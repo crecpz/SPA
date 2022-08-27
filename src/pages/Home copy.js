@@ -9,7 +9,111 @@ export const Home = {
 
     render: () => {
         return `
-                <div class="container">
+    <div class="body-overlay"></div>
+    <!-- 側邊nav -->
+    <nav id="nav" class="nav">
+
+        <div class="nav__header">
+            <!-- hamburger -->
+            <button id="nav-hamburger" class="hamburger hamburger--nav">
+                <div class="hamburger__bar"></div>
+                <div class="hamburger__bar"></div>
+                <div class="hamburger__bar"></div>
+            </button>
+
+            <!-- dark/light mode -->
+            <div id="mode-btns" class="nav__mode-btns">
+                <button id="light-mode-btn" class="btn mode-btn mode-btn--light mode-btn--active">Light</button>
+                <button id="dark-mode-btn" class="btn mode-btn mode-btn--dark">Dark</button>
+            </div>
+        </div>
+
+        <div class="nav__content">
+            <!-- 預設列表 -->
+            <ul class="nav__list default-list">
+                <li class="default-list__item nav__list-item nav__list-item--active">總覽</li>
+                <li class="default-list__item nav__list-item">置頂</li>
+            </ul>
+            <!-- 自訂列表 -->
+            <div class="custom-list-wrapper">
+                <h3 class="custom-list-title">
+                    自訂列表
+                </h3>
+                <ul class="nav__list custom-list">
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        工作
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                    <div class="custom-list__color"></div>
+                    工作
+                </li>
+                <li class="custom-list__item nav__list-item">
+                <div class="custom-list__color"></div>
+                工作
+            </li>
+                    <li class="custom-list__item nav__list-item">
+                    <div class="custom-list__color"></div>
+                    工作
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                    <div class="custom-list__color"></div>
+                    工作
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        旅遊
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        休閒
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        書
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        目標
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        攝影
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        課業
+                    </li>
+                    <li class="custom-list__item nav__list-item">
+                        <div class="custom-list__color"></div>
+                        工作
+                    </li>
+                </ul>
+                <button class="btn btn--add"><i class="fa-solid fa-plus"></i>新增自訂列表</button>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- 主內容區 -->
+    <main id="main" class="main">
+        <header id="main__header" class="main__header">
+            <div class="main__container contaner contaner--full-width">
+                <!-- hamburger -->
+                <button id="main-hamburger" class="hamburger hamburger--main">
+                    <div class="hamburger__bar"></div>
+                    <div class="hamburger__bar"></div>
+                    <div class="hamburger__bar"></div>
+                </button>
+                <!-- main title for mobile -->
+                <h2 class="main__title main__title--mobile">置頂</h2>
+                <!-- seach btn -->
+                <button class="btn btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </header>
+        <section class="main__content">
+            <div class="container">
                 <!-- 主內容區 header -->
                 <div class="main__content-header">
                     <h2 class="main__title">置頂</h2>
@@ -112,7 +216,9 @@ export const Home = {
                     </li>
                 </ul>
             </div>
-        `;
+        </section>
+    </main>
+    `;
     },
 
     listener: {

@@ -15,6 +15,8 @@ const getComponent = (path, routes) => {
   return routes.find(r => r.path.match(new RegExp(`^${path}$`))) || {};
 }
 
+
+
 export const Router = () => {
   if (!location.hash) {
     location.hash = '/';
@@ -31,8 +33,10 @@ export const Router = () => {
   const { component = NotFound } = getComponent(path, Route);
 
 
+  const mainContent = document.querySelector('.main__content');
+
   // 將元件內容渲染至畫面
-  wrapper.innerHTML = component.render();
+  mainContent.innerHTML = component.render();
 
   // 如果元件有 mount 屬性，則在 render 後呼叫 mount()
   'mount' in component
