@@ -1,0 +1,32 @@
+{
+  "name": "spa-prepare",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "watch": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crecpz/SPA-prepare.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crecpz/SPA-prepare/issues"
+  },
+  "homepage": "https://github.com/crecpz/SPA-prepare#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "sass": "^1.54.5"
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "IE 10"
+  ],
+  "description": ""
+}

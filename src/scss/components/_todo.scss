@@ -1,0 +1,66 @@
+@use "abstracts" as *;
+
+.todo {
+  @include flex($dir: column);
+
+  &__item {
+    @include flex($ai: center);
+    cursor: pointer;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--tertiary-color);
+
+    &:not(:first-child) {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &__label {
+    @include flex($ai: center);
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  &__checkbox {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+  }
+
+  &__checkbox:checked ~ &__checkmark {
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 65%;
+      height: 65%;
+      background-color: var(--primary-color);
+    }
+  }
+
+  &__checkmark {
+    position: relative;
+    flex: 0 0 auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1.75px solid var(--primary-color);
+  }
+
+  &__content {
+    @include text(sm);
+
+    @include sm {
+      @include text(base);
+    }
+
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  &__pin {
+    margin-left: auto;
+  }
+}

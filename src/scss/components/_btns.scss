@@ -1,0 +1,110 @@
+@use "abstracts" as *;
+
+// btn
+.btn {
+  @include button-reset;
+  cursor: pointer;
+
+  // 搜尋
+  &--search {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin-left: auto;
+  }
+
+  // 新增自訂列表
+  &--add {
+    @include text(base);
+    @include flex($ai: center, $jc: center);
+    justify-self: flex-end;
+    width: calc(100% - 4.5rem);
+    
+    padding-top:12px;
+    padding-bottom:12px;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+
+
+    i {
+      margin-right: 1rem;
+    }
+  }
+
+  // main-option (清單選項鈕)
+  &--list-option {
+    @include text(md);
+    color: var(--primary-color);
+
+    i {
+      pointer-events: none;
+    }
+  }
+}
+
+// mode-btn
+.mode-btn {
+  padding: 0.25rem 1rem;
+  border: 2px solid var(--primary-color);
+
+  &--light {
+    color: var(--secondary-color);
+    // background-color: var(--primary-color);
+   
+
+    // color:  #fff;
+    // background-color: black;
+    background-color:  #fff;
+  }
+
+  &--dark {
+    // color: var(--primary-color);
+    color: var(--secondary-color);
+    // background-color: var(--secondary-color);
+
+    // color: black;
+    background-color: black;
+    // background-color:  #fff;
+  }
+}
+
+// hamburger
+.hamburger {
+  @include flex($dir: column, $jc: space-between);
+  width: 40px;
+  height: 20px;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  transition-property: opacity ,visibility;
+  transition-duration: 500ms;
+
+  &--nav {
+    // display: none;
+
+    @include lg {
+      display: flex ;
+    }
+  }
+
+  &--hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &--main {
+
+  }
+
+  &__bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    pointer-events: none;
+    
+    transition-property: background-color; 
+    transition-duration: $mode-transition-duration;
+  }
+}

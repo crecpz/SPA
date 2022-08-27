@@ -1,0 +1,92 @@
+@use "abstracts" as *;
+
+html {
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+*,
+::before,
+::after {
+    box-sizing: inherit;
+    text-decoration: none;
+    line-height: 1.5;
+
+    transition-property: color, background-color, border; 
+    transition-duration: $mode-transition-duration, 
+                          $mode-transition-duration, 
+                          $mode-transition-duration;
+    transition-timing-function: ease-in-out;
+}
+
+.light:root {
+    --primary-color: #2a2a2a;
+    --secondary-color: #fff;
+    --tertiary-color:  #f1f1f1;
+}
+
+.dark:root {
+    --primary-color: #fff;
+    --secondary-color: black;
+    --tertiary-color:  #3a3a3a;
+    // --tertiary-color: #f1f1f1;
+}
+
+// hover 亮 暫定 #f1f1f1
+// hover 暗 暫定 hsl(100%,100%, 75%)
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #fff;
+        --secondary-color: black;
+        --tertiary-color:  #3a3a3a;
+    }
+}
+
+@media (prefers-color-scheme: light){
+    :root {
+        --primary-color: #2a2a2a;
+        --secondary-color: #fff;
+        --tertiary-color:  #f1f1f1;
+    }
+}
+
+body {
+    height: 100%;
+}
+
+
+.wrapper {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: minmax(0, 375px) 1fr;
+    grid-template-rows: 4.375rem 1fr;
+
+    font-family: "Noto Serif TC", serif;
+    font-weight: 600;
+    height: 100%;
+
+
+    @include lg {
+        &.nav-open {
+            .body-overlay {
+                @include show();
+            }
+        }
+    }
+}
+
+
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 62.5rem;
+    width: 100%;
+
+    &--full-width {
+        width: 100%;
+        max-width: none;
+    }
+}

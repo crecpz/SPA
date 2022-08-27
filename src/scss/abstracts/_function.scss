@@ -1,0 +1,9 @@
+/*
+用於取得相隔一層map內的值
+$map: 最外層的map
+$inner-map: 內層map
+$key: 內層map屬性值
+*/
+@function deep-map-get($map, $inner-map, $key) {
+  @return map-get(map-get($map, $inner-map), $key);
+}

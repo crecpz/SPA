@@ -1,0 +1,146 @@
+@use "abstracts" as *;
+
+.nav {
+  position: absolute;
+  z-index: 15;
+  left: -23.4375rem;
+
+  display: grid;
+  grid-template-rows: 4.375rem auto 1fr;
+  grid-column: 1/2;
+  grid-row: 1/-1;
+  width: 100%;
+  height: 100%;
+  
+  border-right: 2px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+
+  /*  雖然在 *{} 內已經定義了全站的 transition 屬性了(color, background-color)，
+      但此處仍有 left 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
+      *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
+  */
+  transition-property: color, background-color, border, left; 
+  transition-duration: $mode-transition-duration, 
+                        $mode-transition-duration, 
+                        $mode-transition-duration,
+                        $collapse-transition-duration;
+
+
+  // 當 .nav 與 .nav-open 同時存在:
+  &.nav-open {
+    left: 0;
+
+    // .nav 的兄弟元素 .main 內的 .hamburger--main 會被隱藏
+    &+.main .hamburger--main {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  
+  &__header {
+    @include flex($ai: center, $jc: space-between);
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+    border-bottom: 2px solid var(--primary-color);
+  }
+
+  &__mode-btns {
+    @include flex;
+  }
+
+  &__content {
+    @include flex($dir: column, $jc: flex-start);
+    height: calc(100vh - 7.5rem);
+  }
+
+  &__list-item {
+    @include flex($ai: center);
+    @include text(sm);
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+    cursor: pointer;
+    transition: background-color map-get($map: $transition-duration, $key: hover);
+
+    @include hover-query {
+      &:hover{
+        background-color: var(--tertiary-color);
+      }
+    }
+  }
+
+  &__list-item--active {
+    position: relative;
+    background-color: var(--tertiary-color);
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 100%;
+      top: 0;
+      transform: translateX(100%);
+      width: 10px;
+      height: 100%;
+      background-color: var(--primary-color);
+    }
+  }
+}
+
+.default-list {
+  @include text(md);
+  font-weight: 900;
+  margin-top: 5rem;
+}
+
+.custom-list-wrapper {
+  @include flex($dir: column);
+  grid-row: 3/-1;
+  max-height: 70vh;
+  margin-top: auto;
+}
+
+.custom-list-title {
+  @include text(md);
+  @include flex($ai: center);
+  white-space: nowrap;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background-color: var(--primary-color);
+  }
+
+  &::before {
+    margin-right: 1.125rem;
+    width: 1.125rem;
+  }
+
+  &::after {
+    margin-left: 1.125rem;
+    width: 100%;
+  }
+}
+
+.custom-list {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  overflow-y: scroll;
+  max-height: 40vh;
+  min-height: 40vh;
+
+  // &__item {
+
+  // }
+
+  &__color {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 2rem;
+    background-color: rgb(202, 104, 61);
+  }
+}

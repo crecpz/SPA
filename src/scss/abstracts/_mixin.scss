@@ -1,0 +1,62 @@
+@use "./function" as *;
+@use "./map" as *;
+
+@mixin flex($dir: row, $jc: flex-start, $ai: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-wrap: $wrap;
+}
+
+@mixin rounded-full {
+  border-radius: 50%;
+}
+
+@mixin button-reset {
+  background-color: transparent;
+  border: 0;
+  font-family: "Noto Serif TC", serif;
+}
+
+// 用於設定文字大小
+@mixin text($size) {
+  font-size: deep-map-get($text, size, $size);
+}
+
+// 檢查裝置是否支援hover，若有支援才執行此
+@mixin hover-query() {
+  @media (hover: hover) {
+    @content;
+  }
+}
+
+// 顯示
+@mixin show() {
+  visibility: visible;
+  opacity: 1;
+}
+
+// 隱藏
+@mixin hide(){
+  visibility: hidden;
+  opacity: 0;
+} 
+
+
+/*  使用此 @mixin 後，
+    點擊 hamburger 時: .nav 將會被收合至左側；
+    .main 的寬度將會從原本的 calc(100% - 375px) 變為 100%。
+
+    $width: 設定 .main 的寬度
+    $position-left: 設定 .nav position-left 位移數值  
+*/
+// @mixin collapse-nav(
+//   $width: auto, 
+//   $position-left: auto) {
+
+//   &.collapse {
+//     width: $width;
+//     left: $position-left;
+//   }
+// }

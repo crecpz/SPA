@@ -1,0 +1,141 @@
+@use "abstracts" as *;
+
+.main {
+  display: grid;
+  grid-template-rows: 4.375rem 1fr;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+
+  overflow-y: scroll;
+
+  margin-left: auto;
+  width: 100%;
+
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+
+  /*  雖然在 *{} 內已經定義了全站的 transition 屬性了(color, background-color)，
+      但此處仍有 width 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
+      *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
+  */
+  transition-property: color, background-color, border, width; 
+  transition-duration: $mode-transition-duration, 
+                        $mode-transition-duration, 
+                        $mode-transition-duration,
+                        $collapse-transition-duration;
+
+                        
+  &.nav-open {
+    width: calc(100% - 23.4375rem);
+
+    @include lg {
+      width: 100%;
+    }
+  }
+
+
+  &__header {
+    @include flex($ai: center);
+
+    grid-row: 1 / 2;
+    position: fixed;
+    z-index: 5;
+
+    height: 4.375rem;
+
+    width: 100%;
+
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+
+    /*  雖然在 *{} 內已經定義了全站的 transition 屬性了(color, background-color)，
+        但此處仍有 width 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
+        *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
+    */
+    transition-property: color, background-color, border, width; 
+    transition-duration: $mode-transition-duration, 
+                          $mode-transition-duration, 
+                          $mode-transition-duration,
+                          $collapse-transition-duration;
+                          
+    &.nav-open {
+      width: calc(100% - 23.4375rem);
+  
+      @include lg {
+        width: 100%;
+      }
+    }
+  
+
+    .main__container {
+      @include flex($jc: space-between, $ai: center);
+      width: 100%;
+    }
+  }
+
+  &__content {
+    @include flex($jc: center);
+    grid-column: 2/-1;
+    grid-row: 2/-1;
+
+    // padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+  }
+
+  &__content-header {
+    @include flex($jc: space-between, $ai: center);
+    position: sticky;
+    z-index: 5;
+    top: 70px;
+    
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    
+    width: 100%;
+    
+    padding-left: 2rem;
+    padding-top: 80px;
+    padding-bottom:3rem;
+
+    @include sm {
+      padding-top: 3.125rem;
+    }
+  }
+
+  &__title {
+    @include text(xl);
+    position: relative;
+    left: 0;
+    height: 100%;
+
+    @include sm {
+      @include text(lg);
+    }
+
+    // main-title 色塊裝飾
+    &::before {
+      content: "";
+      position: absolute;
+      left: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 0.625rem;
+      height: 70%;
+
+      background-color: var(--primary-color);
+      transition: color map-get($map: $transition-duration, $key: mode), 
+                  background-color map-get($map: $transition-duration, $key: mode);
+    }     
+
+    &--mobile {
+      display: none;
+    }
+  }
+}
