@@ -30,3 +30,24 @@ export function navSwitcher() {
 }
 
 
+// const navLists = document.querySelectorAll('.nav__list');
+// navLists.forEach(i => {
+//   i.addEventListener('click', (e) => {
+//     if(e.target.classList.contains('nav__list-item')) {
+//       document.querySelectorAll('.nav__list-item')
+//         .forEach(i => i.classList.remove('nav__list-item--active'));
+//       e.target.classList.add('nav__list-item--active');
+//     }
+//   })
+// })
+
+const navLists = document.querySelectorAll('.nav__list');
+
+navLists.forEach(i => {
+  i.addEventListener('click', (e) => {
+    console.log(e.target);
+    // if(e.target.classList.contains('nav__list-item')) {
+      
+    // }
+  })
+})
