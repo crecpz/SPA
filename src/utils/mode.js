@@ -49,7 +49,6 @@ function updateMode() {
 function modeSwitcher(e) {
   // light/dark 模式切換按鈕監聽
   const html = document.documentElement;
-
   if (e.target.id === 'dark-mode-btn') {
     html.classList.add('dark');
     html.classList.remove('light');

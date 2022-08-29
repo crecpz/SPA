@@ -2,7 +2,7 @@
  * 點擊 listOptionBtn 會調用此函數。
  * 此函數用於展開 listOption。  
  */
-export function openListOption(){
+function openListOption(){
   const listOption =document.querySelector('.list-option');
   listOption.classList.toggle('list-option--open');
   // document.addEventListener('click', clickToCloseListOption);
@@ -15,7 +15,7 @@ export function openListOption(){
  * 就將 `listOptionBtn` 調用一次 `click()`。(所以 `listOptionBtn` 會被關閉)
  * @param {*} e `event`
  */
-export function clickToCloseListOption(e){
+function clickToCloseListOption(e){
   const listOptionBtn = document.querySelector('.btn--list-option');
   const listOption =document.querySelector('.list-option');
   const listOptionIsOpened = listOption.classList.contains('list-option--open');
@@ -25,3 +25,5 @@ export function clickToCloseListOption(e){
     listOptionBtn.click();
   }
 }
+
+export {openListOption, clickToCloseListOption};

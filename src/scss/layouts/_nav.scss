@@ -55,8 +55,7 @@
     height: calc(100vh - 7.5rem);
   }
 
-  // list 共同樣式
-
+  // ------------------------- [ list 共同樣式 ] -------------------------
   &__list-item {
     @include flex($ai: center);
     @include text(sm);
@@ -101,11 +100,12 @@
       width: 10px;
       height: 100%;
       background-color: var(--primary-color);
+      pointer-events: none;
     }
   }
 }
 
-// list 獨立樣式個別設定
+// ------------------------- [ list 獨立樣式個別設定 ] -------------------------
 
 .default-list {
   @include text(md);
