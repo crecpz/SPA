@@ -54,7 +54,22 @@ navLists.forEach(i => {
 
 
 // --------------------------[ 新增自訂列表 ]--------------------------
+
 const addBtn = document.querySelector('.btn--add');
+const customList = document.querySelector('.custom-list');
+
+let customLi = '';
+
 addBtn.addEventListener('click', e => {
-  // console.log(new Date().getTime())
+  let customListName = '未命名清單';
+  const listId = new Date().getTime()
+  customLi +=  `<li id="${listId}" class="custom-list__item nav__list-item">
+            <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
+                <div class="custom-list__color"></div>
+                ${customListName}
+            </a>
+          </li>`;
+          console.log(customLi)
+
+  customList.innerHTML = customLi;
 })
