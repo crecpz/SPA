@@ -1,14 +1,15 @@
 const datas = JSON.parse(localStorage.getItem('todoData')) || {};
 
 
-let ul = `<li class="todo__item">
-            <label class="todo__label">
-                <input type="checkbox" class="todo__checkbox">
-                <span class="todo__checkmark"></span>
-                <p class="todo__content">${datas[0].content}</p>
-            </label>
-            <i class="todo__pin fa-solid fa-thumbtack"></i>
-          </li>`;
+let ul = 
+  `<li class="todo__item">
+      <label class="todo__label">
+          <input type="checkbox" class="todo__checkbox">
+          <span class="todo__checkmark"></span>
+          <p class="todo__content">${datas[0].content}</p>
+      </label>
+      <i class="todo__pin fa-solid fa-thumbtack"></i>
+    </li>`;
 
 
 export const CustomList = {

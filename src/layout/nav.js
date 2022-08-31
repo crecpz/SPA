@@ -19,7 +19,7 @@ wrapper.addEventListener('click', e => {
     && document.querySelector('#wrapper').classList.contains('nav-open')) {
     // 切換 nav 展開與收合
     navSwitcher();
-    }
+  }
 })
 
 
@@ -55,7 +55,7 @@ navLists.forEach(i => {
 
 // --------------------------[ 新增自訂列表 ]--------------------------
 
-const addBtn = document.querySelector('.btn--add');
+const addBtn = document.querySelector('#add-list-btn');
 const customList = document.querySelector('.custom-list');
 
 let customLi = '';
@@ -63,13 +63,13 @@ let customLi = '';
 addBtn.addEventListener('click', e => {
   let customListName = '未命名清單';
   const listId = new Date().getTime()
-  customLi +=  `<li id="${listId}" class="custom-list__item nav__list-item">
+  customLi += `<li id="${listId}" class="custom-list__item nav__list-item">
             <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
                 <div class="custom-list__color"></div>
                 ${customListName}
             </a>
           </li>`;
-          console.log(customLi)
+  console.log(customLi)
 
   customList.innerHTML = customLi;
 })
