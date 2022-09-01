@@ -8,7 +8,7 @@ export const Home = {
     },
 
     render: () => {
-        return `This is Hmoe page.`;
+        return `This is Home page.`;
     },
 
     listener: {

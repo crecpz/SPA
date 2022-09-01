@@ -1,0 +1,42 @@
+@use "abstracts" as *;
+
+.input-area{
+  @include flex;
+  position: fixed;
+  left: 50%;
+  top: 100%; 
+  transform: translate(-50%, -100%);
+  width: 100%;
+  max-width: 1000px;
+
+  // grid-column: 2/3;
+  // flex-shrink: 0;
+  // left: 50%;
+  
+  // position: absolute;
+
+
+
+  // max-width: 62.5rem;
+  // &.nav-open {
+  //   width: calc(100% - 23.4375rem);
+
+  //   @include lg {
+  //     width: 100%;
+  //   }
+  // }
+
+  &__add-item-btn{
+    // 使用 inline-block 讓文字與 icon 對齊
+    // display: inline-block;
+    // width: 100%;
+  }
+  
+  &__form{
+    display: none;
+  }
+
+  &__submit-btn{
+
+  }
+}

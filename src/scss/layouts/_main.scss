@@ -5,6 +5,7 @@
   grid-template-rows: 4.375rem 1fr;
   grid-column: 1/-1;
   grid-row: 1/-1;
+  position: relative;
 
   overflow-y: scroll;
 
@@ -82,7 +83,6 @@
     grid-column: 2/-1;
     grid-row: 2/-1;
 
-    // padding-top: 5rem;
     padding-bottom: 5rem;
     padding-left: 2.25rem;
     padding-right: 2.25rem;
@@ -139,3 +139,5 @@
     }
   }
 }
+
+

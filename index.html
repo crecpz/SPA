@@ -112,7 +112,9 @@
                             </a>
                         </li> -->
                     </ul>
-                    <button class="btn btn--add"><i class="fa-solid fa-plus"></i>新增自訂列表</button>
+                    <a href="#/customlist" id="add-list-btn" class="btn btn--primary btn--custom-list"><i
+                            class="fa-solid fa-plus"></i>新增自訂列表</a>
+                    <!-- <button class="btn btn--add"><i class="fa-solid fa-plus"></i>新增自訂列表</button> -->
                 </div>
             </div>
         </nav>
@@ -137,6 +139,19 @@
             </header>
 
             <section class="main__content"></section>
+
+            <!-- 輸入框 -->
+            <div class="input-area">
+                <button id="add-item-btn" class="btn btn--primary btn--add-item">
+                    <i class="fa-solid fa-plus"></i>新增事項
+                </button>
+                <form class="input-area__form">
+                    <input type="text" class="input-area__input">
+                    <button class="btn input-area__submit-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
+            </div>
         </main>
     </div>
 
