@@ -20,6 +20,13 @@ html {
     transition-timing-function: ease-in-out;
 }
 
+
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+
 .light:root {
     --primary-color: #2a2a2a;
     --secondary-color: #fff;
@@ -52,9 +59,6 @@ html {
     }
 }
 
-body {
-    height: 100%;
-}
 
 
 .wrapper {
