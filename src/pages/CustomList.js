@@ -51,7 +51,7 @@ export const CustomList = {
 
         <!-- main content list -->
         <ul id="todo" class="todo">
-          ${ul}
+   
         </ul>
     </div>
   `;
