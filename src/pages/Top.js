@@ -10,7 +10,10 @@ export const Top = {
             <!-- 主內容區 header -->
             <div class="main__content-header">
                 <div class="container">
-                    <h2 class="main__title">置頂</h2>
+                    <h2 class="main__title">
+                        <div class="main__color-block"></div>
+                        置頂
+                    </h2>
                     <!-- 清單選單按鈕 -->
                     <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                     <!-- 清單選單 -->

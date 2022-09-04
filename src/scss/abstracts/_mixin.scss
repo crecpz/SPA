@@ -1,5 +1,6 @@
 @use "./function" as *;
 @use "./map" as *;
+@use "./break-point" as *;
 
 @mixin flex($dir: row, $jc: flex-start, $ai: stretch, $wrap: nowrap) {
   display: flex;
@@ -17,6 +18,17 @@
   background-color: transparent;
   border: 0;
   font-family: "Noto Serif TC", serif;
+}
+
+// 用於設定通用的 x 軸 padding (desktop 與 mobile 不一樣)
+@mixin padding-x {
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
+
+  @include sm {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
 // 用於設定文字大小
@@ -38,25 +50,7 @@
 }
 
 // 隱藏
-@mixin hide(){
+@mixin hide() {
   visibility: hidden;
   opacity: 0;
-} 
-
-
-/*  使用此 @mixin 後，
-    點擊 hamburger 時: .nav 將會被收合至左側；
-    .main 的寬度將會從原本的 calc(100% - 375px) 變為 100%。
-
-    $width: 設定 .main 的寬度
-    $position-left: 設定 .nav position-left 位移數值  
-*/
-// @mixin collapse-nav(
-//   $width: auto, 
-//   $position-left: auto) {
-
-//   &.collapse {
-//     width: $width;
-//     left: $position-left;
-//   }
-// }
+}

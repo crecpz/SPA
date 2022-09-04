@@ -3,17 +3,15 @@
 .list-option {
   @include text(sm);
   position: absolute;
-  top: 7.8125rem;
-  right: 2.8125rem;
+  top: 3.125rem;
+  right: 2.25rem;
+
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+  
   border-top-right-radius: 0;
   background-color: var(--secondary-color);
   outline: 1px solid;
-
-  @include sm {
-    top: 7.1875rem;
-  }
 
   transform: scale(0);
   transform-origin: top right;
@@ -23,21 +21,8 @@
     transform: scale(1);
   }
 
-  // &::before {
-  //   content: "";
-  //   position: absolute;
-  //   right: 0;
-  //   bottom: 100%;
-  //   width: 0;
-  //   height: 0;
-  //   border-style: solid;
-  //   border-width: 0 0 0.9375rem 1.25rem;
-  //   border-color: transparent transparent var(--secondary-color) transparent;
-  // }
-
   &__item {
     &:not(:first-child) {
-      // margin-top: 1rem;
     }
   }
 
@@ -53,18 +38,12 @@
     transition: background-color 100ms, 
       color 100ms;
 
-    // color: var(--secondary-color);
     color: var(--primary-color);
 
     @include hover-query {
       &:hover {
-        // background-color: var(--primary-color);
-        // color: var(--secondary-color);
-        // background-color: hsl(0, 0%, 40%);
         background-color: var(--tertiary-color);
         color: var(--primary-color);
-
-        // color: var(--primary-color);
       }
     }
   }

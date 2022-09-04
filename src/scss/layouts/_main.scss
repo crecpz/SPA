@@ -7,8 +7,6 @@
   grid-row: 1/-1;
   position: relative;
 
-  // overflow-y: scroll;
-
   width: 100%;
   margin-left: auto;
 
@@ -37,17 +35,12 @@
 
   &__header {
     @include flex($ai: center);
-
     grid-row: 1 / 2;
     position: fixed;
     z-index: 5;
 
     height: 4.375rem;
-
     width: 100%;
-
-    padding-left: 2.25rem;
-    padding-right: 2.25rem;
 
     border-bottom: 2px solid var(--primary-color);
     color: var(--primary-color);
@@ -71,9 +64,9 @@
       }
     }
   
-    .main__container {
+    @include padding-x;
+    .container {
       @include flex($jc: space-between, $ai: center);
-      width: 100%;
     }
   }
 
@@ -81,14 +74,12 @@
     @include flex($dir: column, $jc: center);
     grid-column: 2/-1;
     grid-row: 2/-1;
-
+    height: calc(100vh - 70px);
     padding-bottom: 5rem;
-    padding-left: 2.25rem;
-    padding-right: 2.25rem;
   }
 
   &__content-header {
-    @include flex($jc: space-between, $ai: center);
+    @include padding-x;
     position: sticky; // 09/04: 這邊考慮用 fixed 
     z-index: 5;
     top: 70px;
@@ -97,44 +88,58 @@
     background-color: var(--secondary-color);
     
     width: 100%;
-    
-    padding-left: 2rem;
-    padding-top: 80px;
-    padding-bottom:3rem;
+    margin-top: 5rem;        
 
     @include sm {
-      padding-top: 3.125rem;
+      margin-top: 3rem;
+    }
+
+    .container {
+      position: relative;
+      @include flex($jc: space-between, $ai: center);
     }
   }
 
   &__title {
     @include text(xl);
+    @include flex;
     position: relative;
-    left: 0;
+    // left: 0;
     height: 100%;
 
     @include sm {
       @include text(lg);
     }
 
+
+
     // main-title 色塊裝飾
-    &::before {
-      content: "";
-      position: absolute;
-      left: -2rem;
-      top: 50%;
-      transform: translateY(-50%);
+    // &::before {
+    //   content: "";
+    //   position: absolute;
+    //   left: -2rem;
+    //   top: 50%;
+    //   transform: translateY(-50%);
 
-      width: 0.625rem;
-      height: 70%;
+    //   width: .625rem;
+    //   height: 70%;
 
-      background-color: var(--primary-color);
-      transition: color map-get($map: $transition-duration, $key: mode), 
-                  background-color map-get($map: $transition-duration, $key: mode);
-    }     
+    //   background-color: var(--primary-color);
+    //   transition: color map-get($map: $transition-duration, $key: mode), 
+    //               background-color map-get($map: $transition-duration, $key: mode);
+    // }     
+  }
+
+  &__color-block{
+    width: .625rem;
+    margin-right: 2rem;
+    background-color: var(--primary-color);
   }
 
   &__content-list {
     overflow-y: scroll;
+    margin-top: 3rem;
+
+    @include padding-x;
   }
 }
