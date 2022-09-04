@@ -7,10 +7,10 @@
   grid-row: 1/-1;
   position: relative;
 
-  overflow-y: scroll;
+  // overflow-y: scroll;
 
-  margin-left: auto;
   width: 100%;
+  margin-left: auto;
 
   color: var(--primary-color);
   background-color: var(--secondary-color);
@@ -71,7 +71,6 @@
       }
     }
   
-
     .main__container {
       @include flex($jc: space-between, $ai: center);
       width: 100%;
@@ -79,7 +78,7 @@
   }
 
   &__content {
-    @include flex($jc: center);
+    @include flex($dir: column, $jc: center);
     grid-column: 2/-1;
     grid-row: 2/-1;
 
@@ -90,7 +89,7 @@
 
   &__content-header {
     @include flex($jc: space-between, $ai: center);
-    position: sticky;
+    position: sticky; // 09/04: 這邊考慮用 fixed 
     z-index: 5;
     top: 70px;
     
@@ -133,11 +132,9 @@
       transition: color map-get($map: $transition-duration, $key: mode), 
                   background-color map-get($map: $transition-duration, $key: mode);
     }     
+  }
 
-    &--mobile {
-      display: none;
-    }
+  &__content-list {
+    overflow-y: scroll;
   }
 }
-
-
