@@ -6,10 +6,13 @@ html {
     // height: calc(var(--vh, 1vh) * 100);
 
     
-    height: -webkit-fill-available;
-    height: -moz-fill-available;
-    height: -moz-available;
-    height: fill-available;
+    // height: -webkit-fill-available;
+    // height: -moz-fill-available;
+    // height: -moz-available;
+    // height: fill-available;
+    
+    height: 100vh;
+    height: var( — app-height);
 }
 
 *,
@@ -31,10 +34,13 @@ body {
     height: 100%;
     overflow: hidden;
 
-    height: -webkit-fill-available;
-    height: -moz-fill-available;
-    height: -moz-available;
-    height: fill-available;
+    // height: -webkit-fill-available;
+    // height: -moz-fill-available;
+    // height: -moz-available;
+    // height: fill-available;
+
+    height: 100vh;
+    height: var( — app-height);
 }
 
 
