@@ -10,9 +10,9 @@ html {
     // height: -moz-fill-available;
     // height: -moz-available;
     // height: fill-available;
-    
+
     height: 100vh;
-    height: var( — app-height);
+    height: var(--app-height);
 }
 
 *,
@@ -40,7 +40,7 @@ body {
     // height: fill-available;
 
     height: 100vh;
-    height: var( — app-height);
+    height: var(--app-height);
 }
 
 
