@@ -10,7 +10,7 @@ import { updateMode } from "./utils/mode.js";
 
 // solution 02
 const appHeight = () => {
-  const doc = document.documentElement
+  const doc = document.querySelector(':root');
   doc.style.setProperty("--height", `${window.innerHeight}px`)
 }
 window.addEventListener("resize", appHeight)

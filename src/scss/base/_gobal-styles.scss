@@ -12,7 +12,11 @@ html {
     // height: fill-available;
 
     height: 100vh;
-    height: var(--app-height);
+    height: var(--height);
+}
+
+:root {
+    // --app-height: 100%;
 }
 
 *,
@@ -31,8 +35,8 @@ html {
 
 
 body {
-    height: 100%;
-    overflow: hidden;
+    // height: 100%;
+    // overflow: hidden;
 
     // height: -webkit-fill-available;
     // height: -moz-fill-available;
@@ -40,7 +44,7 @@ body {
     // height: fill-available;
 
     height: 100vh;
-    height: var(--app-height);
+    height: var(--height);
 }
 
 
@@ -104,6 +108,5 @@ body {
 .container {
     margin-left: auto;
     margin-right: auto;
-    // max-width: 62.5rem;
     width: 100%;
 }
