@@ -7,7 +7,12 @@
   top: 100%; 
   transform: translate(-50%, -100%);
   width: 100%;
-  max-width: 1000px;
+
+  &.nav-open {
+    width: calc(100% - 23.4375rem);
+    left: calc(50% + 375px);
+  }
+  // max-width: 1000px;
 
   // grid-column: 2/3;
   // flex-shrink: 0;
