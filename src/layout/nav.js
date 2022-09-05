@@ -69,7 +69,6 @@ addBtn.addEventListener('click', e => {
                 ${customListName}
             </a>
           </li>`;
-  // console.log(customLi)
 
   customList.innerHTML = customLi;
 })

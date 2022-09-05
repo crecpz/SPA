@@ -65,13 +65,14 @@
     }
   
     @include padding-x;
+
     .container {
       @include flex($jc: space-between, $ai: center);
     }
   }
 
   &__content {
-    @include flex($dir: column, $jc: center);
+    @include flex($dir: column);
     grid-column: 2/-1;
     grid-row: 2/-1;
     height: calc(100vh - 70px);
@@ -97,6 +98,7 @@
     .container {
       position: relative;
       @include flex($jc: space-between, $ai: center);
+      max-width: 62.5rem;
     }
   }
 
@@ -141,5 +143,9 @@
     margin-top: 3rem;
 
     @include padding-x;
+    
+    .container {
+      max-width: 62.5rem;
+    }
   }
 }
