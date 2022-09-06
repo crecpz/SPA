@@ -2,7 +2,7 @@
 
 .main {
   display: grid;
-  grid-template-rows: 4.375rem 1fr;
+  grid-template-rows: 4.375rem 1fr auto;
   grid-column: 1/-1;
   grid-row: 1/-1;
   position: relative;

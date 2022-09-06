@@ -63,12 +63,13 @@ let customLi = '';
 addBtn.addEventListener('click', e => {
   let customListName = '未命名清單';
   const listId = new Date().getTime()
-  customLi += `<li id="${listId}" class="custom-list__item nav__list-item">
-            <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
-                <div class="custom-list__color"></div>
-                ${customListName}
-            </a>
-          </li>`;
+  customLi += 
+  `<li id="${listId}" class="custom-list__item nav__list-item">
+      <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
+          <div class="custom-list__color"></div>
+          ${customListName}
+      </a>
+  </li>`;
 
   customList.innerHTML = customLi;
 })

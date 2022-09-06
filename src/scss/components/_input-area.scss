@@ -1,47 +1,47 @@
 @use "abstracts" as *;
 
 .input-area{
+  $block: &;
+
   @include flex;
-  position: fixed;
-  left: 50%;
-  top: 100%; 
-  transform: translate(-50%, -100%);
   width: 100%;
+  z-index: 5;
+  grid-row: -1 / span 1;
 
   &.nav-open {
     width: calc(100% - 23.4375rem);
     left: calc(50% + 375px);
   }
-  // max-width: 1000px;
-
-  // grid-column: 2/3;
-  // flex-shrink: 0;
-  // left: 50%;
-  
-  // position: absolute;
 
 
+  &__add-btn{
 
-  // max-width: 62.5rem;
-  // &.nav-open {
-  //   width: calc(100% - 23.4375rem);
+    &--active{
+      display: none;
+      // opacity: 0;
+      // visibility: hidden;;
+    }
 
-  //   @include lg {
-  //     width: 100%;
-  //   }
-  // }
-
-  &__add-item-btn{
-    // 使用 inline-block 讓文字與 icon 對齊
-    // display: inline-block;
-    // width: 100%;
+    &--active + #{$block}__form {
+      display: flex;
+    }
   }
   
   &__form{
     display: none;
+    width: 100%;
+    grid-column: 1/-1;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 18px;
   }
 
   &__submit-btn{
-
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border: 1px solid #fff;
   }
 }
