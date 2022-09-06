@@ -5,18 +5,22 @@ html {
     // height: 100vh; /* Fallback for browsers that do not support Custom Properties */
     // height: calc(var(--vh, 1vh) * 100);
 
-    
-    // height: -webkit-fill-available;
-    // height: -moz-fill-available;
-    // height: -moz-available;
-    // height: fill-available;
+    // height: 100vh;
+    // height: var(--height);
 
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
     height: 100vh;
-    height: var(--height);
+
+    @media not all and (hover: hover) {
+        height: var(--app-height);
+    }
 }
 
 :root {
-    // --app-height: 100%;
+    --app-height: 100%;
 }
 
 *,
@@ -26,13 +30,10 @@ html {
     text-decoration: none;
     line-height: 1.5;
 
-    transition-property: color, background-color, border; 
-    transition-duration: $mode-transition-duration, 
-                          $mode-transition-duration, 
-                          $mode-transition-duration;
+    transition-property: color, background-color, border;
+    transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration;
     transition-timing-function: ease-in-out;
 }
-
 
 body {
     // height: 100%;
@@ -43,21 +44,29 @@ body {
     // height: -moz-available;
     // height: fill-available;
 
-    height: 100vh;
-    height: var(--height);
-}
+    // height: 100vh;
 
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+
+    @media not all and (hover: hover) {
+        height: var(--app-height);
+    }
+}
 
 .light:root {
     --primary-color: #2a2a2a;
     --secondary-color: #fff;
-    --tertiary-color:  #f1f1f1;
+    --tertiary-color: #f1f1f1;
 }
 
 .dark:root {
     --primary-color: #fff;
     --secondary-color: black;
-    --tertiary-color:  #3a3a3a;
+    --tertiary-color: #3a3a3a;
     // --tertiary-color: #f1f1f1;
 }
 
@@ -68,19 +77,17 @@ body {
     :root {
         --primary-color: #fff;
         --secondary-color: black;
-        --tertiary-color:  #3a3a3a;
+        --tertiary-color: #3a3a3a;
     }
 }
 
-@media (prefers-color-scheme: light){
+@media (prefers-color-scheme: light) {
     :root {
         --primary-color: #2a2a2a;
         --secondary-color: #fff;
-        --tertiary-color:  #f1f1f1;
+        --tertiary-color: #f1f1f1;
     }
 }
-
-
 
 .wrapper {
     position: relative;
@@ -93,7 +100,6 @@ body {
     font-weight: 600;
     height: 100%;
 
-
     @include lg {
         &.nav-open {
             .body-overlay {
@@ -102,8 +108,6 @@ body {
         }
     }
 }
-
-
 
 .container {
     margin-left: auto;
