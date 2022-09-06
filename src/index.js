@@ -16,6 +16,8 @@ const appHeight = () => {
 window.addEventListener("resize", appHeight);
 appHeight();
 
+
+
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
 window.addEventListener("load", Router);

@@ -54,7 +54,7 @@
   &__content {
     @include flex($dir: column, $jc: flex-start);
     // height: calc(100vh - 4.375rem);
-    height: calc(var(--height) - 4.375rem);
+    height: calc(var(--app-height) - 4.375rem);
     padding-bottom: 1rem;
   }
 
