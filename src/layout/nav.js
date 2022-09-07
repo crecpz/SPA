@@ -5,6 +5,8 @@ import { openListOption, clickToCloseListOption } from '../layout/main.js';
 // ---------------[ 全局監聽(不管在哪一個頁面都會使用到這些 nav 的監聽) ]---------------
 const wrapper = document.querySelector('.wrapper');
 wrapper.addEventListener('click', e => {
+// console.log(1)
+
   // 光線模式切換
   modeSwitcher(e);
 

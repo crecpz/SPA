@@ -1,3 +1,7 @@
+const addItemBtn = document.querySelector('#add-item-btn');
+
+// addItemBtn.addEventListener('click', )
+
 /**
  * 點擊 listOptionBtn 會調用此函數。
  * 此函數用於展開 listOption。  

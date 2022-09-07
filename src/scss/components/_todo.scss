@@ -1,24 +1,26 @@
 @use "abstracts" as *;
 
 .todo {
+  $block: &;
   @include flex($dir: column);
 
   &__item {
     @include flex($ai: center);
     cursor: pointer;
-    padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--tertiary-color);
-
-    &:not(:first-child) {
-      margin-top: 1.5rem;
+    
+    &:first-child #{$block}__label{
+      padding-top: 0;
     }
   }
-
+  
   &__label {
     @include flex($ai: center);
     position: relative;
     cursor: pointer;
     width: 100%;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   &__checkbox {
