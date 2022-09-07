@@ -11,37 +11,30 @@
   max-width: 1000px;
   margin: 0 auto;
 
-  &.nav-open {
-    width: calc(100% - 23.4375rem);
-    left: calc(50% + 375px);
-  }
-
-  &__add-btn{
-
-    &--active{
-      display: none;
-    }
-
-    &--active + #{$block}__form {
-      display: flex;
-    }
-  }
+  // &.nav-open {
+    // width: calc(100% - 23.4375rem);
+    // left: calc(50% + 375px);
+  // }
   
   &__form{
-    display: none;
+    @include flex;
     width: 100%;
     grid-column: 1/-1;
   }
 
   &__input {
     width: 100%;
-    padding: 8px 12px;
-    font-size: 18px;
+    padding: .5rem .75rem;
+    font-size: 1.125rem;
   }
 
   &__submit-btn{
     color: #fff;
     padding: 1rem 1.5rem;
     border: 1px solid #fff;
+
+    i{
+      pointer-events: none;
+    }
   }
 }
