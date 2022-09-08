@@ -2,7 +2,7 @@
 import { NotFound } from '../pages/NotFound.js';
 import { addListener, removeAllListeners } from '../utils/eventListerer.js';
 import { Route } from './Route.js';
-import { wrapper } from '../utils/variables.js';
+// import { wrapper } from '../utils/variables.js';
 
 
 /**

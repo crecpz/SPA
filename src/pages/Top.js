@@ -1,8 +1,43 @@
 import { openListOption, clickToCloseListOption } from '../layout/main.js';
+import { getLocalData } from '../utils/function.js';
 
 export const Top = {
-    mount: () => {
-        // removeAllListeners()
+    state: {
+        // pageData: [],
+    },
+
+    mount: function () {
+        this.pageData = [...getLocalData()];
+        console.log(this.pageData)
+
+        const pageData = {
+            defaultList: [
+                {
+                    // 此處總覽
+                },
+                {
+                    name: "置頂頁面",
+                    defaultPage: true,
+                    color: '#ba938a',
+                    listOrder: 0,
+                    todos: [
+                        {
+                            checked: false,
+                            content: "",
+                            pin: false,
+                        },
+                        {
+                            checked: false,
+                            content: "",
+                            pin: false,
+                        }
+                    ],
+                },
+            ],
+            customList: [],
+        }
+
+        localStorage.setItem('todoLocalData', JSON.stringify({}))
     },
 
     render: () => {

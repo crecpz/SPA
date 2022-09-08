@@ -1,16 +1,16 @@
-const wrapper = document.querySelector('#wrapper'),
-  submitBtn = document.querySelector('#submit-btn'),
-  todoList = document.querySelector('#todo'),
-  LOCAL_DATA = {
-    todos: JSON.parse(localStorage.getItem('todoData')) || [],
-  };
+// const wrapper = document.querySelector('#wrapper'),
+//   submitBtn = document.querySelector('#submit-btn'),
+//   todoList = document.querySelector('#todo'),
+//   LOCAL_DATA = {
+//     todos: JSON.parse(localStorage.getItem('todoData')) || [],
+//   };
 
-let inputText = '';
+// let inputText = '';
 
-export {
-  wrapper,
-  submitBtn,
-  todoList,
-  LOCAL_DATA,
-  inputText,
-};
+// export {
+//   wrapper,
+//   submitBtn,
+//   todoList,
+//   LOCAL_DATA,
+//   inputText,
+// };

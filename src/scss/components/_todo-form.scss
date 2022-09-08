@@ -1,26 +1,13 @@
 @use "abstracts" as *;
 
-.input-area{
-  $block: &;
-
+.todo-form {
   @include flex;
   width: 100%;
   z-index: 5;
   grid-row: -1 / span 1;
-
   max-width: 1000px;
   margin: 0 auto;
-
-  // &.nav-open {
-    // width: calc(100% - 23.4375rem);
-    // left: calc(50% + 375px);
-  // }
-  
-  &__form{
-    @include flex;
-    width: 100%;
-    grid-column: 1/-1;
-  }
+  grid-column: 1/-1;
 
   &__input {
     width: 100%;
@@ -28,13 +15,16 @@
     font-size: 1.125rem;
   }
 
-  &__submit-btn{
+  &__submit {
     color: #fff;
     padding: 1rem 1.5rem;
     border: 1px solid #fff;
-
+  
     i{
       pointer-events: none;
     }
   }
 }
+
+
+
