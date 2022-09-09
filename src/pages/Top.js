@@ -1,46 +1,30 @@
 import { openListOption, clickToCloseListOption } from '../layout/main.js';
-import { getLocalData } from '../utils/function.js';
+import { addTodo, getStorage, setStorage } from '../utils/function.js';
+import { currentPageId } from '../layout/nav.js';
+// import { getLocalData } from '../utils/function.js';
+
+
+
+// 試引入，資料可用 ↓
+import data from '../todoLocalData.js';
+import todoLocalData from '../todoLocalData.js';
+
+let pageData = getStorage();
 
 export const Top = {
     state: {
-        // pageData: [],
+       
     },
 
     mount: function () {
-        this.pageData = [...getLocalData()];
-        console.log(this.pageData)
 
-        const pageData = {
-            defaultList: [
-                {
-                    // 此處總覽
-                },
-                {
-                    name: "置頂頁面",
-                    defaultPage: true,
-                    color: '#ba938a',
-                    listOrder: 0,
-                    todos: [
-                        {
-                            checked: false,
-                            content: "",
-                            pin: false,
-                        },
-                        {
-                            checked: false,
-                            content: "",
-                            pin: false,
-                        }
-                    ],
-                },
-            ],
-            customList: [],
-        }
 
-        localStorage.setItem('todoLocalData', JSON.stringify({}))
     },
 
-    render: () => {
+    render: function () {
+
+    
+
         return `
             <!-- 主內容區 header -->
             <div class="main__content-header">
@@ -157,7 +141,9 @@ export const Top = {
     },
 
     listener: {
-        click: e => {
+        click: function(e) {
+
+
             // 控制 listOption 展開與收合
             if (e.target.classList.contains('btn--list-option')) {
                 openListOption();
@@ -165,6 +151,15 @@ export const Top = {
 
             // 點擊任意處來關閉 listOption
             clickToCloseListOption(e)
+
+
+
+            // 新增新事項
+            if (e.target.id === 'todo-submit') {
+                // 此處要獲取當前頁面的 id，並用該 id 來辨識目前要渲染哪一頁
+                addTodo();
+            }
+
         },
     },
 }

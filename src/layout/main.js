@@ -1,11 +1,5 @@
 
-const todoInput = document.querySelector('#todo-input'),
-      todoSubmit = document.querySelector('#todo-submit');
 
-      todoSubmit.addEventListener('click', e => {
-        e.preventDefault();
-        
-      })
       
 
 

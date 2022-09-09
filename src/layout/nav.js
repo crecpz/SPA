@@ -5,7 +5,6 @@ import { openListOption, clickToCloseListOption } from '../layout/main.js';
 // ---------------[ 全局監聽(不管在哪一個頁面都會使用到這些 nav 的監聽) ]---------------
 const wrapper = document.querySelector('.wrapper');
 wrapper.addEventListener('click', e => {
-// console.log(1)
 
   // 光線模式切換
   modeSwitcher(e);
@@ -75,3 +74,15 @@ addBtn.addEventListener('click', e => {
 
   customList.innerHTML = customLi;
 })
+
+
+// --------------------------[ 監聽當前點擊頁面 ]--------------------------
+
+const defaultList = document.querySelector('.default-list');
+defaultList.addEventListener('click', getCurrentPageId)
+function getCurrentPageId(e){
+  return currentPageId = e.target.closest('li').id;
+}
+ 
+// 此 currentPageId 將會傳送給各個 page 中，讓它用這個 id 去渲染相對應的內容
+export let currentPageId; 
