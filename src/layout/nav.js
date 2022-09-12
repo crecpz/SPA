@@ -1,5 +1,5 @@
 import { modeSwitcher } from '../utils/mode.js';
-import { openListOption, clickToCloseListOption } from '../layout/main.js';
+import {createUniqueId, getLocalData} from '../utils/function.js'
 
 
 // ---------------[ 全局監聽(不管在哪一個頁面都會使用到這些 nav 的監聽) ]---------------
@@ -61,19 +61,24 @@ const customList = document.querySelector('.custom-list');
 
 let customLi = '';
 
-addBtn.addEventListener('click', e => {
+
+addBtn.addEventListener('click', addCustomList);
+
+function addCustomList(e){
+  const data = getLocalData();
   let customListName = '未命名清單';
-  const listId = new Date().getTime()
+  const listId = createUniqueId();
+
   customLi += 
-  `<li id="${listId}" class="custom-list__item nav__list-item">
-      <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
-          <div class="custom-list__color"></div>
-          ${customListName}
-      </a>
-  </li>`;
+    `<li id="${listId}" class="custom-list__item nav__list-item">
+        <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
+            <div class="custom-list__color"></div>
+            ${customListName}
+        </a>
+    </li>`;
 
   customList.innerHTML = customLi;
-})
+}
 
 
 // --------------------------[ 監聽當前點擊頁面 ]--------------------------

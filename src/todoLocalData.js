@@ -1,66 +1,47 @@
 export default {
-  defaultList: [
+  currentPageData: {
+    pageId: "",
+    path: "",
+  },
+
+  default: [
     {
-      // 此處總覽
+      listId: "overview",
+      listName: "總覽",
+      listColor: "#fff",
+      listContent: [
+        // {
+        //   checked: false,
+        //   content: "this is todo A.",
+        //   pin: false,
+        // },
+      ],
     },
     {
-      id: "top",
-      name: "置頂ya面",
-      defaultPage: true,
-      color: "#ba938a",
-      listOrder: 0,
-      todos: [
-        {
-          checked: false,
-          content: "this is todo A.",
-          pin: false,
-        },
-        {
-          checked: false,
-          content: "this is todo B.",
-          pin: false,
-        },
+      listId: "top",
+      listName: "置頂",
+      listColor: "#fff",
+      listContent: [
+        // {
+        //   checked: false,
+        //   content: "this is todo A.",
+        //   pin: false,
+        // },
       ],
     },
   ],
 
-  customList: [
+  custom: [
     {
-      id: "65456454664165",
-      name: "新頁面",
-      defaultPage: true,
-      color: "#ba938a",
-      listOrder: 0,
-      todos: [
-        {
-          checked: false,
-          content: "this is todo A.",
-          pin: false,
-        },
-        {
-          checked: false,
-          content: "this is todo B.",
-          pin: false,
-        },
-      ],
-    },
-    {
-      id: "2331653354654",
-      name: "新頁面2",
-      defaultPage: true,
-      color: "#ba938a",
-      listOrder: 0,
-      todos: [
-        {
-          checked: false,
-          content: "this is todo A.",
-          pin: false,
-        },
-        {
-          checked: false,
-          content: "this is todo B.",
-          pin: false,
-        },
+      listId: "",
+      listName: "未命名清單",
+      listColor: "",
+      listContent: [
+        // {
+        //   checked: false,
+        //   content: "this is todo A.",
+        //   pin: false,
+        // },
       ],
     },
   ],
