@@ -13,7 +13,6 @@ let pageData = getStorage();
 
 export const Top = {
     state: {
-       
     },
 
     mount: function () {
@@ -22,8 +21,6 @@ export const Top = {
     },
 
     render: function () {
-
-    
 
         return `
             <!-- 主內容區 header -->

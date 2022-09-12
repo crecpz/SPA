@@ -1,16 +1,14 @@
-export function getLocalData(){
-  return JSON.parse(localStorage.getItem('todoLocalData')) || {};
-}
-
-export function setLocalData(target, data){
-  target = data;
-}
+// mobile 100vh 的問題
+export const appHeight = () => {
+  const doc = document.documentElement;
+  doc.style.setProperty("--app-height", `${window.innerHeight}px`);
+};
 
 
 
 // 取得 localStorage 的資料
 export function getStorage(){
-  return JSON.parse(localStorage.getItem('todoLocalData'));
+  return JSON.parse(localStorage.getItem('todoLocalData')) || {};
 }
 
 // 設定 localStorage 的資料
