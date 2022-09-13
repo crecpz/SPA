@@ -11,8 +11,8 @@ export function getStorage() {
     JSON.parse(localStorage.getItem("todoLocalData"))
     || {
         currentPageInfo: {
-          pageId: "home",
-          path: "/",
+          // pageId: "",
+          // path: "",
         },
         pin: [],
         custom: [
@@ -51,8 +51,16 @@ export function createUniqueId() {
   );
 }
 
+
+
 export function addTodo(todo) {
+  setTodo();
+  renderTodo();
+}
+
+export function setTodo(){
   const todoInput = document.querySelector("#todo-input");
+  const data = getStorage();
 
   if (todoInput.value.trim() !== "") {
     const data = getStorage();
@@ -60,10 +68,18 @@ export function addTodo(todo) {
 
     const todo = {
       id: createUniqueId(),
-      content: todoInput.value.trim(),
+      content: todoValue,
       pin: false,
     };
 
     todoInput.value = "";
+
+    console.log(data)
+
   }
 }
+
+export function renderTodo(){
+
+}
+
