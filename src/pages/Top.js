@@ -1,15 +1,10 @@
 import { openListOption, clickToCloseListOption } from '../layout/main.js';
 import { addTodo, getStorage, setStorage } from '../utils/function.js';
-import { currentPageId } from '../layout/nav.js';
-// import { getLocalData } from '../utils/function.js';
-
 
 
 // 試引入，資料可用 ↓
-import data from '../todoLocalData.js';
-import todoLocalData from '../todoLocalData.js';
-
-let pageData = getStorage();
+// import data from '../todoLocalData.js';
+// import todoLocalData from '../todoLocalData.js';
 
 export const Top = {
     state: {

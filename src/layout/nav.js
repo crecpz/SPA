@@ -1,6 +1,5 @@
 import { modeSwitcher } from "../utils/mode.js";
-import { createUniqueId, getStorage } from "../utils/function.js";
-import { localData } from "../index.js";
+import { createUniqueId, getStorage, setStorage } from "../utils/function.js";
 
 // ---------------[ 全局監聽(不管在哪一個頁面都會使用到這些 nav 的監聽) ]---------------
 const wrapper = document.querySelector(".wrapper");
@@ -57,33 +56,44 @@ navLists.forEach((i) => {
 const addBtn = document.querySelector("#add-list-btn");
 const customList = document.querySelector(".custom-list");
 
-let customLi = "";
 
 addBtn.addEventListener("click", addCustomList);
 
 function addCustomList(e) {
-  // let data = getStorage();
-  const data = localData;
+  setCustomList();
+  renderCustomList();
+}
 
-  let customListName = "未命名清單";
-  const listId = createUniqueId();
+/**
+ * 將新的自訂清單加入到 localStorage
+ */
+function setCustomList(){
+  const data = getStorage();
 
-  data.custom.push({
-    id: createUniqueId(),
-    name: "未命名清單",
-    color: "",
-    content: [
-      // {
-      //   checked: false,
-      //   content: "this is todo A.",
-      //   pin: false,
-      // },
-    ],
-  });
+  data.custom.push(
+    {
+      id: createUniqueId(),
+      name: "未命名清單",
+      color: "",
+      content: [
+        // {
+        //   checked: false,
+        //   content: "this is todo A.",
+        //   pin: false,
+        // },
+      ],
+    }
+  );
 
-  // console.log(data.custom)
+  setStorage(data);
+}
 
-  let a = data.custom.map((list) => {
+/**
+ * 從 localStorage 取得已儲存的 customList，並渲染至頁面中
+ */
+export function renderCustomList(){
+  const data = getStorage();
+  let lists = data.custom.map((list) => {
     return `<li id="${list.id}" class="custom-list__item nav__list-item">
               <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
                   <div class="custom-list__color"></div>
@@ -92,30 +102,57 @@ function addCustomList(e) {
             </li>`;
   });
 
-  customList.innerHTML = a.join('');
-
-  // customLi +=
-  // `<li id="${listId}" class="custom-list__item nav__list-item">
-  //     <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
-  //         <div class="custom-list__color"></div>
-  //         ${customListName}
-  //     </a>
-  // </li>`;
-
-  // customList.innerHTML = customLi;
+  customList.innerHTML = lists.join('');
 }
+
 
 // --------------------------[ 監聽當前點擊頁面 ]--------------------------
 
-const defaultList = document.querySelector(".default-list");
-defaultList.addEventListener("click", getCurrentPageId);
-function getCurrentPageId(e) {
-  return (currentPageId = e.target.closest("li").id);
+const navContent = document.querySelector(".nav__content");
+
+
+
+
+navContent.addEventListener('click', setCurrentPageInfo);
+window.addEventListener('hashchange', setCurrentPath);
+
+export const currentPageInfo = {
+    // pageId: "",
+    // path: "",
+};
+
+
+export function setCurrentPath(){
+  const listPath = location.hash.slice(1).toLowerCase();
+  currentPageInfo.path = listPath;
+  console.log(currentPageInfo)
 }
 
+export function setCurrentPageInfo(e){
+  if(e.target.classList.contains('nav__list-link')){
+    const listId = e.target.closest('li').id;
+    currentPageInfo.pageId = listId;
+    console.log(currentPageInfo)
+  }
+}
+
+// window.addEventListener('beforeunload', ()=> {
+//   alert(1)
+// })
+
+
+export function getCurrentPageInfo(){
+  const data = getStorage();
+  return data.currentPageInfo;
+}
+
+
+
+// defaultList.addEventListener("click", getCurrentPageId);
+
+// function getCurrentPageId(e) {
+//   return (currentPageId = e.target.closest("li").id);
+// }
+
 // 此 currentPageId 將會傳送給各個 page 中，讓它用這個 id 去渲染相對應的內容
-export let currentPageId;
-
-
-
-
+// export let currentPageId;
