@@ -1,12 +1,9 @@
 //Router
 import { Router } from "./routes/Router.js";
 import { updateMode } from "./utils/mode.js";
-import { appHeight } from "./utils/function.js";
+import { appHeight, getStorage, setStorage } from "./utils/function.js";
 import { renderCustomList } from "./layout/nav.js";
 
-// 解決手機瀏覽器無法剛好只占滿整版的問題
-window.addEventListener("resize", appHeight);
-window.addEventListener("DOMContentLoaded", appHeight);
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
@@ -22,3 +19,13 @@ window
   
 // 初次載入從資料中渲染出 customList 
 window.addEventListener("DOMContentLoaded", renderCustomList);
+  
+// 解決手機瀏覽器無法剛好只占滿整版的問題
+window.addEventListener("resize", appHeight);
+window.addEventListener("DOMContentLoaded", appHeight);
+
+// 初次載入時取得 localStorage 中的資料並存進變量中
+export const DATA = getStorage();
+
+// 關閉瀏覽器 or 重新整理時，將資料存進 localStorage 中 (先禁用!)
+window.addEventListener('unload', () => setStorage(DATA));

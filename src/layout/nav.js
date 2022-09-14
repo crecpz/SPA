@@ -1,26 +1,27 @@
 import { modeSwitcher } from "../utils/mode.js";
 import { createUniqueId, getStorage, setStorage } from "../utils/function.js";
+import { DATA } from "../index.js";
 
-// ---------------[ 全局監聽(不管在哪一個頁面都會使用到這些 nav 的監聽) ]---------------
-const wrapper = document.querySelector(".wrapper");
-wrapper.addEventListener("click", (e) => {
-  // 光線模式切換
-  modeSwitcher(e);
 
-  // 點擊漢堡鈕來開啟 nav
-  if (e.target.id === "main-hamburger" || e.target.id === "nav-hamburger") {
-    navSwitcher();
-  }
+/**
+ * 渲染 customList 至頁面中
+ */
+export function renderCustomList(){
+  let lists = DATA.custom.map((list) => {
+    return `<li id="${list.id}" class="custom-list__item nav__list-item">
+              <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
+                  <div class="custom-list__color"></div>
+                  ${list.name}
+              </a>
+            </li>`;
+  });
+  customList.innerHTML = lists.join('');
+}
 
-  // 如果點按 body-overlay 時 nav 是開啟的狀態，則調用 navSwitcher() 來關閉 nav
-  if (
-    e.target.classList.contains("body-overlay") &&
-    document.querySelector("#wrapper").classList.contains("nav-open")
-  ) {
-    // 切換 nav 展開與收合
-    navSwitcher();
-  }
-});
+
+
+
+
 
 /**
  * nav 展開時所需套用的行為
@@ -36,6 +37,7 @@ export function navSwitcher() {
   });
 }
 
+
 const navLists = document.querySelectorAll(".nav__list");
 // nav 中所有的選單點擊切換行為
 navLists.forEach((i) => {
@@ -50,6 +52,28 @@ navLists.forEach((i) => {
     }
   });
 });
+
+
+
+
+// 頁面完全載入後，根據 currentPageInfo.pageId 為何來決定哪個 item 要被 active。
+// *註: 使用 `load` 是因為使用 DOMContentLoaded 會讀取不到後續才渲染的 customList
+window.addEventListener("load", navListItemActive);
+
+function navListItemActive(){
+  const navListItems = document.querySelectorAll(".nav__list-item");
+  
+  // 比對目前現有 navListItem 是否有任何一個元素的 id 跟 currentPageInfo.pageId 相同，
+  // 並將其存進 activedItem 變量中
+  let activedItem = Array.from(navListItems).find(item => item.id === DATA.currentPageInfo.pageId);
+
+  // 刪除所有現有 active，並將 activedItem 加上 active
+  navListItems.forEach((i) => i.classList.remove("nav__list-item--active"));
+  activedItem.classList.add("nav__list-item--active");
+}
+
+
+
 
 // --------------------------[ 新增自訂列表 ]--------------------------
 
@@ -69,12 +93,10 @@ function addCustomList() {
 }
 
 /**
- * 將新的自訂清單加入到 localStorage
+ * 將新的自訂清單加入到 DATA
  */
 function setCustomList(){
-  const data = getStorage();
-
-  data.custom.push(
+  DATA.custom.push(
     {
       id: createUniqueId(),
       name: "未命名清單",
@@ -88,26 +110,8 @@ function setCustomList(){
       ],
     }
   );
-
-  setStorage(data);
 }
 
-/**
- * 從 localStorage 取得已儲存的 customList，並渲染至頁面中
- */
-export function renderCustomList(){
-  const data = getStorage();
-  let lists = data.custom.map((list) => {
-    return `<li id="${list.id}" class="custom-list__item nav__list-item">
-              <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
-                  <div class="custom-list__color"></div>
-                  ${list.name}
-              </a>
-            </li>`;
-  });
-
-  customList.innerHTML = lists.join('');
-}
 
 
 // --------------------------[ 監聽當前點擊頁面 ]--------------------------
@@ -115,7 +119,7 @@ export function renderCustomList(){
 const navContent = document.querySelector(".nav__content");
 
 
-// Q: 要怎麼知道當前頁面在哪頁，更深入一點: 當前如果是 customLIst ，我要怎麼知道目前ID?
+// Q: 要怎麼知道當前頁面在哪頁，更深入一點: 當前如果是 customLIst ，我要怎麼知道目前ID? <<< 以下參考就好 >>>
 
 // 初始載入時， path 從網址列取得； pageID 該怎麼取得?
 
@@ -134,43 +138,61 @@ const navContent = document.querySelector(".nav__content");
 //    > 解決辦法是: 寫一個 DOMcontentLoaded 每次再刷新後獲取網址的 path 作為 path
 //    > 等等， 這樣多此一舉，既然網址隨時都在上面，我就直接獲取就好了呀
 
-navContent.addEventListener('click', setCurrentPageInfo);
+
+
+
+
+// 設定在 DATA 中的 currentPageInfo.pageId
+navContent.addEventListener('click', setCurrentPageId);
+
+// 設定在 DATA 中的 currentPageInfo.path
 window.addEventListener('hashchange', setCurrentPath);
 
-export const currentPageInfo = {
-    pageId: "",
-    path: "",
-};
 
 
-export function setCurrentPath(){
-  const listPath = location.hash.slice(1).toLowerCase();  
-  currentPageInfo.path = listPath;
-  // console.log(currentPageInfo)
-}
 
-export function setCurrentPageInfo(e){
+
+
+
+
+
+/**
+ * 設定在 DATA 中的 currentPageInfo.pageId
+ * @param {*} e 
+ */
+export function setCurrentPageId(e){
   if(e.target.classList.contains('nav__list-link')){
-    const listId = e.target.closest('li').id;
-    currentPageInfo.pageId = listId;
-    // console.log(currentPageInfo)
+    const currentPageId = e.target.closest('li').id;
+    DATA.currentPageInfo.pageId = currentPageId;
   }
 }
 
-export function getCurrentPageInfo(){
-  const data = getStorage();
-  return data.currentPageInfo;
+/**
+ * 設定在 DATA 中的 currentPageInfo.path
+ * @param {*} e 
+ */
+export function setCurrentPath(){
+  const currentPath = location.hash.slice(1).toLowerCase();  
+  DATA.currentPageInfo.path = currentPath;
 }
 
 
+const wrapper = document.querySelector(".wrapper");
+wrapper.addEventListener("click", (e) => {
+  // 光線模式切換
+  modeSwitcher(e);
 
+  // 點擊漢堡鈕來開啟 nav
+  if (e.target.id === "main-hamburger" || e.target.id === "nav-hamburger") {
+    navSwitcher();
+  }
 
-
-// defaultList.addEventListener("click", getCurrentPageId);
-
-// function getCurrentPageId(e) {
-//   return (currentPageId = e.target.closest("li").id);
-// }
-
-// 此 currentPageId 將會傳送給各個 page 中，讓它用這個 id 去渲染相對應的內容
-// export let currentPageId;
+  // 如果點按 body-overlay 時 nav 是開啟的狀態，則調用 navSwitcher() 來關閉 nav
+  if (
+    e.target.classList.contains("body-overlay") &&
+    document.querySelector("#wrapper").classList.contains("nav-open")
+  ) {
+    // 切換 nav 展開與收合
+    navSwitcher();
+  }
+});

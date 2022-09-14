@@ -1,3 +1,5 @@
+import { DATA } from "../index.js";
+
 // mobile 100vh 的問題
 export const appHeight = () => {
   const doc = document.documentElement;
@@ -11,8 +13,8 @@ export function getStorage() {
     JSON.parse(localStorage.getItem("todoLocalData"))
     || {
         currentPageInfo: {
-          // pageId: "",
-          // path: "",
+          pageId: "home",
+          path: "/",
         },
         pin: [],
         custom: [
@@ -51,8 +53,6 @@ export function createUniqueId() {
   );
 }
 
-
-
 export function addTodo(todo) {
   setTodo();
   renderTodo();
@@ -60,26 +60,23 @@ export function addTodo(todo) {
 
 export function setTodo(){
   const todoInput = document.querySelector("#todo-input");
-  const data = getStorage();
 
   if (todoInput.value.trim() !== "") {
-    const data = getStorage();
     const todoValue = todoInput.value.trim();
 
     const todo = {
       id: createUniqueId(),
       content: todoValue,
-      pin: false,
+      pin: false, // 如果是在 top 頁面則可將其預設 true (之後有空處裡)
     };
 
     todoInput.value = "";
-
-    console.log(data)
-
   }
 }
 
 export function renderTodo(){
 
 }
+
+
 
