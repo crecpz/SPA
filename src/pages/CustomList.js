@@ -13,9 +13,10 @@ export const CustomList = {
 
   },
 
-  render: function(){
+  render: function(props){
+    console.log(props)
 
-    return this.state.b;
+    return props;
     // return `
     //     <!-- 主內容區 header -->
     //     <div class="main__content-header">

@@ -8,5 +8,5 @@ export const Route = [
   // { path: '/', component: NotFound},
   { path: '/', component: Home },
   { path: '/top', component: Top },
-  { path: '/customlist/:id(\w)', component: CustomList }
+  { path: '/customlist/:id([A-z0-9]*)?', component: CustomList }
 ];

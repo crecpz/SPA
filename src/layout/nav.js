@@ -49,6 +49,9 @@ navLists.forEach((i) => {
         .forEach((i) => i.classList.remove("nav__list-item--active"));
       // 更新 active
       e.target.closest("li").classList.add("nav__list-item--active");
+
+      // console.log(e.target.closest("li").id)
+      // window.location.hash = e.target.closest("li").id;
     }
   });
 });
