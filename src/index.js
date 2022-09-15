@@ -28,4 +28,4 @@ window.addEventListener("DOMContentLoaded", appHeight);
 export const DATA = getStorage();
 
 // 關閉瀏覽器 or 重新整理時，將資料存進 localStorage 中 (先禁用!)
-window.addEventListener('unload', () => setStorage(DATA));
+// window.addEventListener('unload', () => setStorage(DATA));

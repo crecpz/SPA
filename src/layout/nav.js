@@ -65,7 +65,10 @@ function navListItemActive(){
   
   // 比對目前現有 navListItem 是否有任何一個元素的 id 跟 currentPageInfo.pageId 相同，
   // 並將其存進 activedItem 變量中
-  let activedItem = Array.from(navListItems).find(item => item.id === DATA.currentPageInfo.pageId);
+  let activedItem = Array.from(navListItems)
+                      .find(item => {
+                        return item.id === DATA.currentPageInfo.pageId
+                      });
 
   // 刪除所有現有 active，並將 activedItem 加上 active
   navListItems.forEach((i) => i.classList.remove("nav__list-item--active"));
@@ -148,14 +151,6 @@ navContent.addEventListener('click', setCurrentPageId);
 // 設定在 DATA 中的 currentPageInfo.path
 window.addEventListener('hashchange', setCurrentPath);
 
-
-
-
-
-
-
-
-
 /**
  * 設定在 DATA 中的 currentPageInfo.pageId
  * @param {*} e 
@@ -175,6 +170,7 @@ export function setCurrentPath(){
   const currentPath = location.hash.slice(1).toLowerCase();  
   DATA.currentPageInfo.path = currentPath;
 }
+
 
 
 const wrapper = document.querySelector(".wrapper");
