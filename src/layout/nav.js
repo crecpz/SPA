@@ -9,7 +9,7 @@ import { DATA } from "../index.js";
 export function renderCustomList(){
   let lists = DATA.custom.map((list) => {
     return `<li id="${list.id}" class="custom-list__item nav__list-item">
-              <a class="nav__list-link nav__list-link--custom-list" href="#/customlist">
+              <a class="nav__list-link nav__list-link--custom-list" href="#/customlist/${list.id}">
                   <div class="custom-list__color"></div>
                   ${list.name}
               </a>
@@ -17,10 +17,6 @@ export function renderCustomList(){
   });
   customList.innerHTML = lists.join('');
 }
-
-
-
-
 
 
 /**
@@ -38,9 +34,8 @@ export function navSwitcher() {
 }
 
 
-const navLists = document.querySelectorAll(".nav__list");
 // nav 中所有的選單點擊切換行為
-navLists.forEach((i) => {
+document.querySelectorAll(".nav__list").forEach((i) => {
   i.addEventListener("click", (e) => {
     if (e.target.classList.contains("nav__list-link")) {
       // 清除在選單上的 active
@@ -49,9 +44,6 @@ navLists.forEach((i) => {
         .forEach((i) => i.classList.remove("nav__list-item--active"));
       // 更新 active
       e.target.closest("li").classList.add("nav__list-item--active");
-
-      // console.log(e.target.closest("li").id)
-      // window.location.hash = e.target.closest("li").id;
     }
   });
 });
@@ -90,7 +82,9 @@ const customList = document.querySelector(".custom-list");
 addBtn.addEventListener("click", addCustomList);
 
 /**
- * 此函數代表整個 customList 從新建並儲存到渲染的動作
+ * 此函數代表整個 customList 從新建並儲存到渲染的動作。
+ * 會先使用 `setCustomList()` 將新的自訂清單加入到 DATA，
+ * 接著使用 `renderCustomList()` 渲染 customList 至頁面中。
  * @param {*} e 
  */
 function addCustomList() {
@@ -102,21 +96,22 @@ function addCustomList() {
  * 將新的自訂清單加入到 DATA
  */
 function setCustomList(){
-  DATA.custom.push(
-    {
+  DATA.custom.push({
       id: createUniqueId(),
       name: "未命名清單",
       color: "",
       content: [
+        // ↓ 示意格式
         // {
         //   checked: false,
         //   content: "this is todo A.",
         //   pin: false,
         // },
       ],
-    }
-  );
+    });
+  setStorage(DATA)
 }
+
 
 
 

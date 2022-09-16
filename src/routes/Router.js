@@ -85,12 +85,11 @@ export const Router = () => {
   /* ES6 解構賦值: 提取getComponent(path, Route)返回值中的component屬性
       預設值: 當要獲取的屬性返回值是undefined時，將使用事先設定好的預設值。
   */
-  const { component = NotFound , props = {}} = getComponent(path, Route);
-  console.log(getComponent(path, Route))
+  const { component = NotFound , props = {} } = getComponent(path, Route);
   const mainContent = document.querySelector(".main__content");
 
   // 將元件內容渲染至畫面
-  mainContent.innerHTML = component.render();
+  mainContent.innerHTML = component.render(props);
 
   // 如果元件有 mount 屬性，則在 render 後呼叫 mount()
   "mount" in component ? component.mount() : null;
