@@ -24,8 +24,5 @@ window.addEventListener("DOMContentLoaded", renderCustomList);
 window.addEventListener("resize", appHeight);
 window.addEventListener("DOMContentLoaded", appHeight);
 
-// 初次載入時取得 localStorage 中的資料並存進變量中
-export const DATA = getStorage();
-
 // 關閉瀏覽器 or 重新整理時，將資料存進 localStorage 中 (先禁用!)
 // window.addEventListener('unload', () => setStorage(DATA));

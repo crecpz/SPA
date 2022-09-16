@@ -1,4 +1,5 @@
-import { DATA } from "../index.js";
+// 初次載入時取得 localStorage 中的資料並存進變量中
+export const DATA = getStorage();
 
 // mobile 100vh 的問題
 export const appHeight = () => {

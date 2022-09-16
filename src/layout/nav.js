@@ -1,6 +1,6 @@
 import { modeSwitcher } from "../utils/mode.js";
 import { createUniqueId, getStorage, setStorage } from "../utils/function.js";
-import { DATA } from "../index.js";
+import { DATA } from "../utils/function.js";
 
 
 /**
@@ -20,7 +20,7 @@ export function renderCustomList(){
 
 
 /**
- * nav 展開時所需套用的行為
+ * nav 側邊欄展開時所需套用的行為
  */
 export function navSwitcher() {
   const wrapper = document.querySelector("#wrapper"),
@@ -47,6 +47,60 @@ document.querySelectorAll(".nav__list").forEach((i) => {
     }
   });
 });
+
+/**
+ * 提取「未命名清單」後面的數字
+ */
+function extractUnnamedNumber(){
+  const unnameLists = DATA.custom.filter(list => /^未命名清單\(\d*\)$/.test(list))
+  // const unnameLists = DATA.custom.map(list => list.name)
+  // console.log(unnameLists)
+
+}
+
+extractUnnamedNumber();
+
+// console.log(/^未命名清單\(\d*\)$/.test('未命名清單(2)'))
+const fakeList = ['未命名清單(1)','未命名清單(23)','工作', '出遊(1)','未命名清單(9)','未命名清單(45)','未命名清單(4)','未命名清單(A)'];
+/* 將 list 中名為 「未命名清單(x)」 的元素找出來， 
+  提取出每一項元素中的數字部分，最後轉換成 Number，進行排序。
+  所以 unnamedNumber 內的值現在是一個經過排序的數字陣列。  
+*/
+const unnamedNumber = fakeList
+  .filter(list => /^未命名清單\(\d*\)$/.test(list))
+  .map(list => Number(list.match(/\d+/)[0]))
+  .sort((a, b) => a - b);
+
+
+// console.log(unnamedNumber)
+
+
+
+/**
+ * 計算目前最新的未命名清單後的編號應該為多少。
+ * 此函數接收一個 `Array` 作為參數，該 Array 必須包含目前所有的未命名清單的編號。
+ * @param {*} arr 
+ * @returns 返回應該新增在「未命名清單」後的內容，且是 `String`。
+ */
+function listCounter(arr) {
+  // 過濾掉 arr 內空無一物的狀況
+  if(arr.length === 0) {
+    return '';
+  }
+
+  // 其實就是求一個 Array 中的最小數而已 嗎? 沒那麼簡單，還牽涉到缺口
+  // 要逐一找出哪一個數字是缺口， forLoop 應該是一個好選擇
+  let min = 0;
+  return arr.find(i => i > min)
+}
+
+// 如果是空 Array ?
+// console.log(listCounter([]))
+
+// 如果是只有 1 個元素 ?
+console.log(listCounter([0,1,3]))
+
+// 如果有3個元素，需要在最後一個元素新增新的數字?
 
 
 
@@ -112,35 +166,14 @@ function setCustomList(){
   setStorage(DATA)
 }
 
+// function 
+
 
 
 
 // --------------------------[ 監聽當前點擊頁面 ]--------------------------
 
 const navContent = document.querySelector(".nav__content");
-
-
-// Q: 要怎麼知道當前頁面在哪頁，更深入一點: 當前如果是 customLIst ，我要怎麼知道目前ID? <<< 以下參考就好 >>>
-
-// 初始載入時， path 從網址列取得； pageID 該怎麼取得?
-
-// 初次載入時一律從總攬開始，這必須強制規定，
-// 接著爾後的 currentPageInfo 只存在變量，不需要存在 localStorage (這樣一直存不同頁面沒意義)
-// 所以 localStorage 初始資料不需要 currentPageInfo，currentPageInfo 只是在程式碼中的一個變量，刷新就消失
-// 以上作法會有什麼問題?
-
-// 1. 刷新時將導致變量消失，但網址列並不會回到 home，而是在原地，等於說我的變量會變成初始值，但實際上網址沒有變化。
-//    > ex:
-//      初始設定 currentPageInfo = { path: '/', pageId: 'home'}。
-//      點擊 top 頁面後，網址列變成 /top ， currentPageInfo = { path: '/top', pageId: 'top'}。
-//      F5刷新後，網址列不變還在 /top， currentPageInfo = { path: '/', pageId: 'home'}。
-//      輸入新 todo 並送出: 送到錯的資料去
-
-//    > 解決辦法是: 寫一個 DOMcontentLoaded 每次再刷新後獲取網址的 path 作為 path
-//    > 等等， 這樣多此一舉，既然網址隨時都在上面，我就直接獲取就好了呀
-
-
-
 
 
 // 設定在 DATA 中的 currentPageInfo.pageId

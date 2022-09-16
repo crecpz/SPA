@@ -1,5 +1,5 @@
 import { getStorage } from "../utils/function.js";
-import { DATA } from "../index.js";
+import { DATA } from "../utils/function.js";
 
 export const CustomList = {
   state: {},
