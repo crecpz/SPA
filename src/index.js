@@ -19,6 +19,9 @@ window
   
 // 初次載入從資料中渲染出 customList 
 window.addEventListener("DOMContentLoaded", renderCustomList);
+
+// 初次載入從網址列獲得 path
+
   
 // 解決手機瀏覽器無法剛好只占滿整版的問題
 window.addEventListener("resize", appHeight);
