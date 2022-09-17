@@ -2,18 +2,31 @@ import { modeSwitcher } from "../utils/mode.js";
 import { createUniqueId, getStorage, setStorage } from "../utils/function.js";
 import { DATA } from "../utils/function.js";
 
+const navContent = document.querySelector(".nav__content");
+
 /**
  * 渲染 customList 至頁面中
  */
 export function renderCustomList() {
-  let lists = DATA.custom.map((list) => {
-    return `<li id="${list.id}" class="custom-list__item nav__list-item">
-              <a class="nav__list-link nav__list-link--custom-list" href="#/customlist/${list.id}">
+  // 從 DATA.custom 的最後一位取得目前最新的 list 的 Id，若不存在則設為 null。
+  // 下方的結構中將會使用此值與當前頁面 id 做比對，只有在當前 list.id 與 最新的
+  // list.id 相同的元素需要加上 active
+  const latestListId = DATA.custom.length !== 0 
+    ? DATA.custom[DATA.custom.length - 1].id 
+    : null;
+
+  let lists = DATA.custom.map(list => {
+    return `<li id="${list.id}" 
+                class="custom-list__item nav__list-item 
+                ${list.id === latestListId ? "nav__list-item--active" : ""}">
+              <a class="nav__list-link nav__list-link--custom-list" 
+                  href="#/customlist/${list.id}">
                   <div class="custom-list__color"></div>
                   ${list.name}
               </a>
             </li>`;
   });
+
   customList.innerHTML = lists.join("");
 }
 
@@ -31,35 +44,26 @@ export function navSwitcher() {
   });
 }
 
+/**
+ * 清除在 nav內選單的 active
+ */
+function removeNavActive() {
+  navContent
+    .querySelectorAll(".nav__list-item")
+    .forEach((i) => i.classList.remove("nav__list-item--active"));
+}
+
 // nav 中所有的選單點擊切換行為
 document.querySelectorAll(".nav__list").forEach((i) => {
   i.addEventListener("click", (e) => {
     if (e.target.classList.contains("nav__list-link")) {
       // 清除在選單上的 active
-      document
-        .querySelectorAll(".nav__list-item")
-        .forEach((i) => i.classList.remove("nav__list-item--active"));
+      removeNavActive();
       // 更新 active
       e.target.closest("li").classList.add("nav__list-item--active");
     }
   });
 });
-
-// 測試用
-const fakeList = [
-  "未命名清單(23)",
-  "未命名清單(1)",
-  "未命名清單",
-  "工作",
-  "出遊(1)",
-  "未命名清單(9)",
-  "未命名清單(45)",
-  "未命名清單(4)",
-  "未命名清單(A)",
-];
-
-
-
 
 /**
  * 接收一個 Array 作為參數，該 Array 包含所有目前的 「未命名清單」。
@@ -68,26 +72,22 @@ const fakeList = [
  * @returns 返回一個經過大小排序的數字陣列。
  */
 function extractUnnamedNumber(listArr) {
-  return listArr
-  // 匹配開頭為「未命名清單(X)」及頭尾名為 「未命名清單」的元素
-  .filter(list => /^未命名清單(?=\(\d+\)$)|^未命名清單$/.test(list))
-  .map(list => {
-    // 取出數字部分 (如果遇到「未命名清單」純文字，將其設為 0)
-    if(list.match(/\d+/)){
-      return Number(list.match(/\d+/)[0])
-    } else if(list.match(/\d+/) === null && list === "未命名清單"){
-      return 0;
-    }
-  })
-  // 排序
-  .sort((a, b) => a - b);
+  return (
+    listArr
+      // 匹配開頭為「未命名清單(X)」及頭尾名為 「未命名清單」的元素
+      .filter((list) => /^未命名清單(?=\(\d+\)$)|^未命名清單$/.test(list))
+      .map((list) => {
+        // 取出數字部分 (如果遇到「未命名清單」純文字，將其設為 0)
+        if (list.match(/\d+/)) {
+          return Number(list.match(/\d+/)[0]);
+        } else if (list.match(/\d+/) === null && list === "未命名清單") {
+          return 0;
+        }
+      })
+      // 排序
+      .sort((a, b) => a - b)
+  );
 }
-
-// const fakeArray = extractUnnamedNumber(fakeList);
-// console.log(fakeArray)
-
-
-// console.log(listCounter(['']));
 
 /**
  * 計算目前最新的未命名清單後的編號應該為多少。
@@ -102,8 +102,8 @@ function listCounter(numList) {
   }
 
   let i = 0;
-  while(true){
-    if(numList.indexOf(i) === -1){
+  while (true) {
+    if (numList.indexOf(i) === -1) {
       break;
     }
     i++;
@@ -111,35 +111,24 @@ function listCounter(numList) {
   return `(${i})`;
 }
 
+// todo: 將新增的清單更新至 localStorage
 
-// todo: 更新 localStorage
+// // 頁面完全載入後，根據 currentPageInfo.pageId 為何來決定哪個 item 要被 active。
+// // *註: 使用 `load` 是因為使用 DOMContentLoaded 會讀取不到後續才渲染的 customList
+// window.addEventListener("load", navListItemActive);
 
+// function navListItemActive() {
+//   const navListItems = document.querySelectorAll(".nav__list-item");
+//   // 比對目前現有 navListItem 是否有任何一個元素的 id 跟 currentPageInfo.pageId 相同，
+//   // 並將其存進 activedItem 變量中
+//   let activedItem = Array.from(navListItems).find((item) => {
+//     return item.id === DATA.currentPageInfo.pageId;
+//   });
 
-
-
-
-
-
-
-
-
-// 頁面完全載入後，根據 currentPageInfo.pageId 為何來決定哪個 item 要被 active。
-// *註: 使用 `load` 是因為使用 DOMContentLoaded 會讀取不到後續才渲染的 customList
-window.addEventListener("load", navListItemActive);
-
-function navListItemActive() {
-  const navListItems = document.querySelectorAll(".nav__list-item");
-
-  // 比對目前現有 navListItem 是否有任何一個元素的 id 跟 currentPageInfo.pageId 相同，
-  // 並將其存進 activedItem 變量中
-  let activedItem = Array.from(navListItems).find((item) => {
-    return item.id === DATA.currentPageInfo.pageId;
-  });
-
-  // 刪除所有現有 active，並將 activedItem 加上 active
-  navListItems.forEach((i) => i.classList.remove("nav__list-item--active"));
-  activedItem.classList.add("nav__list-item--active");
-}
+//   // 刪除所有現有 active，並將 activedItem 加上 active
+//   removeNavActive();
+//   activedItem.classList.add("nav__list-item--active");
+// }
 
 // --------------------------[ 新增自訂列表 ]--------------------------
 
@@ -156,6 +145,15 @@ addBtn.addEventListener("click", addCustomList);
  */
 function addCustomList() {
   setCustomList();
+
+  // 按下新增按鈕後，將頁面導向到當前最新新增的頁
+  window.location.hash = `/customlist/${
+    DATA.custom[DATA.custom.length - 1].id
+  }`;
+
+  // 清除在選單上的 active
+  removeNavActive();
+
   renderCustomList();
 }
 
@@ -166,10 +164,9 @@ function addCustomList() {
  */
 function setCustomList() {
   // 獲取現有清單
-  const allCustomListName = DATA.custom.map(i => i.name);
+  const allCustomListName = DATA.custom.map((i) => i.name);
   const numberList = extractUnnamedNumber(allCustomListName);
   const newNumber = listCounter(numberList);
-
 
   DATA.custom.push({
     id: createUniqueId(),
@@ -187,11 +184,7 @@ function setCustomList() {
   setStorage(DATA);
 }
 
-
-
 // --------------------------[ 監聽當前點擊頁面 ]--------------------------
-
-const navContent = document.querySelector(".nav__content");
 
 // 設定在 DATA 中的 currentPageInfo.pageId
 navContent.addEventListener("click", setCurrentPageId);
@@ -200,13 +193,14 @@ navContent.addEventListener("click", setCurrentPageId);
 window.addEventListener("hashchange", setCurrentPath);
 
 /**
- * 設定在 DATA 中的 currentPageInfo.pageId
+ * 取得 e.target 的 ID，並更新在 DATA 中的 currentPageInfo.pageId
  * @param {*} e
  */
 export function setCurrentPageId(e) {
   if (e.target.classList.contains("nav__list-link")) {
     const currentPageId = e.target.closest("li").id;
     DATA.currentPageInfo.pageId = currentPageId;
+    console.log('pageId update: ', DATA.currentPageInfo.pageId)
   }
 }
 
