@@ -40,15 +40,16 @@ export function renderCustomList() {
   // 從 DATA.custom 的最後一位取得目前最新的 list 的 Id，若不存在則設為 null。
   // 下方的結構中將會使用此值與當前頁面 id 做比對，只有在當前 list.id 與 最新的
   // list.id 相同的元素需要加上 active
-  const latestListId = DATA.custom.length !== 0 
-    ? DATA.custom[DATA.custom.length - 1].id 
-    : null;
-    console.log(latestListId)
+  // const latestListId = DATA.custom.length !== 0 
+  //   ? DATA.custom[DATA.custom.length - 1].id 
+  //   : null;
+  //   console.log(latestListId)
+
+  const currentPageId = getCurrentPageId();
 
   let lists = DATA.custom.map(list => {
     return `<li id="${list.id}" 
-                class="custom-list__item nav__list-item 
-                ${list.id === latestListId ? "nav__list-item--active" : ""}">
+                class="custom-list__item nav__list-item ${list.id === currentPageId ? "nav__list-item--active" : null}">
               <a class="nav__list-link nav__list-link--custom-list" 
                   href="#/customlist/${list.id}">
                   <div class="custom-list__color"></div>
@@ -178,10 +179,10 @@ addBtn.addEventListener("click", addCustomList);
 function addCustomList() {
   setCustomList();
 
-  // 按下新增按鈕後，將頁面導向到當前最新新增的頁
-  window.location.hash = `/customlist/${
-    DATA.custom[DATA.custom.length - 1].id
-  }`;
+  // 將頁面導向(directed)到當前最新新增的頁
+  window.location.hash = `/customlist/${DATA.custom[DATA.custom.length - 1].id}`;
+
+  // activeCurrentPage()
 
   // 清除在選單上的 active
   removeNavActive();
@@ -189,13 +190,86 @@ function addCustomList() {
   renderCustomList();
 }
 
-// console.log(DATA.custom)
+
+/**
+ * 這麼做雖然可以讓頁面在刷新時能夠根據目前網址來為對應的頁面加上 active，
+ * 但是在頁面被刪除時，如果沒有做好預備措施會產生問題。
+ * 
+ * 問題就出在頁面刪除之後，如果沒有更改網址列的話，
+ * 接著如果原地刷新，此函數將會根據網址列內的值獲取 id。
+ * 但是這個 id 所在的頁面已經不存在了，將會找不到這個頁面。
+ * 
+ * 目前還未新增頁面刪除功能，之所以會發現這個問題是因為我刪除 localStorage
+ * 接著刷新，頁面就找不到了。 報錯原因是函數內的 navContent.querySelector(`#${currentPageId}`).classList.add('nav__list-item--active')
+ * 這段是獲取到 null ， 而我在 null 嘗試加上 classList.add 所致。
+ * 
+* 之後新增刪除功能之後，必須想好刪除頁面之後的方案，最好是改變網址列到某一個順位。
+ */
+
+/**
+ * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，該值即為該頁面的 id。
+ * @returns id 字符串
+ */
+function getCurrentPageId(){
+  const hash = window.location.hash;
+  const currentPageId = hash.match(/[a-z0-9]*$/)[0] === '' 
+  ? 'home' 
+  : hash.match(/[a-z0-9]*$/)[0];
+  return currentPageId;
+}
+
+window.addEventListener('load', activeWhenLoad)
+
+// window.addEventListener('hashchange', activeWhenLoad)
+
+
+/**
+ * 先取得目前所在頁面的 id，
+ * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
+ * 最後將其加上 active 的 class。
+ * 
+ * 主要用途是在網頁載入的時候在目前所在的頁面加上 active。
+ * 防止使用者原地 F5 之後 active 消失的問題。
+ */
+function activeWhenLoad(){
+  const id = getCurrentPageId();
+  const activeTarget = navContent.querySelector(`#${id}`);
+  activeTarget.classList.add('nav__list-item--active');
+}
+
+
+// const A = '#/';
+// const B = '#/top';
+// const C = '#/customlist/l87yex26146un9jeo';
+
+// [A, B , C].map(i => (
+//   console.log(i.match(/[a-z0-9]*$/))
+// ))
+
+// console.log('#/'.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/)[0])
+// console.log('#/top'.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/)[0])
+// console.log(A.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/))
+// console.log(B.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/))
+
+// console.log(C.match(/(?<=#\/customlist\/)[A-z0-9]*|\/))
+
+
+// console.log('#/customlist/l87yex26146un9jeo'.match(/(?<=#\/customlist\/)[A-z0-9]*/))
+
+
+// #/
+// #/top
+// #/customlist/l87yex26146un9jeo
+
 
 /**
  * 將新的自訂清單加入到 DATA
  */
 function setCustomList() {
-  // 獲取現有清單
+  // 獲取現有清單 
+  // (目前讓未命名清單出現 undefined 的原因，沒記錯的話是因為我的清單
+  // 是根據上一位的尾數，而我在沒有任何清單的情況下，就沒辦法基於上一個
+  // 清單來判斷我目前的清單，所以會出現 undefined)
   const allCustomListName = DATA.custom.map((i) => i.name);
   const numberList = extractUnnamedNumber(allCustomListName);
   const newNumber = listCounter(numberList);
@@ -213,6 +287,8 @@ function setCustomList() {
       // },
     ],
   });
+
+  // 存至 localStorage
   setStorage(DATA);
 }
 

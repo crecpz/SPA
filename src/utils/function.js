@@ -78,6 +78,3 @@ export function setTodo(){
 export function renderTodo(){
 
 }
-
-
-
