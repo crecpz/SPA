@@ -148,8 +148,8 @@ export const Top = {
 
             // 新增新事項
             if (e.target.id === 'todo-submit') {
-                // 此處要獲取當前頁面的 id，並用該 id 來辨識目前要渲染哪一頁
-                addTodo();
+                // // 此處要獲取當前頁面的 id，並用該 id 來辨識目前要渲染哪一頁
+                // addTodo();
             }
 
         },

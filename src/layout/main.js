@@ -1,8 +1,10 @@
+import { addTodo } from "../utils/function.js";
+
 /**
  * 點擊 listOptionBtn 會調用此函數。
  * 此函數用於展開 listOption。  
  */
-function openListOption(){
+export function openListOption(){
   const listOption = document.querySelector('.list-option');
   listOption.classList.toggle('list-option--open');
 }
@@ -13,7 +15,7 @@ function openListOption(){
  * 就將 `listOptionBtn` 調用一次 `click()`。(所以 `listOptionBtn` 會被關閉)
  * @param {*} e `event`
  */
-function clickToCloseListOption(e){
+export function clickToCloseListOption(e){
   const listOptionBtn = document.querySelector('.btn--list-option');
   const listOption =document.querySelector('.list-option');
   const listOptionIsOpened = listOption.classList.contains('list-option--open');
@@ -24,4 +26,6 @@ function clickToCloseListOption(e){
   }
 }
 
-export {openListOption, clickToCloseListOption};
+// 監聽 submit 按鈕
+const todoSubmit = document.querySelector('#todo-submit');
+todoSubmit.addEventListener('click', addTodo)

@@ -1,5 +1,5 @@
-import { getStorage } from "../utils/function.js";
 import { DATA } from "../utils/function.js";
+import { setStorage } from "../utils/function.js";
 
 export const CustomList = {
   state: {},
@@ -8,15 +8,16 @@ export const CustomList = {
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
-    const { id, name, content } = pageData;
+    console.log(pageData);
+    const { name, content } = pageData;
 
-    // console.log(pageData);
-    // console.log(id, name, content);
-    const lis = content.map((li) => {
+    const todoContent = content.map((li) => {
       return `
-                <li class="todo__item">
+                <li id="${li.id}" class="todo__item">
                     <label class="todo__label">
-                        <input type="checkbox" class="todo__checkbox" checked="${li.checked}">
+                        <input type="checkbox" class="todo__checkbox" ${
+                          li.checked ? "checked" : ""
+                        }">
                         <span class="todo__checkmark"></span>
                         <p class="todo__content">${li.content}</p>
                     </label>
@@ -58,7 +59,7 @@ export const CustomList = {
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                ${lis}
+                ${todoContent.join("")}
                 </ul>
             </div>
         </div>
@@ -66,6 +67,22 @@ export const CustomList = {
   },
 
   listener: {
-    click: (e) => {},
+    click: (e) => {
+      // console.log(e.target)
+    },
+
+    change: (e) => {
+      if (e.target.classList.contains("todo__checkbox")) {
+        // 取得事件觸發 id
+        const eventTodoId = e.target.closest(".todo__item").id;
+
+
+        // 將最新狀態更改至 DATA: 如何知道現在的頁數，然後更新到相對應的頁數?
+
+
+        // 存進 localStorage
+        
+      }
+    },
   },
 };

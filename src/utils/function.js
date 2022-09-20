@@ -1,3 +1,5 @@
+import { Router } from "../routes/Router.js";
+
 // 初次載入時取得 localStorage 中的資料並存進變量中
 export const DATA = getStorage();
 
@@ -13,11 +15,7 @@ export function getStorage() {
   return (
     JSON.parse(localStorage.getItem("todoLocalData"))
     || {
-        currentPageInfo: {
-          pageId: "home",
-          path: "/",
-        },
-        pin: [],
+        top: [],
         custom: [
           // {
           //   listId: "",
@@ -27,7 +25,7 @@ export function getStorage() {
           //     // {
           //     //   checked: false,
           //     //   content: "this is todo A.",
-          //     //   pin: false,
+          //     //   top: false,
           //     // },
           //   ],
           // },
@@ -39,6 +37,19 @@ export function getStorage() {
 // 設定 localStorage 的資料
 export function setStorage(data) {
   localStorage.setItem("todoLocalData", JSON.stringify(data));
+}
+
+
+/**
+ * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，該值即為該頁面的 id。
+ * @returns id 字符串
+ */
+export function getCurrentPageId(){
+  const hash = window.location.hash;
+  const currentPageId = hash.match(/[a-z0-9]*$/)[0] === '' 
+    ? 'home' 
+    : hash.match(/[a-z0-9]*$/)[0];
+  return currentPageId;
 }
 
 /**
@@ -54,27 +65,34 @@ export function createUniqueId() {
   );
 }
 
-export function addTodo(todo) {
-  setTodo();
-  renderTodo();
-}
 
 export function setTodo(){
   const todoInput = document.querySelector("#todo-input");
 
   if (todoInput.value.trim() !== "") {
     const todoValue = todoInput.value.trim();
+    // 取得目前頁面的所在位置(取得頁面ID)
+    const currentPageId = getCurrentPageId();
 
     const todo = {
       id: createUniqueId(),
+      checked: false,
       content: todoValue,
-      pin: false, // 如果是在 top 頁面則可將其預設 true (之後有空處裡)
+      top: currentPageId === 'top' , // 凡是在 top 內的都是 true
     };
 
+    DATA.custom.find(i => i.id === currentPageId).content.push(todo);
+    setStorage(DATA);
     todoInput.value = "";
   }
+  Router();
 }
 
 export function renderTodo(){
 
+}
+
+export function addTodo(todo) {
+  setTodo();
+  renderTodo();
 }

@@ -44,8 +44,7 @@ const getComponent = (path, routes) => {
               //解構路由陣列
               let [params, paramsRegex] = regex;
               //排除條件設定
-              if (
-                urlArry.length > routesArry.length || //當前網址列路徑數目多於routes
+              if (urlArry.length > routesArry.length || //當前網址列路徑數目多於routes
                 !paramsRegex || //若有設定正規表示法驗證
                 (!urlArry[i] && routesArry[i].slice(-1) !== "?") || //若網址不存在,檢查路徑是否設定模糊匹配
                 (urlArry[i] &&

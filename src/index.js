@@ -1,7 +1,7 @@
 //Router
 import { Router } from "./routes/Router.js";
 import { updateMode } from "./utils/mode.js";
-import { appHeight, getStorage, setStorage } from "./utils/function.js";
+import { appHeight } from "./utils/function.js";
 import { renderCustomList, activeWhenLoad } from "./layout/nav.js";
 
 
@@ -20,7 +20,7 @@ window
 // 初次載入從資料中渲染出 customList 
 window.addEventListener("DOMContentLoaded", renderCustomList);
 
-// 初次載入時將 nav active 
+// 初次載入時將 Nav 中相對應的頁面套用 active 
 window.addEventListener('load', activeWhenLoad)
   
 // 解決手機瀏覽器無法剛好只占滿整版的問題

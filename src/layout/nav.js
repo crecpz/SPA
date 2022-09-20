@@ -1,6 +1,6 @@
 import { modeSwitcher } from "../utils/mode.js";
 import { createUniqueId, getStorage, setStorage } from "../utils/function.js";
-import { DATA } from "../utils/function.js";
+import { DATA, getCurrentPageId } from "../utils/function.js";
 
 const navContent = document.querySelector(".nav__content");
 
@@ -18,7 +18,7 @@ export function renderCustomList() {
                             ? "nav__list-item--active" 
                             : null
                         }"
-                >
+            >
               <a class="nav__list-link nav__list-link--custom-list" 
                   href="#/customlist/${list.id}">
                   <div class="custom-list__color"></div>
@@ -29,6 +29,8 @@ export function renderCustomList() {
 
   customList.innerHTML = lists.join("");
 }
+
+
 
 /**
  * nav 側邊欄展開時所需套用的行為
@@ -44,6 +46,8 @@ export function navSwitcher() {
   });
 }
 
+
+
 /**
  * 清除在 nav內選單的 active
  */
@@ -52,6 +56,8 @@ function removeNavActive() {
     .querySelectorAll(".nav__list-item")
     .forEach((i) => i.classList.remove("nav__list-item--active"));
 }
+
+
 
 // nav 中所有的選單點擊切換行為
 document.querySelectorAll(".nav__list").forEach((i) => {
@@ -113,6 +119,7 @@ function listCounter(numList) {
   return i;
 }
 
+
 // --------------------------[ 新增自訂列表 ]--------------------------
 
 const addBtn = document.querySelector("#add-list-btn");
@@ -152,17 +159,7 @@ function addCustomList() {
 * 之後新增刪除功能之後，必須想好刪除頁面之後的方案，最好是改變網址列到某一個順位。
  */
 
-/**
- * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，該值即為該頁面的 id。
- * @returns id 字符串
- */
-function getCurrentPageId(){
-  const hash = window.location.hash;
-  const currentPageId = hash.match(/[a-z0-9]*$/)[0] === '' 
-  ? 'home' 
-  : hash.match(/[a-z0-9]*$/)[0];
-  return currentPageId;
-}
+
 
 /**
  * 將新的自訂清單加入到 DATA
@@ -180,7 +177,7 @@ function setCustomList() {
 
   DATA.custom.push({
     id: createUniqueId(),
-    name: `未命名清單(${newNumber})`,
+    name: `未命名清單${newNumber === 0 ? '' : `(${newNumber})`}`,
     color: "",
     content: [
       // ↓ 示意格式
@@ -204,7 +201,7 @@ function setCustomList() {
  * 主要用途是在網頁載入的時候在目前所在的頁面加上 active。
  * 防止使用者原地 F5 之後 active 消失的問題。
  */
- export function activeWhenLoad(){
+export function activeWhenLoad(){
   const id = getCurrentPageId();
   const activeTarget = navContent.querySelector(`#${id}`);
   activeTarget.classList.add('nav__list-item--active');
