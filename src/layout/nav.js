@@ -37,19 +37,17 @@ const navContent = document.querySelector(".nav__content");
  * 渲染 customList 至頁面中
  */
 export function renderCustomList() {
-  // 從 DATA.custom 的最後一位取得目前最新的 list 的 Id，若不存在則設為 null。
-  // 下方的結構中將會使用此值與當前頁面 id 做比對，只有在當前 list.id 與 最新的
-  // list.id 相同的元素需要加上 active
-  // const latestListId = DATA.custom.length !== 0 
-  //   ? DATA.custom[DATA.custom.length - 1].id 
-  //   : null;
-  //   console.log(latestListId)
 
   const currentPageId = getCurrentPageId();
 
   let lists = DATA.custom.map(list => {
     return `<li id="${list.id}" 
-                class="custom-list__item nav__list-item ${list.id === currentPageId ? "nav__list-item--active" : null}">
+                class="custom-list__item nav__list-item 
+                        ${list.id === currentPageId 
+                            ? "nav__list-item--active" 
+                            : null
+                        }"
+                >
               <a class="nav__list-link nav__list-link--custom-list" 
                   href="#/customlist/${list.id}">
                   <div class="custom-list__color"></div>
@@ -120,11 +118,13 @@ function extractUnnamedNumber(listArr) {
   );
 }
 
+
+
 /**
  * 計算目前最新的未命名清單後的編號應該為多少。
  * 此函數接收一個 `Array` 作為參數，該 Array 必須包含目前所有的未命名清單的編號。
  * @param {*} numList
- * @returns 返回應該新增在「未命名清單」後的內容，且是 `String`。
+ * @returns 返回應一個數字，該數字為「未命名清單」編號的最新順位。
  */
 function listCounter(numList) {
   // 過濾掉 arr 內空無一物的狀況
@@ -139,29 +139,8 @@ function listCounter(numList) {
     }
     i++;
   }
-  return `(${i})`;
+  return i;
 }
-
-// window.addEventListener('hashchange',()=> console.log(window.location.hash))
-
-// todo: 將新增的清單更新至 localStorage
-
-// // 頁面完全載入後，根據 currentPageInfo.pageId 為何來決定哪個 item 要被 active。
-// // *註: 使用 `load` 是因為使用 DOMContentLoaded 會讀取不到後續才渲染的 customList
-// window.addEventListener("load", navListItemActive);
-
-// function navListItemActive() {
-//   const navListItems = document.querySelectorAll(".nav__list-item");
-//   // 比對目前現有 navListItem 是否有任何一個元素的 id 跟 currentPageInfo.pageId 相同，
-//   // 並將其存進 activedItem 變量中
-//   let activedItem = Array.from(navListItems).find((item) => {
-//     return item.id === DATA.currentPageInfo.pageId;
-//   });
-
-//   // 刪除所有現有 active，並將 activedItem 加上 active
-//   removeNavActive();
-//   activedItem.classList.add("nav__list-item--active");
-// }
 
 // --------------------------[ 新增自訂列表 ]--------------------------
 
@@ -172,8 +151,6 @@ addBtn.addEventListener("click", addCustomList);
 
 /**
  * 此函數代表整個 customList 從新建並儲存到渲染的動作。
- * 會先使用 `setCustomList()` 將新的自訂清單加入到 DATA，
- * 接著使用 `renderCustomList()` 渲染 customList 至頁面中。
  * @param {*} e
  */
 function addCustomList() {
@@ -181,8 +158,6 @@ function addCustomList() {
 
   // 將頁面導向(directed)到當前最新新增的頁
   window.location.hash = `/customlist/${DATA.custom[DATA.custom.length - 1].id}`;
-
-  // activeCurrentPage()
 
   // 清除在選單上的 active
   removeNavActive();
@@ -218,50 +193,6 @@ function getCurrentPageId(){
   return currentPageId;
 }
 
-window.addEventListener('load', activeWhenLoad)
-
-// window.addEventListener('hashchange', activeWhenLoad)
-
-
-/**
- * 先取得目前所在頁面的 id，
- * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
- * 最後將其加上 active 的 class。
- * 
- * 主要用途是在網頁載入的時候在目前所在的頁面加上 active。
- * 防止使用者原地 F5 之後 active 消失的問題。
- */
-function activeWhenLoad(){
-  const id = getCurrentPageId();
-  const activeTarget = navContent.querySelector(`#${id}`);
-  activeTarget.classList.add('nav__list-item--active');
-}
-
-
-// const A = '#/';
-// const B = '#/top';
-// const C = '#/customlist/l87yex26146un9jeo';
-
-// [A, B , C].map(i => (
-//   console.log(i.match(/[a-z0-9]*$/))
-// ))
-
-// console.log('#/'.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/)[0])
-// console.log('#/top'.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/)[0])
-// console.log(A.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/))
-// console.log(B.match(/(?<=#\/customlist\/)[A-z0-9]*|(?<=\/)[a-z]*/))
-
-// console.log(C.match(/(?<=#\/customlist\/)[A-z0-9]*|\/))
-
-
-// console.log('#/customlist/l87yex26146un9jeo'.match(/(?<=#\/customlist\/)[A-z0-9]*/))
-
-
-// #/
-// #/top
-// #/customlist/l87yex26146un9jeo
-
-
 /**
  * 將新的自訂清單加入到 DATA
  */
@@ -271,12 +202,16 @@ function setCustomList() {
   // 是根據上一位的尾數，而我在沒有任何清單的情況下，就沒辦法基於上一個
   // 清單來判斷我目前的清單，所以會出現 undefined)
   const allCustomListName = DATA.custom.map((i) => i.name);
-  const numberList = extractUnnamedNumber(allCustomListName);
-  const newNumber = listCounter(numberList);
+  console.log(allCustomListName)
+  const extractNumberList = extractUnnamedNumber(allCustomListName).length === 0
+    ? [1]
+    : extractUnnamedNumber(allCustomListName);
+  console.log(extractNumberList)
+  const newNumber = listCounter(extractNumberList);
 
   DATA.custom.push({
     id: createUniqueId(),
-    name: `未命名清單${newNumber}`,
+    name: `未命名清單(${newNumber})`,
     color: "",
     content: [
       // ↓ 示意格式
@@ -292,34 +227,22 @@ function setCustomList() {
   setStorage(DATA);
 }
 
-// --------------------------[ 監聽當前點擊頁面 ]--------------------------
+/**
+ * 先取得目前所在頁面的 id，
+ * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
+ * 最後將其加上 active 的 class。
+ * 
+ * 主要用途是在網頁載入的時候在目前所在的頁面加上 active。
+ * 防止使用者原地 F5 之後 active 消失的問題。
+ */
+ export function activeWhenLoad(){
+  const id = getCurrentPageId();
+  const activeTarget = navContent.querySelector(`#${id}`);
+  activeTarget.classList.add('nav__list-item--active');
+}
 
-// 設定在 DATA 中的 currentPageInfo.pageId
-// navContent.addEventListener("click", setCurrentPageId);
 
-// 設定在 DATA 中的 currentPageInfo.path
-// window.addEventListener("hashchange", setCurrentPath);
 
-// /**
-//  * 取得 e.target 的 ID，並更新在 DATA 中的 currentPageInfo.pageId
-//  * @param {*} e
-//  */
-// export function setCurrentPageId(e) {
-//   if (e.target.classList.contains("nav__list-link")) {
-//     const currentPageId = e.target.closest("li").id;
-//     DATA.currentPageInfo.pageId = currentPageId;
-//     console.log('pageId update: ', DATA.currentPageInfo.pageId)
-//   }
-// }
-
-// /**
-//  * 設定在 DATA 中的 currentPageInfo.path
-//  * @param {*} e
-//  */
-// export function setCurrentPath() {
-//   const currentPath = location.hash.slice(1).toLowerCase();
-//   DATA.currentPageInfo.path = currentPath;
-// }
 
 const wrapper = document.querySelector(".wrapper");
 wrapper.addEventListener("click", (e) => {
