@@ -5,35 +5,6 @@ import { DATA } from "../utils/function.js";
 const navContent = document.querySelector(".nav__content");
 
 /**
- * 注意:
- * 下面這個 renderCustomList() 會有一個問題。
- * 
- * 具體問題為何，可以試試看:
- * 1.先增加幾個自訂清單
- * 2.隨意點擊清單，可以看到 active 與網址都沒有問題
- * 3.此時隨意點擊「除了最後一個以外的任意一個」，ex: 置頂。
- * 4.F5 刷新，可以看到雖然網址沒有變化，但是 active 已經跑到最後了
- * 5.這樣的問題就出在 renderCustomList() 內，我直接把 DATA.custom[DATA.custom.length - 1].id
- *   賦值給 latestListId，也就是說，在下面結構進行比較時，它必定會讓 active 變成 DATA.custom 的最後一位，
- *   這也是為什麼怎麼刷新都始終卡在最下面。
- * 
- * 關鍵概念:
- * - 以上行為的動作(指「無論如何都讓 active 套用在最後一個元素」這個行為)固然需要，但是並不適用於「平常載入時的渲染」，
- *   意思是說，如果要做為單純頁面載入時的渲染，不應該包含 "nav.js:33 ~ nav.js:35" 那段。應該只有在使用者按下「新增
- *   自訂清單」按鈕之後，才會出現那樣的判斷，否則其他時候應該是靜默無聲才對。
- * 
- * - 具體來說可能是條件下錯，可以看 :35 的條件: DATA.custom.length，這不就代表只要 DATA.custom 內有東西，
- *   active 就一定會在最後面嗎 ?
- * 
- * - 下次先想想看要怎麼換條件，或是要用什麼方法，讓頁面載入時的渲染就只是單純渲染出來，而只有在新增新的清單時，
- *   才加入判斷來控制 active。
- * 
- * - 所有的 active 應該是根據網址列來決定的，那是單一來源。(目前開始把 currentPageInfo 撤掉了，因為根本沒有什麼
- *   好存的，我所需要的東西網址列就有了)
- */
-
-
-/**
  * 渲染 customList 至頁面中
  */
 export function renderCustomList() {
@@ -202,11 +173,9 @@ function setCustomList() {
   // 是根據上一位的尾數，而我在沒有任何清單的情況下，就沒辦法基於上一個
   // 清單來判斷我目前的清單，所以會出現 undefined)
   const allCustomListName = DATA.custom.map((i) => i.name);
-  console.log(allCustomListName)
   const extractNumberList = extractUnnamedNumber(allCustomListName).length === 0
     ? [1]
     : extractUnnamedNumber(allCustomListName);
-  console.log(extractNumberList)
   const newNumber = listCounter(extractNumberList);
 
   DATA.custom.push({
