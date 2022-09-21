@@ -61,6 +61,21 @@ export function getCurrentCustomPage(){
   return DATA.custom.find(i => i.id === getCurrentPageId())
 }
 
+/**
+ * 取得當前事件觸發的 todo 物件
+ * @param {*} e 事件
+ * @returns todo 物件
+ */
+export function getCurrentTodo(e){
+      // 取得事件觸發 id
+      const currentTodoId = e.target.closest(".todo__item").id;
+      // 取得當前頁面資料(Object)
+      const currentPage = getCurrentCustomPage();
+      // 從當前頁面資料取得當前 todo 
+      const currentTodo = currentPage.content.find(todoItem => todoItem.id === currentTodoId);     
+      return currentTodo;
+}
+
 
 
 

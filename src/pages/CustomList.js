@@ -1,4 +1,4 @@
-import { createUniqueId, DATA, getCurrentPageId, getCurrentCustomPage } from "../utils/function.js";
+import { createUniqueId, DATA, getCurrentPageId, getCurrentCustomPage, getCurrentTodo } from "../utils/function.js";
 import { setStorage } from "../utils/function.js";
 
 export const CustomList = {
@@ -11,6 +11,7 @@ export const CustomList = {
     const { name, content } = pageData;
 
     const todoContent = content.map((li) => {
+      
       return `
                 <li id="${li.id}" class="todo__item">
                     <label class="todo__label">
@@ -21,7 +22,7 @@ export const CustomList = {
                         <span class="todo__checkmark"></span>
                         <p class="todo__content">${li.content}</p>
                     </label>
-                    <i class="todo__pin fa-solid fa-thumbtack"></i>
+                    <i class="todo__top ${li.top ? "fa-solid" : "fa-regular"} fa-star"></i> 
                 </li>
         `;
     });
@@ -68,17 +69,22 @@ export const CustomList = {
 
   listener: {
     click: (e) => {
-      // console.log(e.target)
+      
+      if(e.target.classList.contains('todo__top')){ 
+        // 取得當前 todo
+        const currentTodo = getCurrentTodo(e);
+        currentTodo.top = !currentTodo.top;
+        e.target.classList.toggle("fa-solid")
+        e.target.classList.toggle("fa-regular")
+        // 存進 localStorage
+        setStorage(DATA);
+      }
     },
 
     change: function(e){
       if (e.target.classList.contains("todo__checkbox")) {
-        // 取得事件觸發 id
-        const currentTodoId = e.target.closest(".todo__item").id;
-        // 取得目前頁面資料(Object)
-        const currentPage = getCurrentCustomPage();
-        // 從目前頁面資料取得當前 todo 
-        const currentTodo = currentPage.content.find(todoItem => todoItem.id === currentTodoId);
+        // 取得當前 todo
+        const currentTodo = getCurrentTodo(e);
         // 反轉 checked 值
         currentTodo.checked = !currentTodo.checked;
         // 存進 localStorage
