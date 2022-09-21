@@ -42,6 +42,7 @@ export function setStorage(data) {
 
 /**
  * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，該值即為該頁面的 id。
+ * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
  * @returns id 字符串
  */
 export function getCurrentPageId(){
@@ -51,6 +52,17 @@ export function getCurrentPageId(){
     : hash.match(/[a-z0-9]*$/)[0];
   return currentPageId;
 }
+
+/**
+ * 取得當前所在 custom 頁面的資料
+ * @returns 目前所在的 custom 頁面的資料(`Object`)
+ */
+export function getCurrentCustomPage(){
+  return DATA.custom.find(i => i.id === getCurrentPageId())
+}
+
+
+
 
 /**
  * 產生一個隨機 id
@@ -96,3 +108,4 @@ export function addTodo(todo) {
   setTodo();
   renderTodo();
 }
+
