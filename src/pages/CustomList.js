@@ -1,5 +1,6 @@
-import { createUniqueId, DATA, getCurrentPageId, getCurrentCustomPage, getCurrentTodo } from "../utils/function.js";
-import { setStorage } from "../utils/function.js";
+import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
+import { openListOption, clickToCloseListOption } from "../layout/main.js";
+
 
 export const CustomList = {
   state: {},
@@ -69,6 +70,9 @@ export const CustomList = {
 
   listener: {
     click: (e) => {
+      openListOption(e)
+      // 點擊任意處來關閉 listOption
+      clickToCloseListOption(e)
       
       if(e.target.classList.contains('todo__top')){ 
         // 取得當前 todo

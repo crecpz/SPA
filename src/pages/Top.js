@@ -135,12 +135,7 @@ export const Top = {
     listener: {
         click: function(e) {
 
-
-            // 控制 listOption 展開與收合
-            if (e.target.classList.contains('btn--list-option')) {
-                openListOption();
-            }
-
+            openListOption(e)
             // 點擊任意處來關閉 listOption
             clickToCloseListOption(e)
 
