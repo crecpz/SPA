@@ -1,23 +1,17 @@
-import { openListOption, clickToCloseListOption } from '../layout/main.js';
-import { addTodo, getStorage, setStorage } from '../utils/function.js';
-
+import { openListOption, clickToCloseListOption } from "../layout/main.js";
+import { addTodo, getStorage, setStorage } from "../utils/function.js";
 
 // 試引入，資料可用 ↓
 // import data from '../todoLocalData.js';
 // import todoLocalData from '../todoLocalData.js';
 
 export const Top = {
-    state: {
-    },
+  state: {},
 
-    mount: function () {
+  mount: function () {},
 
-
-    },
-
-    render: function () {
-
-        return `
+  render: function () {
+    return `
             <!-- 主內容區 header -->
             <div class="main__content-header">
                 <div class="container">
@@ -27,21 +21,8 @@ export const Top = {
                     </h2>
                     <!-- 清單選單按鈕 -->
                     <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-                    <!-- 清單選單 -->
-                    <ul class="list-option">
-                        <li class="list-option__item">
-                            <a href="#" class="list-option__link">重新命名</a>
-                        </li>
-                        <li class="list-option__item">
-                            <a href="#" class="list-option__link">編輯</a>
-                        </li>
-                        <li class="list-option__item">
-                            <a href="#" class="list-option__link">排序</a>
-                        </li>
-                        <li class="list-option__item">
-                            <a href="#" class="list-option__link">刪除清單</a>
-                        </li>
-                    </ul>
+    
+                    top 的 listoption 都還沒調整，請到 custom 複製
                 </div>
             </div>
 
@@ -130,23 +111,19 @@ export const Top = {
                 </div>
             </div>
         `;
+  },
+
+  listener: {
+    click: function (e) {
+      openListOption(e);
+      // 點擊任意處來關閉 listOption
+      clickToCloseListOption(e);
+
+      // 新增新事項
+      if (e.target.id === "todo-submit") {
+        // // 此處要獲取當前頁面的 id，並用該 id 來辨識目前要渲染哪一頁
+        // addTodo();
+      }
     },
-
-    listener: {
-        click: function(e) {
-
-            openListOption(e)
-            // 點擊任意處來關閉 listOption
-            clickToCloseListOption(e)
-
-
-
-            // 新增新事項
-            if (e.target.id === 'todo-submit') {
-                // // 此處要獲取當前頁面的 id，並用該 id 來辨識目前要渲染哪一頁
-                // addTodo();
-            }
-
-        },
-    },
-}
+  },
+};

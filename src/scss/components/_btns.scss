@@ -14,14 +14,8 @@
 
   // 主要樣式
   &--primary {
-    @include text(base);
     @include flex($ai: center, $jc: center);
     justify-self: flex-end;
-
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-
-
     background-color: var(--primary-color);
     color: var(--secondary-color);
 
@@ -37,7 +31,10 @@
 
   // 新增自訂清單按鈕 
   &--custom-list{
+    @include text(base);
     width: calc(100% - 4.5rem);
+    padding-top: .75rem;
+    padding-bottom: .75rem;
     margin-top: auto;
     margin-left: auto;
     margin-right: auto;
@@ -55,6 +52,18 @@
 
     i {
       pointer-events: none;
+    }
+  }
+
+  // modal 內按鈕
+  &--modal {
+    padding-top: .4375rem;
+    padding-bottom: .4375rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    &:not(:first-child) {
+      margin-left: 1rem;
     }
   }
 }

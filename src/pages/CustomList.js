@@ -1,5 +1,5 @@
 import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
-import { openListOption, clickToCloseListOption } from "../layout/main.js";
+import { openListOption, clickToCloseListOption, removeList } from "../layout/main.js";
 
 
 export const CustomList = {
@@ -39,18 +39,18 @@ export const CustomList = {
                 <!-- 清單選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 <!-- 清單選單 -->
-                <ul class="list-option">
-                    <li class="list-option__item">
-                        <a href="#" class="list-option__link">重新命名</a>
+                <ul class="list-options">
+                    <li class="list-option">
+                      <a href="javascript:;" class="list-option__link">重新命名</a>
                     </li>
-                    <li class="list-option__item">
-                        <a href="#" class="list-option__link">編輯</a>
+                    <li class="list-option">
+                      <a href="javascript:;" class="list-option__link">編輯</a>
                     </li>
-                    <li class="list-option__item">
-                        <a href="#" class="list-option__link">排序</a>
+                    <li class="list-option">
+                      <a href="javascript:;" class="list-option__link">排序</a>
                     </li>
-                    <li class="list-option__item">
-                        <a href="#" class="list-option__link">刪除清單</a>
+                    <li class="list-option">
+                      <a href="javascript:;" class="list-option__link list-option__link--remove">刪除清單</a>
                     </li>
                 </ul>
             </div>
@@ -70,9 +70,12 @@ export const CustomList = {
 
   listener: {
     click: (e) => {
-      openListOption(e)
-      // 點擊任意處來關閉 listOption
-      clickToCloseListOption(e)
+      // listOption 相關設定
+      openListOption(e); // 監聽來開啟 listOption
+      clickToCloseListOption(e); // 點擊任意處來關閉 listOption
+      removeList(e) // 刪除清單
+
+      
       
       if(e.target.classList.contains('todo__top')){ 
         // 取得當前 todo
@@ -86,6 +89,8 @@ export const CustomList = {
     },
 
     change: function(e){
+
+      // checkbox 相關
       if (e.target.classList.contains("todo__checkbox")) {
         // 取得當前 todo
         const currentTodo = getCurrentTodo(e);

@@ -1,6 +1,6 @@
 @use "abstracts" as *;
 
-.list-option {
+.list-options {
   @include text(sm);
   position: absolute;
   top: 3.125rem;
@@ -20,11 +20,9 @@
   &--open {
     transform: scale(1);
   }
+}
 
-  &__item {
-    &:not(:first-child) {
-    }
-  }
+.list-option {
 
   &__link {
     display: inline-block;
