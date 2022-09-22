@@ -5,39 +5,42 @@
   @include button-reset;
   cursor: pointer;
 
-  // 搜尋
+  // 搜尋按鈕
   &--search {
     font-size: 1.25rem;
     color: var(--primary-color);
     margin-left: auto;
   }
 
-  // 新增自訂列表
+  // 主要樣式
   &--primary {
     @include text(base);
     @include flex($ai: center, $jc: center);
     justify-self: flex-end;
 
-    padding-top: 12px;
-    padding-bottom: 12px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+
 
     background-color: var(--primary-color);
     color: var(--secondary-color);
-
-    &:hover {
-    }
 
     i {
       margin-right: 1rem;
     }
   }
 
+  &--danger {
+    color: var(--primary-color);
+    background-color: var(--danger-color);
+  }
+
   // 新增自訂清單按鈕 
   &--custom-list{
     width: calc(100% - 4.5rem);
     margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   // 新增新事項按鈕
@@ -56,17 +59,13 @@
   }
 }
 
-// mode-btn
+// mode-btn (光線模式)  之後回來處理，這邊要重寫
 .mode-btn {
   padding: 0.25rem 1rem;
   border: 2px solid var(--primary-color);
 
   &--light {
     color: var(--secondary-color);
-    // background-color: var(--primary-color);
-
-    // color:  #fff;
-    // background-color: black;
     background-color: #fff;
   }
 
@@ -81,7 +80,7 @@
   }
 }
 
-// hamburger
+// hamburger 
 .hamburger {
   @include flex($dir: column, $jc: space-between);
   width: 40px;
@@ -93,8 +92,6 @@
   transition-duration: 500ms;
 
   &--nav {
-    // display: none;
-
     @include lg {
       display: flex;
     }

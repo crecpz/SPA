@@ -1,0 +1,24 @@
+@use "abstracts" as *;
+
+/*
+  白色 modal 配上白色背景是沒有問題的，
+  因為我還會使用 overlay
+*/
+
+
+.modal{
+  width: 100%;
+  max-width: 20.625rem;
+
+  &__confirm{
+    @include flex($dir: column);
+  }
+
+  &__text{
+      color: var(--primary-color);
+  }
+
+  &__btn-group{
+    @include flex;
+  }
+}

@@ -23,7 +23,7 @@
 
 <body>
     <div id="wrapper" class="wrapper">
-        <div class="body-overlay"></div>
+        <div class="body-overlay overlay"></div>
 
         <!-- 側邊nav -->
         <nav id="nav" class="nav">
@@ -148,9 +148,18 @@
         </main>
     </div>
 
-    <div class="modal-overlay">
+    <div class="modal-overlay overlay overlay--active">
         <div class="modal">
-            
+            <div class="modal__confirm">
+                <p class="modal__text">確定要刪除<span id="modal__confirm-target">「未命名清單(2)」嗎?</span></p>
+                <div class="modal__btn-group">
+                    <div class="btn btn--primary">取消</div>
+                    <div class="btn btn--primary btn--danger">刪除</div>
+                </div>
+            </div>
+            <div class="modal__todo-editor">
+
+            </div>
         </div>
     </div>
 
