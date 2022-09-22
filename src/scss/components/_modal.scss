@@ -14,8 +14,10 @@
     @include flex($dir: column);
   }
 
+  // 字體 PC: md ,mobile: sm
   &__text{
       color: var(--primary-color);
+      // font-size: 
   }
 
   &__btn-group{
