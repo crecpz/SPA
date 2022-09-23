@@ -5,7 +5,7 @@ import { DATA, getCurrentPageId } from "../utils/function.js";
 const navContent = document.querySelector(".nav__content");
 
 /**
- * 渲染 customList 至頁面中
+ * 渲染 customList 至 nav 中
  */
 export function renderCustomList() {
 
@@ -26,7 +26,6 @@ export function renderCustomList() {
               </a>
             </li>`;
   });
-
   customList.innerHTML = lists.join("");
 }
 
@@ -73,6 +72,9 @@ document.querySelectorAll(".nav__list").forEach((i) => {
 
 /**
  * 接收一個 Array 作為參數，該 Array 包含所有目前的 「未命名清單」。
+ * 
+ * ex: `[ "未命名清單", "未命名清單(1)", "未命名清單(4)" ]`
+ * 
  * 提取出所有「未命名清單」後的數字，並將數字排序後並返回一個數字陣列
  * @param {*} listArr 所有「未命名清單」陣列
  * @returns 返回一個經過大小排序的數字陣列。
@@ -83,10 +85,11 @@ function extractUnnamedNumber(listArr) {
       // 匹配開頭為「未命名清單(X)」及頭尾名為 「未命名清單」的元素
       .filter((list) => /^未命名清單(?=\(\d+\)$)|^未命名清單$/.test(list))
       .map((list) => {
-        // 取出數字部分 (如果遇到「未命名清單」純文字，將其設為 0)
+        // 取出數字部分 
         if (list.match(/\d+/)) {
           return Number(list.match(/\d+/)[0]);
         } else if (list.match(/\d+/) === null && list === "未命名清單") {
+          // 如果遇到「未命名清單」純文字，將其設為 0
           return 0;
         }
       })
@@ -100,15 +103,11 @@ function extractUnnamedNumber(listArr) {
 /**
  * 計算目前最新的未命名清單後的編號應該為多少。
  * 此函數接收一個 `Array` 作為參數，該 Array 必須包含目前所有的未命名清單的編號。
+ * ex: `[1, 3, 5]`
  * @param {*} numList
- * @returns 返回應一個數字，該數字為「未命名清單」編號的最新順位。
+ * @returns 返回應一個數字，該數字即為「未命名清單」編號的最新順位。
  */
 function listCounter(numList) {
-  // 過濾掉 arr 內空無一物的狀況
-  if (numList.length === 0) {
-    return; // 這個 undefined 後續必續用它來判斷文字後是否要加數字
-  }
-
   let i = 0;
   while (true) {
     if (numList.indexOf(i) === -1) {
@@ -118,6 +117,7 @@ function listCounter(numList) {
   }
   return i;
 }
+
 
 
 // --------------------------[ 新增自訂列表 ]--------------------------
@@ -140,6 +140,7 @@ function addCustomList() {
   // 清除在選單上的 active
   removeNavActive();
 
+  // 渲染 customList 至 nav 中
   renderCustomList();
 }
 
@@ -166,17 +167,19 @@ function addCustomList() {
  */
 function setCustomList() {
   // 獲取現有清單 
-  // (目前讓未命名清單出現 undefined 的原因，沒記錯的話是因為我的清單
-  // 是根據上一位的尾數，而我在沒有任何清單的情況下，就沒辦法基於上一個
-  // 清單來判斷我目前的清單，所以會出現 undefined)
   const allCustomListName = DATA.custom.map((i) => i.name);
+  // 提取清單尾數。
+  // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
+  // (因為初始值是 1 ，在後續的計算中，下一個順位將會是 0)
   const extractNumberList = extractUnnamedNumber(allCustomListName).length === 0
     ? [1]
     : extractUnnamedNumber(allCustomListName);
+  // 得出最新的數字
   const newNumber = listCounter(extractNumberList);
 
   DATA.custom.push({
     id: createUniqueId(),
+    // 如果新的數字是 0，則後面加個空字串
     name: `未命名清單${newNumber === 0 ? '' : `(${newNumber})`}`,
     color: "",
     content: [

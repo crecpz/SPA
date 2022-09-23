@@ -41,7 +41,7 @@ export function setStorage(data) {
 
 
 /**
- * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，該值即為該頁面的 id。
+ * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
  * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
  * @returns id 字符串
  */
@@ -54,7 +54,8 @@ export function getCurrentPageId(){
 }
 
 /**
- * 取得當前所在 custom 頁面的資料
+ * 取得當前所在 custom 頁面的資料。
+ * 注意: 此函數是指定在 DATA.custom 內尋找"內部元素的"的 ID。
  * @returns 目前所在的 custom 頁面的資料(`Object`)
  */
 export function getCurrentCustomPage(){

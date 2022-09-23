@@ -1,5 +1,5 @@
 import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
-import { openListOption, clickToCloseListOption, removeList } from "../layout/main.js";
+import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeConfirmModal } from "../layout/main.js";
 
 
 export const CustomList = {
@@ -10,9 +10,7 @@ export const CustomList = {
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
     const { name, content } = pageData;
-
     const todoContent = content.map((li) => {
-      
       return `
                 <li id="${li.id}" class="todo__item">
                     <label class="todo__label">
@@ -70,10 +68,12 @@ export const CustomList = {
 
   listener: {
     click: (e) => {
-      // listOption 相關設定
+      // listOption: 刪除清單
       openListOption(e); // 監聽來開啟 listOption
       clickToCloseListOption(e); // 點擊任意處來關閉 listOption
-      removeList(e) // 刪除清單
+      openConfirmModal(e); // 偵測使用者是否有點擊 "刪除清單"
+      closeConfirmModal(e) // 偵測使用者是否有點擊"取消"
+      removeList(e) // 偵測使用者是否有點擊"刪除"
 
       
       

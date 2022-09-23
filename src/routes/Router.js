@@ -2,7 +2,6 @@
 import { NotFound } from "../pages/NotFound.js";
 import { addListener, removeAllListeners } from "../utils/eventListerer.js";
 import { Route } from "./Route.js";
-import { getStorage } from "../utils/function.js";
 
 /**
  *
@@ -77,7 +76,6 @@ export const Router = () => {
   }
 
   // 得到目前路徑(對應route)
-  // (原)
   const path = location.hash.slice(1).toLowerCase();
 
   // 找出對應頁面

@@ -1,1 +1,1 @@
-{"version":3,"sources":["utilities/_text.scss"],"names":[],"mappings":"AAAA,aACE,eAAA,CACA,aAAA","file":"../../utilities/index.css","sourcesContent":[".text-strong {\n  font-weight: 900;\n  color: rgb(200, 176, 128)\n}"]}
+{"version":3,"sources":["utilities/_text.scss"],"names":[],"mappings":"AAAA,aACE,eAAA","file":"../../utilities/index.css","sourcesContent":[".text-strong {\n  font-weight: 900;\n  // color: rgb(200, 176, 128)\n}"]}
