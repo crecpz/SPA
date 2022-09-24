@@ -40,30 +40,7 @@ export function getStorage() {
           ],
         },
       ],
-      // all: {
-      //   id: "all",
-      //   name: "全部",
-      //   color: "",
-      //   content: [
-      //   //   {
-      //   //     checked: false,
-      //   //     content: "this is todo A.",
-      //   //     top: false,
-      //   //   },
-      //   ],
-      // },
-      // top: {
-      //   id: "top",
-      //   name: "置頂",
-      //   color: "",
-      //   content: [
-      //   //   {
-      //   //     checked: false,
-      //   //     content: "this is todo A.",
-      //   //     top: true, // 凡是在 top 內的都是 true
-      //   //   },
-      //   ],
-      // },
+    
       custom: [
         // {
         //   id: "",
