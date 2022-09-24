@@ -13,24 +13,46 @@ export const appHeight = () => {
 export function getStorage() {
   // 如果取得的 localStorage 資料為空，則返回一個基本的初始資料
   return (
-    JSON.parse(localStorage.getItem("todoLocalData"))
-    || {
-        top: [],
-        custom: [
-          // {
-          //   listId: "",
-          //   listName: "未命名清單",
-          //   listColor: "",
-          //   listContent: [
-          //     // {
-          //     //   checked: false,
-          //     //   content: "this is todo A.",
-          //     //   top: false,
-          //     // },
-          //   ],
-          // },
+    JSON.parse(localStorage.getItem("todoLocalData")) || {
+      all: {
+        id: "all",
+        name: "全部",
+        color: "",
+        content: [
+        //   {
+        //     checked: false,
+        //     content: "this is todo A.",
+        //     top: false,
+        //   },
         ],
-      }
+      },
+      top: {
+        id: "top",
+        name: "置頂",
+        color: "",
+        content: [
+        //   {
+        //     checked: false,
+        //     content: "this is todo A.",
+        //     top: true, // 凡是在 top 內的都是 true
+        //   },
+        ],
+      },
+      custom: [
+        // {
+        //   id: "",
+        //   name: "未命名清單",
+        //   color: "",
+        //   content: [
+            // {
+            //   checked: false,
+            //   content: "this is todo A.",
+            //   top: false,
+            // },
+          // ],
+        // },
+      ],
+    }
   );
 }
 
@@ -39,17 +61,17 @@ export function setStorage(data) {
   localStorage.setItem("todoLocalData", JSON.stringify(data));
 }
 
-
 /**
  * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
  * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
  * @returns id 字符串
  */
-export function getCurrentPageId(){
+export function getCurrentPageId() {
   const hash = window.location.hash;
-  const currentPageId = hash.match(/[a-z0-9]*$/)[0] === '' 
-    ? 'home' 
-    : hash.match(/[a-z0-9]*$/)[0];
+  const currentPageId =
+    hash.match(/[a-z0-9]*$/)[0] === "" 
+      ? "home" 
+      : hash.match(/[a-z0-9]*$/)[0];
   return currentPageId;
 }
 
@@ -58,26 +80,35 @@ export function getCurrentPageId(){
  * 注意: 此函數是指定在 DATA.custom 內尋找"內部元素的"的 ID。
  * @returns 目前所在的 custom 頁面的資料(`Object`)
  */
-export function getCurrentCustomPage(){
-  return DATA.custom.find(i => i.id === getCurrentPageId())
+export function getCurrentCustomPage() {
+  return DATA.custom.find((i) => i.id === getCurrentPageId());
 }
+
+export function getCurrentDefaultPage(){
+  const currentPageId = getCurrentPageId();
+  for(let page in DATA){
+    return DATA[page].id === currentPageId ? DATA[page] : null;
+  }
+}
+console.log(getCurrentDefaultPage())
+
 
 /**
  * 取得當前事件觸發的 todo 物件
  * @param {*} e 事件
  * @returns todo 物件
  */
-export function getCurrentTodo(e){
-      // 取得事件觸發 id
-      const currentTodoId = e.target.closest(".todo__item").id;
-      // 取得當前頁面資料(Object)
-      const currentPage = getCurrentCustomPage();
-      // 從當前頁面資料取得當前 todo 
-      const currentTodo = currentPage.content.find(todoItem => todoItem.id === currentTodoId);     
-      return currentTodo;
+export function getCurrentTodo(e) {
+  // 取得事件觸發 id
+  const currentTodoId = e.target.closest(".todo__item").id;
+  // 取得當前頁面資料(Object)
+  const currentPage = getCurrentCustomPage();
+  // 從當前頁面資料取得當前 todo
+  const currentTodo = currentPage.content.find(
+    (todoItem) => todoItem.id === currentTodoId
+  );
+  return currentTodo;
 }
-
-
 
 
 /**
@@ -93,8 +124,7 @@ export function createUniqueId() {
   );
 }
 
-
-export function setTodo(){
+export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
 
   if (todoInput.value.trim() !== "") {
@@ -106,22 +136,25 @@ export function setTodo(){
       id: createUniqueId(),
       checked: false,
       content: todoValue,
-      top: currentPageId === 'top' , // 凡是在 top 內的都是 true
+      top: currentPageId === "top", // 凡是在 top 內的都是 true
     };
 
-    DATA.custom.find(i => i.id === currentPageId).content.push(todo);
+    console.log(currentPageId)
+
+    // ↓ 這個寫法要改善，要更活一點
+    if(currentPageId === 'home'|| currentPageId === 'all' || currentPageId === 'top'){
+      DATA[currentPageId].content.push(todo)
+    } else {
+      DATA.custom.find((i) => i.id === currentPageId).content.push(todo);
+    }
+
     setStorage(DATA);
     todoInput.value = "";
   }
   Router();
 }
 
-export function renderTodo(){
-
-}
 
 export function addTodo(todo) {
   setTodo();
-  renderTodo();
 }
-

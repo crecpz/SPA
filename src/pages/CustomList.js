@@ -1,5 +1,5 @@
 import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
-import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal } from "../layout/main.js";
+import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox } from "../layout/main.js";
 
 
 export const CustomList = {
@@ -68,15 +68,15 @@ export const CustomList = {
 
   listener: {
     click: (e) => {
-      // listOption: 刪除清單
-      openListOption(e); // 監聽來開啟 listOption
+      // 選項(listOption): 刪除清單
+      openListOption(e); // 監聽 listOption 按鈕來決定是否開啟 listOption
       clickToCloseListOption(e); // 點擊任意處來關閉 listOption
       openConfirmModal(e); // 偵測使用者是否有點擊 "刪除清單"
       closeModal(e) // 偵測使用者是否有點擊"取消"
       removeList(e) // 偵測使用者是否有點擊"刪除"
 
       
-      
+      // 置頂星號
       if(e.target.classList.contains('todo__top')){ 
         // 取得當前 todo
         const currentTodo = getCurrentTodo(e);
@@ -89,16 +89,8 @@ export const CustomList = {
     },
 
     change: function(e){
-
-      // checkbox 相關
-      if (e.target.classList.contains("todo__checkbox")) {
-        // 取得當前 todo
-        const currentTodo = getCurrentTodo(e);
-        // 反轉 checked 值
-        currentTodo.checked = !currentTodo.checked;
-        // 存進 localStorage
-        setStorage(DATA);
-      }
+      // checkbox 
+      checkbox(e);
     },
   },
 };

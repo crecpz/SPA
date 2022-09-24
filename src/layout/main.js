@@ -3,6 +3,7 @@ import {
   DATA,
   getCurrentCustomPage,
   getCurrentPageId,
+  getCurrentTodo,
   setStorage,
 } from "../utils/function.js";
 import { activeNavLists as activeNavLists, renderCustomList } from "./nav.js";
@@ -62,7 +63,7 @@ export function openConfirmModal(e) {
  * 關閉清單
  */
 export function closeModal(e) {
-  if (e.target.classList.contains('btn--modal')) {
+  if (e.target.classList.contains("btn--modal")) {
     const modalOverlay = document.querySelector(".modal-overlay");
     modalOverlay.classList.remove("overlay--active");
   }
@@ -78,11 +79,11 @@ export function removeList(e) {
 
     // 存放接下來頁面的去向 (此處存放的是一段網址，)
     let pageWillGoTo;
-    
+
     // 獲取當前頁面的前一個頁面，如果只有一個頁面，則前一個頁面指定為 '/top'
     if (!DATA.custom[DATA.custom.indexOf(currentPage) - 1]) {
       pageWillGoTo = "/top";
-      
+
       window.location.hash = pageWillGoTo;
       activeNavLists();
     } else {
@@ -92,12 +93,31 @@ export function removeList(e) {
     }
 
     // 刪除在 DATA 中該頁的資料
-    DATA.custom = DATA.custom.filter(page => page.id !== currentPage.id)
+    DATA.custom = DATA.custom.filter((page) => page.id !== currentPage.id);
 
     // 重新渲染 nav 自訂清單的 UI
-    renderCustomList()
-    
+    renderCustomList();
+
     // 存到 localStorage
-    setStorage(DATA)
+    setStorage(DATA);
+  }
+}
+
+// 加上星號
+
+
+/**
+ * checkbox 功能
+ * @param {*} e 
+ */
+export function checkbox(e) {
+  // checkbox
+  if (e.target.classList.contains("todo__checkbox")) {
+    // 取得當前 todo
+    const currentTodo = getCurrentTodo(e);
+    // 反轉 checked 值
+    currentTodo.checked = !currentTodo.checked;
+    // 存進 localStorage
+    setStorage(DATA);
   }
 }
