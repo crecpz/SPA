@@ -1,5 +1,5 @@
 import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
-import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeConfirmModal } from "../layout/main.js";
+import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal } from "../layout/main.js";
 
 
 export const CustomList = {
@@ -72,7 +72,7 @@ export const CustomList = {
       openListOption(e); // 監聽來開啟 listOption
       clickToCloseListOption(e); // 點擊任意處來關閉 listOption
       openConfirmModal(e); // 偵測使用者是否有點擊 "刪除清單"
-      closeConfirmModal(e) // 偵測使用者是否有點擊"取消"
+      closeModal(e) // 偵測使用者是否有點擊"取消"
       removeList(e) // 偵測使用者是否有點擊"刪除"
 
       

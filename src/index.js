@@ -2,7 +2,7 @@
 import { Router } from "./routes/Router.js";
 import { updateMode } from "./utils/mode.js";
 import { appHeight } from "./utils/function.js";
-import { renderCustomList, activeWhenLoad } from "./layout/nav.js";
+import { renderCustomList, activeNavLists } from "./layout/nav.js";
 
 
 // 監聽 hash 變化 & 加載完畢事件
@@ -21,7 +21,7 @@ window
 window.addEventListener("DOMContentLoaded", renderCustomList);
 
 // 初次載入時將 Nav 中相對應的頁面套用 active 
-window.addEventListener('load', activeWhenLoad)
+window.addEventListener('load', activeNavLists)
   
 // 解決手機瀏覽器無法剛好只占滿整版的問題
 window.addEventListener("resize", appHeight);

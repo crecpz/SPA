@@ -5,6 +5,7 @@ import {
   getCurrentPageId,
   setStorage,
 } from "../utils/function.js";
+import { activeNavLists as activeNavLists, renderCustomList } from "./nav.js";
 
 /**
  * 點擊 listOptionBtn 會調用此函數。
@@ -60,8 +61,8 @@ export function openConfirmModal(e) {
 /**
  * 關閉清單
  */
-export function closeConfirmModal(e) {
-  if (e.target.id === "confirm-cancel") {
+export function closeModal(e) {
+  if (e.target.classList.contains('btn--modal')) {
     const modalOverlay = document.querySelector(".modal-overlay");
     modalOverlay.classList.remove("overlay--active");
   }
@@ -75,22 +76,28 @@ export function removeList(e) {
     // 取得當前清單頁面的資料
     const currentPage = getCurrentCustomPage();
 
-    // 存放接下來頁面的去向
+    // 存放接下來頁面的去向 (此處存放的是一段網址，)
     let pageWillGoTo;
     
-    // 獲取當前頁面的前一個頁面，如果獲取到 undefined，則指定為 'top'
+    // 獲取當前頁面的前一個頁面，如果只有一個頁面，則前一個頁面指定為 '/top'
     if (!DATA.custom[DATA.custom.indexOf(currentPage) - 1]) {
-      pageWillGoTo = "top";
+      pageWillGoTo = "/top";
+      
       window.location.hash = pageWillGoTo;
+      activeNavLists();
     } else {
+      // 找到當前頁面的前一頁的 id
       pageWillGoTo = DATA.custom[DATA.custom.indexOf(currentPage) - 1].id;
       window.location.hash = `/customlist/${pageWillGoTo}`;
     }
 
-    // 將頁面導向到前一個順位
-    // window.location.hash = `/customlist/${DATA.custom[DATA.custom.length - 1].id}`;
+    // 刪除在 DATA 中該頁的資料
+    DATA.custom = DATA.custom.filter(page => page.id !== currentPage.id)
 
-    // 將改變新增到 localStorage
-    // setStorage(DATA)
+    // 重新渲染 nav 自訂清單的 UI
+    renderCustomList()
+    
+    // 存到 localStorage
+    setStorage(DATA)
   }
 }

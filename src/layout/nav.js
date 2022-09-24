@@ -200,11 +200,8 @@ function setCustomList() {
  * 先取得目前所在頁面的 id，
  * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
  * 最後將其加上 active 的 class。
- * 
- * 主要用途是在網頁載入的時候在目前所在的頁面加上 active。
- * 防止使用者原地 F5 之後 active 消失的問題。
  */
-export function activeWhenLoad(){
+export function activeNavLists(){
   const id = getCurrentPageId();
   const activeTarget = navContent.querySelector(`#${id}`);
   activeTarget.classList.add('nav__list-item--active');
