@@ -10,7 +10,7 @@ export const Top = {
 
   mount: function () {},
   render: function () {
-    const { name, content } = DATA.top;
+    const { name, content } = DATA.default.find(page => page.id === 'top');
     const todoContent = content.map((li) => {
       return `
                 <li id="${li.id}" class="todo__item">

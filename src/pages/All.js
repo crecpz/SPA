@@ -8,7 +8,7 @@ export const All = {
   mount: function () {},
 
   render: function () {
-    const { name, content } = DATA.all;
+    const { name, content } = DATA.default.find(page => page.id === 'all');
     const todoContent = content.map((li) => {
       return `
                 <li id="${li.id}" class="todo__item">

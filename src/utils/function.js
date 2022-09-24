@@ -14,42 +14,68 @@ export function getStorage() {
   // 如果取得的 localStorage 資料為空，則返回一個基本的初始資料
   return (
     JSON.parse(localStorage.getItem("todoLocalData")) || {
-      all: {
-        id: "all",
-        name: "全部",
-        color: "",
-        content: [
-        //   {
-        //     checked: false,
-        //     content: "this is todo A.",
-        //     top: false,
-        //   },
-        ],
-      },
-      top: {
-        id: "top",
-        name: "置頂",
-        color: "",
-        content: [
-        //   {
-        //     checked: false,
-        //     content: "this is todo A.",
-        //     top: true, // 凡是在 top 內的都是 true
-        //   },
-        ],
-      },
+      default: [
+        {
+          id: "all",
+          name: "全部",
+          color: "",
+          content: [
+            //   {
+            //     checked: false,
+            //     content: "this is todo A.",
+            //     top: false,
+            //   },
+          ],
+        },
+        {
+          id: "top",
+          name: "置頂",
+          color: "",
+          content: [
+            //   {
+            //     checked: false,
+            //     content: "this is todo A.",
+            //     top: true, // 凡是在 top 內的都是 true
+            //   },
+          ],
+        },
+      ],
+      // all: {
+      //   id: "all",
+      //   name: "全部",
+      //   color: "",
+      //   content: [
+      //   //   {
+      //   //     checked: false,
+      //   //     content: "this is todo A.",
+      //   //     top: false,
+      //   //   },
+      //   ],
+      // },
+      // top: {
+      //   id: "top",
+      //   name: "置頂",
+      //   color: "",
+      //   content: [
+      //   //   {
+      //   //     checked: false,
+      //   //     content: "this is todo A.",
+      //   //     top: true, // 凡是在 top 內的都是 true
+      //   //   },
+      //   ],
+      // },
       custom: [
         // {
         //   id: "",
         //   name: "未命名清單",
         //   color: "",
         //   content: [
-            // {
-            //   checked: false,
-            //   content: "this is todo A.",
-            //   top: false,
-            // },
-          // ],
+        // {
+        //   checked: false,
+        //   content: "this is todo A.",
+        //   top: false,
+        // },
+        // ],
         // },
       ],
     }
@@ -69,9 +95,7 @@ export function setStorage(data) {
 export function getCurrentPageId() {
   const hash = window.location.hash;
   const currentPageId =
-    hash.match(/[a-z0-9]*$/)[0] === "" 
-      ? "home" 
-      : hash.match(/[a-z0-9]*$/)[0];
+    hash.match(/[a-z0-9]*$/)[0] === "" ? "home" : hash.match(/[a-z0-9]*$/)[0];
   return currentPageId;
 }
 
@@ -84,14 +108,12 @@ export function getCurrentCustomPage() {
   return DATA.custom.find((i) => i.id === getCurrentPageId());
 }
 
-export function getCurrentDefaultPage(){
+export function getCurrentDefaultPage() {
   const currentPageId = getCurrentPageId();
-  for(let page in DATA){
-    return DATA[page].id === currentPageId ? DATA[page] : null;
-  }
+  // for(let page in DATA){
+  //   return DATA[page].id === currentPageId ? DATA[page] : null;
+  // }
 }
-console.log(getCurrentDefaultPage())
-
 
 /**
  * 取得當前事件觸發的 todo 物件
@@ -110,7 +132,6 @@ export function getCurrentTodo(e) {
   return currentTodo;
 }
 
-
 /**
  * 產生一個隨機 id
  * @returns 一個獨一無二的亂數 id
@@ -123,7 +144,7 @@ export function createUniqueId() {
     ).toString(36)
   );
 }
-
+console.log(DATA)
 export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
 
@@ -139,11 +160,15 @@ export function setTodo() {
       top: currentPageId === "top", // 凡是在 top 內的都是 true
     };
 
-    console.log(currentPageId)
+    console.log(currentPageId);
 
     // ↓ 這個寫法要改善，要更活一點
-    if(currentPageId === 'home'|| currentPageId === 'all' || currentPageId === 'top'){
-      DATA[currentPageId].content.push(todo)
+    if (
+      currentPageId === "home" ||
+      currentPageId === "all" ||
+      currentPageId === "top"
+    ) {
+      DATA.default.find(i => i.id === currentPageId).content.push(todo);
     } else {
       DATA.custom.find((i) => i.id === currentPageId).content.push(todo);
     }
@@ -153,7 +178,6 @@ export function setTodo() {
   }
   Router();
 }
-
 
 export function addTodo(todo) {
   setTodo();
