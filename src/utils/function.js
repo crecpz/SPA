@@ -9,6 +9,9 @@ export const appHeight = () => {
   doc.style.setProperty("--app-height", `${window.innerHeight}px`);
 };
 
+
+
+
 // 取得 localStorage 的資料
 export function getStorage() {
   // 如果取得的 localStorage 資料為空，則返回一個基本的初始資料
@@ -19,13 +22,7 @@ export function getStorage() {
           id: "all",
           name: "全部",
           color: "",
-          content: [
-            //   {
-            //     checked: false,
-            //     content: "this is todo A.",
-            //     top: false,
-            //   },
-          ],
+          content: [],
         },
         {
           id: "top",
@@ -63,6 +60,7 @@ export function getStorage() {
 export function setStorage(data) {
   localStorage.setItem("todoLocalData", JSON.stringify(data));
 }
+
 
 /**
  * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
@@ -121,7 +119,7 @@ export function createUniqueId() {
     ).toString(36)
   );
 }
-console.log(DATA)
+
 export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
 

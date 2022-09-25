@@ -2,13 +2,34 @@ import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
 import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox } from "../layout/main.js";
 
 
+/**
+ * 找出所有頁面內的 todo。
+ * 
+ * 方法:
+ * 找出在 DATA.default 與 DATA.custom 內每一個元素的 content 屬性內的 todo 資料。
+ * (會排除 DATA.default 內 id 為 'all' 的元素)
+ * @returns 一個包含所有 todo 的 Array
+ */
+const getAllTodos = () => {
+  let allTodos = []
+  for(let pageType in DATA) {
+    DATA[pageType].forEach(page => {
+      if(page.id !== 'all'){
+        allTodos.push(page.content);
+      }
+    })
+  }
+  // 展開多維陣列
+  return allTodos.reduce((arr, cur) => arr.concat(cur), [])
+}
+
+
 export const All = {
-  state: {},
-
-  mount: function () {},
-
   render: function () {
-    const { name, content } = DATA.default.find(page => page.id === 'all');
+    const dataOfAll = DATA.default.find(page => page.id === 'all');
+    // all 的 JSON 資料中的 content 屬性放入所有的 todo
+    dataOfAll.content = getAllTodos();
+    const { name, content } = dataOfAll;
     const todoContent = content.map((li) => {
       return `
                 <li id="${li.id}" class="todo__item">
