@@ -2,8 +2,17 @@
 
 .overview {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  // column-gap: 45px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 360px));
+  gap: 3.75rem;
+
+  @include lg {
+    grid-template-columns: repeat(2, minmax(300px, 360px));
+  }
+
+  @include md  {
+    grid-template-columns: minmax(auto, 360px);
+  }
 
   &__link {
     border: 2px solid var(--primary-color);
@@ -13,11 +22,10 @@
   &__header {
     @include text(sm);
     font-weight: bold;
-
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    padding-top: .625rem;
-    padding-bottom: .625rem;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
 
     color: var(--secondary-color);
     background-color: var(--primary-color);
@@ -27,8 +35,8 @@
     display: grid;
     grid-template-columns: 25% 50%;
     justify-content: space-between;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -61,19 +69,16 @@
     padding-left: 1.8rem;
     border-left: 1px solid var(--primary-color);
   }
-
-  &__progress-bar {
-  }
 }
 
 
 .progress {
   @include flex($dir: column);
   grid-column: 1/-1;
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
 
   &__value{
-    // margin-left: auto;
+
   }
 
   &__outer{
