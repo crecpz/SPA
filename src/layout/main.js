@@ -108,7 +108,7 @@ export function removeList(e) {
 
 /**
  * checkbox 功能
- * @param {*} e 
+ * @param {*} e event
  */
 export function checkbox(e) {
   // checkbox

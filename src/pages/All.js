@@ -14,14 +14,23 @@ const getAllTodos = () => {
   let allTodos = []
   for(let pageType in DATA) {
     DATA[pageType].forEach(page => {
-      if(page.id !== 'all'){
-        allTodos.push(page.content);
+      // 找出來自於「全部」內原生的 todo
+      const ownTodos = page.content.filter(i => i.all === true);
+      if(ownTodos.length !== 0){
+        allTodos.push(ownTodos);
+      }
+
+      // 確認資料是否來自於 all 以外的頁面
+      const todosIsFromOtherPage = page.id !== 'all';
+      if(todosIsFromOtherPage){
+        allTodos.push(page.content)
       }
     })
   }
   // 展開多維陣列
   return allTodos.reduce((arr, cur) => arr.concat(cur), [])
 }
+
 
 
 export const All = {

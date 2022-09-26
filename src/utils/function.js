@@ -74,6 +74,7 @@ export function getCurrentPageId() {
   return currentPageId;
 }
 
+
 /**
  * 取得當前所在 custom 頁面的資料。
  * 注意: 此函數是指定在 DATA.custom 內尋找"內部元素的"的 ID。
@@ -83,12 +84,19 @@ export function getCurrentCustomPage() {
   return DATA.custom.find((i) => i.id === getCurrentPageId());
 }
 
-export function getCurrentDefaultPage() {
-  const currentPageId = getCurrentPageId();
-  // for(let page in DATA){
-  //   return DATA[page].id === currentPageId ? DATA[page] : null;
-  // }
+/**
+ * 從 default 與 custom 中取得當前所在頁面的資料
+ * @returns 頁面 Object
+ */
+function getCurrentPage(){
+  for(let page in DATA) {
+    const result = DATA[page].find(i => i.id === getCurrentPageId());
+    if(result){
+      return result;
+    }
+  }
 }
+
 
 /**
  * 取得當前事件觸發的 todo 物件
@@ -99,7 +107,7 @@ export function getCurrentTodo(e) {
   // 取得事件觸發 id
   const currentTodoId = e.target.closest(".todo__item").id;
   // 取得當前頁面資料(Object)
-  const currentPage = getCurrentCustomPage();
+  const currentPage = getCurrentPage();
   // 從當前頁面資料取得當前 todo
   const currentTodo = currentPage.content.find(
     (todoItem) => todoItem.id === currentTodoId
@@ -133,9 +141,8 @@ export function setTodo() {
       checked: false,
       content: todoValue,
       top: currentPageId === "top", // 凡是在 top 內的都是 true
+      all: currentPageId === "all", // 紀錄此 todo 是否來自於 all 頁面原生的
     };
-
-    console.log(currentPageId);
 
     // ↓ 這個寫法要改善，要更活一點
     if (
