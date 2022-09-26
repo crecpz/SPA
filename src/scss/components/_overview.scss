@@ -1,1 +1,90 @@
 @use "abstracts" as *;
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  // column-gap: 45px;
+
+  &__link {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  &__header {
+    @include text(sm);
+    font-weight: bold;
+
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: .625rem;
+    padding-bottom: .625rem;
+
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 25% 50%;
+    justify-content: space-between;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  &__text {
+    @include text(xs);
+    @include flex($jc: space-between, $ai: center);
+
+    &--column{
+      @include flex($dir: column);
+      text-align: center;
+    }
+  }
+
+  &__number {
+    font-weight: bold;
+  }
+
+  &__number--lg {
+    @include text(xl);
+  }
+
+  &__number--sm {
+    @include text(sm);
+  }
+
+  &__group {
+    grid-column: 2/3;
+    @include flex($dir: column, $jc: space-between);
+    padding-left: 1.8rem;
+    border-left: 1px solid var(--primary-color);
+  }
+
+  &__progress-bar {
+  }
+}
+
+
+.progress {
+  @include flex($dir: column);
+  grid-column: 1/-1;
+  margin-top: 1.25rem;
+
+  &__value{
+    // margin-left: auto;
+  }
+
+  &__outer{
+    margin-top: 0.5rem;
+    height: .5rem;
+    border: 1px solid var(--primary-color);
+  }
+
+  &__inner{
+    width: 50%;
+    height: 100%;
+    background-color: var(--primary-color);
+  }
+}
