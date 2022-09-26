@@ -9,9 +9,6 @@ export const appHeight = () => {
   doc.style.setProperty("--app-height", `${window.innerHeight}px`);
 };
 
-
-
-
 // 取得 localStorage 的資料
 export function getStorage() {
   // 如果取得的 localStorage 資料為空，則返回一個基本的初始資料

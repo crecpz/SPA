@@ -3,7 +3,8 @@
 .nav {
   position: absolute;
   z-index: 15;
-  left: -23.4375rem;
+  // left: -23.4375rem;
+  left: -100%;
 
   display: grid;
   grid-template-rows: 4.375rem auto 1fr;

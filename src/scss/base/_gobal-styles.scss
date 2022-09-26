@@ -79,19 +79,21 @@ body {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 375px) 1fr;
+    // grid-template-columns: minmax(0, 100%) 1fr;
     grid-template-rows: 4.375rem 1fr;
     font-weight: 600;
     height: 100%;
 
     @include lg {
         &.nav-open {
-            // .body-overlay {
-            //     @include show();
-            // }
             .overlay {
                 @include show();
             }
         }
+    }
+
+    @include sm {
+        grid-template-columns: minmax(0, 100%) 1fr;
     }
 }
 
