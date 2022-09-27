@@ -1,49 +1,5 @@
 import { DATA, fillZero } from "../utils/function.js";
 
-// function dynamicProgress(percentage) {
-//     let showingPercentage = 0;
-
-//     const plusPercentage = setInterval(() => {
-//         showingPercentage++;
-
-//         if(showingPercentage === percentage){
-//             clearInterval(plusPercentage);
-//         }
-//     }, 100);
-//     console.log(showingPercentage)
-//     return showingPercentage;
-
-//     //   let showNumber = 0;
-//     //   const plusNum = setInterval(() => {
-//     //     showNumber++;
-//     //     progressValue.innerHTML = `${fillZero(showNumber)}%`;
-//     //     // 1% = 3.6deg
-//     //     progressOuter.style.backgroundImage = `conic-gradient(white ${
-//     //       showNumber * 3.6
-//     //     }deg, rgb(169, 164, 164) 0deg)`;
-
-//     //     if (showNumber === percentage) {
-//     //       clearInterval(plusNum);
-//     //     }
-//     //   }, 10);
-// }
-
-// console.log(dynamicProgress(50))
-
-function getOverviewData() {
-    const overviewData = [];
-    for (let pageType in DATA) {
-        DATA[pageType].forEach((page) => {
-            if (pageType === "custom") {
-                page.isCustom = true;
-            }
-            overviewData.push(page);
-        });
-    }
-    return overviewData;
-}
-
-
 export const Home = {
     state: {
     },
@@ -52,7 +8,18 @@ export const Home = {
     },
 
     render: function () {
-        const overviewCards = getOverviewData()
+        const overviewData = [];
+
+        for (let pageType in DATA) {
+            DATA[pageType].forEach((page) => {
+                if (pageType === "custom") {
+                    page.isCustom = true;
+                }
+                overviewData.push(page);
+            });
+        }
+
+        const overviewCards = overviewData
             .map(({ name, content, isCustom, id }) => {
                 const pageName = name;
                 const all = content.length;
