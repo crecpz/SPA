@@ -1,4 +1,4 @@
-import {  DATA, setStorage,getCurrentTodo } from "../utils/function.js";
+import {  DATA, setStorage, getCurrentTodo } from "../utils/function.js";
 import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox } from "../layout/main.js";
 
 

@@ -1,6 +1,4 @@
-import { navSwitcher } from "../layout/nav.js";
-import { modeSwitcher } from "../utils/mode.js";
-import { openListOption, clickToCloseListOption } from "../layout/main.js";
+import { DATA, setStorage, getCurrentTodo } from "../utils/function.js";
 
 export const Home = {
     mount: () => {
@@ -8,6 +6,57 @@ export const Home = {
     },
 
     render: () => {
+        const overviewData = [];
+
+        for (let pageType in DATA) {
+            DATA[pageType].forEach(page => {
+                overviewData.push(page)
+            });
+        }
+
+        console.log(overviewData)
+
+        const overviewCards = overviewData.map(({name, content}) => {
+            const pageName = name;
+            const all = content.length
+            const unCompleted = content.filter(todo => !todo.checked).length;
+            const completed = content.filter(todo => todo.checked).length;
+            const progress = isNaN(Math.round(completed / all * 100)) 
+                                ? 0 
+                                : Math.round(completed / all * 100);
+
+            // href="#/customlist/l8i4wjei1hzozzxso"
+            // href="#/top"
+            
+            return `
+                    <a href="#" class="overview__link">
+                        <div class="overview__header">${pageName}</div>
+                        <div class="overview__content">
+                            <div class="overview__text overview__text--column">待完成
+                                <span class="overview__number overview__number--lg">${unCompleted}</span>
+                            </div>
+                            <div class="overview__group">
+                                <div class="overview__text">全部
+                                    <span class="overview__number overview__number--sm">${all}</span>
+                                </div>
+                                <div class="overview__text">已完成
+                                    <span class="overview__number overview__number--sm">${completed}</span>
+                                </div>
+                            </div>
+                            <div class="overview__progress-bar progress">
+                                <span class="progress__value">${progress}%
+                                </span>
+                                <div class="progress__outer">
+                                    <div class="progress__inner"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `
+        }).join('')
+
+
+
         return `
         <!-- 主內容區 header -->
         <div class="main__content-header">
@@ -25,166 +74,7 @@ export const Home = {
         <div class="main__content-list">
             <div class="container">
                 <div class="overview">
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="overview__link">
-                        <div class="overview__header">工作</div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">15</span>
-                            </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">35</span>
-                                </div>
-                                <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">08</span>
-                                </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                                <span class="progress__value">36%</span>
-                                <div class="progress__outer">
-                                    <div class="progress__inner"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                ${overviewCards}
                 </div>
             </div>
         </div>
