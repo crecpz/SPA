@@ -154,7 +154,7 @@ export function setTodo() {
       checked: false,
       content: todoValue,
       top: currentPageId === "top", // 凡是在 top 內的都是 true
-      all: currentPageId === "all", // 紀錄此 todo 是否來自於 all 頁面原生的
+      src: getCurrentPageId(),
     };
 
     // ↓ 這個寫法要改善，要更活一點
@@ -177,3 +177,9 @@ export function setTodo() {
 export function addTodo(todo) {
   setTodo();
 }
+
+function dropdownSwitch(e) {
+  
+}
+
+

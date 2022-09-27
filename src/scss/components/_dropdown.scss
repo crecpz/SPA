@@ -1,2 +1,23 @@
 @use "abstracts" as *;
 
+.dropdown {
+
+}
+
+.dropdown-name {
+  @include text(sm);
+  color: var(--secondary-color);
+  padding-left: .5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: var(--primary-color);
+  
+  i {
+    margin-right: 1rem;
+  }
+}
+
+.dropdown-cover {
+  overflow: hidden;
+  // height: 0;
+}

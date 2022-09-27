@@ -58,11 +58,13 @@
       @include text(base);
     }
 
+    color: var(--primary-color);
     margin-left: 1.25rem;
     margin-right: 1.25rem;
   }
 
   &__top {
     margin-left: auto;
+    color: var(--primary-color);
   }
 }
