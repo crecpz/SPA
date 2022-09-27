@@ -1,4 +1,4 @@
-import { DATA, setStorage, getCurrentTodo } from "../utils/function.js";
+import { DATA, setStorage, getCurrentTodo, dropdownSwitch } from "../utils/function.js";
 import {
   openListOption,
   clickToCloseListOption,
@@ -61,9 +61,8 @@ export const All = {
                         <span class="todo__checkmark"></span>
                         <p class="todo__content">${li.content}</p>
                     </label>
-                    <i class="todo__top ${
-                      li.top ? "fa-solid" : "fa-regular"
-                    } fa-star"></i> 
+                    <i class="todo__top ${li.top ? "fa-solid" : "fa-regular"
+        } fa-star"></i> 
                 </li>
         `;
     });
@@ -94,18 +93,33 @@ export const All = {
         <!-- main content list -->
         <div class="main__content-list">
             <div class="container">
-              <ul id="todo" class="todo">
-                <div class="dropdown-name"><i class="fa-solid fa-chevron-right"></i>工作</div>
-                <div class="dropdown-cover">
-                  <li id="" class="todo__item">
-                    <label class="todo__label">
-                        <input type="checkbox" class="todo__checkbox">
-                        <span class="todo__checkmark"></span>
-                        <p class="todo__content">545454</p>
-                    </label>
-                    <i class="todo__top fa-regular fa-star"></i> 
-                  </li>
-                </div>
+              <ul class="dropdowns">
+                <li class="dropdown">
+                  <div class="dropdown__name">
+                    <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                    工作
+                  </div>
+                  <div class="dropdown__cover">
+                    <ul class="todo">
+                      <li class="todo__item">
+                        <label class="todo__label">
+                            <input type="checkbox" class="todo__checkbox">
+                            <span class="todo__checkmark"></span>
+                            <p class="todo__content">545454</p>
+                        </label>
+                        <i class="todo__top fa-regular fa-star"></i> 
+                      </li>
+                      <li class="todo__item">
+                        <label class="todo__label">
+                            <input type="checkbox" class="todo__checkbox">
+                            <span class="todo__checkmark"></span>
+                            <p class="todo__content">545454</p>
+                        </label>
+                        <i class="todo__top fa-regular fa-star"></i> 
+                      </li>
+                    </ul>
+                  </div>
+                </li>
               </ul>
             </div>
         </div>
@@ -122,7 +136,7 @@ export const All = {
       removeList(e); // 偵測使用者是否有點擊"刪除"
 
       // dropdown
-      if(e.target.classList.contins('dropdown-wrapper')){
+      if (e.target.classList.contains('dropdown__name')) {
         dropdownSwitch(e);
       }
 

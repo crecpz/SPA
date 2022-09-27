@@ -1,23 +1,42 @@
 @use "abstracts" as *;
 
 .dropdown {
-
-}
-
-.dropdown-name {
   @include text(sm);
-  color: var(--secondary-color);
   padding-left: .5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  background-color: var(--primary-color);
-  
-  i {
-    margin-right: 1rem;
-  }
-}
 
-.dropdown-cover {
-  overflow: hidden;
-  // height: 0;
+        
+  &__arrow{
+    margin-right: .5rem;
+    pointer-events: none;
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: transform 350ms ease-in-out;
+
+    &--closing {
+      transform: rotate(0deg);
+    }
+  }
+
+  &__name{
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    cursor: pointer;
+  }
+
+  &__cover {
+    overflow: hidden;
+    transition: height ease-in-out 350ms;
+
+    &--closing {
+      height: 0;
+    }
+  }
+
+
 }

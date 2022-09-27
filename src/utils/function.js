@@ -178,8 +178,22 @@ export function addTodo(todo) {
   setTodo();
 }
 
-function dropdownSwitch(e) {
-  
+export function dropdownSwitch(e) {
+  const dropdownCover = e.target.nextElementSibling;
+  const todos = dropdownCover.children[0];
+  const dropdownArrow = e.target.children[0];
+  console.log(dropdownArrow)
+  dropdownCover.style.height = `${todos.clientHeight}px`
+
+  if(dropdownCover.clientHeight){
+    dropdownCover.style.height = `${0}px`;
+    dropdownArrow.classList.add('dropdown__arrow--closing');
+  } else {
+    dropdownCover.style.height = `${todos.clientHeight}px`
+    dropdownArrow.classList.remove('dropdown__arrow--closing');
+  }
 }
 
 
+
+// console.log(document.querySelector('.dropdown-name'))
