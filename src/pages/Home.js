@@ -1,35 +1,71 @@
-import { DATA, setStorage, getCurrentTodo } from "../utils/function.js";
+import { DATA, fillZero } from "../utils/function.js";
+
+// function dynamicProgress(percentage) {
+//     let showingPercentage = 0;
+
+//     const plusPercentage = setInterval(() => {
+//         showingPercentage++;
+
+//         if(showingPercentage === percentage){
+//             clearInterval(plusPercentage);
+//         }
+//     }, 100);
+//     console.log(showingPercentage)
+//     return showingPercentage;
+
+//     //   let showNumber = 0;
+//     //   const plusNum = setInterval(() => {
+//     //     showNumber++;
+//     //     progressValue.innerHTML = `${fillZero(showNumber)}%`;
+//     //     // 1% = 3.6deg
+//     //     progressOuter.style.backgroundImage = `conic-gradient(white ${
+//     //       showNumber * 3.6
+//     //     }deg, rgb(169, 164, 164) 0deg)`;
+
+//     //     if (showNumber === percentage) {
+//     //       clearInterval(plusNum);
+//     //     }
+//     //   }, 10);
+// }
+
+// console.log(dynamicProgress(50))
+
+function getOverviewData() {
+    const overviewData = [];
+    for (let pageType in DATA) {
+        DATA[pageType].forEach((page) => {
+            if (pageType === "custom") {
+                page.isCustom = true;
+            }
+            overviewData.push(page);
+        });
+    }
+    return overviewData;
+}
+
 
 export const Home = {
-    mount: () => {
-        // removeAllListeners()
+    state: {
     },
 
-    render: () => {
-        const overviewData = [];
+    mount: function () {
+    },
 
-        for (let pageType in DATA) {
-            DATA[pageType].forEach(page => {
-                overviewData.push(page)
-            });
-        }
+    render: function () {
+        const overviewCards = getOverviewData()
+            .map(({ name, content, isCustom, id }) => {
+                const pageName = name;
+                const all = content.length;
+                const unCompleted = content.filter((todo) => !todo.checked).length;
+                const completed = content.filter((todo) => todo.checked).length;
+                const percentage = isNaN(Math.round((completed / all) * 100))
+                    ? "0"
+                    : fillZero(Math.round((completed / all) * 100));
 
-        console.log(overviewData)
 
-        const overviewCards = overviewData.map(({name, content}) => {
-            const pageName = name;
-            const all = content.length
-            const unCompleted = content.filter(todo => !todo.checked).length;
-            const completed = content.filter(todo => todo.checked).length;
-            const progress = isNaN(Math.round(completed / all * 100)) 
-                                ? 0 
-                                : Math.round(completed / all * 100);
-
-            // href="#/customlist/l8i4wjei1hzozzxso"
-            // href="#/top"
-            
-            return `
-                    <a href="#" class="overview__link">
+                return `
+                    <a href="#/${isCustom ? "customlist/" + id : id
+                    }" class="overview__link">
                         <div class="overview__header">${pageName}</div>
                         <div class="overview__content">
                             <div class="overview__text overview__text--column">待完成
@@ -44,45 +80,42 @@ export const Home = {
                                 </div>
                             </div>
                             <div class="overview__progress-bar progress">
-                                <span class="progress__value">${progress}%
+                                <span class="progress__value">${percentage}%
                                 </span>
                                 <div class="progress__outer">
-                                    <div class="progress__inner"></div>
+                                    <div class="progress__inner" style="width:${percentage}%"></div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                `
-        }).join('')
-
-
+                `;
+            })
+            .join("");
 
         return `
-        <!-- 主內容區 header -->
-        <div class="main__content-header">
-            <div class="container">
-                <h2 class="main__title">
-                    <div class="main__color-block"></div>
-                </h2>
-                <!-- 清單選單按鈕 -->
-                <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-            </div>
-        </div>
-
-
-        <!-- main content list -->
-        <div class="main__content-list">
-            <div class="container">
-                <div class="overview">
-                ${overviewCards}
+            <!-- 主內容區 header -->
+            <div class="main__content-header">
+                <div class="container">
+                    <h2 class="main__title">
+                        <div class="main__color-block"></div>
+                    </h2>
+                    <!-- 清單選單按鈕 -->
+                    <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 </div>
             </div>
-        </div>
-    `;
+
+            <!-- main content list -->
+            <div class="main__content-list">
+                <div class="container">
+                    <div class="overview">
+                        ${overviewCards}
+                    </div>
+                </div>
+            </div>
+        `;
     },
 
     listener: {
         click: (e) => { },
     },
 };
-

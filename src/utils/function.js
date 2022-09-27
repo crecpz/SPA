@@ -125,6 +125,22 @@ export function createUniqueId() {
   );
 }
 
+
+/**
+ * 接收一個數字參數number，檢查number是否大於0且小於10，
+ * 若符合條件，返回一個前面補0的String；
+ * 若不符合條件返回一個由number轉化成的String。
+ * @param {*} number 
+ * @returns `String`
+ */
+export function fillZero(number) {
+  return number < 10 && number > 0
+    ? '0' + number
+    : String(number);
+}
+
+
+
 export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
 
