@@ -8,7 +8,18 @@ export const Home = {
     },
 
     render: function () {
-        const overviewCards = getOverviewData()
+        const overviewData = [];
+
+        for (let pageType in DATA) {
+            DATA[pageType].forEach((page) => {
+                if (pageType === "custom") {
+                    page.isCustom = true;
+                }
+                overviewData.push(page);
+            });
+        }
+
+        const overviewCards = overviewData
             .map(({ name, content, isCustom, id }) => {
                 const pageName = name;
                 const all = content.length;
