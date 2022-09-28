@@ -1,18 +1,17 @@
 @use "abstracts" as *;
 
-.dropdown {
-  @include text(sm);
-  padding-left: .5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+$dropdown-transition-speed: 250ms; 
 
+.dropdown {
+  padding-top: 2rem;
         
   &__arrow{
-    margin-right: .5rem;
+    @include text(xs);
+    margin-right: .875rem;
     pointer-events: none;
     transform: rotate(90deg);
     transform-origin: center;
-    transition: transform 350ms ease-in-out;
+    transition: transform $dropdown-transition-speed ease-in-out;
 
     &--closing {
       transform: rotate(0deg);
@@ -20,6 +19,9 @@
   }
 
   &__name{
+    @include flex($ai: center);
+    @include text(base);
+    font-weight: bold;
     width: 100%;
     padding-left: 1rem;
     padding-top: 0.35rem;
@@ -30,13 +32,14 @@
   }
 
   &__cover {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border: 1px solid var(--primary-color);
     overflow: hidden;
-    transition: height ease-in-out 350ms;
+    transition: height ease-in-out $dropdown-transition-speed;
 
     &--closing {
       height: 0;
     }
   }
-
-
 }

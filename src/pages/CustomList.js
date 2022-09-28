@@ -1,11 +1,14 @@
 import {  DATA, setStorage, getCurrentTodo } from "../utils/function.js";
-import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox } from "../layout/main.js";
+import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox, scrollBarFix } from "../layout/main.js";
 
 
 export const CustomList = {
   state: {},
+  
 
-  mount: function () {},
+  mount: function () {
+    scrollBarFix()
+  },
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);

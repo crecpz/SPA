@@ -19,8 +19,8 @@
     position: relative;
     cursor: pointer;
     width: 100%;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
 
   &__checkbox {
@@ -52,11 +52,11 @@
   }
 
   &__content {
-    @include text(sm);
+    @include text(base);
 
-    @include sm {
-      @include text(base);
-    }
+    // @include sm {
+    //   @include text(base);
+    // }
 
     color: var(--primary-color);
     margin-left: 1.25rem;

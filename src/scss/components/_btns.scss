@@ -49,6 +49,8 @@
   &--list-option {
     @include text(md);
     color: var(--primary-color);
+    padding-right: 0;
+    padding-left: 0;
 
     i {
       pointer-events: none;

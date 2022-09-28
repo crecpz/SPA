@@ -74,14 +74,16 @@
   }
 
   &__content {
-    @include flex($dir: column);
+    @include flex($dir: column, $ai: center);
     grid-column: 2/-1;
     grid-row: 2/-1;
     height: calc(100vh - 70px);
     padding-bottom: 5rem;
+    overflow-y: hidden;
   }
 
   &__content-header {
+    @include flex($jc: center);
     @include padding-x;
     position: sticky; // 09/04: 這邊考慮用 fixed 
     z-index: 5;
@@ -91,7 +93,7 @@
     background-color: var(--secondary-color);
     
     width: 100%;
-    margin-top: 5rem;        
+    margin-top: 4rem;        
 
     @include sm {
       margin-top: 3rem;
@@ -100,7 +102,6 @@
     .container {
       position: relative;
       @include flex($jc: space-between, $ai: center);
-      // max-width: 62.5rem;
       max-width: $max-width;
     }
   }
@@ -123,13 +124,19 @@
   }
 
   &__content-list {
-    overflow-y: scroll;
-    margin-top: 3rem;
+    @include flex($jc: center);
+    margin-top: 2.5rem;
+    width: 100%;
+
+    overflow: auto;
+    padding-right: 0px; /* exact value is given in JavaScript code */
 
     @include padding-x;
     
     .container {
+      // overflow-y: scroll;
       max-width: $max-width;
+
     }
   }
 }
