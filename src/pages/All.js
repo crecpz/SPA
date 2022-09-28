@@ -1,4 +1,9 @@
-import { DATA, setStorage, getCurrentTodo, dropdownSwitch } from "../utils/function.js";
+import {
+  DATA,
+  setStorage,
+  getCurrentTodo,
+  dropdownSwitch,
+} from "../utils/function.js";
 import {
   openListOption,
   clickToCloseListOption,
@@ -6,66 +11,53 @@ import {
   openConfirmModal,
   closeModal,
   checkbox,
+  scrollBarFix,
 } from "../layout/main.js";
 
-/**
- * 找出所有頁面內的 todo。
- *
- * 方法:
- * 找出在 DATA.default 與 DATA.custom 內每一個元素的 content 屬性內的 todo 資料。
- * (會排除 DATA.default 內 id 為 'all' 的元素)
- * @returns 一個包含所有 todo 的 Array
- */
-const getAllTodos = () => {
-  let allTodos = [];
-  for (let pageType in DATA) {
-    DATA[pageType].forEach((page) => {
-      // allTodos 只會存放兩種內容:
-      // 1. todo 資料內的 src 屬性為 'all' 的元素。(代表此元素是在 all 頁面被創建的)
-      // 2. 頁面 id 不為 'all' 的內容。 (因為 all 內容並不需要存放 'all' 自己本身)
-
-      // 找出 todo 資料內的 src 屬性為 'all' 的元素
-      const ownTodos = page.content.filter(
-        (todoData) => todoData.src === "all"
-      );
-      if (ownTodos.length !== 0) {
-        allTodos.push(ownTodos);
-      }
-
-      // 找出頁面 id 不為 'all' 的內容。
-      const todosIsFromOtherPage = page.id !== "all";
-      if (todosIsFromOtherPage) {
-        allTodos.push(page.content);
-      }
-    });
-  }
-  // console.log(allTodos)
-  // return allTodos;
-  // 展開多維陣列
-  return allTodos.reduce((arr, cur) => arr.concat(cur), []); // 88888
-};
-
 export const All = {
+  mount: function () {
+    scrollBarFix();
+  },
+
   render: function () {
-    const dataOfAll = DATA.default.find((page) => page.id === "all");
-    // all 的 JSON 資料中的 content 屬性放入所有的 todo
-    dataOfAll.content = getAllTodos();
-    // console.log(dataOfAll.content)
-    const { name, content } = dataOfAll;
-    const todoContent = content.map((li) => {
-      return `
-                <li id="${li.id}" class="todo__item">
-                    <label class="todo__label">
-                        <input type="checkbox" class="todo__checkbox" 
-                        ${li.checked ? "checked" : ""}>
-                        <span class="todo__checkmark"></span>
-                        <p class="todo__content">${li.content}</p>
-                    </label>
-                    <i class="todo__top ${li.top ? "fa-solid" : "fa-regular"
-        } fa-star"></i> 
-                </li>
-        `;
-    });
+    const allContent = getAllContentObj();
+    const { name: pageName } = DATA.default.find((page) => page.id === "all");
+    console.log(pageName)
+
+    const dropdownsContent = allContent
+      .map(({ name, content }) => {
+        return `
+        <li class="dropdown">
+          <div class="dropdown__name">
+            <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+            ${name}
+          </div>
+          <div class="dropdown__cover">
+            <ul class="todo">
+              ${content
+                .map((todo) => {
+                  return `
+                    <li id="${todo.id}" class="todo__item">
+                      <label class="todo__label">
+                          <input type="checkbox" class="todo__checkbox"
+                            ${todo.checked ? "checked" : ""}
+                          >
+                          <span class="todo__checkmark"></span>
+                          <p class="todo__content">${todo.content}</p>
+                      </label>
+                      <i class="todo__top ${
+                        todo.top ? "fa-solid" : "fa-regular"
+                      } fa-star"></i> 
+                    </li>
+                  `;
+                })
+                .join("")}
+            </ul>
+          </div>
+        </li>
+      `;
+      })
+      .join("");
 
     return `
         <!-- 主內容區 header -->
@@ -73,7 +65,7 @@ export const All = {
             <div class="container">
                 <h2 class="main__title">
                     <div class="main__color-block"></div>
-                    ${name}
+                    ${pageName}
                 </h2>
                 <!-- 清單選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
@@ -94,36 +86,50 @@ export const All = {
         <div class="main__content-list">
             <div class="container">
               <ul class="dropdowns">
-                <li class="dropdown">
-                  <div class="dropdown__name">
-                    <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
-                    工作
-                  </div>
-                  <div class="dropdown__cover">
-                    <ul class="todo">
-                      <li class="todo__item">
-                        <label class="todo__label">
-                            <input type="checkbox" class="todo__checkbox">
-                            <span class="todo__checkmark"></span>
-                            <p class="todo__content">545454</p>
-                        </label>
-                        <i class="todo__top fa-regular fa-star"></i> 
-                      </li>
-                      <li class="todo__item">
-                        <label class="todo__label">
-                            <input type="checkbox" class="todo__checkbox">
-                            <span class="todo__checkmark"></span>
-                            <p class="todo__content">545454</p>
-                        </label>
-                        <i class="todo__top fa-regular fa-star"></i> 
-                      </li>
-                    </ul>
-                  </div>
-                </li>
+                ${dropdownsContent}
               </ul>
             </div>
         </div>
     `;
+
+    /**
+     * 彙整 all 頁面中需要的 data。
+     *
+     * 遍歷 DATA 內的 default & custom，並找出以下符合兩項條件的 Object:
+     *  1.找出頁面資料中 id 不是 'all' 的 Object
+     *  2.找出來自於 all 頁面自己所新增的 todo Object (src 屬性 === 'all')
+     *
+     * - 返回值: 返回 `allContentObj` Array
+     *  - 遍歷頁面物件資料，如果找到頁面資料中 id 不是 'all'，直接將此物件加進 allContentObj array 中。
+     *  - 遍歷頁面物件資料，如果該物件 id 是 'all'，則遍歷該物件內的 content 屬性(array)，找出元素 src 屬性 === 'all'
+     *    的物件，並將找到的結果放入新的頁面物件資料當中的 content 屬性中。
+     *
+     * 備註:此新頁面屬性將作為 All.js 頁面中的 all 頁面資料。這麼做的原因是因為在 All.js 內只需要顯示出來自於 All 頁面新增的 todo 即可。
+     *      不需要把整個 all 的資料都渲染出來，這樣資料會重複。
+     */
+    function getAllContentObj() {
+      const allContentObj = [];
+      for (let pageType in DATA) {
+        DATA[pageType].forEach((pageObj) => {
+          if (pageObj.id !== "all") {
+            allContentObj.push(pageObj);
+          } else {
+            // 找出 all 頁面中自己的 todo
+            const allOwnContent = pageObj.content.filter(
+              (todo) => todo.src === "all"
+            );
+            // 建立物件，並在物件中的 content 中放入 allOwnContent
+            allContentObj.push({
+              id: "all",
+              name: "全部",
+              content: [...allOwnContent],
+              color: "",
+            });
+          }
+        });
+      }
+      return allContentObj;
+    }
   },
 
   listener: {
@@ -136,7 +142,7 @@ export const All = {
       removeList(e); // 偵測使用者是否有點擊"刪除"
 
       // dropdown
-      if (e.target.classList.contains('dropdown__name')) {
+      if (e.target.classList.contains("dropdown__name")) {
         dropdownSwitch(e);
       }
 
@@ -158,4 +164,3 @@ export const All = {
     },
   },
 };
-

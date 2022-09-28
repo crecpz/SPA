@@ -1,10 +1,9 @@
+import { scrollBarFix } from "../layout/main.js";
 import { DATA, fillZero } from "../utils/function.js";
 
 export const Home = {
-    state: {
-    },
-
     mount: function () {
+        scrollBarFix();
     },
 
     render: function () {

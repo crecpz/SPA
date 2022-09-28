@@ -2,13 +2,15 @@ import {
   openListOption,
   clickToCloseListOption,
   checkbox,
+  scrollBarFix,
 } from "../layout/main.js";
 import { DATA } from "../utils/function.js";
 
 export const Top = {
-  state: {},
+  mount: function () {
+    scrollBarFix();
+  },
 
-  mount: function () {},
   render: function () {
     const { name, content } = DATA.default.find(page => page.id === 'top');
     const todoContent = content.map((li) => {

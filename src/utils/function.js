@@ -94,7 +94,6 @@ function getCurrentPage(){
   }
 }
 
-
 /**
  * 取得當前事件觸發的 todo 物件
  * @param {*} e 事件
@@ -178,22 +177,23 @@ export function addTodo(todo) {
   setTodo();
 }
 
+
+/**
+ * 控制 dropdown 展開與收合
+ */
 export function dropdownSwitch(e) {
   const dropdownCover = e.target.nextElementSibling;
   const todos = dropdownCover.children[0];
   const dropdownArrow = e.target.children[0];
-  console.log(dropdownArrow)
   dropdownCover.style.height = `${todos.clientHeight}px`
 
   if(dropdownCover.clientHeight){
     dropdownCover.style.height = `${0}px`;
     dropdownArrow.classList.add('dropdown__arrow--closing');
   } else {
-    dropdownCover.style.height = `${todos.clientHeight}px`
+    dropdownCover.style.height = `${todos.clientHeight}px`;
     dropdownArrow.classList.remove('dropdown__arrow--closing');
   }
 }
 
 
-
-// console.log(document.querySelector('.dropdown-name'))

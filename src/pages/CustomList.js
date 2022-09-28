@@ -3,9 +3,6 @@ import { openListOption, clickToCloseListOption, removeList, openConfirmModal, c
 
 
 export const CustomList = {
-  state: {},
-  
-
   mount: function () {
     scrollBarFix()
   },

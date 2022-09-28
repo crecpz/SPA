@@ -3,7 +3,7 @@
 $dropdown-transition-speed: 250ms; 
 
 .dropdown {
-  padding-top: 2rem;
+  padding-top: 1.5rem;
         
   &__arrow{
     @include text(xs);
@@ -21,6 +21,9 @@ $dropdown-transition-speed: 250ms;
   &__name{
     @include flex($ai: center);
     @include text(base);
+    position: sticky;
+    top: 0;
+    z-index: 10;
     font-weight: bold;
     width: 100%;
     padding-left: 1rem;

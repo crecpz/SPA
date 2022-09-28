@@ -103,7 +103,6 @@ export function removeList(e) {
   }
 }
 
-// 加上星號
 
 
 /**
@@ -115,12 +114,30 @@ export function checkbox(e) {
   if (e.target.classList.contains("todo__checkbox")) {
     // 取得當前 todo
     const currentTodo = getCurrentTodo(e);
+    console.log(currentTodo)
     // 反轉 checked 值
     currentTodo.checked = !currentTodo.checked;
     // 存進 localStorage
     setStorage(DATA);
   }
 }
+
+/**
+ * 以往更新 checkbox 的值的方式是先透過 e.target.id 來找出:
+ *  1.該 todo 的 id
+ *  2.該事件觸發時的網址後段(id)，利用 id 找出相對於此網址的 DATA 資料，從資料中再根據
+ *    todo id 找出該筆 todo
+ * 接著反轉 checkbox 的值，並且更新至 localStorage。
+ * 
+ * 但位於 All.js 的情況並非如此， All.js 的資料已經是從 DATA 中拉下來之後經過變造的次等資料。
+ * 那些資料僅是為了呈現到 dropdown 所寫出來的資料。除了全部頁面親生的 todo 能儲存改變之外，
+ * 其他的 todo 都沒辦法存入資料，因為變更的次等資料。
+ * 
+ * 對於 all 頁面的 checkbox，應該要另想方設法，
+ */
+
+
+
 
 /**
  * 使 scrollBar 不佔據任何空間但保有滾動條樣式與滾動的功能。
