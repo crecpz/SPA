@@ -8,6 +8,7 @@ export const Home = {
 
     render: function () {
         const overviewData = [];
+        console.log(DATA)
 
         for (let pageType in DATA) {
             DATA[pageType].forEach((page) => {
@@ -64,9 +65,8 @@ export const Home = {
                 <div class="container">
                     <h2 class="main__title">
                         <div class="main__color-block"></div>
+                        總覽
                     </h2>
-                    <!-- 清單選單按鈕 -->
-                    <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 </div>
             </div>
 
