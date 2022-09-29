@@ -2,8 +2,8 @@ import {
   DATA,
   setStorage,
   getCurrentTodo,
-  dropdownSwitch,
 } from "../utils/function.js";
+
 import {
   openListOption,
   clickToCloseListOption,
@@ -12,6 +12,7 @@ import {
   closeModal,
   checkbox,
   scrollBarFix,
+  dropdownSwitch,
 } from "../layout/main.js";
 
 export const All = {
@@ -22,7 +23,6 @@ export const All = {
   render: function () {
     const allContent = getAllContentObj();
     const { name: pageName } = DATA.default.find((page) => page.id === "all");
-    console.log(pageName)
 
     const dropdownsContent = allContent
       .map(({ name, content }) => {
@@ -35,8 +35,8 @@ export const All = {
           <div class="dropdown__cover">
             <ul class="todo">
               ${content
-                .map((todo) => {
-                  return `
+            .map((todo) => {
+              return `
                     <li id="${todo.id}" class="todo__item">
                       <label class="todo__label">
                           <input type="checkbox" class="todo__checkbox"
@@ -45,13 +45,12 @@ export const All = {
                           <span class="todo__checkmark"></span>
                           <p class="todo__content">${todo.content}</p>
                       </label>
-                      <i class="todo__top ${
-                        todo.top ? "fa-solid" : "fa-regular"
-                      } fa-star"></i> 
+                      <i class="todo__top ${todo.top ? "fa-solid" : "fa-regular"
+                } fa-star"></i> 
                     </li>
                   `;
-                })
-                .join("")}
+            })
+            .join("")}
             </ul>
           </div>
         </li>
@@ -97,11 +96,11 @@ export const All = {
      *
      * 遍歷 DATA 內的 default & custom，並找出以下符合兩項條件的 Object:
      *  1.找出頁面資料中 id 不是 'all' 的 Object
-     *  2.找出來自於 all 頁面自己所新增的 todo Object (src 屬性 === 'all')
+     *  2.找出來自於 all 頁面自己所新增的 todo Object (srcId 屬性 === 'all')
      *
      * - 返回值: 返回 `allContentObj` Array
      *  - 遍歷頁面物件資料，如果找到頁面資料中 id 不是 'all'，直接將此物件加進 allContentObj array 中。
-     *  - 遍歷頁面物件資料，如果該物件 id 是 'all'，則遍歷該物件內的 content 屬性(array)，找出元素 src 屬性 === 'all'
+     *  - 遍歷頁面物件資料，如果該物件 id 是 'all'，則遍歷該物件內的 content 屬性(array)，找出元素 srcId 屬性 === 'all'
      *    的物件，並將找到的結果放入新的頁面物件資料當中的 content 屬性中。
      *
      * 備註:此新頁面屬性將作為 All.js 頁面中的 all 頁面資料。這麼做的原因是因為在 All.js 內只需要顯示出來自於 All 頁面新增的 todo 即可。
@@ -116,7 +115,7 @@ export const All = {
           } else {
             // 找出 all 頁面中自己的 todo
             const allOwnContent = pageObj.content.filter(
-              (todo) => todo.src === "all"
+              (todo) => todo.srcId === "all"
             );
             // 建立物件，並在物件中的 content 中放入 allOwnContent
             allContentObj.push({

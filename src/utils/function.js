@@ -1,3 +1,4 @@
+// import { scrollBarFix } from "../layout/main.js";
 import { Router } from "../routes/Router.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
@@ -34,7 +35,7 @@ export function getStorage() {
           ],
         },
       ],
-    
+
       custom: [
         // {
         //   id: "",
@@ -71,6 +72,18 @@ export function getCurrentPageId() {
   return currentPageId;
 }
 
+/**
+ * 取得當前所在頁面的 Object
+ * @returns 頁面 Object
+ */
+function getCurrentPage() {
+  for (let pageType in DATA) {
+    const result = DATA[pageType].find(i => i.id === getCurrentPageId())
+    if(result) return result;
+  }
+}
+
+// console.log(getCurrentPage())
 
 /**
  * 取得當前所在 custom 頁面的資料。
@@ -81,18 +94,8 @@ export function getCurrentCustomPage() {
   return DATA.custom.find((i) => i.id === getCurrentPageId());
 }
 
-/**
- * 從 default 與 custom 中取得當前所在頁面的資料
- * @returns 頁面 Object
- */
-function getCurrentPage(){
-  for(let page in DATA) {
-    const result = DATA[page].find(i => i.id === getCurrentPageId());
-    if(result){
-      return result;
-    }
-  }
-}
+
+
 
 /**
  * 取得當前事件觸發的 todo 物件
@@ -100,9 +103,9 @@ function getCurrentPage(){
  * @returns todo 物件
  */
 export function getCurrentTodo(e) {
-  // 取得事件觸發 id
+  // 取得事件觸發 todo 的 id
   const currentTodoId = e.target.closest(".todo__item").id;
-  // 取得當前頁面資料(Object)
+  // 取得當前頁面物件資料
   const currentPage = getCurrentPage();
   // 從當前頁面資料取得當前 todo
   const currentTodo = currentPage.content.find(
@@ -148,12 +151,14 @@ export function setTodo() {
     // 取得目前頁面的所在位置(取得頁面ID)
     const currentPageId = getCurrentPageId();
 
+
     const todo = {
       id: createUniqueId(),
       checked: false,
       content: todoValue,
       top: currentPageId === "top", // 凡是在 top 內的都是 true
-      src: getCurrentPageId(),
+      srcId: getCurrentPageId(),
+      srcName: getCurrentPage().name,
     };
 
     // ↓ 這個寫法要改善，要更活一點
@@ -178,22 +183,6 @@ export function addTodo(todo) {
 }
 
 
-/**
- * 控制 dropdown 展開與收合
- */
-export function dropdownSwitch(e) {
-  const dropdownCover = e.target.nextElementSibling;
-  const todos = dropdownCover.children[0];
-  const dropdownArrow = e.target.children[0];
-  dropdownCover.style.height = `${todos.clientHeight}px`
 
-  if(dropdownCover.clientHeight){
-    dropdownCover.style.height = `${0}px`;
-    dropdownArrow.classList.add('dropdown__arrow--closing');
-  } else {
-    dropdownCover.style.height = `${todos.clientHeight}px`;
-    dropdownArrow.classList.remove('dropdown__arrow--closing');
-  }
-}
 
 

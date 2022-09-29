@@ -2,11 +2,9 @@ import {
   addTodo,
   DATA,
   getCurrentCustomPage,
-  getCurrentPageId,
-  getCurrentTodo,
   setStorage,
 } from "../utils/function.js";
-import { activeNavLists as activeNavLists, renderCustomList } from "./nav.js";
+import { activeNavLists, renderCustomList } from "./nav.js";
 
 /**
  * 點擊 listOptionBtn 會調用此函數。
@@ -104,6 +102,24 @@ export function removeList(e) {
 }
 
 
+/**
+ * 搜尋出自於該頁面本身的 todo
+ */
+function searchOriginTodo(todoId) {
+  const isInAll = DATA.default[0].content.find(({ id, srcId }) => srcId === 'all' && id === todoId);
+  if (isInAll) return isInAll;
+  else {
+    const allPageObj = [];
+    for (let pageType in DATA) {
+      allPageObj.push(...DATA[pageType]);
+    }
+    return allPageObj.filter(({ id }) => id !== 'all')
+      .map(({ content }) => content)
+      .reduce((acc, cur) => acc.concat(cur), [])
+      .find(({ id }) => id === todoId);
+  }
+}
+
 
 /**
  * checkbox 功能
@@ -112,12 +128,11 @@ export function removeList(e) {
 export function checkbox(e) {
   // checkbox
   if (e.target.classList.contains("todo__checkbox")) {
-    // 取得當前 todo
-    const currentTodo = getCurrentTodo(e);
-    console.log(currentTodo)
-    // 反轉 checked 值
-    currentTodo.checked = !currentTodo.checked;
-    // 存進 localStorage
+    // 取得 checkbox 事件觸發 todo 的 id
+    const currentTodoId = e.target.closest(".todo__item").id;
+    searchOriginTodo(currentTodoId).checked = !searchOriginTodo(currentTodoId).checked
+    console.log(searchOriginTodo(currentTodoId).checked)
+
     setStorage(DATA);
   }
 }
@@ -128,23 +143,40 @@ export function checkbox(e) {
  *  2.該事件觸發時的網址後段(id)，利用 id 找出相對於此網址的 DATA 資料，從資料中再根據
  *    todo id 找出該筆 todo
  * 接著反轉 checkbox 的值，並且更新至 localStorage。
- * 
+ *
  * 但位於 All.js 的情況並非如此， All.js 的資料已經是從 DATA 中拉下來之後經過變造的次等資料。
  * 那些資料僅是為了呈現到 dropdown 所寫出來的資料。除了全部頁面親生的 todo 能儲存改變之外，
  * 其他的 todo 都沒辦法存入資料，因為變更的次等資料。
- * 
+ *
  * 對於 all 頁面的 checkbox，應該要另想方設法，
  */
 
 
+/**
+ * 控制 dropdown 展開與收合
+ */
+export function dropdownSwitch(e) {
+  const dropdownCover = e.target.nextElementSibling;
+  const todos = dropdownCover.children[0];
+  const dropdownArrow = e.target.children[0];
+  dropdownCover.style.height = `${todos.clientHeight}px`
 
+  if (dropdownCover.clientHeight) {
+    dropdownCover.style.height = `${0}px`;
+    dropdownArrow.classList.add('dropdown__arrow--closing');
+  } else {
+    dropdownCover.style.height = `${todos.clientHeight}px`;
+    dropdownArrow.classList.remove('dropdown__arrow--closing');
+  }
+}
 
 /**
  * 使 scrollBar 不佔據任何空間但保有滾動條樣式與滾動的功能。
  */
-export function scrollBarFix(){
-  const mainContentList = document.querySelector('.main__content-list');
-  mainContentList.style.paddingRight = mainContentList.offsetWidth - mainContentList.clientWidth 
-    ? mainContentList.offsetWidth - mainContentList.clientWidth + "px"
-    : '';
+export function scrollBarFix() {
+  const mainContentList = document.querySelector(".main__content-list");
+  mainContentList.style.paddingRight =
+    mainContentList.offsetWidth - mainContentList.clientWidth
+      ? mainContentList.offsetWidth - mainContentList.clientWidth + "px"
+      : "";
 }
