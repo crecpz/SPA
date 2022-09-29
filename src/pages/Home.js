@@ -8,7 +8,6 @@ export const Home = {
 
     render: function () {
         const overviewData = [];
-        console.log(DATA)
 
         for (let pageType in DATA) {
             DATA[pageType].forEach((page) => {

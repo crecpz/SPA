@@ -11,7 +11,11 @@
   }
 
   @include md  {
-    grid-template-columns: minmax(auto, 360px);
+    grid-template-columns: minmax(auto, 360px) ;
+    gap: 2rem;
+  }
+
+  @include sm {
   }
 
   &__link {
@@ -26,9 +30,16 @@
     padding-right: 1.5rem;
     padding-top: .75rem;
     padding-bottom: .75rem;
-
     color: var(--secondary-color);
     background-color: var(--primary-color);
+
+    @include sm {
+      padding-left: 1rem;
+      padding-right: 1rem;
+  
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
   }
 
   &__content {
@@ -42,7 +53,8 @@
   }
 
   &__text {
-    @include text(xs);
+    @include text(base);
+    // font-weight: bold;
     @include flex($jc: space-between, $ai: center);
 
     &--column{
@@ -88,7 +100,6 @@
   }
 
   &__inner{
-    // width: 60%;
     height: 100%;
     background-color: var(--primary-color);
   }
