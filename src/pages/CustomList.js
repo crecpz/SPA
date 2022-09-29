@@ -1,4 +1,4 @@
-import {  DATA, setStorage, getCurrentTodo } from "../utils/function.js";
+import {  DATA, setStorage, getCurrentTodo, editName, saveEditedName } from "../utils/function.js";
 import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox, scrollBarFix } from "../layout/main.js";
 
 
@@ -30,16 +30,16 @@ export const CustomList = {
         <!-- 主內容區 header -->
         <div class="main__content-header">
             <div class="container">
-                <h2 class="main__title">
+                <div class="main__name-wrapper">
                     <div class="main__color-block"></div>
-                    ${name}
-                </h2>
+                    <input type="text" class="main__name" value="${name}" readonly>
+                </div>
                 <!-- 清單選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 <!-- 清單選單 -->
                 <ul class="list-options">
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">重新命名</a>
+                      <a href="javascript:;" class="list-option__link list-option__link--rename">重新命名</a>
                     </li>
                     <li class="list-option">
                       <a href="javascript:;" class="list-option__link">編輯</a>
@@ -86,11 +86,22 @@ export const CustomList = {
         // 存進 localStorage
         setStorage(DATA);
       }
+
+
+      // 重新命名清單名稱
+      if(e.target.classList.contains('list-option__link--rename')){
+        editName()
+      }
     },
 
     change: function(e){
       // checkbox 
       checkbox(e);
+
+      // 儲存已經改動的清單名稱
+      saveEditedName(e);
     },
+
+    
   },
 };

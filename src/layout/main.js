@@ -130,9 +130,11 @@ export function checkbox(e) {
   if (e.target.classList.contains("todo__checkbox")) {
     // 取得 checkbox 事件觸發 todo 的 id
     const currentTodoId = e.target.closest(".todo__item").id;
-    searchOriginTodo(currentTodoId).checked = !searchOriginTodo(currentTodoId).checked
-    console.log(searchOriginTodo(currentTodoId).checked)
 
+    // 翻轉 checked 值
+    searchOriginTodo(currentTodoId).checked = !searchOriginTodo(currentTodoId).checked;
+
+    // 儲存變更
     setStorage(DATA);
   }
 }

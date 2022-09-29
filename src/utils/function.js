@@ -183,6 +183,34 @@ export function addTodo(todo) {
 }
 
 
+/**
+ * 編輯自訂清單的名稱
+ */
+export function editName(){
+  const pageName = document.querySelector('.main__name');
+  pageName.removeAttribute('readonly');
+  pageName.select();
+}
+
+export function saveEditedName(e){
+  // 取得 input value
+  const inputValue = e.target.value;
+  const currentPage = getCurrentPage();
+  currentPage.name = inputValue;
+
+  setStorage(DATA);
+}
 
 
 
+// function selectText(containerid) {
+//   if (document.selection) {
+//       let range = document.body.createTextRange();
+//       range.moveToElementText(document.getElementById(containerid));
+//       range.select();
+//   } else if (window.getSelection) {
+//       let range = document.createRange();
+//       range.selectNode(document.getElementById(containerid));
+//       window.getSelection().addRange(range);
+//   }
+// }
