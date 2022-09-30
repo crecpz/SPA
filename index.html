@@ -102,8 +102,14 @@
         <div class="modal">
 
             <div class="modal__confirm">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <p class="modal__text">確定要刪除「 <span id="modal__confirm-target" class="text-strong">未命名清單(2)</span> 」嗎?</p>
+                <!-- <i class="fa-solid fa-circle-exclamation"></i> -->
+                <!-- <p class="modal__text">確定要刪除「 <span id="modal__confirm-target" class="text-strong"></span> 」嗎?</p> -->
+                <p class="modal__text">
+                    <span class="text-lg text-strong">刪除確認</span>
+                    <span id="modal__list-name" class="modal__list-name text-base"></span>
+                    <span class="text-base text-normal">清單刪除之後將無法復原</span>
+                </p>
+
                 <div class="modal__btn-group">
                     <div id="confirm-cancel" class="btn btn--primary btn--modal">取消</div>
                     <div id="confirm-yes" class="btn btn--primary btn--modal btn--danger">刪除</div>
