@@ -106,7 +106,7 @@ export function removeList(e) {
 }
 
 /**
- * 搜尋出自於該頁面本身的 todo
+ * 接收一個 todoId 作為參數，從 DATA 中搜尋出該 todo 的原始來源資料。
  */
 function searchOriginTodo(todoId) {
   // 若 todo 本身就存在在 All.js ，存入 isInAll 並返回
@@ -126,6 +126,8 @@ function searchOriginTodo(todoId) {
       .find(({ id }) => id === todoId);
   }
 }
+
+console.log(DATA)
 
 /**
  * checkbox 功能

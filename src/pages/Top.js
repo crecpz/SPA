@@ -12,9 +12,39 @@ export const Top = {
   },
 
   render: function () {
+    // 這裡僅是原生來自 top 的內容
     const { name: pageName, content: pageContent } = DATA.default.find(
       (page) => page.id === "top"
     );
+
+    // 這裡必須撈出其它頁面中 top 屬性是 true 的 todo。(srcId !== 'top' && top)
+    const allPageObj = [];
+    for (let pageType in DATA) {
+      allPageObj.push(...DATA[pageType]);
+    }
+
+    // 以下兩者有什麼差別?
+
+    // 最終答案寫這邊
+    allPageObj.map(pageObj => pageObj.content)
+      .reduce((acc, pageContent) => acc.concat(pageContent), [])
+      .filter(todo => todo.srcId === 'top' || (todo.srcId !== 'top' && todo.top === true))
+
+    // 找出 todo.srcId === 'top' 而且 (todo.srcId !== 'top' && todo.top === true))
+      // console.log(allPageObj.map(pageObj => pageObj.content)
+      //   .reduce((acc, pageContent) => acc.concat(pageContent), [])
+      //   .filter(todo => todo.srcId === 'top' || (todo.srcId !== 'top' && todo.top === true))
+      // )
+      
+    // 只用 todo.top === true 來篩選
+    console.log(allPageObj.map(pageObj => pageObj.content)
+      .reduce((acc, pageContent) => acc.concat(pageContent), [])
+      .filter(todo => todo.top === true)
+    )
+
+
+
+
     const todoContent = pageContent.map(({ id, checked, content, top }) => {
       return `
         <li id="${id}" class="todo__item">
@@ -24,7 +54,7 @@ export const Top = {
                 <span class="todo__checkmark"></span>
                 <p class="todo__content">${content}</p>
             </label>
-            <i class="todo__top ${ top ? "fa-solid" : "fa-regular" } fa-star"></i> 
+            <i class="todo__top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
         </li>
       `;
     });

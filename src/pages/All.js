@@ -1,11 +1,7 @@
 import { DATA, setStorage, getCurrentTodo } from "../utils/function.js";
 
 import {
-  openListOption,
   clickToCloseListOption,
-  removeList,
-  openConfirmModal,
-  closeModal,
   checkbox,
   scrollBarFix,
   dropdownSwitch,
