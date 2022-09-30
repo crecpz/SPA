@@ -89,18 +89,21 @@ export const All = {
     `;
 
     /**
-     * 彙整 all 頁面中需要的 data。
+     * __彙整 All.js 頁面中需要的 data__
      *
-     * 遍歷 DATA 內的 default & custom，並找出以下符合兩項條件的 Object:
-     *  1.找出頁面資料中 id 不是 'all' 的 Object
-     *  2.找出來自於 all 頁面自己所新增的 todo Object (srcId 屬性 === 'all')
+     * 遍歷 DATA 內的 default & custom，並找出符合以下任一項條件的 Object:
+     * 
+     *  1.頁面資料中 id !== 'all' 的 Object
+     * 
+     *  2.來自於 All.js 頁面中，它自己所新增的 todo Object (也就是該項 todo Object 的 srcId 屬性 === 'all')
      *
-     * - 返回值: 返回 `allContentObj` Array
-     *  - 遍歷頁面物件資料，如果找到頁面資料中 id 不是 'all'，直接將此物件加進 allContentObj array 中。
-     *  - 遍歷頁面物件資料，如果該物件 id 是 'all'，則遍歷該物件內的 content 屬性(array)，找出元素 srcId 屬性 === 'all'
+     * - 返回值: 
+     *    - 返回 `allContentObj` Array
+     *    - 遍歷頁面物件資料，如果找到頁面資料中 id !== 'all'，直接將頁面此物件加進 allContentObj Array 中。
+     *    - 遍歷頁面物件資料，如果該物件 id === 'all'，則遍歷該物件內的 content 屬性的 Array，找出元素 srcId 屬性 === 'all'
      *    的物件，並將找到的結果放入新的頁面物件資料當中的 content 屬性中。
      *
-     * 備註:此新頁面屬性將作為 All.js 頁面中的 all 頁面資料。這麼做的原因是因為在 All.js 內只需要顯示出來自於 All 頁面新增的 todo 即可。
+     * 備註:此新頁面屬性將作為 All.js 頁面中的頁面資料。這麼做的原因是因為在 All.js 內只需要顯示出來自於 All 頁面新增的 todo 即可。
      *      不需要把整個 all 的資料都渲染出來，這樣資料會重複。
      */
     function getAllContentObj() {

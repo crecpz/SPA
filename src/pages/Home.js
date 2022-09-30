@@ -7,10 +7,12 @@ export const Home = {
     },
 
     render: function () {
+        // 將 DATA 內的所有 pageObj 資料拉進 overviewData Array 中
+        // 每一張卡片都將會利用此 overviewData 來渲染。
         const overviewData = [];
-
         for (let pageType in DATA) {
             DATA[pageType].forEach((page) => {
+                // 為每個 pageObj 加上 isCustom 屬性，後續此屬性用來決定 overviewCard 的超連結網址結構
                 if (pageType === "custom") {
                     page.isCustom = true;
                 }
@@ -18,9 +20,10 @@ export const Home = {
             });
         }
 
+        // 利用 map 遍歷 overviewData
         const overviewCards = overviewData
-            .map(({ name, content, isCustom, id }) => {
-                const pageName = name;
+            .map(({ name: pageName, content, isCustom, id }) => {
+                // 以下分別為: 全部、未完成、已完成、完成百分比
                 const all = content.length;
                 const unCompleted = content.filter((todo) => !todo.checked).length;
                 const completed = content.filter((todo) => todo.checked).length;
@@ -30,8 +33,7 @@ export const Home = {
 
 
                 return `
-                    <a href="#/${isCustom ? "customlist/" + id : id
-                    }" class="overview__link">
+                    <a href="#/${isCustom ? "customlist/" + id : id}" class="overview__link">
                         <div class="overview__header">${pageName}</div>
                         <div class="overview__content">
                             <div class="overview__text overview__text--column">待完成
@@ -55,8 +57,7 @@ export const Home = {
                         </div>
                     </a>
                 `;
-            })
-            .join("");
+            }).join("");
 
         return `
             <!-- 主內容區 header -->
@@ -81,6 +82,6 @@ export const Home = {
     },
 
     listener: {
-        click: (e) => { },
+        // click: (e) => { },
     },
 };
