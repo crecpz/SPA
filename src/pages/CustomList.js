@@ -1,27 +1,38 @@
-import {  DATA, setStorage, getCurrentTodo, editName, saveEditedName } from "../utils/function.js";
-import { openListOption, clickToCloseListOption, removeList, openConfirmModal, closeModal, checkbox, scrollBarFix } from "../layout/main.js";
-
+import {
+  DATA,
+  setStorage,
+  getCurrentTodo,
+  editName,
+  saveEditedName,
+} from "../utils/function.js";
+import {
+  openListOption,
+  clickToCloseListOption,
+  removeList,
+  openConfirmModal,
+  closeModal,
+  checkbox,
+  scrollBarFix,
+} from "../layout/main.js";
 
 export const CustomList = {
   mount: function () {
-    scrollBarFix()
+    scrollBarFix();
   },
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
     const { name: pageName, content: pageContent } = pageData;
-    const todoContent = pageContent.map((li) => {
+    const todoContent = pageContent.map(({ id, checked, content, top }) => {
       return `
-                <li id="${li.id}" class="todo__item">
+                <li id="${id}" class="todo__item">
                     <label class="todo__label">
                         <input type="checkbox" class="todo__checkbox" 
-                        ${
-                          li.checked ? "checked" : ""
-                        }>
+                        ${checked ? "checked" : ""}>
                         <span class="todo__checkmark"></span>
-                        <p class="todo__content">${li.content}</p>
+                        <p class="todo__content">${content}</p>
                     </label>
-                    <i class="todo__top ${li.top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+                    <i class="todo__top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
                 </li>
         `;
     });
@@ -69,41 +80,48 @@ export const CustomList = {
   listener: {
     click: (e) => {
       // 選項(listOption): 刪除清單
-      openListOption(e); // 監聽 listOption 按鈕來決定是否開啟 listOption
-      clickToCloseListOption(e); // 點擊任意處來關閉 listOption
-      openConfirmModal(e); // 偵測使用者是否有點擊 "刪除清單"
-      closeModal(e) // 偵測使用者是否有點擊"取消"
-      removeList(e) // 偵測使用者是否有點擊"刪除"
-
+      if (e.target.classList.contains("btn--list-option")) {
+        // 監聽 listOption 按鈕來決定是否開啟 listOption
+        const listOptions = document.querySelector(".list-options");
+        listOptions.classList.toggle("list-options--open");
+      }
+      // 點擊任意處來關閉 listOption (這個函式一定得寫在這裡，不然無法正常收起 list-option)
+      clickToCloseListOption(e); 
+      // 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟 modal 
+      openConfirmModal(e); 
       
+      closeModal(e); // 偵測使用者是否有點擊"取消"
+      removeList(e); // 偵測使用者是否有點擊"刪除"
+      
+      // openListOption(e); // 監聽 listOption 按鈕來決定是否開啟 listOption
+
+
+
       // 置頂星號
-      if(e.target.classList.contains('todo__top')){ 
+      if (e.target.classList.contains("todo__top")) {
         // 取得當前 todo
         const currentTodo = getCurrentTodo(e);
         currentTodo.top = !currentTodo.top;
-        e.target.classList.toggle("fa-solid")
-        e.target.classList.toggle("fa-regular")
+        e.target.classList.toggle("fa-solid");
+        e.target.classList.toggle("fa-regular");
         // 存進 localStorage
         setStorage(DATA);
       }
 
-
       // 重新命名清單名稱
-      if(e.target.classList.contains('list-option__link--rename')){
-        editName()
+      if (e.target.classList.contains("list-option__link--rename")) {
+        editName();
       }
     },
 
-    change: function(e){
-      // checkbox 
+    change: function (e) {
+      // checkbox
       checkbox(e);
 
       // 儲存已經改動的清單名稱
-      if(e.target.classList.contains('main__name')){
+      if (e.target.classList.contains("main__name")) {
         saveEditedName(e);
       }
     },
-
-    
   },
 };

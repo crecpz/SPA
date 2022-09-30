@@ -2,6 +2,7 @@ import {
   addTodo,
   DATA,
   getCurrentCustomPage,
+  getCurrentPage,
   setStorage,
 } from "../utils/function.js";
 import { activeNavLists, renderCustomList } from "./nav.js";
@@ -27,8 +28,7 @@ export function openListOption(e) {
 export function clickToCloseListOption(e) {
   const listOptionBtn = document.querySelector(".btn--list-option");
   const listOptions = document.querySelector(".list-options");
-  const listOptionsIsOpened =
-    listOptions.classList.contains("list-options--open");
+  const listOptionsIsOpened = listOptions.classList.contains("list-options--open");
   const clickingListOptionBtn = e.target.classList.contains("btn--list-option");
 
   if (listOptionsIsOpened && !clickingListOptionBtn) {
@@ -40,25 +40,25 @@ export function clickToCloseListOption(e) {
 const todoSubmit = document.querySelector("#todo-submit");
 todoSubmit.addEventListener("click", addTodo);
 
-/**
- * 關鍵 modal 動作
- * 1.偵測使用者是否有點擊"刪除清單"的 showConfirmModal()
- * 2.偵測使用者是否有點擊"取消"的 closeConfirmModal()
- * 3.偵測使用者是否有點擊"刪除"的 removeList()
- */
+
 
 /**
- * 偵測使用者是否有點擊 "刪除清單"
+ * 開啟 modal 
+ * 偵測使用者是否有點擊 "刪除清單"，若點擊"刪除清單"，則使 overlay 加上 active
  */
 export function openConfirmModal(e) {
   if (e.target.classList.contains("list-option__link--remove")) {
     const modalOverlay = document.querySelector(".modal-overlay");
     modalOverlay.classList.add("overlay--active");
+    const modalConfirmTarget = document.querySelector('#modal__list-name');
+    const currentPageName = getCurrentPage().name;
+    modalConfirmTarget.innerHTML = currentPageName;
+    // console.log(currentPageName)
   }
 }
 
 /**
- * 關閉清單
+ * 關閉 modal
  */
 export function closeModal(e) {
   if (e.target.classList.contains("btn--modal")) {
@@ -73,19 +73,20 @@ export function closeModal(e) {
 export function removeList(e) {
   if (e.target.id === "confirm-yes") {
     // 取得當前清單頁面的資料
-    const currentPage = getCurrentCustomPage();
-
+    const currentPage = getCurrentPage();
+    
     // 存放接下來頁面的去向 (此處存放的是一段網址，)
     let pageWillGoTo;
 
     // 獲取當前頁面的前一個頁面，如果只有一個頁面，則前一個頁面指定為 '/top'
     if (!DATA.custom[DATA.custom.indexOf(currentPage) - 1]) {
+      // 將頁面導向到 '/top'
       pageWillGoTo = "/top";
-
       window.location.hash = pageWillGoTo;
+
       activeNavLists();
     } else {
-      // 找到當前頁面的前一頁的 id
+      // 找到當前頁面的前一頁的 id，並將頁面導向過去
       pageWillGoTo = DATA.custom[DATA.custom.indexOf(currentPage) - 1].id;
       window.location.hash = `/customlist/${pageWillGoTo}`;
     }
@@ -106,6 +107,7 @@ export function removeList(e) {
  * 搜尋出自於該頁面本身的 todo
  */
 function searchOriginTodo(todoId) {
+  // 若 todo 本身就存在在 All.js ，存入 isInAll 並返回
   const isInAll = DATA.default[0].content.find(({ id, srcId }) => srcId === 'all' && id === todoId);
   if (isInAll) return isInAll;
   else {
@@ -126,7 +128,6 @@ function searchOriginTodo(todoId) {
  * @param {*} e event
  */
 export function checkbox(e) {
-  // checkbox
   if (e.target.classList.contains("todo__checkbox")) {
     // 取得 checkbox 事件觸發 todo 的 id
     const currentTodoId = e.target.closest(".todo__item").id;

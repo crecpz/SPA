@@ -77,12 +77,13 @@ export function getCurrentPageId() {
  * 取得當前所在頁面的 Object
  * @returns 頁面 Object
  */
-function getCurrentPage() {
+export function getCurrentPage() {
   for (let pageType in DATA) {
     const result = DATA[pageType].find(i => i.id === getCurrentPageId())
     if(result) return result;
   }
 }
+
 
 // console.log(getCurrentPage())
 

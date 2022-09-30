@@ -1,8 +1,4 @@
-import {
-  DATA,
-  setStorage,
-  getCurrentTodo,
-} from "../utils/function.js";
+import { DATA, setStorage, getCurrentTodo } from "../utils/function.js";
 
 import {
   openListOption,
@@ -34,26 +30,31 @@ export const All = {
             </div>
             <div class="dropdown__cover">
               <ul class="todo">
-                ${content.map((todo) => {
-                  return `
-                    <li id="${todo.id}" class="todo__item">
-                      <label class="todo__label">
-                          <input type="checkbox" 
-                                class="todo__checkbox"
-                                ${todo.checked ? "checked" : ""}
-                          >
-                          <span class="todo__checkmark"></span>
-                          <p class="todo__content">${todo.content}</p>
-                      </label>
-                      <i class="todo__top ${todo.top ? "fa-solid" : "fa-regular"} fa-star"></i> 
-                    </li>
-                  `;
-                }).join("")}
+                ${content
+                  .map(({ id, checked, content, top }) => {
+                    return `
+                              <li id="${id}" class="todo__item">
+                                <label class="todo__label">
+                                    <input type="checkbox" 
+                                          class="todo__checkbox"
+                                          ${checked ? "checked" : ""}
+                                    >
+                                    <span class="todo__checkmark"></span>
+                                    <p class="todo__content">${content}</p>
+                                </label>
+                                <i class="todo__top ${
+                                  top ? "fa-solid" : "fa-regular"
+                                } fa-star"></i> 
+                              </li>
+                            `;
+                  })
+                  .join("")}
               </ul>
             </div>
           </li>
         `;
-        }).join("");
+      })
+      .join("");
 
     return `
         <!-- 主內容區 header -->
@@ -92,12 +93,12 @@ export const All = {
      * __彙整 All.js 頁面中需要的 data__
      *
      * 遍歷 DATA 內的 default & custom，並找出符合以下任一項條件的 Object:
-     * 
+     *
      *  1.頁面資料中 id !== 'all' 的 Object
-     * 
+     *
      *  2.來自於 All.js 頁面中，它自己所新增的 todo Object (也就是該項 todo Object 的 srcId 屬性 === 'all')
      *
-     * - 返回值: 
+     * - 返回值:
      *    - 返回 `allContentObj` Array
      *    - 遍歷頁面物件資料，如果找到頁面資料中 id !== 'all'，直接將頁面此物件加進 allContentObj Array 中。
      *    - 遍歷頁面物件資料，如果該物件 id === 'all'，則遍歷該物件內的 content 屬性的 Array，找出元素 srcId 屬性 === 'all'

@@ -22,32 +22,39 @@
 
 .modal{
   width: 100%;
-  max-width: 23.4375rem;
+  max-width: 22.1875rem;
   background-color: var(--tertiary-color);
 
   &__confirm{
     @include flex($dir: column);
     padding: 2rem;
-    
-    i {
-      font-size: 60px;
-      color: var(--primary-color);
-      // color: #c8b080;
-      text-align: center;
-    }
   }
   
   // 字體 PC: md ,mobile: sm
   &__text{
-    color: var(--primary-color);
     @include text(sm);
-    margin-top: 2rem;
-    font-weight: 500;
+    @include flex($dir: column, $ai: center);
+    color: var(--primary-color);
+    text-align: center;
+
+    span:not(:first-child) {
+      display: inline-block;
+      margin-top: 1.5rem;
+    }
+  }
+
+  &__list-name{
+    &::before{
+      content: '「 ';
+    } 
+    &::after{
+      content: ' 」';
+    } 
   }
 
   &__btn-group{
     @include flex($jc: center);
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 }
 

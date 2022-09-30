@@ -12,19 +12,19 @@ export const Top = {
   },
 
   render: function () {
-    const { name: pageName, content: pageContent } = DATA.default.find(page => page.id === 'top');
-    const todoContent = pageContent.map((li) => {
+    const { name: pageName, content: pageContent } = DATA.default.find(
+      (page) => page.id === "top"
+    );
+    const todoContent = pageContent.map(({ id, checked, content, top }) => {
       return `
-        <li id="${li.id}" class="todo__item">
+        <li id="${id}" class="todo__item">
             <label class="todo__label">
                 <input type="checkbox" class="todo__checkbox" 
-                ${li.checked ? "checked" : ""}>
+                ${checked ? "checked" : ""}>
                 <span class="todo__checkmark"></span>
-                <p class="todo__content">${li.content}</p>
+                <p class="todo__content">${content}</p>
             </label>
-            <i class="todo__top ${
-              li.top ? "fa-solid" : "fa-regular"
-            } fa-star"></i> 
+            <i class="todo__top ${ top ? "fa-solid" : "fa-regular" } fa-star"></i> 
         </li>
       `;
     });
