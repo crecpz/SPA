@@ -99,7 +99,9 @@ export const CustomList = {
       checkbox(e);
 
       // 儲存已經改動的清單名稱
-      saveEditedName(e);
+      if(e.target.classList.contains('main__name')){
+        saveEditedName(e);
+      }
     },
 
     
