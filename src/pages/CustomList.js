@@ -32,7 +32,9 @@ export const CustomList = {
                         <span class="todo__checkmark"></span>
                         <p class="todo__content">${content}</p>
                     </label>
-                    <i class="todo__top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+                    <i class="todo__top ${
+                      top ? "fa-solid" : "fa-regular"
+                    } fa-star"></i> 
                 </li>
         `;
     });
@@ -65,7 +67,6 @@ export const CustomList = {
             </div>
         </div>
 
-
         <!-- main content list -->
         <div class="main__content-list">
             <div class="container">
@@ -79,23 +80,30 @@ export const CustomList = {
 
   listener: {
     click: (e) => {
-      // 選項(listOption): 刪除清單
+      // 點擊任意處來關閉 listOption
+      clickToCloseListOption(e);
+
+      // 判斷是否要開啟 listOption
       if (e.target.classList.contains("btn--list-option")) {
         // 監聽 listOption 按鈕來決定是否開啟 listOption
         const listOptions = document.querySelector(".list-options");
         listOptions.classList.toggle("list-options--open");
       }
-      // 點擊任意處來關閉 listOption (這個函式一定得寫在這裡，不然無法正常收起 list-option)
-      clickToCloseListOption(e); 
-      // 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟 modal 
-      openConfirmModal(e); 
-      
-      closeModal(e); // 偵測使用者是否有點擊"取消"
-      removeList(e); // 偵測使用者是否有點擊"刪除"
-      
-      // openListOption(e); // 監聽 listOption 按鈕來決定是否開啟 listOption
 
+      // 刪除清單 - 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟「確認刪除 modal」
+      if (e.target.classList.contains("list-option__link--remove")) {
+        openConfirmModal();
+      }
 
+      // 刪除清單 - 偵測使用者是否有點擊"取消"
+      if (e.target.classList.contains("btn--modal")) {
+        closeModal(e);
+      }
+
+      // 刪除清單 - 偵測使用者是否有點擊"刪除" 
+      if (e.target.id === "confirm-yes") {
+        removeList(e);
+      }
 
       // 置頂星號
       if (e.target.classList.contains("todo__top")) {
@@ -108,7 +116,7 @@ export const CustomList = {
         setStorage(DATA);
       }
 
-      // 重新命名清單名稱
+      // 清單重新命名
       if (e.target.classList.contains("list-option__link--rename")) {
         editName();
       }

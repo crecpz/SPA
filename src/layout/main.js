@@ -28,7 +28,8 @@ export function openListOption(e) {
 export function clickToCloseListOption(e) {
   const listOptionBtn = document.querySelector(".btn--list-option");
   const listOptions = document.querySelector(".list-options");
-  const listOptionsIsOpened = listOptions.classList.contains("list-options--open");
+  const listOptionsIsOpened =
+    listOptions.classList.contains("list-options--open");
   const clickingListOptionBtn = e.target.classList.contains("btn--list-option");
 
   if (listOptionsIsOpened && !clickingListOptionBtn) {
@@ -40,41 +41,43 @@ export function clickToCloseListOption(e) {
 const todoSubmit = document.querySelector("#todo-submit");
 todoSubmit.addEventListener("click", addTodo);
 
-
+/**
+ * 開啟 modal
+ */
+export function openModal() {
+  const modalOverlay = document.querySelector(".modal-overlay");
+  modalOverlay.classList.add("overlay--active");
+}
 
 /**
- * 開啟 modal 
+ * 開啟 modal
  * 偵測使用者是否有點擊 "刪除清單"，若點擊"刪除清單"，則使 overlay 加上 active
  */
-export function openConfirmModal(e) {
-  if (e.target.classList.contains("list-option__link--remove")) {
-    const modalOverlay = document.querySelector(".modal-overlay");
-    modalOverlay.classList.add("overlay--active");
-    const modalConfirmTarget = document.querySelector('#modal__list-name');
-    const currentPageName = getCurrentPage().name;
-    modalConfirmTarget.innerHTML = currentPageName;
-    // console.log(currentPageName)
-  }
+export function openConfirmModal() {
+  // 開啟 modal
+  openModal();
+  // 將當前頁面名稱套用到刪除確認 modal 中(告知使用者現在要刪除的頁面是什麼)
+  const modalListName = document.querySelector("#modal__list-name");
+  const currentPageName = getCurrentPage().name;
+  modalListName.innerHTML = currentPageName;
 }
 
 /**
  * 關閉 modal
  */
 export function closeModal(e) {
-  if (e.target.classList.contains("btn--modal")) {
     const modalOverlay = document.querySelector(".modal-overlay");
     modalOverlay.classList.remove("overlay--active");
-  }
 }
 
 /**
  * 刪除清單
  */
 export function removeList(e) {
-  if (e.target.id === "confirm-yes") {
+
     // 取得當前清單頁面的資料
     const currentPage = getCurrentPage();
-    
+
     // 存放接下來頁面的去向 (此處存放的是一段網址，)
     let pageWillGoTo;
 
@@ -99,29 +102,30 @@ export function removeList(e) {
 
     // 存到 localStorage
     setStorage(DATA);
-  }
-}
 
+}
 
 /**
  * 搜尋出自於該頁面本身的 todo
  */
 function searchOriginTodo(todoId) {
   // 若 todo 本身就存在在 All.js ，存入 isInAll 並返回
-  const isInAll = DATA.default[0].content.find(({ id, srcId }) => srcId === 'all' && id === todoId);
+  const isInAll = DATA.default[0].content.find(
+    ({ id, srcId }) => srcId === "all" && id === todoId
+  );
   if (isInAll) return isInAll;
   else {
     const allPageObj = [];
     for (let pageType in DATA) {
       allPageObj.push(...DATA[pageType]);
     }
-    return allPageObj.filter(({ id }) => id !== 'all')
+    return allPageObj
+      .filter(({ id }) => id !== "all")
       .map(({ content }) => content)
       .reduce((acc, cur) => acc.concat(cur), [])
       .find(({ id }) => id === todoId);
   }
 }
-
 
 /**
  * checkbox 功能
@@ -133,7 +137,8 @@ export function checkbox(e) {
     const currentTodoId = e.target.closest(".todo__item").id;
 
     // 翻轉 checked 值
-    searchOriginTodo(currentTodoId).checked = !searchOriginTodo(currentTodoId).checked;
+    searchOriginTodo(currentTodoId).checked =
+      !searchOriginTodo(currentTodoId).checked;
 
     // 儲存變更
     setStorage(DATA);
@@ -154,7 +159,6 @@ export function checkbox(e) {
  * 對於 all 頁面的 checkbox，應該要另想方設法，
  */
 
-
 /**
  * 控制 dropdown 展開與收合
  */
@@ -162,14 +166,14 @@ export function dropdownSwitch(e) {
   const dropdownCover = e.target.nextElementSibling;
   const todos = dropdownCover.children[0];
   const dropdownArrow = e.target.children[0];
-  dropdownCover.style.height = `${todos.clientHeight}px`
+  dropdownCover.style.height = `${todos.clientHeight}px`;
 
   if (dropdownCover.clientHeight) {
     dropdownCover.style.height = `${0}px`;
-    dropdownArrow.classList.add('dropdown__arrow--closing');
+    dropdownArrow.classList.add("dropdown__arrow--closing");
   } else {
     dropdownCover.style.height = `${todos.clientHeight}px`;
-    dropdownArrow.classList.remove('dropdown__arrow--closing');
+    dropdownArrow.classList.remove("dropdown__arrow--closing");
   }
 }
 

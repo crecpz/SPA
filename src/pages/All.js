@@ -134,12 +134,15 @@ export const All = {
 
   listener: {
     click: (e) => {
-      // 選項(listOption): 刪除清單
-      openListOption(e); // 監聽 listOption 按鈕來決定是否開啟 listOption
-      clickToCloseListOption(e); // 點擊任意處來關閉 listOption
-      openConfirmModal(e); // 偵測使用者是否有點擊 "刪除清單"
-      closeModal(e); // 偵測使用者是否有點擊"取消"
-      removeList(e); // 偵測使用者是否有點擊"刪除"
+      // 判斷是否要開啟 listOption
+      if (e.target.classList.contains("btn--list-option")) {
+        // 監聽 listOption 按鈕來決定是否開啟 listOption
+        const listOptions = document.querySelector(".list-options");
+        listOptions.classList.toggle("list-options--open");
+      }
+
+      // 點擊任意處來關閉 listOption
+      clickToCloseListOption(e);
 
       // dropdown
       if (e.target.classList.contains("dropdown__name")) {

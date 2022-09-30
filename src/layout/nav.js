@@ -24,13 +24,14 @@ document.querySelector(".wrapper").addEventListener("click", (e) => {
   }
 });
 
+// window.addEventListener('click', (e) => console.log(e.target))
+
 
 /**
  * 渲染 customList 至 nav 中
  */
 export function renderCustomList() {
   const currentPageId = getCurrentPageId();
-
   let lists = DATA.custom.map((list) => {
     return `
       <li id="${list.id}" 
@@ -74,37 +75,21 @@ function removeNavActive() {
     .forEach((i) => i.classList.remove("nav__list-item--active"));
 }
 
-function myFunction() {
-  let x = window.matchMedia("(max-width: 576px)");
-  if (x.matches) {
-    // If media query matches
-    alert("match");
-  } else {
-    alert("not match");
-  }
-}
-
-window.addEventListener("resize", () => {
-  let x = window.matchMedia("(max-width: 576px)");
-  if (x.matches) {
-    // If media query matches
-  } else {
-  }
-});
-
-// console.log(window.matchMedia("(max-width: 576px)"))
 
 // nav 中所有的選單點擊切換行為
-document.querySelectorAll(".nav__list").forEach((i) => {
-  i.addEventListener("click", (e) => {
+document.querySelectorAll(".nav__list").forEach((navList) => {
+  navList.addEventListener("click", (e) => {
     if (e.target.classList.contains("nav__list-link")) {
       // 清除在選單上的 active
       removeNavActive();
+
       // 更新 active
       e.target.closest("li").classList.add("nav__list-item--active");
 
+      
       // 如果目前螢幕的寬度 < 576px 點擊任一清單就把清單收合
       const smallerThan576 = window.matchMedia("(max-width: 576px)");
+
       // If media query matches
       if (smallerThan576.matches) {
         navSwitcher();
@@ -113,10 +98,18 @@ document.querySelectorAll(".nav__list").forEach((i) => {
   });
 });
 
-function closeNav() {
-  const nav = document.querySelector("#nav");
-  nav.classList.remove("");
+
+/**
+ * 先取得目前所在頁面的 id，
+ * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
+ * 最後將其加上 active 的 class。
+ */
+ export function activeNavLists() {
+  const id = getCurrentPageId();
+  const activeTarget = navContent.querySelector(`#${id}`);
+  activeTarget.classList.add("nav__list-item--active");
 }
+
 
 /**
  * 接收一個 Array 作為參數，該 Array 包含所有目前的 「未命名清單」。
@@ -230,15 +223,4 @@ function setCustomList() {
 
   // 存至 localStorage
   setStorage(DATA);
-}
-
-/**
- * 先取得目前所在頁面的 id，
- * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
- * 最後將其加上 active 的 class。
- */
-export function activeNavLists() {
-  const id = getCurrentPageId();
-  const activeTarget = navContent.querySelector(`#${id}`);
-  activeTarget.classList.add("nav__list-item--active");
 }
