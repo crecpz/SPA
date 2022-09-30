@@ -1,4 +1,5 @@
 // import { scrollBarFix } from "../layout/main.js";
+import { renderCustomList } from "../layout/nav.js";
 import { Router } from "../routes/Router.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
@@ -187,30 +188,29 @@ export function addTodo(todo) {
  * 編輯自訂清單的名稱
  */
 export function editName(){
-  const pageName = document.querySelector('.main__name');
-  pageName.removeAttribute('readonly');
-  pageName.select();
+  const editTarget = document.querySelector('.main__name');
+  editTarget.removeAttribute('readonly');
+  editTarget.select();
 }
 
+/**
+ * 儲存已經改動的清單名稱
+ * @param {*} e 
+ */
 export function saveEditedName(e){
+  // 取得 input
+  const editTarget = e.target;
   // 取得 input value
   const inputValue = e.target.value;
+  // 更新 DATA 中的資料
   const currentPage = getCurrentPage();
   currentPage.name = inputValue;
-
+  // 更新該頁中的 todo obj 內的 srcName
+  currentPage.content.forEach(todoObj => todoObj.srcName = inputValue);
+  // 存入 localStorage
   setStorage(DATA);
+  // 重新渲染新的名稱上去 nav
+  renderCustomList();
+  // input 設定回 readonly 屬性
+  editTarget.setAttribute('readonly', 'readonly');
 }
-
-
-
-// function selectText(containerid) {
-//   if (document.selection) {
-//       let range = document.body.createTextRange();
-//       range.moveToElementText(document.getElementById(containerid));
-//       range.select();
-//   } else if (window.getSelection) {
-//       let range = document.createRange();
-//       range.selectNode(document.getElementById(containerid));
-//       window.getSelection().addRange(range);
-//   }
-// }

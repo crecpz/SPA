@@ -27,67 +27,64 @@ export const All = {
     const dropdownsContent = allContent
       .map(({ name, content }) => {
         return `
-        <li class="dropdown">
-          <div class="dropdown__name">
-            <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
-            ${name}
-          </div>
-          <div class="dropdown__cover">
-            <ul class="todo">
-              ${content
-            .map((todo) => {
-              return `
+          <li class="dropdown">
+            <div class="dropdown__name">
+              <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+              ${name}
+            </div>
+            <div class="dropdown__cover">
+              <ul class="todo">
+                ${content.map((todo) => {
+                  return `
                     <li id="${todo.id}" class="todo__item">
                       <label class="todo__label">
-                          <input type="checkbox" class="todo__checkbox"
-                            ${todo.checked ? "checked" : ""}
+                          <input type="checkbox" 
+                                class="todo__checkbox"
+                                ${todo.checked ? "checked" : ""}
                           >
                           <span class="todo__checkmark"></span>
                           <p class="todo__content">${todo.content}</p>
                       </label>
-                      <i class="todo__top ${todo.top ? "fa-solid" : "fa-regular"
-                } fa-star"></i> 
+                      <i class="todo__top ${todo.top ? "fa-solid" : "fa-regular"} fa-star"></i> 
                     </li>
                   `;
-            })
-            .join("")}
-            </ul>
-          </div>
-        </li>
-      `;
-      })
-      .join("");
+                }).join("")}
+              </ul>
+            </div>
+          </li>
+        `;
+        }).join("");
 
     return `
         <!-- 主內容區 header -->
         <div class="main__content-header">
-            <div class="container">
-                <h2 class="main__title">
-                    <div class="main__color-block"></div>
-                    ${pageName}
-                </h2>
-                <!-- 清單選單按鈕 -->
-                <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-                <!-- 清單選單 -->
-                <ul class="list-options">
-                    <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">編輯</a>
-                    </li>
-                    <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">排序</a>
-                    </li>
-                </ul>
+          <div class="container">
+            <div class="main__name-wrapper">
+              <div class="main__color-block"></div>
+              <h2 class="main__name">${pageName}</h2>
             </div>
+            <!-- 清單選單按鈕 -->
+            <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
+            <!-- 清單選單 -->
+            <ul class="list-options">
+                <li class="list-option">
+                  <a href="javascript:;" class="list-option__link">編輯</a>
+                </li>
+                <li class="list-option">
+                  <a href="javascript:;" class="list-option__link">排序</a>
+                </li>
+            </ul>
+          </div>
         </div>
 
 
         <!-- main content list -->
         <div class="main__content-list">
-            <div class="container">
-              <ul class="dropdowns">
-                ${dropdownsContent}
-              </ul>
-            </div>
+          <div class="container">
+            <ul class="dropdowns">
+              ${dropdownsContent}
+            </ul>
+          </div>
         </div>
     `;
 

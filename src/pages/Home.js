@@ -62,10 +62,10 @@ export const Home = {
             <!-- 主內容區 header -->
             <div class="main__content-header">
                 <div class="container">
-                    <h2 class="main__title">
+                    <div class="main__name-wrapper">
                         <div class="main__color-block"></div>
-                        總覽
-                    </h2>
+                        <h2 class="main__name">總覽</h2>
+                    </div>
                 </div>
             </div>
 

@@ -9,8 +9,8 @@ export const CustomList = {
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
-    const { name, content } = pageData;
-    const todoContent = content.map((li) => {
+    const { name: pageName, content: pageContent } = pageData;
+    const todoContent = pageContent.map((li) => {
       return `
                 <li id="${li.id}" class="todo__item">
                     <label class="todo__label">
@@ -32,7 +32,7 @@ export const CustomList = {
             <div class="container">
                 <div class="main__name-wrapper">
                     <div class="main__color-block"></div>
-                    <input type="text" class="main__name" value="${name}" readonly>
+                    <input type="text" class="main__name" value="${pageName}" readonly>
                 </div>
                 <!-- 清單選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
@@ -59,7 +59,7 @@ export const CustomList = {
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                ${todoContent.join("")}
+                  ${todoContent.join("")}
                 </ul>
             </div>
         </div>

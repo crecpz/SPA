@@ -4,6 +4,27 @@ import { DATA, getCurrentPageId } from "../utils/function.js";
 
 const navContent = document.querySelector(".nav__content");
 
+// 監聽整個頁面的 click 事件
+document.querySelector(".wrapper").addEventListener("click", (e) => {
+  // 光線模式切換
+  modeSwitcher(e);
+
+  // 點擊漢堡鈕來開啟 nav
+  if (e.target.id === "main-hamburger" || e.target.id === "nav-hamburger") {
+    navSwitcher();
+  }
+
+  // 如果點按 body-overlay 時 nav 是開啟的狀態，則調用 navSwitcher() 來關閉 nav
+  if (
+    e.target.classList.contains("body-overlay") &&
+    document.querySelector("#wrapper").classList.contains("nav-open")
+  ) {
+    // 切換 nav 展開與收合
+    navSwitcher();
+  }
+});
+
+
 /**
  * 渲染 customList 至 nav 中
  */
@@ -11,20 +32,21 @@ export function renderCustomList() {
   const currentPageId = getCurrentPageId();
 
   let lists = DATA.custom.map((list) => {
-    return `<li id="${list.id}" 
-                class="custom-list__item nav__list-item 
-                        ${
-                          list.id === currentPageId
-                            ? "nav__list-item--active"
-                            : null
-                        }"
-            >
-              <a class="nav__list-link nav__list-link--custom-list" 
-                  href="#/customlist/${list.id}">
-                  <div class="custom-list__color"></div>
-                  ${list.name}
-              </a>
-            </li>`;
+    return `
+      <li id="${list.id}" 
+          class="custom-list__item nav__list-item 
+                ${list.id === currentPageId
+                  ? "nav__list-item--active"
+                  : null
+                }"
+          >
+          <a class="nav__list-link nav__list-link--custom-list" 
+              href="#/customlist/${list.id}">
+              <div class="custom-list__color"></div>
+              ${list.name}
+          </a>
+      </li>
+    `;
   });
   customList.innerHTML = lists.join("");
 }
@@ -157,9 +179,8 @@ function addCustomList() {
   setCustomList();
 
   // 將頁面導向(directed)到當前最新新增的頁
-  window.location.hash = `/customlist/${
-    DATA.custom[DATA.custom.length - 1].id
-  }`;
+  window.location.hash = `/customlist/${DATA.custom[DATA.custom.length - 1].id
+    }`;
 
   // 清除在選單上的 active
   removeNavActive();
@@ -191,7 +212,7 @@ function setCustomList() {
   const allCustomListName = DATA.custom.map((i) => i.name);
   // 提取清單尾數。
   // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
-  // (因為初始值是 1 ，在後續的計算中，下一個順位將會是 0)
+  // (因為如果初始值是 1 ，在後續的計算中，下一個順位將會是 0)
   const extractNumberList =
     extractUnnamedNumber(allCustomListName).length === 0
       ? [1]
@@ -204,14 +225,7 @@ function setCustomList() {
     // 如果新的數字是 0，則後面加個空字串
     name: `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`,
     color: "",
-    content: [
-      // ↓ 示意格式
-      // {
-      //   checked: false,
-      //   content: "this is todo A.",
-      //   pin: false,
-      // },
-    ],
+    content: [],
   });
 
   // 存至 localStorage
@@ -228,23 +242,3 @@ export function activeNavLists() {
   const activeTarget = navContent.querySelector(`#${id}`);
   activeTarget.classList.add("nav__list-item--active");
 }
-
-const wrapper = document.querySelector(".wrapper");
-wrapper.addEventListener("click", (e) => {
-  // 光線模式切換
-  modeSwitcher(e);
-
-  // 點擊漢堡鈕來開啟 nav
-  if (e.target.id === "main-hamburger" || e.target.id === "nav-hamburger") {
-    navSwitcher();
-  }
-
-  // 如果點按 body-overlay 時 nav 是開啟的狀態，則調用 navSwitcher() 來關閉 nav
-  if (
-    e.target.classList.contains("body-overlay") &&
-    document.querySelector("#wrapper").classList.contains("nav-open")
-  ) {
-    // 切換 nav 展開與收合
-    navSwitcher();
-  }
-});
