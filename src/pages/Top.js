@@ -4,7 +4,7 @@ import {
   checkbox,
   scrollBarFix,
 } from "../layout/main.js";
-import { DATA } from "../utils/function.js";
+import { DATA, getCurrentTodo } from "../utils/function.js";
 
 export const Top = {
   mount: function () {
@@ -12,38 +12,16 @@ export const Top = {
   },
 
   render: function () {
-    // 這裡僅是原生來自 top 的內容
-    const { name: pageName, content: pageContent } = DATA.default.find(
-      (page) => page.id === "top"
-    );
-
-    // 這裡必須撈出其它頁面中 top 屬性是 true 的 todo。(srcId !== 'top' && top)
     const allPageObj = [];
+
     for (let pageType in DATA) {
       allPageObj.push(...DATA[pageType]);
     }
 
-    // 以下兩者有什麼差別?
-
-    // 最終答案寫這邊
-    allPageObj.map(pageObj => pageObj.content)
+    const pageContent = allPageObj.map(pageObj => pageObj.content)
       .reduce((acc, pageContent) => acc.concat(pageContent), [])
-      .filter(todo => todo.srcId === 'top' || (todo.srcId !== 'top' && todo.top === true))
-
-    // 找出 todo.srcId === 'top' 而且 (todo.srcId !== 'top' && todo.top === true))
-      // console.log(allPageObj.map(pageObj => pageObj.content)
-      //   .reduce((acc, pageContent) => acc.concat(pageContent), [])
-      //   .filter(todo => todo.srcId === 'top' || (todo.srcId !== 'top' && todo.top === true))
-      // )
-      
-    // 只用 todo.top === true 來篩選
-    console.log(allPageObj.map(pageObj => pageObj.content)
-      .reduce((acc, pageContent) => acc.concat(pageContent), [])
-      .filter(todo => todo.top === true)
-    )
-
-
-
+      .filter(todo => todo.top === true);
+    const pageName = '置頂';
 
     const todoContent = pageContent.map(({ id, checked, content, top }) => {
       return `
@@ -96,7 +74,6 @@ export const Top = {
   listener: {
     click: function (e) {
       openListOption(e);
-      // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
       // 新增新事項
@@ -104,20 +81,22 @@ export const Top = {
         // // 此處要獲取當前頁面的 id，並用該 id 來辨識目前要渲染哪一頁
         // addTodo();
       }
+
+      // 置頂星號
+      if (e.target.classList.contains("todo__top")) {
+        // 取得當前 todo
+        const currentTodo = getCurrentTodo(e);
+        currentTodo.top = !currentTodo.top;
+        e.target.classList.toggle("fa-solid");
+        e.target.classList.toggle("fa-regular");
+        // 存進 localStorage
+        // setStorage(DATA);
+      }
     },
 
     change: function (e) {
       // checkbox
       checkbox(e);
-
-      // Uncaught TypeError: currentPage is undefined function.js:84:23
-      // 因為 function.js:82 的 currentPage 是來自於 getCurrentCustomPage()
-      // getCurrentCustomPage() 只取得 CustomPage ， 沒有取得 top ，所以獲到 undefined
-      // 要如何更改 getCurrentCustomPage() ，讓這個函數透過網址列 id ，就可以獲取到無論是
-      // 預設清單的內容還是自訂清單的內容?
-
-      // 如果寫出這個函數，就可以去更改 getCurrentCustomPage()，這個弄好，我的 checkbox 就
-      // 可以到處通用了
     },
   },
 };

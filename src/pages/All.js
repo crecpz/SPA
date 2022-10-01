@@ -5,6 +5,7 @@ import {
   checkbox,
   scrollBarFix,
   dropdownSwitch,
+  searchOriginTodo,
 } from "../layout/main.js";
 
 export const All = {
@@ -13,10 +14,14 @@ export const All = {
   },
 
   render: function () {
-    const allContent = getAllContentObj();
-    const { name: pageName } = DATA.default.find((page) => page.id === "all");
-
-    const dropdownsContent = allContent
+    //  將有頁面的物件資料放進 pageObjs
+    let pageObjs = [];
+    for (let pageType in DATA) {
+      pageObjs.push(...DATA[pageType]);
+    }
+    console.log(pageObjs)
+    console.log(DATA.default)
+    const dropdownsContent = pageObjs
       .map(({ name, content }) => {
         return `
           <li class="dropdown">
@@ -58,7 +63,7 @@ export const All = {
           <div class="container">
             <div class="main__name-wrapper">
               <div class="main__color-block"></div>
-              <h2 class="main__name">${pageName}</h2>
+              <h2 class="main__name">全部</h2>
             </div>
             <!-- 清單選單按鈕 -->
             <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
@@ -103,33 +108,37 @@ export const All = {
      * 備註:此新頁面屬性將作為 All.js 頁面中的頁面資料。這麼做的原因是因為在 All.js 內只需要顯示出來自於 All 頁面新增的 todo 即可。
      *      不需要把整個 all 的資料都渲染出來，這樣資料會重複。
      */
-    function getAllContentObj() {
-      const allContentObj = [];
-      for (let pageType in DATA) {
-        DATA[pageType].forEach((pageObj) => {
-          if (pageObj.id !== "all") {
-            allContentObj.push(pageObj);
-          } else {
-            // 找出 all 頁面中自己的 todo
-            const allOwnContent = pageObj.content.filter(
-              (todo) => todo.srcId === "all"
-            );
-            // 建立物件，並在物件中的 content 中放入 allOwnContent
-            allContentObj.push({
-              id: "all",
-              name: "全部",
-              content: [...allOwnContent],
-              color: "",
-            });
-          }
-        });
-      }
-      return allContentObj;
-    }
+    // function getAllContentObj() {
+    //   const allContentObj = [];
+    //   for (let pageType in DATA) {
+    //     DATA[pageType].forEach((pageObj) => {
+    //       if (pageObj.id !== "all") {
+    //         allContentObj.push(pageObj);
+    //       } else {
+    //         // 找出 all 頁面中自己的 todo
+    //         const allOwnContent = pageObj.content.filter(
+    //           (todo) => todo.srcId === "all"
+    //         );
+    //         // 建立物件，並在物件中的 content 中放入 allOwnContent
+    //         allContentObj.push({
+    //           id: "all",
+    //           name: "全部",
+    //           content: [...allOwnContent],
+    //           color: "",
+    //         });
+    //       }
+    //     });
+    //   }
+    //   console.log('allContentObj:',allContentObj)
+    //   return allContentObj;
+    // }
   },
 
   listener: {
     click: (e) => {
+      // searchOriginTodo(e.target.closest('li').id)
+      console.log(1);
+
       // 判斷是否要開啟 listOption
       if (e.target.classList.contains("btn--list-option")) {
         // 監聽 listOption 按鈕來決定是否開啟 listOption

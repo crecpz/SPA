@@ -1,8 +1,8 @@
 import {
   addTodo,
   DATA,
-  getCurrentCustomPage,
   getCurrentPage,
+  getCurrentPageId,
   setStorage,
 } from "../utils/function.js";
 import { activeNavLists, renderCustomList } from "./nav.js";
@@ -66,68 +66,70 @@ export function openConfirmModal() {
  * 關閉 modal
  */
 export function closeModal(e) {
-    const modalOverlay = document.querySelector(".modal-overlay");
-    modalOverlay.classList.remove("overlay--active");
+  const modalOverlay = document.querySelector(".modal-overlay");
+  modalOverlay.classList.remove("overlay--active");
 }
 
 /**
  * 刪除清單
  */
 export function removeList(e) {
+  // 取得當前清單頁面的資料
+  const currentPage = getCurrentPage();
 
-    // 取得當前清單頁面的資料
-    const currentPage = getCurrentPage();
+  // 存放接下來頁面的去向 (此處存放的是一段網址，)
+  let pageWillGoTo;
 
-    // 存放接下來頁面的去向 (此處存放的是一段網址，)
-    let pageWillGoTo;
+  // 獲取當前頁面的前一個頁面，如果只有一個頁面，則前一個頁面指定為 '/top'
+  if (!DATA.custom[DATA.custom.indexOf(currentPage) - 1]) {
+    // 將頁面導向到 '/top'
+    pageWillGoTo = "/top";
+    window.location.hash = pageWillGoTo;
 
-    // 獲取當前頁面的前一個頁面，如果只有一個頁面，則前一個頁面指定為 '/top'
-    if (!DATA.custom[DATA.custom.indexOf(currentPage) - 1]) {
-      // 將頁面導向到 '/top'
-      pageWillGoTo = "/top";
-      window.location.hash = pageWillGoTo;
+    activeNavLists();
+  } else {
+    // 找到當前頁面的前一頁的 id，並將頁面導向過去
+    pageWillGoTo = DATA.custom[DATA.custom.indexOf(currentPage) - 1].id;
+    window.location.hash = `/customlist/${pageWillGoTo}`;
+  }
 
-      activeNavLists();
-    } else {
-      // 找到當前頁面的前一頁的 id，並將頁面導向過去
-      pageWillGoTo = DATA.custom[DATA.custom.indexOf(currentPage) - 1].id;
-      window.location.hash = `/customlist/${pageWillGoTo}`;
-    }
+  // 刪除在 DATA 中該頁的資料
+  DATA.custom = DATA.custom.filter((page) => page.id !== currentPage.id);
 
-    // 刪除在 DATA 中該頁的資料
-    DATA.custom = DATA.custom.filter((page) => page.id !== currentPage.id);
+  // 重新渲染 nav 自訂清單的 UI
+  renderCustomList();
 
-    // 重新渲染 nav 自訂清單的 UI
-    renderCustomList();
-
-    // 存到 localStorage
-    setStorage(DATA);
-
+  // 存到 localStorage
+  setStorage(DATA);
 }
 
 /**
  * 接收一個 todoId 作為參數，從 DATA 中搜尋出該 todo 的原始來源資料。
  */
-function searchOriginTodo(todoId) {
-  // 若 todo 本身就存在在 All.js ，存入 isInAll 並返回
-  const isInAll = DATA.default[0].content.find(
-    ({ id, srcId }) => srcId === "all" && id === todoId
-  );
-  if (isInAll) return isInAll;
+export function searchOriginTodo(todoId) {
+  // 取得當前頁面 id
+  const currentPageId = getCurrentPageId();
+
+  // 若 todo 原始來源資料就是當前頁面(而非來自其他頁面)則返回在當前頁面搜尋到的 todo 資料:
+  const originIsInCurrentPage = DATA.default
+    .map(({ content }) => content)
+    .reduce((acc, cur) => acc.concat(cur), [])
+    .find(({ id, srcId }) => srcId === currentPageId && id === todoId);
+
+  if (originIsInCurrentPage) return originIsInCurrentPage;
   else {
     const allPageObj = [];
+    console.log(DATA)
     for (let pageType in DATA) {
       allPageObj.push(...DATA[pageType]);
     }
     return allPageObj
-      .filter(({ id }) => id !== "all")
+      .filter(({ id }) => id !== currentPageId)
       .map(({ content }) => content)
       .reduce((acc, cur) => acc.concat(cur), [])
       .find(({ id }) => id === todoId);
   }
 }
-
-console.log(DATA)
 
 /**
  * checkbox 功能
