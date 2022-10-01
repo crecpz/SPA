@@ -16,11 +16,11 @@ export const All = {
   render: function () {
     //  將有頁面的物件資料放進 pageObjs
     let pageObjs = [];
+    
     for (let pageType in DATA) {
       pageObjs.push(...DATA[pageType]);
     }
-    console.log(pageObjs)
-    console.log(DATA.default)
+
     const dropdownsContent = pageObjs
       .map(({ name, content }) => {
         return `
@@ -135,9 +135,8 @@ export const All = {
   },
 
   listener: {
-    click: (e) => {
+    click: function(e){
       // searchOriginTodo(e.target.closest('li').id)
-      console.log(1);
 
       // 判斷是否要開啟 listOption
       if (e.target.classList.contains("btn--list-option")) {

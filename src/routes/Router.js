@@ -6,7 +6,7 @@ import { Route } from "./Route.js";
 /**
  *
  * @param {*} path 從網址列中接收到的路徑
- * @param {*} routes 從./Route.js引入的路徑集合
+ * @param {*} routes 從 ./Route.js 引入的路徑集合
  * @returns 若有找到匹配的路徑則返回該物件，若沒有的話則返回空物件。
  */
 const getComponent = (path, routes) => {

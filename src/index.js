@@ -4,7 +4,6 @@ import { updateMode } from "./utils/mode.js";
 import { appHeight } from "./utils/function.js";
 import { renderCustomList, activeNavLists } from "./layout/nav.js";
 
-
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
 window.addEventListener("load", Router);
@@ -16,16 +15,13 @@ window.addEventListener("DOMContentLoaded", updateMode);
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", updateMode);
-  
-// 初次載入從資料中渲染出 customList 
+
+// 初次載入從資料中渲染出 customList
 window.addEventListener("DOMContentLoaded", renderCustomList);
 
-// 初次載入時將 Nav 中相對應的頁面套用 active 
-window.addEventListener('load', activeNavLists)
-  
+// 初次載入時將 Nav 中相對應的頁面套用 active
+window.addEventListener("load", activeNavLists);
+
 // 解決手機瀏覽器無法剛好只占滿整版的問題
 window.addEventListener("resize", appHeight);
 window.addEventListener("DOMContentLoaded", appHeight);
-
-// 關閉瀏覽器 or 重新整理時，將資料存進 localStorage 中 (先禁用!)
-// window.addEventListener('unload', () => setStorage(DATA));

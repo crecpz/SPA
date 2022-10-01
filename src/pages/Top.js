@@ -4,7 +4,7 @@ import {
   checkbox,
   scrollBarFix,
 } from "../layout/main.js";
-import { DATA, getCurrentTodo } from "../utils/function.js";
+import { DATA, getCurrentTodo, setStorage } from "../utils/function.js";
 
 export const Top = {
   mount: function () {
@@ -73,6 +73,7 @@ export const Top = {
 
   listener: {
     click: function (e) {
+
       openListOption(e);
       clickToCloseListOption(e);
 
@@ -90,7 +91,7 @@ export const Top = {
         e.target.classList.toggle("fa-solid");
         e.target.classList.toggle("fa-regular");
         // 存進 localStorage
-        // setStorage(DATA);
+        setStorage(DATA);
       }
     },
 
