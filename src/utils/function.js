@@ -251,3 +251,19 @@ export function saveEditedName(e) {
   // input 設定回 readonly 屬性
   editTarget.setAttribute("readonly", "readonly");
 }
+
+console.log(
+  DATA
+
+)
+
+export function updateTop(e){
+  // 取得點擊的 todo 物件
+
+  // 翻轉該 todo 物件的 "top" 屬性
+
+
+  // 「 所有的 todo 在被取消掉都要前往到 all 嗎? No, 只有 srcId === top 的才要 」，所以: 
+  // 直接指定要檢查的位置: 檢查 DATA.default --> top 資料 --> content --> 每一項todo
+  // 如果有任何一項
+}

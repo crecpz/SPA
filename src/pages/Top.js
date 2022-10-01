@@ -7,9 +7,11 @@ import {
 import { DATA, getAllPage, getCurrentTodo, setStorage } from "../utils/function.js";
 
 
-// 決定什麼項目可以放到 top 裡面，
-// 究竟是看 srcId 來決定?
-// 還是看 top 屬性?
+// Q: 決定什麼項目可以放到 top 裡面，
+// 究竟是看 srcId 來決定? 
+// 還是看 top 屬性? 
+
+// A: 是看 top 屬性
 
 // 所有的 todo 在被取消掉都要前往到 all 嗎? 
 // No, 只有 srcId === top 的才要
@@ -97,6 +99,7 @@ export const Top = {
         // 取得當前 todo
         const currentTodo = getCurrentTodo(e);
         currentTodo.top = !currentTodo.top;
+
         e.target.classList.toggle("fa-solid");
         e.target.classList.toggle("fa-regular");
         // 存進 localStorage

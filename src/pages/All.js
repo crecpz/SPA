@@ -18,9 +18,9 @@ export const All = {
     const allPages = getAllPage();
     
     const dropdownsContent = allPages
-      .map(({ name, content }) => {
+      .map(({id, name, content }) => {
         // 判斷如果 content 沒任何內容，就渲染空字串就好
-        if (content.length === 0) {
+        if (content.length === 0 || id === 'top') {
           return "";
         } else {
           return `
