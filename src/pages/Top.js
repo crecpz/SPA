@@ -24,11 +24,15 @@ export const Top = {
   render: function () {
     // 集成所有的頁面物件
     const allPages = getAllPage();
+    console.log(allPages)
 
     // 找出所有 top 屬性帶有 true 的 todo Object，放入 pageContent 中
-    const pageContent = allPages.map(pageObj => pageObj.content)
+    const pageContent = allPages
+      .map(pageObj => pageObj.content)
       .reduce((acc, pageContent) => acc.concat(pageContent), [])
       .filter(todo => todo.top === true);
+
+    console.log(pageContent)
 
     // 因為本頁的名稱確定不會做變動，所以這裡直接指定清單名稱
     const pageName = '置頂';
@@ -69,7 +73,6 @@ export const Top = {
               </ul>
           </div>
         </div>
-
 
         <!-- main content list -->
         <div class="main__content-list">
