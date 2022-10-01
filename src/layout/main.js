@@ -4,6 +4,7 @@ import {
   getAllPage,
   getCurrentPage,
   getCurrentPageId,
+  getCurrentTodo,
   setStorage,
 } from "../utils/function.js";
 import { activeNavLists, renderCustomList } from "./nav.js";
@@ -104,43 +105,37 @@ export function removeList(e) {
   setStorage(DATA);
 }
 
-/**
- * 接收一個 todoId 作為參數，從 DATA 中搜尋出該 todo 的原始來源資料。
- */
-export function searchOriginTodo(todoId) {
-  // 取得當前頁面 id
-  const currentPageId = getCurrentPageId();
+// /**
+//  * 接收一個 todoId 作為參數，從 DATA 中搜尋出該 todo 的原始來源資料。
+//  */
+// export function searchOriginTodo(todoId) {
+//   // 取得當前頁面 id
+//   const currentPageId = getCurrentPageId();
 
-  // 若 todo 原始來源資料就是當前頁面(而非來自其他頁面)則返回在當前頁面搜尋到的 todo 資料:
-  const originIsInCurrentPage = DATA.default
-    .map(({ content }) => content)
-    .reduce((acc, cur) => acc.concat(cur), [])
-    .find(({ id, srcId }) => srcId === currentPageId && id === todoId);
+//   // 若 todo 原始來源資料就是當前頁面(而非來自其他頁面)則返回在當前頁面搜尋到的 todo 資料:
+//   const originIsInCurrentPage = DATA.default
+//     .map(({ content }) => content)
+//     .reduce((acc, cur) => acc.concat(cur), [])
+//     .find(({ id, srcId }) => srcId === currentPageId && id === todoId);
 
-  if (originIsInCurrentPage) return originIsInCurrentPage;
-  else {
-    const allPage = getAllPage();
-    return allPage
-      .filter(({ id }) => id !== currentPageId)
-      .map(({ content }) => content)
-      .reduce((acc, cur) => acc.concat(cur), [])
-      .find(({ id }) => id === todoId);
-  }
-}
+//   if (originIsInCurrentPage) return originIsInCurrentPage;
+
+//   const allPages = getAllPage();
+//   return allPages
+//     .filter(({ id }) => id !== currentPageId)
+//     .map(({ content }) => content)
+//     .reduce((acc, cur) => acc.concat(cur), [])
+//     .find(({ id }) => id === todoId);
+// }
 
 /**
  * checkbox 功能
  * @param {*} e event
  */
-export function checkbox(e) {
+export function changeCheckbox(e) {
   if (e.target.classList.contains("todo__checkbox")) {
-    // 取得 checkbox 事件觸發 todo 的 id
-    const currentTodoId = e.target.closest(".todo__item").id;
-
     // 翻轉 checked 值
-    searchOriginTodo(currentTodoId).checked =
-      !searchOriginTodo(currentTodoId).checked;
-
+    getCurrentTodo(e).checked = !getCurrentTodo(e).checked
     // 儲存變更
     setStorage(DATA);
   }

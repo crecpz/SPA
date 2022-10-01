@@ -2,10 +2,9 @@ import { DATA, setStorage, getCurrentTodo, getAllPage } from "../utils/function.
 
 import {
   clickToCloseListOption,
-  checkbox,
+  changeCheckbox,
   scrollBarFix,
   dropdownSwitch,
-  searchOriginTodo,
 } from "../layout/main.js";
 
 export const All = {
@@ -14,6 +13,7 @@ export const All = {
   },
 
   render: function () {
+    
     //  將有頁面的物件資料放進 allPages
     const allPages = getAllPage();
     
@@ -116,6 +116,7 @@ export const All = {
         // 取得當前 todo
         const currentTodo = getCurrentTodo(e);
         currentTodo.top = !currentTodo.top;
+
         e.target.classList.toggle("fa-solid");
         e.target.classList.toggle("fa-regular");
         // 存進 localStorage
@@ -125,7 +126,9 @@ export const All = {
 
     change: function (e) {
       // checkbox
-      checkbox(e);
+      changeCheckbox(e);
     },
   },
 };
+
+// function 

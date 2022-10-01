@@ -11,7 +11,7 @@ import {
   removeList,
   openConfirmModal,
   closeModal,
-  checkbox,
+  changeCheckbox,
   scrollBarFix,
 } from "../layout/main.js";
 
@@ -124,7 +124,7 @@ export const CustomList = {
 
     change: function (e) {
       // checkbox
-      checkbox(e);
+      changeCheckbox(e);
 
       // 儲存已經改動的清單名稱
       if (e.target.classList.contains("main__name")) {

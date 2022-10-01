@@ -98,7 +98,6 @@ export function getCurrentPage() {
   if (result) return result;
 }
 
-
 /**
  * 取得當前所在 custom 頁面的資料。
  * 注意: 此函數是指定在 DATA.custom 內尋找"內部元素的"的 ID。
@@ -109,20 +108,32 @@ export function getCurrentPage() {
 // }
 
 /**
- * 取得當前事件觸發的 todo 物件
+ * 透過 id 名稱，搜尋當前觸發的 todo 在 DATA 中的資料。
  * @param {*} e 事件
- * @returns todo 物件
+ * @returns 返回 todo 物件
  */
 export function getCurrentTodo(e) {
   // 取得事件觸發 todo 的 id
   const currentTodoId = e.target.closest(".todo__item").id;
+
   // 取得當前頁面物件資料
   const currentPage = getCurrentPage();
-  // 從當前頁面資料取得當前 todo
-  const currentTodo = currentPage.content.find(
+
+  // 先從當前頁面資料取得當前 todo
+  const currentTodoObj = currentPage.content.find(
     (todoItem) => todoItem.id === currentTodoId
   );
-  return currentTodo;
+
+  // 如果在當前頁面資料當中已找到 todo Object ，則返回。
+  if (currentTodoObj) return currentTodoObj;
+
+  // 如果找不到(undefined)，要往其他頁面去尋找:
+  const allPages = getAllPage();
+  return allPages
+    .filter(({ id }) => id !== currentPage.id) // 過濾掉當前頁面物件資料
+    .map(({ content }) => content) // 取得 content 屬性
+    .reduce((acc, cur) => acc.concat(cur), []) // 攤平
+    .find(({ id }) => id === currentTodoId); // 找出 todo Object
 }
 
 /**
