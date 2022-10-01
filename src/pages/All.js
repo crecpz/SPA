@@ -1,4 +1,4 @@
-import { DATA, setStorage, getCurrentTodo } from "../utils/function.js";
+import { DATA, setStorage, getCurrentTodo, getAllPage } from "../utils/function.js";
 
 import {
   clickToCloseListOption,
@@ -14,14 +14,10 @@ export const All = {
   },
 
   render: function () {
-    //  將有頁面的物件資料放進 pageObjs
-    let pageObjs = [];
-
-    for (let pageType in DATA) {
-      pageObjs.push(...DATA[pageType]);
-    }
-
-    const dropdownsContent = pageObjs
+    //  將有頁面的物件資料放進 allPages
+    const allPages = getAllPage();
+    
+    const dropdownsContent = allPages
       .map(({ name, content }) => {
         // 判斷如果 content 沒任何內容，就渲染空字串就好
         if (content.length === 0) {

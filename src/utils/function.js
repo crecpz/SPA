@@ -65,6 +65,18 @@ export function setStorage(data) {
 }
 
 /**
+ * 將所有頁面集合成一個 Array 並返回。
+ * @returns
+ */
+export function getAllPage() {
+  const allPage = [];
+  for (let pageType in DATA) {
+    allPage.push(...DATA[pageType]);
+  }
+  return allPage;
+}
+
+/**
  * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
  * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
  * @returns id 字符串
@@ -81,22 +93,20 @@ export function getCurrentPageId() {
  * @returns 頁面 Object
  */
 export function getCurrentPage() {
-  for (let pageType in DATA) {
-    const result = DATA[pageType].find((i) => i.id === getCurrentPageId());
-    if (result) return result;
-  }
+  const allPages = getAllPage();
+  const result = allPages.find((i) => i.id === getCurrentPageId());
+  if (result) return result;
 }
 
-// console.log(getCurrentPage())
 
 /**
  * 取得當前所在 custom 頁面的資料。
  * 注意: 此函數是指定在 DATA.custom 內尋找"內部元素的"的 ID。
  * @returns 目前所在的 custom 頁面的資料(`Object`)
  */
-export function getCurrentCustomPage() {
-  return DATA.custom.find((i) => i.id === getCurrentPageId());
-}
+// export function getCurrentCustomPage() {
+//   return DATA.custom.find((i) => i.id === getCurrentPageId());
+// }
 
 /**
  * 取得當前事件觸發的 todo 物件
@@ -209,12 +219,12 @@ export function saveEditedName(e) {
     // 得出最新的數字
     const newNumber = listCounter(extractNumberList);
 
+    // 給予目前的清單新名稱
     editTarget.value = `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
-  } 
-  
-  const inputValue = e.target.value;
+  }
 
   // 更新 DATA 中的資料
+  const inputValue = e.target.value;
   const currentPage = getCurrentPage();
   currentPage.name = inputValue;
 

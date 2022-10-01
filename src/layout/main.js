@@ -1,6 +1,7 @@
 import {
   addTodo,
   DATA,
+  getAllPage,
   getCurrentPage,
   getCurrentPageId,
   setStorage,
@@ -118,12 +119,8 @@ export function searchOriginTodo(todoId) {
 
   if (originIsInCurrentPage) return originIsInCurrentPage;
   else {
-    const allPageObj = [];
-    console.log(DATA)
-    for (let pageType in DATA) {
-      allPageObj.push(...DATA[pageType]);
-    }
-    return allPageObj
+    const allPage = getAllPage();
+    return allPage
       .filter(({ id }) => id !== currentPageId)
       .map(({ content }) => content)
       .reduce((acc, cur) => acc.concat(cur), [])

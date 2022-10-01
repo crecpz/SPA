@@ -4,7 +4,7 @@ import {
   checkbox,
   scrollBarFix,
 } from "../layout/main.js";
-import { DATA, getCurrentTodo, setStorage } from "../utils/function.js";
+import { DATA, getAllPage, getCurrentTodo, setStorage } from "../utils/function.js";
 
 export const Top = {
   mount: function () {
@@ -12,17 +12,18 @@ export const Top = {
   },
 
   render: function () {
-    const allPageObj = [];
+    // 集成所有的頁面物件
+    const allPages = getAllPage();
 
-    for (let pageType in DATA) {
-      allPageObj.push(...DATA[pageType]);
-    }
-
-    const pageContent = allPageObj.map(pageObj => pageObj.content)
+    // 找出所有 top 屬性帶有 true 的 todo Object，放入 pageContent 中
+    const pageContent = allPages.map(pageObj => pageObj.content)
       .reduce((acc, pageContent) => acc.concat(pageContent), [])
       .filter(todo => todo.top === true);
+
+    // 因為本頁的名稱確定不會做變動，所以這裡直接指定清單名稱
     const pageName = '置頂';
 
+    // 遍歷 pageContent 先準備好所有會在 Top.js 會出現的 todoList
     const todoContent = pageContent.map(({ id, checked, content, top }) => {
       return `
         <li id="${id}" class="todo__item">
@@ -35,7 +36,7 @@ export const Top = {
             <i class="todo__top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
         </li>
       `;
-    });
+    }).join("");
 
     return `
         <!-- 主內容區 header -->
@@ -64,7 +65,7 @@ export const Top = {
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                ${todoContent.join("")}
+                ${todoContent}
                 </ul>
             </div>
         </div>
