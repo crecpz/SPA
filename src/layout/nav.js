@@ -1,5 +1,5 @@
 import { modeSwitcher } from "../utils/mode.js";
-import { createUniqueId, setStorage } from "../utils/function.js";
+import { createUniqueId, editName, setStorage } from "../utils/function.js";
 import { DATA, getCurrentPageId } from "../utils/function.js";
 
 const navContent = document.querySelector(".nav__content");
@@ -24,9 +24,6 @@ document.querySelector(".wrapper").addEventListener("click", (e) => {
   }
 });
 
-// window.addEventListener('click', (e) => console.log(e.target))
-
-
 /**
  * 渲染 customList 至 nav 中
  */
@@ -36,10 +33,7 @@ export function renderCustomList() {
     return `
       <li id="${list.id}" 
           class="custom-list__item nav__list-item 
-                ${list.id === currentPageId
-                  ? "nav__list-item--active"
-                  : null
-                }"
+                ${list.id === currentPageId ? "nav__list-item--active" : null}"
           >
           <a class="nav__list-link nav__list-link--custom-list" 
               href="#/customlist/${list.id}">
@@ -75,7 +69,6 @@ function removeNavActive() {
     .forEach((i) => i.classList.remove("nav__list-item--active"));
 }
 
-
 // nav 中所有的選單點擊切換行為
 document.querySelectorAll(".nav__list").forEach((navList) => {
   navList.addEventListener("click", (e) => {
@@ -86,7 +79,6 @@ document.querySelectorAll(".nav__list").forEach((navList) => {
       // 更新 active
       e.target.closest("li").classList.add("nav__list-item--active");
 
-      
       // 如果目前螢幕的寬度 < 576px 點擊任一清單就把清單收合
       const smallerThan576 = window.matchMedia("(max-width: 576px)");
 
@@ -98,18 +90,16 @@ document.querySelectorAll(".nav__list").forEach((navList) => {
   });
 });
 
-
 /**
  * 先取得目前所在頁面的 id，
  * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
  * 最後將其加上 active 的 class。
  */
- export function activeNavLists() {
+export function activeNavLists() {
   const id = getCurrentPageId();
   const activeTarget = navContent.querySelector(`#${id}`);
   activeTarget.classList.add("nav__list-item--active");
 }
-
 
 /**
  * 接收一個 Array 作為參數，該 Array 包含所有目前的 「未命名清單」。
@@ -165,21 +155,27 @@ const customList = document.querySelector(".custom-list");
 addBtn.addEventListener("click", addCustomList);
 
 /**
- * 此函數代表整個 customList 從新建並儲存到渲染的動作。
+ * 此函數包含整個 customList 從新建、儲存 storage 、渲染的動作。
  * @param {*} e
  */
 function addCustomList() {
+  // 將新的自訂清單加入到 DATA
   setCustomList();
 
-  // 將頁面導向(directed)到當前最新新增的頁
-  window.location.hash = `/customlist/${DATA.custom[DATA.custom.length - 1].id
-    }`;
+  // 將頁面導向到當前最新新增的頁
+  window.location.hash = `/customlist/${
+    DATA.custom[DATA.custom.length - 1].id
+  }`;
 
   // 清除在選單上的 active
   removeNavActive();
 
   // 渲染 customList 至 nav 中
   renderCustomList();
+
+  setTimeout(()=> {
+    editName();
+  }, 200)
 }
 
 /**
