@@ -110,7 +110,7 @@ export function activeNavLists() {
  * @param {*} listArr 所有「未命名清單」陣列
  * @returns 返回一個經過大小排序的數字陣列。
  */
-function extractUnnamedNumber(listArr) {
+export function extractUnnamedNumber(listArr) {
   return (
     listArr
       // 匹配開頭為「未命名清單(X)」及頭尾名為 「未命名清單」的元素
@@ -136,7 +136,7 @@ function extractUnnamedNumber(listArr) {
  * @param {*} numList
  * @returns 返回應一個數字，該數字即為「未命名清單」編號的最新順位。
  */
-function listCounter(numList) {
+export function listCounter(numList) {
   let i = 0;
   while (true) {
     if (numList.indexOf(i) === -1) {

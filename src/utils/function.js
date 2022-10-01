@@ -1,5 +1,9 @@
 // import { scrollBarFix } from "../layout/main.js";
-import { renderCustomList } from "../layout/nav.js";
+import {
+  extractUnnamedNumber,
+  listCounter,
+  renderCustomList,
+} from "../layout/nav.js";
 import { Router } from "../routes/Router.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
@@ -60,7 +64,6 @@ export function setStorage(data) {
   localStorage.setItem("todoLocalData", JSON.stringify(data));
 }
 
-
 /**
  * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
  * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
@@ -79,11 +82,10 @@ export function getCurrentPageId() {
  */
 export function getCurrentPage() {
   for (let pageType in DATA) {
-    const result = DATA[pageType].find(i => i.id === getCurrentPageId())
-    if(result) return result;
+    const result = DATA[pageType].find((i) => i.id === getCurrentPageId());
+    if (result) return result;
   }
 }
-
 
 // console.log(getCurrentPage())
 
@@ -95,9 +97,6 @@ export function getCurrentPage() {
 export function getCurrentCustomPage() {
   return DATA.custom.find((i) => i.id === getCurrentPageId());
 }
-
-
-
 
 /**
  * 取得當前事件觸發的 todo 物件
@@ -129,21 +128,16 @@ export function createUniqueId() {
   );
 }
 
-
 /**
  * 接收一個數字參數number，檢查number是否大於0且小於10，
  * 若符合條件，返回一個前面補0的String；
  * 若不符合條件返回一個由number轉化成的String。
- * @param {*} number 
+ * @param {*} number
  * @returns `String`
  */
 export function fillZero(number) {
-  return number < 10 && number > 0
-    ? '0' + number
-    : String(number);
+  return number < 10 && number > 0 ? "0" + number : String(number);
 }
-
-
 
 export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
@@ -152,7 +146,6 @@ export function setTodo() {
     const todoValue = todoInput.value.trim();
     // 取得目前頁面的所在位置(取得頁面ID)
     const currentPageId = getCurrentPageId();
-
 
     const todo = {
       id: createUniqueId(),
@@ -169,7 +162,7 @@ export function setTodo() {
       currentPageId === "all" ||
       currentPageId === "top"
     ) {
-      DATA.default.find(i => i.id === currentPageId).content.push(todo);
+      DATA.default.find((i) => i.id === currentPageId).content.push(todo);
     } else {
       DATA.custom.find((i) => i.id === currentPageId).content.push(todo);
     }
@@ -184,34 +177,56 @@ export function addTodo(todo) {
   setTodo();
 }
 
-
 /**
  * 編輯自訂清單的名稱
  */
-export function editName(){
-  const editTarget = document.querySelector('.main__name');
-  editTarget.removeAttribute('readonly');
+export function editName() {
+  const editTarget = document.querySelector(".main__name");
+  editTarget.removeAttribute("readonly");
   editTarget.select();
 }
 
 /**
  * 儲存已經改動的清單名稱
- * @param {*} e 
+ * @param {*} e
  */
-export function saveEditedName(e){
+export function saveEditedName(e) {
   // 取得 input
   const editTarget = e.target;
-  // 取得 input value
+
+  // 如果輸入的內容為空，則替此內容新增內容
+  if (editTarget.value.trim() === "") {
+    // 獲取現有清單
+    const allCustomListName = DATA.custom.map((i) => i.name);
+    // 提取清單尾數。
+    // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
+    // (因為如果初始值是 1 ，在後續的計算中，下一個順位將會是 0)
+    const extractNumberList =
+      extractUnnamedNumber(allCustomListName).length === 0
+        ? [1]
+        : extractUnnamedNumber(allCustomListName);
+
+    // 得出最新的數字
+    const newNumber = listCounter(extractNumberList);
+
+    editTarget.value = `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
+  } 
+  
   const inputValue = e.target.value;
+
   // 更新 DATA 中的資料
   const currentPage = getCurrentPage();
   currentPage.name = inputValue;
+
   // 更新該頁中的 todo obj 內的 srcName
-  currentPage.content.forEach(todoObj => todoObj.srcName = inputValue);
+  currentPage.content.forEach((todoObj) => (todoObj.srcName = inputValue));
+
   // 存入 localStorage
   setStorage(DATA);
+
   // 重新渲染新的名稱上去 nav
   renderCustomList();
+
   // input 設定回 readonly 屬性
-  editTarget.setAttribute('readonly', 'readonly');
+  editTarget.setAttribute("readonly", "readonly");
 }
