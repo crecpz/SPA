@@ -16,44 +16,49 @@ export const All = {
   render: function () {
     //  將有頁面的物件資料放進 pageObjs
     let pageObjs = [];
-    
+
     for (let pageType in DATA) {
       pageObjs.push(...DATA[pageType]);
     }
 
     const dropdownsContent = pageObjs
       .map(({ name, content }) => {
-        return `
-          <li class="dropdown">
-            <div class="dropdown__name">
-              <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
-              ${name}
-            </div>
-            <div class="dropdown__cover">
-              <ul class="todo">
-                ${content
-                  .map(({ id, checked, content, top }) => {
-                    return `
-                              <li id="${id}" class="todo__item">
-                                <label class="todo__label">
-                                    <input type="checkbox" 
-                                          class="todo__checkbox"
-                                          ${checked ? "checked" : ""}
-                                    >
-                                    <span class="todo__checkmark"></span>
-                                    <p class="todo__content">${content}</p>
-                                </label>
-                                <i class="todo__top ${
-                                  top ? "fa-solid" : "fa-regular"
-                                } fa-star"></i> 
-                              </li>
-                            `;
-                  })
-                  .join("")}
-              </ul>
-            </div>
-          </li>
-        `;
+        // 判斷如果 content 沒任何內容，就渲染空字串就好
+        if (content.length === 0) {
+          return "";
+        } else {
+          return `
+            <li class="dropdown">
+              <div class="dropdown__name">
+                <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                ${name}
+              </div>
+              <div class="dropdown__cover">
+                <ul class="todo">
+                  ${content
+                    .map(({ id, checked, content, top }) => {
+                      return `
+                        <li id="${id}" class="todo__item">
+                          <label class="todo__label">
+                              <input type="checkbox" 
+                                    class="todo__checkbox"
+                                    ${checked ? "checked" : ""}
+                              >
+                              <span class="todo__checkmark"></span>
+                              <p class="todo__content">${content}</p>
+                          </label>
+                          <i class="todo__top ${
+                            top ? "fa-solid" : "fa-regular"
+                          } fa-star"></i> 
+                        </li>
+                      `;
+                    })
+                    .join("")}
+                </ul>
+              </div>
+            </li>
+          `;
+        }
       })
       .join("");
 
@@ -92,7 +97,7 @@ export const All = {
   },
 
   listener: {
-    click: function(e){
+    click: function (e) {
       // searchOriginTodo(e.target.closest('li').id)
 
       // 判斷是否要開啟 listOption
