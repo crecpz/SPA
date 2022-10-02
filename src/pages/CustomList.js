@@ -15,6 +15,10 @@ import {
 } from "../layout/main.js";
 
 export const CustomList = {
+  state: {
+    nameEditing: false,
+  },
+
   mount: function () {
     scrollBarFix();
   },
@@ -99,7 +103,7 @@ export const CustomList = {
         closeModal(e);
       }
 
-      // 刪除清單 - 偵測使用者是否有點擊"刪除" 
+      // 刪除清單 - 偵測使用者是否有點擊"刪除"
       if (e.target.id === "confirm-yes") {
         removeList(e);
       }
@@ -119,15 +123,30 @@ export const CustomList = {
       if (e.target.classList.contains("list-option__link--rename")) {
         editName();
       }
-    },
-
-    change: function (e) {
-      // checkbox
-      changeCheckbox(e);
 
       // 儲存已經改動的清單名稱
-      if (e.target.classList.contains("main__name")) {
-        saveEditedName(e);
+      if (
+        // 如果目前處於編輯中
+        CustomList.state.nameEditing &&
+        // 且如果目前點擊的對象不是 list-option 內的「重新命名」
+        !e.target.classList.contains("list-option__link--rename") &&
+        // 且如果目前點擊的對象不是編輯輸入框本身
+        !e.target.classList.contains("main__name")
+      ) {
+        // 就儲存已編輯的文字
+        saveEditedName();
+      }
+    },
+
+    change: (e) => {
+      // 變更 checkbox 
+      changeCheckbox(e);
+    },
+
+    keyup: (e) => {
+      if (e.key === "Enter") {
+        // 如果編輯模式下按 enter 則儲存編輯
+        saveEditedName();
       }
     },
   },

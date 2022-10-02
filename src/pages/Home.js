@@ -92,8 +92,4 @@ export const Home = {
             </div>
         `;
     },
-
-    listener: {
-        // click: (e) => { },
-    },
 };

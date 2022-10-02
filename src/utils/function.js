@@ -4,6 +4,8 @@ import {
   listCounter,
   renderCustomList,
 } from "../layout/nav.js";
+import { CustomList } from "../pages/CustomList.js";
+import { Top } from "../pages/Top.js";
 import { Router } from "../routes/Router.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
@@ -213,6 +215,8 @@ export function addTodo(todo) {
  * 編輯自訂清單的名稱
  */
 export function editName() {
+  // 將目前在 customList 中的 nameEditing state 改成 true，表示編輯中
+  CustomList.state.nameEditing = true;
   const editTarget = document.querySelector(".main__name");
   editTarget.removeAttribute("readonly");
   editTarget.select();
@@ -222,9 +226,10 @@ export function editName() {
  * 儲存已經改動的清單名稱
  * @param {*} e
  */
-export function saveEditedName(e) {
+export function saveEditedName() {
+  CustomList.state.nameEditing = !CustomList.state.nameEditing
   // 取得 input
-  const editTarget = e.target;
+  const editTarget = document.querySelector(".main__name");
 
   // 如果輸入的內容為空，則替此內容新增內容
   if (editTarget.value.trim() === "") {
@@ -246,12 +251,11 @@ export function saveEditedName(e) {
   }
 
   // 更新 DATA 中的資料
-  const inputValue = e.target.value;
   const currentPage = getCurrentPage();
-  currentPage.name = inputValue;
+  currentPage.name = editTarget.value;
 
   // 更新該頁中的 todo obj 內的 srcName
-  currentPage.content.forEach((todoObj) => (todoObj.srcName = inputValue));
+  currentPage.content.forEach((todoObj) => (todoObj.srcName = editTarget.value));
 
   // 存入 localStorage
   setStorage(DATA);
@@ -261,14 +265,15 @@ export function saveEditedName(e) {
 
   // input 設定回 readonly 屬性
   editTarget.setAttribute("readonly", "readonly");
+
+  // 將 state 中的 nameEditing 設回 false
+  CustomList.state.nameEditing = false;
 }
 
-console.log(DATA);
-
-export function updateTop(e) {
-  // 取得點擊的 todo 物件
-  // 翻轉該 todo 物件的 "top" 屬性
-  // 「 所有的 todo 在被取消掉都要前往到 all 嗎? No, 只有 srcId === top 的才要 」，所以:
-  // 直接指定要檢查的位置: 檢查 DATA.default --> top 資料 --> content --> 每一項todo
-  // 如果有任何一項
-}
+// export function updateTop(e) {
+//   // 取得點擊的 todo 物件
+//   // 翻轉該 todo 物件的 "top" 屬性
+//   // 「 所有的 todo 在被取消掉都要前往到 all 嗎? No, 只有 srcId === top 的才要 」，所以:
+//   // 直接指定要檢查的位置: 檢查 DATA.default --> top 資料 --> content --> 每一項todo
+//   // 如果有任何一項
+// }
