@@ -1,5 +1,5 @@
 import { scrollBarFix } from "../layout/main.js";
-import { DATA, fillZero, getAllPage } from "../utils/function.js";
+import { DATA, fillZero, getAllPage, getAllTodos } from "../utils/function.js";
 
 export const Home = {
     mount: function () {
@@ -7,51 +7,33 @@ export const Home = {
     },
 
     render: function () {
-        // 將 DATA 拿過來之後，替換掉 all 的資料，因為在總覽頁面當中，「全部」的這張卡片
-        // 應該要顯示的是所有(全站) todo 的數量，而非僅只有 all 本身的 todo。
+        // 準備「全部」總覽卡片:
+        // 1.從 DATA.default 拷貝一個「 all 」物件
+        const cloneAll = Object.assign({}, DATA.default.find(({ id }) => id === 'all'));
+        // 2.替換 content 屬性: content 內原本只包含來自「All.js」自身的 todo，現在改放入所有的 todo 進去
+        cloneAll.content = getAllTodos();
 
-        // 抓取所有的 todo Obj 放入 allTodos 這個陣列當中
-        const allTodos = getAllPage()
-            .map(({ content }) => content)
-            .reduce((acc, cur) => acc.concat(cur), []);
+        // 準備「置頂」總覽卡片:
+        // 1.從 DATA.default 拷貝一個「 top 」物件
+        const cloneTop = Object.assign({}, DATA.default.find(({ id }) => id === 'top'));
+        // 2.替換 content 屬性: content 內原本只包含來自「top.js」自身的 todo，現在改放入所有帶有星號的 todo 進去
+        cloneTop.content = getAllTodos().filter(({ top }) => top === true);
 
-        // // 為「 全部 」這個總覽卡片重新寫一個 Object，其中，content 放入 allTodos(所有的 todo)
-        // const pageObjOfAll = {
-        //     id: 'all',
-        //     name: '全部',
-        //     content: allTodos,
-        // }
-
-        // 準備將要顯示的內容
-        const contentsWillBedisplayed = getAllPage();
-        // 將 all 這個 page Object 內的 content 屬性替換成 allTodos
-        contentsWillBedisplayed.find(({id}) => id === 'all').content = allTodos;
-
-
-        // // 其餘的物件資料保持不變
-        // const pageObjsOfOther = getAllPage()
-        //     .filter(({ id }) => id !== 'all');
-
-
-        // console.log(allTodos, pageObjsOfOther)
-
-        // 將 DATA 內的所有 pageObj 資料拉進 overviewData Array 中
-        // 每一張卡片都將會利用此 overviewData 來渲染。
-        // const overviewData = [{}, pageObjsOfOther];
-        // console.log(overviewData)
-
-
-        DATA.custom.forEach((page) => {
-            page.isCustom = true;
-            // console.log(page)
+        // 準備 custom 總覽卡片
+        const custom = DATA.custom;
+        console.log(custom)
+        
+        // 如果頁面物件是來自於 custom ，則為頁面物件新增一個 isCustom = true
+        // 此屬性可以在遍歷的時候用來辨別 <a> 的 href 內容是否該加 customlist/
+        custom.forEach((pageObj) => {
+            pageObj.isCustom = true;
         });
 
-
-
-
+        // 準備將要顯示的內容
+        const contentsWillBeDisplayed = [cloneAll, cloneTop, ...custom];
 
         // 利用 map 遍歷 overviewData
-        const overviewCards = contentsWillBedisplayed
+        const overviewCards = contentsWillBeDisplayed
             .map(({ name: pageName, content, isCustom, id }) => {
                 // 以下分別為: 全部數量、未完成數量、已完成數量、完成百分比
                 const all = content.length;

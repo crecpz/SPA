@@ -6,7 +6,6 @@ import {
   saveEditedName,
 } from "../utils/function.js";
 import {
-  openListOption,
   clickToCloseListOption,
   removeList,
   openConfirmModal,

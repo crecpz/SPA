@@ -137,6 +137,17 @@ export function getCurrentTodo(e) {
 }
 
 /**
+ * 取得所有的 todo Object，返回一個 Array。
+ * @returns 返回一個匯集所有 todo Object 的 Array
+ */
+export function getAllTodos() {
+  const allPage = getAllPage();
+  return allPage
+    .map((pageObj) => pageObj.content)
+    .reduce((acc, pageContent) => acc.concat(pageContent), []);
+}
+
+/**
  * 產生一個隨機 id
  * @returns 一個獨一無二的亂數 id
  */
@@ -252,18 +263,12 @@ export function saveEditedName(e) {
   editTarget.setAttribute("readonly", "readonly");
 }
 
-console.log(
-  DATA
+console.log(DATA);
 
-)
-
-export function updateTop(e){
+export function updateTop(e) {
   // 取得點擊的 todo 物件
-
   // 翻轉該 todo 物件的 "top" 屬性
-
-
-  // 「 所有的 todo 在被取消掉都要前往到 all 嗎? No, 只有 srcId === top 的才要 」，所以: 
+  // 「 所有的 todo 在被取消掉都要前往到 all 嗎? No, 只有 srcId === top 的才要 」，所以:
   // 直接指定要檢查的位置: 檢查 DATA.default --> top 資料 --> content --> 每一項todo
   // 如果有任何一項
 }

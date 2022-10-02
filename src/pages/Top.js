@@ -4,16 +4,21 @@ import {
   changeCheckbox,
   scrollBarFix,
 } from "../layout/main.js";
-import { DATA, getAllPage, getCurrentTodo, setStorage } from "../utils/function.js";
-
+import {
+  DATA,
+  getAllPage,
+  getAllTodos,
+  getCurrentTodo,
+  setStorage,
+} from "../utils/function.js";
 
 // Q: 決定什麼項目可以放到 top 裡面，
-// 究竟是看 srcId 來決定? 
-// 還是看 top 屬性? 
+// 究竟是看 srcId 來決定?
+// 還是看 top 屬性?
 
 // A: 是看 top 屬性
 
-// 所有的 todo 在被取消掉都要前往到 all 嗎? 
+// 所有的 todo 在被取消掉都要前往到 all 嗎?
 // No, 只有 srcId === top 的才要
 
 export const Top = {
@@ -22,24 +27,19 @@ export const Top = {
   },
 
   render: function () {
+    // 因為本頁的名稱確定不會做變動，所以這裡直接指定清單名稱
+    const pageName = "置頂";
+
     // 集成所有的頁面物件
     const allPages = getAllPage();
-    console.log(allPages)
 
     // 找出所有 top 屬性帶有 true 的 todo Object，放入 pageContent 中
-    const pageContent = allPages
-      .map(pageObj => pageObj.content)
-      .reduce((acc, pageContent) => acc.concat(pageContent), [])
-      .filter(todo => todo.top === true);
+    const pageContent = getAllTodos().filter((todo) => todo.top === true);
 
-    console.log(pageContent)
-
-    // 因為本頁的名稱確定不會做變動，所以這裡直接指定清單名稱
-    const pageName = '置頂';
-
-    // 遍歷 pageContent 先準備好所有會在 Top.js 會出現的 todoList
-    const todoContent = pageContent.map(({ id, checked, content, top }) => {
-      return `
+    // 遍歷 pageContent: 準備好所有會在 Top.js 會出現的 todoList
+    const todoContent = pageContent
+      .map(({ id, checked, content, top }) => {
+        return `
         <li id="${id}" class="todo__item">
             <label class="todo__label">
                 <input type="checkbox" class="todo__checkbox" 
@@ -47,10 +47,13 @@ export const Top = {
                 <span class="todo__checkmark"></span>
                 <p class="todo__content">${content}</p>
             </label>
-            <i class="todo__top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+            <i class="todo__top ${
+              top ? "fa-solid" : "fa-regular"
+            } fa-star"></i> 
         </li>
       `;
-    }).join("");
+      })
+      .join("");
 
     return `
         <!-- 主內容區 header -->
@@ -87,7 +90,6 @@ export const Top = {
 
   listener: {
     click: function (e) {
-
       openListOption(e);
       clickToCloseListOption(e);
 
