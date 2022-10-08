@@ -184,15 +184,18 @@ export function fillZero(number) {
 }
 
 /**
- * ! 此函數的描述待補
+ * * 建立新的 todo 資料，並加進當前頁面中
  */
 export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
   if (todoInput.value.trim() !== "") {
+    // 存放使用者輸入的文字內容
     const todoValue = todoInput.value.trim();
+
     // 取得目前頁面的所在位置(取得頁面ID)
     const currentPageId = getCurrentPageId();
 
+    // 建構 todo Obecjt
     const todo = {
       id: createUniqueId(),
       checked: false,
@@ -202,16 +205,21 @@ export function setTodo() {
       srcName: getCurrentPage().name,
     };
 
-    // ↓ 這個寫法要改善，要更活一點
-    if (
-      currentPageId === "home" ||
-      currentPageId === "all" ||
-      currentPageId === "top"
-    ) {
-      DATA.default.find((i) => i.id === currentPageId).content.push(todo);
-    } else {
-      DATA.custom.find((i) => i.id === currentPageId).content.push(todo);
-    }
+    // 取得所有的頁面資料，並找出與目前頁面 id 相匹配的資料，
+    // 在 content 內加入新 todo
+    const allPage = getAllPage();
+    allPage.find((i) => i.id === currentPageId).content.unshift(todo);
+
+    // @ 未來確定用不到的時候可以刪除
+    // // ↓ 這個寫法要改善，要更活一點
+    // if (
+    //   currentPageId === "all" ||
+    //   currentPageId === "top"
+    // ) {
+    //   DATA.default.find((i) => i.id === currentPageId).content.unshift(todo);
+    // } else {
+    //   DATA.custom.find((i) => i.id === currentPageId).content.unshift(todo);
+    // }
 
     setStorage(DATA);
     todoInput.value = "";
@@ -219,12 +227,6 @@ export function setTodo() {
   Router();
 }
 
-/**
- * ! 此函數的描述待補
- */
-export function addTodo(todo) {
-  setTodo();
-}
 
 /**
  * * 隱藏 DOM 上的某個元素
@@ -262,6 +264,4 @@ export function topMoveToAll(todoId){
   // todo: 取得 DATA.default 中的 all 物件
   // todo: 放入 all 物件中的 content Array 中
 }
-
-
 

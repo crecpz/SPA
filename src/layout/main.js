@@ -1,6 +1,5 @@
 import { Router } from "../routes/Router.js";
 import {
-  addTodo,
   DATA,
   getAllPage,
   getCurrentPage,
@@ -8,6 +7,7 @@ import {
   getCurrentTodoOriginArray,
   getPage,
   setStorage,
+  setTodo,
   unhide,
 } from "../utils/function.js";
 import { activeNavLists, renderCustomList } from "./nav.js";
@@ -53,7 +53,7 @@ export function clickToCloseListOption(e) {
 
 // 監聽 submit 按鈕
 const todoSubmit = document.querySelector("#todo-submit");
-todoSubmit.addEventListener("click", addTodo);
+todoSubmit.addEventListener("click", setTodo);
 
 /**
  * 編輯自訂清單的名稱
