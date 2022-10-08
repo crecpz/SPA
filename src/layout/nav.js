@@ -1,6 +1,7 @@
 import { modeSwitcher } from "../utils/mode.js";
-import { createUniqueId, editName, setStorage } from "../utils/function.js";
+import { createUniqueId, setStorage } from "../utils/function.js";
 import { DATA, getCurrentPageId } from "../utils/function.js";
+import { editName } from "./main.js";
 
 const navContent = document.querySelector(".nav__content");
 
@@ -155,12 +156,19 @@ const customList = document.querySelector(".custom-list");
 addBtn.addEventListener("click", addCustomList);
 
 /**
- * 此函數包含整個 customList 從新建、儲存 storage 、渲染的動作。
+ * * 此函數包含整個 customList 從新建、儲存 storage 、渲染的動作。
  * @param {*} e
  */
 function addCustomList() {
   // 將新的自訂清單加入到 DATA
   setCustomList();
+
+  // 如果目前螢幕的寬度 < 1024px，讓 「新增自訂清單」 按紐被點擊時收起 nav
+  // 防止 nav 遮蓋到頁面名稱而不知道要命名
+  const smallerThan1024 = window.matchMedia("(max-width: 1024px)");
+  if (smallerThan1024.matches) {
+    navSwitcher();
+  }
 
   // 將頁面導向到當前最新新增的頁
   window.location.hash = `/customlist/${
@@ -173,25 +181,11 @@ function addCustomList() {
   // 渲染 customList 至 nav 中
   renderCustomList();
 
-  setTimeout(()=> {
+  setTimeout(() => {
     editName();
-  }, 200)
+  }, 300);
 }
 
-/**
- * 這麼做雖然可以讓頁面在刷新時能夠根據目前網址來為對應的頁面加上 active，
- * 但是在頁面被刪除時，如果沒有做好預備措施會產生問題。
- *
- * 問題就出在頁面刪除之後，如果沒有更改網址列的話，
- * 接著如果原地刷新，此函數將會根據網址列內的值獲取 id。
- * 但是這個 id 所在的頁面已經不存在了，將會找不到這個頁面。
- *
- * 目前還未新增頁面刪除功能，之所以會發現這個問題是因為我刪除 localStorage
- * 接著刷新，頁面就找不到了。 報錯原因是函數內的 navContent.querySelector(`#${currentPageId}`).classList.add('nav__list-item--active')
- * 這段是獲取到 null ， 而我在 null 嘗試加上 classList.add 所致。
- *
- * 之後新增刪除功能之後，必須想好刪除頁面之後的方案，最好是改變網址列到某一個順位。
- */
 
 /**
  * 將新的自訂清單加入到 DATA
@@ -209,6 +203,7 @@ function setCustomList() {
   // 得出最新的數字
   const newNumber = listCounter(extractNumberList);
 
+  // 在 DATA 中新增新的 nav 資料
   DATA.custom.push({
     id: createUniqueId(),
     // 如果新的數字是 0，則後面加個空字串

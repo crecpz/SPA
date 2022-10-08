@@ -21,8 +21,7 @@ export const Home = {
 
         // 準備 custom 總覽卡片
         const custom = DATA.custom;
-        console.log(custom)
-        
+
         // 如果頁面物件是來自於 custom ，則為頁面物件新增一個 isCustom = true
         // 此屬性可以在遍歷的時候用來辨別 <a> 的 href 內容是否該加 customlist/
         custom.forEach((pageObj) => {

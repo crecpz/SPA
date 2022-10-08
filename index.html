@@ -63,9 +63,8 @@
                 </h3>
                 <ul class="nav__list custom-list"></ul>
                 <a href="javascript:;" id="add-list-btn" class="btn btn--primary btn--custom-list"><i
-                        class="fa-solid fa-plus"></i>新增自訂列表</a>
+                        class="fa-solid fa-plus"></i>新增自訂清單</a>
                 <!-- <button class="btn btn--add"><i class="fa-solid fa-plus"></i>新增自訂列表</button> -->
-
             </div>
         </nav>
 
@@ -99,23 +98,21 @@
     </div>
 
     <div class="modal-overlay overlay">
-        <div class="modal">
-
-            <div class="modal__confirm">
-                <p class="modal__text">
-                    <span class="text-lg text-strong">刪除確認</span>
-                    <span id="modal__list-name" class="modal__list-name text-base"></span>
-                    <span class="text-base text-normal">清單刪除之後將無法復原</span>
-                </p>
-
-                <div class="modal__btn-group">
-                    <div id="confirm-cancel" class="btn btn--primary btn--modal">取消</div>
-                    <div id="confirm-yes" class="btn btn--primary btn--modal btn--danger">刪除</div>
-                </div>
-            </div>
-
-            <div class="modal__todo-editor"></div>
+        <!-- * confirm modal -->
+        <div id="confirm-modal" class="modal modal--confirm">
+            <!-- <p class="modal__text">
+                <span class="text-lg text-strong">刪除確認</span>
+                <span id="modal__list-name" class="modal__list-name text-base"></span>
+                <span class="text-base text-normal">清單刪除之後將無法復原</span>
+            </p>
+            <div class="modal__btn-group">
+                <button id="confirm-cancel" class="btn btn--primary btn--modal">取消</button>
+                <button id="confirm-yes" class="btn btn--primary btn--modal btn--danger">刪除</button>
+            </div> -->
         </div>
+
+        <!-- * edit todo modal -->
+        <div id="edit-modal" class="modal modal--edit"></div>
     </div>
 
 

@@ -44,6 +44,16 @@ body {
     }
 }
 
+body.preload *{
+    animation-duration: 0s !important;
+    -webkit-animation-duration: 0s !important;
+}
+
+
+input, textarea {
+    font-family: "Noto Serif TC", serif;
+}
+
 .light:root {
     --primary-color: #2a2a2a;
     --secondary-color: #fff;
@@ -57,9 +67,7 @@ body {
     // --tertiary-color: #f1f1f1;
 }
 
-// hover 亮 暫定 #f1f1f1
-// hover 暗 暫定 hsl(100%,100%, 75%)
-
+// 使用者系統光線模式: dark
 @media (prefers-color-scheme: dark) {
     :root {
         --primary-color: #fff;
@@ -68,6 +76,7 @@ body {
     }
 }
 
+// 使用者系統光線模式: light
 @media (prefers-color-scheme: light) {
     :root {
         --primary-color: #2a2a2a;
@@ -99,27 +108,5 @@ body {
 }
 
 .container {
-    // margin-left: auto;
-    // margin-right: auto;
     width: 100%;
 }
-
-// .body-overlay {
-//     opacity: 0;
-//     visibility: hidden;
-
-//     position: fixed;
-//     z-index: 10;
-//     inset: 0;
-//     width: 100%;
-//     height: 100vh;
-//     background-color: rgba(0,0,0,.5);
-
-//     transition-property:  opacity, visibility;
-//     transition-duration: 500ms;
-
-//     // &--active {
-//     //   opacity: 1;
-//     //   visibility: visible;
-//     // }
-//   }

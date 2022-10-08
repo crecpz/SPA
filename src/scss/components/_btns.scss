@@ -18,15 +18,26 @@
     justify-self: flex-end;
     background-color: var(--primary-color);
     color: var(--secondary-color);
+    border-radius: deep-map-get($border-radius, base);
 
     i {
       margin-right: 1rem;
     }
   }
 
+  // 警告
   &--danger {
-    color: var(--primary-color);
+    color: #fff;
     background-color: var(--danger-color);
+  }
+
+  &--remove{
+    @include text(md);
+    color: var(--primary-color);
+
+    i {
+      pointer-events: none;
+    }
   }
 
   // 新增自訂清單按鈕 
@@ -59,14 +70,11 @@
 
   // modal 內按鈕
   &--modal {
+    @include text(normal);
     padding-top: .5rem;
     padding-bottom: .5rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-
-    &:not(:first-child) {
-      margin-left: 2rem;
-    }
   }
 }
 

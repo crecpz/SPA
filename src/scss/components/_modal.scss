@@ -1,37 +1,96 @@
 @use "abstracts" as *;
 
-/*
-  白色 modal 配上白色背景是沒有問題的，
-  因為我還會使用 overlay
+/* 
+  * 白色 modal 配上白色背景是沒有問題的，
+  * 因為我還會使用 overlay
 */
 
 .modal-overlay {
+  // display: none;
   opacity: 0;
   visibility: hidden;
-  
-  @include flex($jc:center, $ai: center);
-  padding-left: deep-map-get($padding, padding-x,desktop);
-  padding-right: deep-map-get($padding, padding-x,desktop);
-  
+
+  @include flex($jc: center, $ai: center);
+  padding-left: deep-map-get($padding, padding-x, desktop);
+  padding-right: deep-map-get($padding, padding-x, desktop);
+
   @include sm {
-    padding-left: deep-map-get($padding, padding-x,mobile);
-    padding-right: deep-map-get($padding, padding-x,mobile);
+    padding-left: deep-map-get($padding, padding-x, mobile);
+    padding-right: deep-map-get($padding, padding-x, mobile);
   }
 }
 
+.modal {
+  @include flex($dir: column);
+  padding: 2rem;
 
-.modal{
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(40%);
+
   width: 100%;
   max-width: 22.1875rem;
   background-color: var(--tertiary-color);
+  border-radius: deep-map-get($border-radius, base);
 
-  &__confirm{
-    @include flex($dir: column);
-    padding: 2rem;
+  transition: 400ms ease-in-out;
+  transition-property: transform, opacity, visibility;
+
+  // 當 modal 被開啟時套用此 class
+  &--active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0%);
   }
-  
+
+  // 刪除清單的確認框
+  &--confirm {
+    z-index: 15; // @ modal--confirm 的 z-index 層級會比 modal--edit 來得高
+  }
+
+  // 編輯 todo 的對話框
+  &--edit {
+    position: fixed;
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+
+  &__textarea {
+    @include text(base);
+    grid-column: 1/-1;
+    width: 100%;
+    height: 12.5rem;
+    margin-top: 1.5rem;
+    resize: none;
+    padding: 0.5rem;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+  }
+
+  &__check-options {
+    @include flex;
+    grid-column: 2 / -1;
+    grid-row: 2/3;
+    color: var(--primary-color);
+    column-gap: 1.5rem;
+    margin-top: 1.5625rem;
+  }
+
+  &__label {
+    @include flex($ai: center);
+    position: relative;
+    column-gap: 0.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+
   // 字體 PC: md ,mobile: sm
-  &__text{
+  &__text {
     @include text(sm);
     @include flex($dir: column, $ai: center);
     color: var(--primary-color);
@@ -43,18 +102,31 @@
     }
   }
 
-  &__list-name{
-    &::before{
-      content: '「 ';
-    } 
-    &::after{
-      content: ' 」';
-    } 
+  .confirm-content {
+    &::before {
+      content: "「 ";
+    }
+    &::after {
+      content: " 」";
+    }
   }
 
-  &__btn-group{
+  // btn-group 基礎樣式
+  &__btn-group {
     @include flex($jc: center);
-    margin-top: 1.5rem;
+    margin-top: 1.5em;
+
+    & > *:not(:first-child) {
+      margin-left: 2rem;
+    }
+  }
+
+  // 編輯框的 btn-group
+  &--edit &__btn-group {
+    grid-column: 1/-1;
+    grid-row: 3 /4;
+    margin-top: 3.125rem;
+    justify-content: space-between;
   }
 }
 

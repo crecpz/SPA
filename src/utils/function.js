@@ -1,11 +1,3 @@
-// import { scrollBarFix } from "../layout/main.js";
-import {
-  extractUnnamedNumber,
-  listCounter,
-  renderCustomList,
-} from "../layout/nav.js";
-import { CustomList } from "../pages/CustomList.js";
-import { Top } from "../pages/Top.js";
 import { Router } from "../routes/Router.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
@@ -61,14 +53,17 @@ export function getStorage() {
   );
 }
 
-// 設定 localStorage 的資料
+/**
+ * * 設定 localStorage 的資料
+ * @param {*} data 欲存至 localStorage 的物件
+ */
 export function setStorage(data) {
   localStorage.setItem("todoLocalData", JSON.stringify(data));
 }
 
 /**
- * 將所有頁面集合成一個 Array 並返回。
- * @returns
+ * * 將所有頁面資料集合成一個 Array 並返回。
+ * @returns 包含所有頁面 Object 的 array
  */
 export function getAllPage() {
   const allPage = [];
@@ -79,8 +74,8 @@ export function getAllPage() {
 }
 
 /**
- * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
- * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
+ * * 取得網址列中的 hash，並利用 RegExp 過濾出網址列最後面的值，返回一個字符串(返回值是本頁 id)。
+ * * 註: 取得的結果若是 `''` 則代表取得的 id 是 home。
  * @returns id 字符串
  */
 export function getCurrentPageId() {
@@ -91,7 +86,7 @@ export function getCurrentPageId() {
 }
 
 /**
- * 取得當前所在頁面的 Object
+ * * 取得當前所在頁面的 Object
  * @returns 頁面 Object
  */
 export function getCurrentPage() {
@@ -101,23 +96,11 @@ export function getCurrentPage() {
 }
 
 /**
- * 取得當前所在 custom 頁面的資料。
- * 注意: 此函數是指定在 DATA.custom 內尋找"內部元素的"的 ID。
- * @returns 目前所在的 custom 頁面的資料(`Object`)
- */
-// export function getCurrentCustomPage() {
-//   return DATA.custom.find((i) => i.id === getCurrentPageId());
-// }
-
-/**
- * 透過 id 名稱，搜尋當前觸發的 todo 在 DATA 中的資料。
- * @param {*} e 事件
+ * * 透過 id 字串，搜尋當前觸發的 todo 在 DATA 中的物件資料。
+ * @param {*}  currentTodoId 提供 id 字串作為參數
  * @returns 返回 todo 物件
  */
-export function getCurrentTodo(e) {
-  // 取得事件觸發 todo 的 id
-  const currentTodoId = e.target.closest(".todo__item").id;
-
+export function getCurrentTodo(currentTodoId) {
   // 取得當前頁面物件資料
   const currentPage = getCurrentPage();
 
@@ -126,10 +109,10 @@ export function getCurrentTodo(e) {
     (todoItem) => todoItem.id === currentTodoId
   );
 
-  // 如果在當前頁面資料當中已找到 todo Object ，則返回。
+  // 如果在當前頁面資料當中已找到 todo Object ，則返回該 todo Object
   if (currentTodoObj) return currentTodoObj;
 
-  // 如果找不到(undefined)，要往其他頁面去尋找:
+  // 如果找不到(undefined)，要往其他頁面資料去尋找:
   const allPages = getAllPage();
   return allPages
     .filter(({ id }) => id !== currentPage.id) // 過濾掉當前頁面物件資料
@@ -138,8 +121,35 @@ export function getCurrentTodo(e) {
     .find(({ id }) => id === currentTodoId); // 找出 todo Object
 }
 
+
 /**
- * 取得所有的 todo Object，返回一個 Array。
+ * * 取得某個 todo 在 DATA 中所屬的 Array 並返回
+ * @param {*} currentTodoId 接收一個 id 字符串作為參數
+ * @returns 返回該 todo 在 DATA 中所屬的 Array
+ */
+export function getCurrentTodoOriginArray(currentTodoId) {
+  // 取得 todo 物件中的 srcId
+  const todoObj = getCurrentTodo(currentTodoId);
+  const { srcId } = todoObj;
+  // 取得所有頁面
+  const allPages = getAllPage();
+  const currentTodoArray = allPages.find(({ id }) => id === srcId).content;
+  return currentTodoArray;
+}
+
+/**
+ * * 接收一個頁面的 Id，返回該頁面的物件
+ * @param {*} pageId 頁面 id 字串
+ * @returns 返回給定的 id 相對應的頁面物件
+ */
+export function getPage(pageId){
+  const allPages = getAllPage();
+  return allPages.find(({id}) => id === pageId);
+}
+
+
+/**
+ * * 取得所有的 todo Object，返回一個 Array。
  * @returns 返回一個匯集所有 todo Object 的 Array
  */
 export function getAllTodos() {
@@ -150,7 +160,7 @@ export function getAllTodos() {
 }
 
 /**
- * 產生一個隨機 id
+ * * 產生一個隨機 id
  * @returns 一個獨一無二的亂數 id
  */
 export function createUniqueId() {
@@ -163,9 +173,9 @@ export function createUniqueId() {
 }
 
 /**
- * 接收一個數字參數number，檢查number是否大於0且小於10，
- * 若符合條件，返回一個前面補0的String；
- * 若不符合條件返回一個由number轉化成的String。
+ * * 接收一個數字參數 number，檢查 number是否大於 0 且小於 10，
+ * * 若符合條件，返回一個前面補 0 的 String；
+ * * 若不符合條件返回一個由 number 轉化成的 String。
  * @param {*} number
  * @returns `String`
  */
@@ -173,9 +183,11 @@ export function fillZero(number) {
   return number < 10 && number > 0 ? "0" + number : String(number);
 }
 
+/**
+ * ! 此函數的描述待補
+ */
 export function setTodo() {
   const todoInput = document.querySelector("#todo-input");
-
   if (todoInput.value.trim() !== "") {
     const todoValue = todoInput.value.trim();
     // 取得目前頁面的所在位置(取得頁面ID)
@@ -207,73 +219,32 @@ export function setTodo() {
   Router();
 }
 
+/**
+ * ! 此函數的描述待補
+ */
 export function addTodo(todo) {
   setTodo();
 }
 
 /**
- * 編輯自訂清單的名稱
+ * * 隱藏 DOM 上的某個元素
+ *
+ * 將該元素新增 .hide class。
+ * visibility: hidden;
+ * opacity: 0;
+ * @param {*} selector css 選擇器
  */
-export function editName() {
-  // 將目前在 customList 中的 nameEditing state 改成 true，表示編輯中
-  CustomList.state.nameEditing = true;
-  const editTarget = document.querySelector(".main__name");
-  editTarget.removeAttribute("readonly");
-  editTarget.select();
+export function hide(selector) {
+  const target = document.querySelector(selector);
+  target.classList.add("hide");
 }
 
 /**
- * 儲存已經改動的清單名稱
- * @param {*} e
+ * * 取消隱藏 DOM 上的某個元素
+ * 移除 指定 DOM 元素上的 .hide class
+ * @param {*} selector css 選擇器
  */
-export function saveEditedName() {
-  CustomList.state.nameEditing = !CustomList.state.nameEditing
-  // 取得 input
-  const editTarget = document.querySelector(".main__name");
-
-  // 如果輸入的內容為空，則替此內容新增內容
-  if (editTarget.value.trim() === "") {
-    // 獲取現有清單
-    const allCustomListName = DATA.custom.map((i) => i.name);
-    // 提取清單尾數。
-    // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
-    // (因為如果初始值是 1 ，在後續的計算中，下一個順位將會是 0)
-    const extractNumberList =
-      extractUnnamedNumber(allCustomListName).length === 0
-        ? [1]
-        : extractUnnamedNumber(allCustomListName);
-
-    // 得出最新的數字
-    const newNumber = listCounter(extractNumberList);
-
-    // 給予目前的清單新名稱
-    editTarget.value = `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
-  }
-
-  // 更新 DATA 中的資料
-  const currentPage = getCurrentPage();
-  currentPage.name = editTarget.value;
-
-  // 更新該頁中的 todo obj 內的 srcName
-  currentPage.content.forEach((todoObj) => (todoObj.srcName = editTarget.value));
-
-  // 存入 localStorage
-  setStorage(DATA);
-
-  // 重新渲染新的名稱上去 nav
-  renderCustomList();
-
-  // input 設定回 readonly 屬性
-  editTarget.setAttribute("readonly", "readonly");
-
-  // 將 state 中的 nameEditing 設回 false
-  CustomList.state.nameEditing = false;
+export function unhide(selector) {
+  const target = document.querySelector(selector);
+  target.classList.remove("hide");
 }
-
-// export function updateTop(e) {
-//   // 取得點擊的 todo 物件
-//   // 翻轉該 todo 物件的 "top" 屬性
-//   // 「 所有的 todo 在被取消掉都要前往到 all 嗎? No, 只有 srcId === top 的才要 」，所以:
-//   // 直接指定要檢查的位置: 檢查 DATA.default --> top 資料 --> content --> 每一項todo
-//   // 如果有任何一項
-// }
