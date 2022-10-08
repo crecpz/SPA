@@ -121,7 +121,6 @@ export function getCurrentTodo(currentTodoId) {
     .find(({ id }) => id === currentTodoId); // 找出 todo Object
 }
 
-
 /**
  * * 取得某個 todo 在 DATA 中所屬的 Array 並返回
  * @param {*} currentTodoId 接收一個 id 字符串作為參數
@@ -142,11 +141,10 @@ export function getCurrentTodoOriginArray(currentTodoId) {
  * @param {*} pageId 頁面 id 字串
  * @returns 返回給定的 id 相對應的頁面物件
  */
-export function getPage(pageId){
+export function getPage(pageId) {
   const allPages = getAllPage();
-  return allPages.find(({id}) => id === pageId);
+  return allPages.find(({ id }) => id === pageId);
 }
-
 
 /**
  * * 取得所有的 todo Object，返回一個 Array。
@@ -227,7 +225,6 @@ export function setTodo() {
   Router();
 }
 
-
 /**
  * * 隱藏 DOM 上的某個元素
  *
@@ -256,12 +253,23 @@ export function unhide(selector) {
  * 2.若來自於 Top.js，將該 todo 資料移動到 DATA.default 的 all 物件中
  * 3.移動過去之前，將 srcId、srcName 做更改
  * 4.移動過去之後，該項 todo 將屬於 all 物件
- * @param {*} todoId 
+ * @param {*} todoId
  */
-export function topMoveToAll(todoId){
-  // todo: 取得 todo 物件
-  // todo: 將 srcId、srcName 做更改
-  // todo: 取得 DATA.default 中的 all 物件
-  // todo: 放入 all 物件中的 content Array 中
-}
+export function moveTopToAll(moveTodoObj) {
+  // 取得 DATA 中的 top 物件後，過濾掉與 moveTodoObj
+  const top = getPage("top");
+  top.content = top.content.filter((todoObj) => todoObj !== moveTodoObj);
 
+  // 將 srcId、srcName 做更改
+  moveTodoObj.srcName = "全部";
+  moveTodoObj.srcId = "all";
+
+  // 取得 DATA.default 中的 all 物件，並將 moveTodoObj 放入 all 物件中的 content Array 中
+  const all = getPage("all");
+  all.content.unshift(moveTodoObj);
+
+  // ! 由於目前沒有儲存，所以很難看出正確性
+  // todo: 取消置頂後必須及時更新頁面(這個做出來後應該可以更清楚的看到是否有誤)
+
+  // todo 儲存變更至 localStorage
+}

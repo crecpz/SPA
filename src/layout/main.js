@@ -3,9 +3,11 @@ import {
   DATA,
   getAllPage,
   getCurrentPage,
+  getCurrentPageId,
   getCurrentTodo,
   getCurrentTodoOriginArray,
   getPage,
+  moveTopToAll,
   setStorage,
   setTodo,
   unhide,
@@ -415,38 +417,52 @@ export function changeCheckbox(e) {
  * @param {*} e event
  * ! 參數原本是 e，現在我改成 Id
  */
-export function changeTop(currentTodoId) {
-  // 取得當前 todo 資料
-  const currentTodo = getCurrentTodo(currentTodoId);
-  currentTodo.top = !currentTodo.top;
-
+export function changeTop(todoObj) {
+  todoObj.top = !todoObj.top;
   // 存進 localStorage
   setStorage(DATA);
 }
 
 /**
  * * 反轉置頂星號的狀態(處理來自 todoItem 所觸發的事件)
- * @param {*} e 
+ * @param {*} e
  */
 export function changeTopFromTodoItem(e) {
   // 從 .todo__item 取得 id
   const currentTodoId = e.target.closest(".todo__item").id;
+  // 取得當前 todo 資料
+  const currentTodo = getCurrentTodo(currentTodoId);
   // 反轉在資料中的 checkbox 值，並儲存
-  changeTop(currentTodoId);
+  changeTop(currentTodo);
+
   // 改變星號的樣式
   e.target.classList.toggle("fa-solid");
   e.target.classList.toggle("fa-regular");
+
+  // 檢查於置頂頁面中產生的 todo 當中，已經不再被置頂的 todo
+  // 將其移至 「all」 資料中
+  const currentPageId = getCurrentPageId();
+  if (
+    currentPageId === "top" && // 如果目前位於置頂頁面
+    !currentTodo.top && // 且當前 todo 不再是置頂狀態(星星被摘除)
+    currentTodo.srcId === "top" // 且該項 todo 是在置頂頁面被創建出來的話
+  ) {
+    // 上述條件若符合，代表該項 todo 不該出現在「置頂」，必須將其移至資料中的 「all」 內
+    moveTopToAll(currentTodo);
+  }
 }
 
 /**
  * * 反轉置頂星號的狀態(處理來自 editModal 所觸發的事件)
- * @param {*} e 
+ * @param {*} e
  */
 export function changeTopFromEditModal(e) {
   // 從他們的上層找 dataset.id (我將 todo 的 id 使用 dataset 的方式放在 modal__form)
   const currentTodoId = e.target.closest(".modal__form").dataset.id;
+  // 取得當前 todo 資料
+  const currentTodo = getCurrentTodo(currentTodoId);
   // 反轉在資料中的 checkbox 值，並儲存
-  changeTop(currentTodoId);
+  changeTop(currentTodo);
   // 根據使用者具體是點擊到哪個元素，在相對應的位置改變星號的樣式
   if (e.target.tagName === "I") {
     e.target.classList.toggle("fa-solid");
