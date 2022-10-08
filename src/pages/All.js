@@ -20,10 +20,12 @@ import {
 } from "../layout/main.js";
 
 import {
+  DATA,
   getAllPage,
   hide,
   unhide,
 } from "../utils/function.js";
+
 
 export const All = {
   mount: function () {

@@ -424,6 +424,10 @@ export function changeTop(currentTodoId) {
   setStorage(DATA);
 }
 
+/**
+ * * 反轉置頂星號的狀態(處理來自 todoItem 所觸發的事件)
+ * @param {*} e 
+ */
 export function changeTopFromTodoItem(e) {
   // 從 .todo__item 取得 id
   const currentTodoId = e.target.closest(".todo__item").id;
@@ -434,6 +438,10 @@ export function changeTopFromTodoItem(e) {
   e.target.classList.toggle("fa-regular");
 }
 
+/**
+ * * 反轉置頂星號的狀態(處理來自 editModal 所觸發的事件)
+ * @param {*} e 
+ */
 export function changeTopFromEditModal(e) {
   // 從他們的上層找 dataset.id (我將 todo 的 id 使用 dataset 的方式放在 modal__form)
   const currentTodoId = e.target.closest(".modal__form").dataset.id;
