@@ -248,28 +248,25 @@ export function unhide(selector) {
 }
 
 /**
- * * 處理在 Top.js 中被取消置頂的項目
- * 1.判斷被取消置頂的 todo 是否來自於 Top.js
- * 2.若來自於 Top.js，將該 todo 資料移動到 DATA.default 的 all 物件中
- * 3.移動過去之前，將 srcId、srcName 做更改
- * 4.移動過去之後，該項 todo 將屬於 all 物件
- * @param {*} todoId
+ * * 接收一個在「置頂」被取消的 todo 物件，將該物件從「top」移動至「all」
+ * 1.判斷被取消置頂的 todo 是否來自於 Top.js 本身
+ * 2.若來自於 Top.js 本身，將該 todo 資料移動到 DATA.default 的 all 物件中
+ * 3.移動過去之前，將 srcId、srcName 更改成屬於 all 
+ * 4.移動過去之後，該項 todo 將不再屬於 top，而是屬於 all 物件
+ * @param {*} moveTodoObj 被取消置頂的 todo Object 
  */
 export function moveTopToAll(moveTodoObj) {
   // 取得 DATA 中的 top 物件後，過濾掉與 moveTodoObj
   const top = getPage("top");
   top.content = top.content.filter((todoObj) => todoObj !== moveTodoObj);
-
   // 將 srcId、srcName 做更改
   moveTodoObj.srcName = "全部";
   moveTodoObj.srcId = "all";
-
   // 取得 DATA.default 中的 all 物件，並將 moveTodoObj 放入 all 物件中的 content Array 中
   const all = getPage("all");
   all.content.unshift(moveTodoObj);
-
-  // ! 由於目前沒有儲存，所以很難看出正確性
-  // todo: 取消置頂後必須及時更新頁面(這個做出來後應該可以更清楚的看到是否有誤)
-
-  // todo 儲存變更至 localStorage
+  // 取消置頂後及時更新頁面
+  Router();
+  // 儲存變更至 localStorage
+  setStorage(DATA);
 }
