@@ -117,13 +117,14 @@ export const CustomList = {
 
 
       // * listOption - 刪除清單功能
-      // 刪除清單 - 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟 "確認刪除 modal"
+      // 刪除清單 step1 - 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟 "確認刪除 modal"
       if (e.target.classList.contains("list-option__link--remove")) {
         // 確認刪除過程
         removeListConfirm();
       }
 
-      // 刪除清單 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
+      console.log(listIsRemoving)
+      // 刪除清單 step2 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
       if (listIsRemoving && e.target.id === "confirm-yes") {
         // 刪除清單在 DATA 中的資料
         removeList(e);

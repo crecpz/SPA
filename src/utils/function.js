@@ -270,3 +270,9 @@ export function moveTopToAll(moveTodoObj) {
   // 儲存變更至 localStorage
   setStorage(DATA);
 }
+
+
+
+function reorder(){
+  
+}

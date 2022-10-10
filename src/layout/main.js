@@ -133,7 +133,6 @@ export function openModalOverlay() {
 export function closeModalOverlay() {
   const modalOverlay = document.querySelector(".modal-overlay");
   modalOverlay.classList.remove("overlay--active");
-  listIsRemoving = false;
   todoIsEditing = false;
 }
 
