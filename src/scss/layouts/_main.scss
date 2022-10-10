@@ -120,6 +120,8 @@
     border: 0;
     background-color: transparent;
     color: var(--primary-color);
+    letter-spacing: .15em;
+    
 
     @include sm {
       @include text(lg);

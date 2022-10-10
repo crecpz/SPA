@@ -123,7 +123,6 @@ export const CustomList = {
         removeListConfirm();
       }
 
-      console.log(listIsRemoving)
       // 刪除清單 step2 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
       if (listIsRemoving && e.target.id === "confirm-yes") {
         // 刪除清單在 DATA 中的資料
