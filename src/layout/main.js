@@ -471,8 +471,8 @@ export function changeTopByTodoItem(e) {
   const currentTodo = getCurrentTodo(currentTodoId);
   // 判斷目前 top 是否是由 false ---> true (只有非置頂 ---> 置頂)
   // @ 書寫中
-  if(!currentTodo.top){
-    pinTodo(currentTodoId, currentTodo)
+  if (!currentTodo.top) {
+    pinTodo(currentTodoId, currentTodo);
   }
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
@@ -501,8 +501,8 @@ export function changeTopByEditModal(e) {
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
   // @ 書寫中
-  if(!currentTodo.top){
-    pinTodo(currentTodoId, currentTodo)
+  if (!currentTodo.top) {
+    pinTodo(currentTodoId, currentTodo);
   }
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
