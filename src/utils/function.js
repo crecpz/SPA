@@ -265,7 +265,6 @@ export function moveTopToAll(moveTodoObj) {
 //@ 以下的函數會放到 changeTopByTodoItem 、changeTopByEditModal 兩個函數中，放置位置: 在取得到他們各自的 ID 、獲取到 todoObj 之後
 export function pinTodo(todoId, todoObj) {
   // 取得該 todo 的原始 Array:
-  // console.log(todoObj)
   const { srcId } = todoObj;
   const allPages = getAllPage();
   // 在所有頁面中尋找與 srcId 符合的頁面，找到之後，取得 content 屬性

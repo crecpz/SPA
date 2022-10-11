@@ -53,10 +53,65 @@
     position: fixed;
   }
 
+  // 新增新清單的對話框
+  &--add-list{
+
+  }
+
   &__form {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
+  }
+
+  
+  
+  &__title{
+    @include text(md);
+    grid-column: 1/-1;
+    color: var(--primary-color);
+    text-align: center;
+  }
+
+  &__input{
+    @include text(sm);
+    margin-top: 1.5rem;
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    width: 100%;
+    padding: 0.5rem;
+    color: var(--primary-color);
+    border-radius: deep-map-get($border-radius, base);
+  }
+
+  .color-picker{
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+    margin-top: 2rem;
+  }
+
+  &__color-block{
+    width: 42px;
+    height: 42px;
+    background-color: #fff;
+
+    &--active {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 36px;
+        height: 36px;
+        border: 2px solid var(--secondary-color)
+        
+      }
+    }
   }
 
   &__textarea {

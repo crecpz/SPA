@@ -97,20 +97,29 @@
         </main>
     </div>
 
-    <div class="modal-overlay overlay">
-        <!-- * confirm modal -->
+    <div class="modal-overlay overlay overlay--active">
+        <!-- * confirm modal -->modal__input
         <div id="confirm-modal" class="modal modal--confirm"></div>
         <!-- * edit todo modal -->
         <div id="edit-modal" class="modal modal--edit"></div>
         <!-- * color picker -->
-        <div id="add-list-modal" class="modal modal--add-list">
+        <div id="add-list-modal" class="modal modal--add-list modal--active">
             <form class="modal__form">
-                <p class="modal-title">清單名稱</p>
-                <input type="text" id="new-list-name">
+                <p class="modal__title">清單名稱</p>
+                <input type="text" id="new-list-name" class="modal__input">
                 <div id="color-picker" class="color-picker">
-
+                    <div class="modal__color-block modal__color-block--active"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
+                    <div class="modal__color-block"></div>
                 </div>
-                
+                <button id="add-list-close" class="btn btn--primary btn--modal btn--add-list-modal">完成</button>
             </form>
         </div>
     </div>

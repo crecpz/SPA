@@ -285,7 +285,7 @@ export function closeEditModal() {
 }
 
 /**
- * * 儲存已編輯的 todo，並將頁面更新。
+ * * 儲存已編輯的 todo 內容，並將頁面更新。
  */
 export function saveEditedTodo(e) {
   // 透過傳入的參數 e 取得 textarea 的 value

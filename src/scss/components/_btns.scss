@@ -51,7 +51,7 @@
     margin-right: auto;
   }
 
-  // 新增新事項按鈕
+  // 新增新 todo 按鈕
   &--add-item {
     width: 100%;
   }
@@ -75,6 +75,11 @@
     padding-bottom: .5rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+
+  // 新增新清單跳出的 modal 內的完成按鈕
+  &--add-list-modal{
+    margin-top: 1.5rem;
   }
 }
 
