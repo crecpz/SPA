@@ -115,7 +115,6 @@ export const CustomList = {
         }
       }
 
-
       // * listOption - 刪除清單功能
       // 刪除清單 step1 - 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟 "確認刪除 modal"
       if (e.target.classList.contains("list-option__link--remove")) {
@@ -152,15 +151,13 @@ export const CustomList = {
           .setAttribute("readonly", "readonly");
       }
 
-      // * 置頂星號
+      // ! 注意 All.js、Top.js 目前都還沒改，需要做更改，複製以下的過去
+      // * 置頂星號 
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
         changeTopByTodoItem(e);
-      } else if (
         // 如果上述方法獲取不到內容，則代表使用者現在點擊的是位於 editModal 的星星
-        e.target.classList.contains("modal__top") || // 使用者可能點的是 label
-        e.target.classList.contains("top") // 使用者可能點的是 <i> tag
-      ) {
+      } else if (e.target.classList.contains("modal__top")) {
         changeTopByEditModal(e);
       }
 
@@ -204,7 +201,6 @@ export const CustomList = {
         removeTodo(removeTodoId);
       }
     },
-
     change: (e) => {
       //* 變更 checkbox 狀態
       changeCheckbox(e);

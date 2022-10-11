@@ -128,10 +128,12 @@ export function getCurrentTodo(currentTodoId) {
  */
 export function getCurrentTodoOriginArray(currentTodoId) {
   // 取得 todo 物件中的 srcId
+  // 取得到 srcId 之後就可以知道此 todo 的資料是來自於哪一個頁面資料
   const todoObj = getCurrentTodo(currentTodoId);
   const { srcId } = todoObj;
   // 取得所有頁面
   const allPages = getAllPage();
+  // 在所有頁面中尋找與 srcId 符合的頁面，找到之後取得 content 屬性
   const currentTodoArray = allPages.find(({ id }) => id === srcId).content;
   return currentTodoArray;
 }
@@ -208,17 +210,6 @@ export function setTodo() {
     const allPage = getAllPage();
     allPage.find((i) => i.id === currentPageId).content.unshift(todo);
 
-    // @ 未來確定用不到的時候可以刪除
-    // // ↓ 這個寫法要改善，要更活一點
-    // if (
-    //   currentPageId === "all" ||
-    //   currentPageId === "top"
-    // ) {
-    //   DATA.default.find((i) => i.id === currentPageId).content.unshift(todo);
-    // } else {
-    //   DATA.custom.find((i) => i.id === currentPageId).content.unshift(todo);
-    // }
-
     setStorage(DATA);
     todoInput.value = "";
   }
@@ -251,9 +242,9 @@ export function unhide(selector) {
  * * 接收一個在「置頂」被取消的 todo 物件，將該物件從「top」移動至「all」
  * 1.判斷被取消置頂的 todo 是否來自於 Top.js 本身
  * 2.若來自於 Top.js 本身，將該 todo 資料移動到 DATA.default 的 all 物件中
- * 3.移動過去之前，將 srcId、srcName 更改成屬於 all 
+ * 3.移動過去之前，將 srcId、srcName 更改成屬於 all
  * 4.移動過去之後，該項 todo 將不再屬於 top，而是屬於 all 物件
- * @param {*} moveTodoObj 被取消置頂的 todo Object 
+ * @param {*} moveTodoObj 被取消置頂的 todo Object
  */
 export function moveTopToAll(moveTodoObj) {
   // 取得 DATA 中的 top 物件後，過濾掉與 moveTodoObj
@@ -271,8 +262,29 @@ export function moveTopToAll(moveTodoObj) {
   setStorage(DATA);
 }
 
+//@ 以下的函數會放到 changeTopByTodoItem 、changeTopByEditModal 兩個函數中，放置位置: 在取得到他們各自的 ID 、獲取到 todoObj 之後
+export function pinTodo(todoId, todoObj) {
+  // 取得該 todo 的原始 Array:
+  // console.log(todoObj)
+  const { srcId } = todoObj;
+  const allPages = getAllPage();
+  // 在所有頁面中尋找與 srcId 符合的頁面，找到之後，取得 content 屬性
+  const currentTodoOriginPage =  allPages.find(({ id }) => id === srcId);
+  const currentTodoArray = currentTodoOriginPage.content;
+  // todo - 更該順序: 將點擊到的 todo 放到第一個，其餘的順序不更改
+  // todo - 利用 todoId，將 currentTodoArray 做 filter， 過濾掉該項 todo
+  // todo - 創建一個新的 []，使用 spread operator 放入置頂的元素跟剩下的元素
+  console.log('old: ', currentTodoArray)
+  const filteredArray = currentTodoArray.filter(({id}) => id !== todoId);
+  const topTodo = currentTodoArray.find(({id}) => id === todoId);
+  const newArr = [topTodo, ...filteredArray];
 
-// ? 重新排序或許未來會用到這個名，不建議使用 reorder
-export function pinTodo(e){
-  // getCurrentTodoOriginArray
+  console.log('newArr: ', newArr)
+
+  currentTodoOriginPage.content = newArr;
+
+  Router();
+  
+  // todo -
+  // todo -
 }

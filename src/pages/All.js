@@ -19,13 +19,7 @@ import {
   dropdownSwitch,
 } from "../layout/main.js";
 
-import {
-  DATA,
-  getAllPage,
-  hide,
-  unhide,
-} from "../utils/function.js";
-
+import { DATA, getAllPage, hide, unhide } from "../utils/function.js";
 
 export const All = {
   mount: function () {
@@ -191,6 +185,13 @@ export const All = {
             .dataset.id;
         removeTodo(removeTodoId);
       }
+    },
+
+    scroll: (e) => {
+      if(e.target.classList.contains('main__content-list')){
+        console.log(1)
+      }
+      // console.log(e.target.scrollTop);
     },
 
     change: function (e) {

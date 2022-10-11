@@ -6,6 +6,7 @@ import {
   getCurrentTodo,
   getPage,
   moveTopToAll,
+  pinTodo,
   setStorage,
   setTodo,
   unhide,
@@ -266,7 +267,7 @@ export function openEditModal({ id, checked, content, top }) {
 //         </div>
 //         <div class="modal__btn-group">
 //           <button id="edit-delete" class="btn btn--remove">
-//             <i class="fa-regular fa-trash-can"></i>   
+//             <i class="fa-regular fa-trash-can"></i>
 //           </button>
 //           <button id="edit-close" class="btn btn--primary btn--modal">完成</button>
 //         </div>
@@ -468,17 +469,15 @@ export function changeTopByTodoItem(e) {
   const currentTodoId = e.target.closest(".todo__item").id;
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
+  // 判斷目前 top 是否是由 false ---> true (只有非置頂 ---> 置頂)
+  // @ 書寫中
+  if(!currentTodo.top){
+    pinTodo(currentTodoId, currentTodo)
+  }
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
-
-  
-  // // 改變星號的樣式
-  // e.target.classList.toggle("fa-solid");
-  // e.target.classList.toggle("fa-regular");
-
   // 渲染
   Router();
-
   // 檢查於置頂頁面中產生的 todo 當中，已經不再被置頂的 todo
   // 將其移至 「all」 資料中
   const currentPageId = getCurrentPageId();
@@ -501,21 +500,17 @@ export function changeTopByEditModal(e) {
   const currentTodoId = e.target.closest(".modal__form").dataset.id;
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
+  // @ 書寫中
+  if(!currentTodo.top){
+    pinTodo(currentTodoId, currentTodo)
+  }
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
-  // 渲染出最新的改變(此渲染會影響的元素是顯示在 todoItem 上面的星星)
+  // 渲染出最新的改變(此渲染會影響的元素僅是顯示在 todoItem 上面的星星，位於 editModal 上的星星不會有任何變化)
   Router();
-
-  // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後
-  // 就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
-  // 下面判斷的是使用者按的是
-  if (e.target.tagName === "I") {
-    e.target.classList.toggle("fa-solid");
-    e.target.classList.toggle("fa-regular");
-  } else {
-    e.target.children[0].classList.toggle("fa-solid");
-    e.target.children[0].classList.toggle("fa-regular");
-  }
+  // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
+  e.target.children[0].classList.toggle("fa-solid");
+  e.target.children[0].classList.toggle("fa-regular");
 }
 
 /**

@@ -25,3 +25,11 @@ window.addEventListener("load", activeNavLists);
 // 解決手機瀏覽器無法剛好只占滿整版的問題
 window.addEventListener("resize", appHeight);
 window.addEventListener("DOMContentLoaded", appHeight);
+
+// window.addEventListener("DOMContentLoaded", () => {
+//   document
+//     .querySelector(".main__content-list")
+//     .addEventListener("scroll", () => {
+//       console.log(1);
+//     });
+// });
