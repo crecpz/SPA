@@ -99,20 +99,20 @@
 
     <div class="modal-overlay overlay">
         <!-- * confirm modal -->
-        <div id="confirm-modal" class="modal modal--confirm">
-            <!-- <p class="modal__text">
-                <span class="text-lg text-strong">刪除確認</span>
-                <span id="modal__list-name" class="modal__list-name text-base"></span>
-                <span class="text-base text-normal">清單刪除之後將無法復原</span>
-            </p>
-            <div class="modal__btn-group">
-                <button id="confirm-cancel" class="btn btn--primary btn--modal">取消</button>
-                <button id="confirm-yes" class="btn btn--primary btn--modal btn--danger">刪除</button>
-            </div> -->
-        </div>
-
+        <div id="confirm-modal" class="modal modal--confirm"></div>
         <!-- * edit todo modal -->
         <div id="edit-modal" class="modal modal--edit"></div>
+        <!-- * color picker -->
+        <div id="add-list-modal" class="modal modal--add-list">
+            <form class="modal__form">
+                <p class="modal-title">清單名稱</p>
+                <input type="text" id="new-list-name">
+                <div id="color-picker" class="color-picker">
+
+                </div>
+                
+            </form>
+        </div>
     </div>
 
 
