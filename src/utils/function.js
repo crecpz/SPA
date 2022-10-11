@@ -272,7 +272,7 @@ export function moveTopToAll(moveTodoObj) {
 }
 
 
-
-function reorder(){
-  
+// ? 重新排序或許未來會用到這個名，不建議使用 reorder
+export function pinTodo(e){
+  // getCurrentTodoOriginArray
 }

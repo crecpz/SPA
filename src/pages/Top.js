@@ -14,8 +14,8 @@ import {
   removeTodo,
   saveEditedTodo,
   openListOption,
-  changeTopFromTodoItem,
-  changeTopFromEditModal,
+  changeTopByTodoItem,
+  changeTopByEditModal,
 } from "../layout/main.js";
 
 import {
@@ -122,13 +122,13 @@ export const Top = {
       // * 置頂星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
-        changeTopFromTodoItem(e);
+        changeTopByTodoItem(e);
       } else if (
         // 如果上述方法獲取不到內容，則代表使用者現在點擊的是位於 editModal 的星星
         e.target.classList.contains("modal__top") || // 使用者可能點的是 label
         e.target.classList.contains("top") // 使用者可能點的是 <i> tag
       ) {
-        changeTopFromEditModal(e);
+        changeTopByEditModal(e);
       }
 
       // * 開啟編輯視窗

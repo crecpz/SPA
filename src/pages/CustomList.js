@@ -20,8 +20,8 @@ import {
   removeTodo,
   saveEditedTodo,
   openListOption,
-  changeTopFromTodoItem as changeTopByTodoItem,
-  changeTopFromEditModal as changeTopByEditModal,
+  changeTopByTodoItem,
+  changeTopByEditModal,
 } from "../layout/main.js";
 
 export const CustomList = {
@@ -180,7 +180,7 @@ export const CustomList = {
       // * 刪除單項 todo
       // 確認階段 - 跳出確認框
       if (e.target.id === "edit-delete") {
-        // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉)
+        // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉，萬一使用者改變主意，按下取消)
         hide("#edit-modal");
         // 取得 todo id ，並將其傳進 removeTodoConfirm 中做確認
         const removeTodoId = e.target.closest(".modal__form").dataset.id;
