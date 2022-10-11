@@ -1,11 +1,9 @@
 import { Router } from "../routes/Router.js";
 import {
   DATA,
-  getAllPage,
   getCurrentPage,
   getCurrentPageId,
   getCurrentTodo,
-  getCurrentTodoOriginArray,
   getPage,
   moveTopToAll,
   setStorage,
