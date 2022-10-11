@@ -82,12 +82,23 @@
     margin-top: 1.5625rem;
   }
 
-  &__label {
+  &__check-option {
     @include flex($ai: center);
     position: relative;
     column-gap: 0.5rem;
     color: var(--primary-color);
     cursor: pointer;
+  }
+
+  &__top {
+    @include button-reset();
+    @include text(normal);
+    padding-left: 0;
+    padding-right: 0;
+    
+    i{
+      pointer-events: none;
+    }
   }
 
   // 字體 PC: md ,mobile: sm

@@ -214,16 +214,16 @@ export function openEditModal({ id, checked, content, top }) {
     <form class="modal__form" data-id="${id}">
       <textarea class="modal__textarea">${content}</textarea>
       <div class="modal__check-options">
-        <label class="modal__label checkbox">
+        <label class="modal__check-option checkbox">
             <input type="checkbox" class="checkbox__input"
             ${checked ? "checked" : ""}>
             <div class="checkbox__appearance"></div>
             已完成
         </label>
-        <label class="modal__label modal__top">
+        <button class="modal__check-option modal__top">
           <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i>
           置頂
-        </label>
+        </button>
         </div>
         <div class="modal__btn-group">
           <button id="edit-delete" class="btn btn--remove">
@@ -234,6 +234,45 @@ export function openEditModal({ id, checked, content, top }) {
       </form>
     `;
 }
+
+//@ 備用
+// /**
+//  * * 開啟 eidtModal，並放入所需結構
+//  * ! 僅開啟 eidtModal 與放入結構，使用者後續的行為並不是此函數負責。
+//  * 1.接收一個 todo Object 作為參數
+//  * 2.將 editModal 的 class　加上 modal--active，使其彈出。
+//  * 3.放入 editModal 結構，並將 todo Object 中相對應的內容插入結構當中
+//  */
+// export function openEditModal({ id, checked, content, top }) {
+//   // 顯示 modal
+//   const editModal = document.querySelector("#edit-modal");
+//   editModal.classList.add("modal--active");
+
+//   // 放入 editModal 結構
+//   editModal.innerHTML = `
+//     <form class="modal__form" data-id="${id}">
+//       <textarea class="modal__textarea">${content}</textarea>
+//       <div class="modal__check-options">
+//         <label class="modal__label checkbox">
+//             <input type="checkbox" class="checkbox__input"
+//             ${checked ? "checked" : ""}>
+//             <div class="checkbox__appearance"></div>
+//             已完成
+//         </label>
+//         <label class="modal__label modal__top">
+//           <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i>
+//           置頂
+//         </label>
+//         </div>
+//         <div class="modal__btn-group">
+//           <button id="edit-delete" class="btn btn--remove">
+//             <i class="fa-regular fa-trash-can"></i>   
+//           </button>
+//           <button id="edit-close" class="btn btn--primary btn--modal">完成</button>
+//         </div>
+//       </form>
+//     `;
+// }
 
 /**
  * * 關閉 edit modal
@@ -342,9 +381,9 @@ export function removeTodo(removeTodoId) {
   const todoObj = getCurrentTodo(removeTodoId);
   const { srcId } = todoObj;
 
-  // 取得 todo 所屬的頁面 Object
+  // 取得該 todo 在 DATA 中的頁面資料
   const pageObjOfRemoveTarget = getPage(srcId);
-  // 承上，將 content 屬性中的該項 todo 剔除掉
+  // 承上，在頁面資料的 content 屬性做過濾，將該項 todo 剔除掉
   pageObjOfRemoveTarget.content = pageObjOfRemoveTarget.content.filter(
     ({ id }) => id !== removeTodoId
   );
@@ -432,9 +471,13 @@ export function changeTopByTodoItem(e) {
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
 
-  // 改變星號的樣式
-  e.target.classList.toggle("fa-solid");
-  e.target.classList.toggle("fa-regular");
+  
+  // // 改變星號的樣式
+  // e.target.classList.toggle("fa-solid");
+  // e.target.classList.toggle("fa-regular");
+
+  // 渲染
+  Router();
 
   // 檢查於置頂頁面中產生的 todo 當中，已經不再被置頂的 todo
   // 將其移至 「all」 資料中
@@ -460,7 +503,12 @@ export function changeTopByEditModal(e) {
   const currentTodo = getCurrentTodo(currentTodoId);
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
-  // 根據使用者具體是點擊到哪個元素，在相對應的位置改變星號的樣式
+  // 渲染出最新的改變(此渲染會影響的元素是顯示在 todoItem 上面的星星)
+  Router();
+
+  // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後
+  // 就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
+  // 下面判斷的是使用者按的是
   if (e.target.tagName === "I") {
     e.target.classList.toggle("fa-solid");
     e.target.classList.toggle("fa-regular");
@@ -468,11 +516,6 @@ export function changeTopByEditModal(e) {
     e.target.children[0].classList.toggle("fa-solid");
     e.target.children[0].classList.toggle("fa-regular");
   }
-  // 在 todoItem 中顯示的星號樣式也要改變
-  const currentTodoTop = document.querySelector(`#${currentTodoId}`)
-    .children[2];
-  currentTodoTop.classList.toggle("fa-solid");
-  currentTodoTop.classList.toggle("fa-regular");
 }
 
 /**
