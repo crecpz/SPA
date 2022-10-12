@@ -1,7 +1,15 @@
 import { modeSwitcher } from "../utils/mode.js";
 import { createUniqueId, setStorage } from "../utils/function.js";
 import { DATA, getCurrentPageId } from "../utils/function.js";
-import { editName } from "./main.js";
+import {
+  editName,
+  getEditNameResult,
+  openEditNameModal,
+  openModalOverlay,
+} from "./main.js";
+
+// 用來表示目前的各種操作狀態
+export let listIsAdding = false;
 
 const navContent = document.querySelector(".nav__content");
 
@@ -148,7 +156,7 @@ export function listCounter(numList) {
   return i;
 }
 
-// --------------------------[ 新增自訂列表 ]--------------------------
+// --------------------------[ 新增自訂清單 ]--------------------------
 
 const addBtn = document.querySelector("#add-list-btn");
 const customList = document.querySelector(".custom-list");
@@ -156,12 +164,12 @@ const customList = document.querySelector(".custom-list");
 addBtn.addEventListener("click", addCustomList);
 
 /**
- * * 此函數包含整個 customList 從新建、儲存 storage 、渲染的動作。
+ * ? 此函數包含整個 customList 從新建、儲存 storage 、渲染的動作。
  * @param {*} e
  */
 function addCustomList() {
-  // 將新的自訂清單加入到 DATA
-  setCustomList();
+  // 新增清單模式設為 true
+  listIsAdding = true;
 
   // 如果目前螢幕的寬度 < 1024px，讓 「新增自訂清單」 按紐被點擊時收起 nav
   // 防止 nav 遮蓋到頁面名稱而不知道要命名
@@ -169,6 +177,39 @@ function addCustomList() {
   if (smallerThan1024.matches) {
     navSwitcher();
   }
+
+  // @ 開啟 modal-overlay & editNameModal
+  openModalOverlay();
+  openEditNameModal(); // @ --> 現在 placeholder 就會是最新的未命名清單順位
+
+}
+      //  1.建立一個頁面的物件
+        //  2.將其存進 localStorage
+        //  3.將頁面導向到最新的清單
+
+/**
+ * * 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+ * 1.此函數調用時機為: 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕" 時
+ * 2.先取得使用者編輯清單名稱後的最終結果
+ * 3.新增一個新的清單物件至 DATA 中，並將 2.的結果套用進該 Object 中，存至 localStorage
+ * 4.調整 nav active 指向
+ * 5.恢復 listIsAdding 為 false
+ */
+export function createCustomList(e) {
+  // 取得使用者編輯清單名稱後的最終結果
+  const { name: listName, color: listColorBlock } = getEditNameResult(e);
+
+  // 在 DATA 中新增新的 nav 資料
+  DATA.custom.push({
+    id: createUniqueId(),
+    // 如果新的數字是 0，則後面加個空字串
+    name: listName,
+    color: listColorBlock,
+    content: [],
+  });
+
+  // 存至 localStorage
+  setStorage(DATA);
 
   // 將頁面導向到當前最新新增的頁
   window.location.hash = `/customlist/${
@@ -181,16 +222,16 @@ function addCustomList() {
   // 渲染 customList 至 nav 中
   renderCustomList();
 
-  setTimeout(() => {
-    editName();
-  }, 300);
+  // 新增清單模式設為 false
+  listIsAdding = false;
 }
 
 
 /**
- * 將新的自訂清單加入到 DATA
+ * * 根據現有的未命名清單，產生最新的清單名稱，例如: 未命名清單(2)。
+ * @returns "未命名清單" + (一個數字)
  */
-function setCustomList() {
+export function createNewListName() {
   // 獲取現有清單
   const allCustomListName = DATA.custom.map((i) => i.name);
   // 提取清單尾數。
@@ -202,16 +243,6 @@ function setCustomList() {
       : extractUnnamedNumber(allCustomListName);
   // 得出最新的數字
   const newNumber = listCounter(extractNumberList);
-
-  // 在 DATA 中新增新的 nav 資料
-  DATA.custom.push({
-    id: createUniqueId(),
-    // 如果新的數字是 0，則後面加個空字串
-    name: `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`,
-    color: "",
-    content: [],
-  });
-
-  // 存至 localStorage
-  setStorage(DATA);
+  // 如果新的數字是 0，則後面加個空字串
+  return `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
 }

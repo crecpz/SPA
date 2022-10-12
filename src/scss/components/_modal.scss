@@ -22,12 +22,17 @@
 
 .modal {
   @include flex($dir: column);
-  padding: 2rem;
+  // 因為 visibility: hidden 仍保有佔位，
+  // 多個 modal 即便都是不可見，但仍會影響彼此的位置，
+  // 讓所有只要有 modal class 的元素加上 fixed，
+  // 所有的 modal 將會變成重疊，而非左右排開。
+  position: fixed;
 
   visibility: hidden;
   opacity: 0;
   transform: translateY(40%);
-
+  
+  padding: 2rem;
   width: 100%;
   max-width: 22.1875rem;
   background-color: var(--tertiary-color);
@@ -53,8 +58,9 @@
     position: fixed;
   }
 
-  // 新增新清單的對話框
-  &--add-list {
+  // 編輯清單名稱的對話框(包含選色)
+  &--eidt-name {
+    position: fixed;
   }
 
   &__form {
@@ -128,18 +134,14 @@
     }
 
     &:nth-child(1) {
-      background-color: var(--primary-color);
+      // background-color: var(--primary-color);
     }
 
-    @for $i from 2 through 10 {
-      @debug $i;
-      &:nth-child(#{$i}) {
-        background-color: var(--color-block-#{$i});
-      }
-    }
-
-    // &:nth-child(2){
-
+    // @for $i from 2 through 10 {
+    //   @debug $i;
+    //   &:nth-child(#{$i}) {
+    //     background-color: var(--color-block-#{$i});
+    //   }
     // }
   }
 

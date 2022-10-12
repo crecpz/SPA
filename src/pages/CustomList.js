@@ -1,4 +1,4 @@
-import { colorSelector, DATA, hide, unhide } from "../utils/function.js";
+import { DATA, hide, unhide } from "../utils/function.js";
 
 import {
   clickToCloseListOption,
@@ -22,7 +22,14 @@ import {
   openListOption,
   changeTopByTodoItem,
   changeTopByEditModal,
+  openEditNameModal,
+  openModalOverlay,
+  closeEditNameModal,
+  colorSelectorActive,
+  getEditNameResult,
+  setListName,
 } from "../layout/main.js";
+import { createCustomList, listIsAdding } from "../layout/nav.js";
 
 export const CustomList = {
   mount: function () {
@@ -64,7 +71,7 @@ export const CustomList = {
                 <!-- 清單選單 -->
                 <ul class="list-options">
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link list-option__link--rename">重新命名</a>
+                      <a href="javascript:;" class="list-option__link list-option__link--rename">清單名稱設定</a>
                     </li>
                     <li class="list-option">
                       <a href="javascript:;" class="list-option__link">編輯</a>
@@ -93,12 +100,42 @@ export const CustomList = {
   listener: {
     click: function (e) {
       // * test
-      console.log(e.target)
-      if(e.target.classList.contains('modal__color-block')){
-        colorSelector(e)
+      // console.log(e.target)
+      if (e.target.classList.contains("modal__color-block")) {
+        // window.getComputedStyle(e.target).getPropertyValue('background-color')
       }
 
+      // openModalOverlay();
+      // openEditNameModal();
 
+      // @ 新功能 ↓
+
+      // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
+      if (e.target.id === "edit-name-close") {
+        
+        // 關閉 editNameModal & modalOverlay
+        // ! 以下只是暫時關閉，為了長期顯示
+        closeEditNameModal();
+        closeModalOverlay();
+      }
+
+      // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (listIsAdding && e.target.id === "edit-name-close") {
+        // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+        createCustomList(e);
+      }
+
+      // 當使用者在 「 nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if(nameIsEditing && e.target.id === "edit-name-close"){
+
+      }
+
+      // 控制顏色選擇器的 active 顯示
+      if (e.target.classList.contains("modal__color-block")) {
+        colorSelectorActive(e);
+      }
+
+      // @ 新功能 ↑
 
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
@@ -160,7 +197,7 @@ export const CustomList = {
       }
 
       // ! 注意 All.js、Top.js 目前都還沒改，需要做更改，複製以下的過去
-      // * 置頂星號 
+      // * 置頂星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
         changeTopByTodoItem(e);

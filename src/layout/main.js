@@ -11,16 +11,12 @@ import {
   setTodo,
   unhide,
 } from "../utils/function.js";
-import { activeNavLists, renderCustomList } from "./nav.js";
+import { activeNavLists, createNewListName, renderCustomList } from "./nav.js";
 
 // 用來表示目前的各種操作狀態
-export let nameIsEditing = false; // 正在編輯清單名稱: false
-export let todoIsEditing = false; //  正在編輯單項 todo : false
-export let listIsRemoving = false; // 正在刪除單項 todo: false
-
-// export function changeState(nameIsEditing){
-
-// }
+export let nameIsEditing = false; // 正在編輯清單名稱
+export let todoIsEditing = false; //  正在編輯單項 todo
+export let listIsRemoving = false; // 正在刪除單項 todo
 
 /**
  * 點擊 listOptionBtn 會調用此函數。
@@ -60,11 +56,16 @@ todoSubmit.addEventListener("click", setTodo);
  * 編輯自訂清單的名稱
  */
 export function editName() {
-  // 將目前 nameEditing 改成 true，表示編輯清單名稱中
-  nameIsEditing = true;
-  const editTarget = document.querySelector(".main__name");
-  editTarget.removeAttribute("readonly");
-  editTarget.select();
+  // // 將目前 nameEditing 改成 true，表示編輯清單名稱中
+  // nameIsEditing = true;
+  // const editTarget = document.querySelector(".main__name");
+  // editTarget.removeAttribute("readonly");
+  // editTarget.select();
+  // // @ 開啟 modal-overlay & editNameModal
+  // openModalOverlay();
+  // openEditNameModal();
+  // @ 調用編輯清單名
+  // editName();
 }
 
 /**
@@ -145,6 +146,15 @@ export function openConfirmModal() {
 }
 
 /**
+ * * 關閉 confirm modal
+ * 將 confirmModal 的 class 移除 modal--active 使其關閉
+ */
+export function closeConfirmModal() {
+  const confirmModal = document.querySelector("#confirm-modal");
+  confirmModal.classList.remove("modal--active");
+}
+
+/**
  * * 製作出 confirmModal 所需要的結構
  * @param {*} confirmContent 要確認的內容，最後會顯示在「 」中
  */
@@ -166,15 +176,6 @@ export function createConfirmModalContent(confirmContent) {
         <button id="confirm-yes" class="btn btn--primary btn--modal btn--danger">確定刪除</button>
     </div>
   `;
-}
-
-/**
- * * 關閉 confirm modal
- * 將 confirmModal 的 class 移除 modal--active 使其關閉
- */
-export function closeConfirmModal() {
-  const confirmModal = document.querySelector("#confirm-modal");
-  confirmModal.classList.remove("modal--active");
 }
 
 /**
@@ -235,45 +236,6 @@ export function openEditModal({ id, checked, content, top }) {
       </form>
     `;
 }
-
-//@ 備用
-// /**
-//  * * 開啟 eidtModal，並放入所需結構
-//  * ! 僅開啟 eidtModal 與放入結構，使用者後續的行為並不是此函數負責。
-//  * 1.接收一個 todo Object 作為參數
-//  * 2.將 editModal 的 class　加上 modal--active，使其彈出。
-//  * 3.放入 editModal 結構，並將 todo Object 中相對應的內容插入結構當中
-//  */
-// export function openEditModal({ id, checked, content, top }) {
-//   // 顯示 modal
-//   const editModal = document.querySelector("#edit-modal");
-//   editModal.classList.add("modal--active");
-
-//   // 放入 editModal 結構
-//   editModal.innerHTML = `
-//     <form class="modal__form" data-id="${id}">
-//       <textarea class="modal__textarea">${content}</textarea>
-//       <div class="modal__check-options">
-//         <label class="modal__label checkbox">
-//             <input type="checkbox" class="checkbox__input"
-//             ${checked ? "checked" : ""}>
-//             <div class="checkbox__appearance"></div>
-//             已完成
-//         </label>
-//         <label class="modal__label modal__top">
-//           <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i>
-//           置頂
-//         </label>
-//         </div>
-//         <div class="modal__btn-group">
-//           <button id="edit-delete" class="btn btn--remove">
-//             <i class="fa-regular fa-trash-can"></i>
-//           </button>
-//           <button id="edit-close" class="btn btn--primary btn--modal">完成</button>
-//         </div>
-//       </form>
-//     `;
-// }
 
 /**
  * * 關閉 edit modal
@@ -401,6 +363,91 @@ export function removeTodo(removeTodoId) {
 
   // 將原本被隱藏的 editModal 再度切換成顯示狀態(以確保下一次彈出時是可見的)
   unhide("#edit-modal");
+}
+
+/**
+ * * 開啟編輯清單名稱 editNameModal
+ * * 取得最新的清單名稱
+ * * 將裡面 input 的 placeholder &  value 屬性設定為最新的清單名稱
+ * * 反白 value 文字(為了更容易編輯)
+ */
+export function openEditNameModal() {
+  //  獲取最新的清單名稱
+  const newListName = createNewListName();
+  //  取得 editNameModal DOM
+  const editNameModal = document.querySelector("#edit-name-modal");
+  editNameModal.classList.add("modal--active");
+  // 設定 input 內的 placeholder &  value 屬性
+  const input = editNameModal.querySelector("#list-name");
+  input.placeholder = newListName;
+  input.value = newListName;
+  // 反白文字內容
+  setTimeout(() => input.select(), 300);
+}
+
+/**
+ * * 關閉編輯清單名稱的 modal
+ */
+export function closeEditNameModal() {
+  const editNameModal = document.querySelector("#edit-name-modal");
+  editNameModal.classList.remove("modal--active");
+}
+
+/**
+ * * 控制在 editNameModal 中的顏色選擇器 active 的狀態
+ * @param {*} e
+ */
+export function colorSelectorActive(e) {
+  const colorBlocks = document.querySelectorAll(".modal__color-block");
+  colorBlocks.forEach((colorBlocks) =>
+    colorBlocks.classList.remove("modal__color-block--active")
+  );
+  e.target.classList.add("modal__color-block--active");
+}
+
+/**
+ * * 取得使用者編輯清單名稱後的最終結果
+ */
+export function getEditNameResult(e) {
+  // todo - 獲取 editNameModal DOM 元素
+  const editNameModal = e.target.closest("#edit-name-modal");
+
+  // todo - 獲取清單名稱 input 的內容
+  const editName = editNameModal.querySelector("#list-name");
+  let newName = "";
+  // 如果使用者留下空白，那就使用預設值。
+  // 基本預設值會是跟 placeholder 相同(因為預設值已經放在 placeholder)
+  if (editName.value.trim() === "") {
+    newName = editName.placeholder;
+  } else {
+    // 如果使用者有輸入內容，則該內容將成為新的清單名稱
+    newName = editName.value;
+  }
+
+  // ! 關於顏色，如果使用的是 class 呢? 10 種不同的 class?
+  // todo - 獲取顏色
+  const color = editNameModal.querySelector(".modal__color-block--active")
+    .dataset.color;
+
+  // todo - 返回物件 {name:"", color:""}
+  return {
+    name: newName,
+    color: color,
+  };
+}
+
+/**
+ *
+ * 1.此函數是在使用者於 editNameModal 按下 「完成」 之後所觸發
+ * 2.觸發後會先獲取使用者編輯清單名稱後的最終結果(包括選色)
+ * 3.將此設定套用到目標清單
+ * @param {*} editNameResult
+ */
+export function setListName(e) {
+  // 取得使用者編輯清單名稱後的最終結果
+  const { name: listName, color: listColorBlock } = getEditNameResult(e);
+
+  // console.log(listName, listColorBlock);
 }
 
 /**

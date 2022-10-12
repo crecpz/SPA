@@ -1,0 +1,41 @@
+.color-block-1 {
+  background-color: var(--primary-color);
+}
+
+@for $i from 2 through 10 {
+  .color-block-#{$i} {
+    background-color: var(--color-block-#{$i});
+  }
+}
+
+
+// .color-block-1{
+//   background-color: ;
+// }
+// .color-block-2{
+//   background-color: ;
+// }
+// .color-block-3{
+//   background-color: ;
+// }
+// .color-block-4{
+//   background-color: ;
+// }
+// .color-block-5{
+//   background-color: ;
+// }
+// .color-block-6{
+//   background-color: ;
+// }
+// .color-block-7{
+//   background-color: ;
+// }
+// .color-block-8{
+//   background-color: ;
+// }
+// .color-block-9{
+//   background-color: ;
+// }
+// .color-block-10{
+//   background-color: ;
+// }
