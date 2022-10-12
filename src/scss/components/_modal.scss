@@ -54,8 +54,7 @@
   }
 
   // 新增新清單的對話框
-  &--add-list{
-
+  &--add-list {
   }
 
   &__form {
@@ -64,16 +63,14 @@
     align-items: center;
   }
 
-  
-  
-  &__title{
+  &__title {
     @include text(md);
     grid-column: 1/-1;
     color: var(--primary-color);
     text-align: center;
   }
 
-  &__input{
+  &__input {
     @include text(sm);
     margin-top: 1.5rem;
     background-color: transparent;
@@ -84,7 +81,7 @@
     border-radius: deep-map-get($border-radius, base);
   }
 
-  .color-picker{
+  .color-picker {
     grid-column: 1/-1;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -94,24 +91,56 @@
     margin-top: 2rem;
   }
 
-  &__color-block{
+  &__color-block {
     width: 42px;
     height: 42px;
-    background-color: #fff;
+    cursor: pointer;
+    background-color: var(--primary-color);
 
     &--active {
       position: relative;
 
       &::before {
-        content: '';
+        content: "\f00c";
+        @include flex($jc: center, $ai: center);
         position: absolute;
-        inset: 0;
-        width: 36px;
-        height: 36px;
-        border: 2px solid var(--secondary-color)
-        
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font: var(--fa-font-solid);
+        // @include text(sm);
+        width: 2.25rem;
+        height: 2.25rem;
+        color: var(--secondary-color);
+        border: 2px solid var(--secondary-color);
+      }
+
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   right: 0%;
+      //   width: 0;
+      //   height: 0;
+      //   border-style: solid;
+      //   border-width: 0 20px 20px 0;
+      //   border-color: transparent var(--secondary-color) transparent transparent;
+      // }
+    }
+
+    &:nth-child(1) {
+      background-color: var(--primary-color);
+    }
+
+    @for $i from 2 through 10 {
+      @debug $i;
+      &:nth-child(#{$i}) {
+        background-color: var(--color-block-#{$i});
       }
     }
+
+    // &:nth-child(2){
+
+    // }
   }
 
   &__textarea {
@@ -122,7 +151,7 @@
     margin-top: 1.5rem;
     resize: none;
     padding: 0.5rem;
-    letter-spacing: .15em;
+    letter-spacing: 0.15em;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     background-color: transparent;
@@ -150,8 +179,8 @@
     @include text(normal);
     padding-left: 0;
     padding-right: 0;
-    
-    i{
+
+    i {
       pointer-events: none;
     }
   }

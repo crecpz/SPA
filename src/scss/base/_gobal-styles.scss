@@ -15,7 +15,18 @@ html {
 
 :root {
     --app-height: 100%;
-    --danger-color:#a71f24;
+    --danger-color: #a71f24;
+
+    // --custom-color-01:;
+    --color-block-2: #5ea670;
+    --color-block-3: #e39459;
+    --color-block-4: #9f6cab;
+    --color-block-5: #fed700;
+    --color-block-6: #9ca9b2;
+    --color-block-7: #e72912;
+    --color-block-8: #5cc3e5;
+    --color-block-9: #00ffa2;
+    --color-block-10: #467b9a;
 }
 
 *,
@@ -44,13 +55,13 @@ body {
     }
 }
 
-body.preload *{
+body.preload * {
     animation-duration: 0s !important;
     -webkit-animation-duration: 0s !important;
 }
 
-
-input, textarea {
+input,
+textarea {
     font-family: "Noto Serif TC", serif;
 }
 

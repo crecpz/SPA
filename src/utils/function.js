@@ -287,3 +287,9 @@ export function pinTodo(todoId, todoObj) {
   // todo -
   // todo -
 }
+
+export function colorSelector(e){
+  const colorBlocks = document.querySelectorAll('.modal__color-block');
+  colorBlocks.forEach(colorBlocks => colorBlocks.classList.remove('modal__color-block--active'));
+  e.target.classList.add('modal__color-block--active');
+}

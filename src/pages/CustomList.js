@@ -1,4 +1,4 @@
-import { DATA, hide, unhide } from "../utils/function.js";
+import { colorSelector, DATA, hide, unhide } from "../utils/function.js";
 
 import {
   clickToCloseListOption,
@@ -92,6 +92,14 @@ export const CustomList = {
 
   listener: {
     click: function (e) {
+      // * test
+      console.log(e.target)
+      if(e.target.classList.contains('modal__color-block')){
+        colorSelector(e)
+      }
+
+
+
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
       openListOption(e);
