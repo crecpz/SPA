@@ -9,7 +9,6 @@ import {
   scrollBarFix,
   closeConfirmModal,
   closeEditModal,
-  changeTop,
   removeTodoConfirm,
   listIsRemoving,
   nameIsEditing,
@@ -21,12 +20,8 @@ import {
   openListOption,
   changeTopByTodoItem,
   changeTopByEditModal,
-  openEditNameModal,
-  openModalOverlay,
   closeEditNameModal,
-  colorSelectorActive,
-  getEditNameResult,
-  setListName,
+  clearColorSelectorActive,
   saveNameSetting,
 } from "../layout/main.js";
 import { createNewList, listIsAdding } from "../layout/nav.js";
@@ -38,7 +33,7 @@ export const CustomList = {
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
-    const { name: pageName, content: pageContent } = pageData;
+    const { name: pageName, content: pageContent , color} = pageData;
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
@@ -63,7 +58,7 @@ export const CustomList = {
         <div class="main__content-header">
             <div class="container">
                 <div class="main__name-wrapper">
-                    <div class="main__color-block"></div>
+                    <div class="main__color-block color-block-${color}"></div>
                     <input type="text" class="main__name" value="${pageName}" readonly>
                 </div>
                 <!-- 清單選單按鈕 -->
@@ -99,14 +94,11 @@ export const CustomList = {
 
   listener: {
     click: function (e) {
-      // * test
-      // console.log(e.target)
-      if (e.target.classList.contains("modal__color-block")) {
-        // window.getComputedStyle(e.target).getPropertyValue('background-color')
+      // * 清單名稱設定相關(editNameModal)
+      // 開啟清單名稱設定
+      if (e.target.classList.contains("list-option__link--rename")) {
+        nameSetting();
       }
-
-      // @ 新功能 ↓
-
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
         // 關閉 editNameModal & modalOverlay
@@ -120,17 +112,16 @@ export const CustomList = {
         createNewList(e);
       }
 
-      // 當使用者在 「 nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
       if (nameIsEditing && e.target.id === "edit-name-close") {
-        saveNameSetting(e)
+        saveNameSetting(e);
       }
 
       // 控制顏色選擇器的 active 顯示
       if (e.target.classList.contains("modal__color-block")) {
-        colorSelectorActive(e);
+        clearColorSelectorActive();
+        e.target.classList.add("modal__color-block--active");
       }
-
-      // @ 新功能 ↑
 
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
@@ -168,27 +159,7 @@ export const CustomList = {
         removeList(e);
       }
 
-      // * listOption - 清單名稱設定
-      // 清單重新命名
-      if (e.target.classList.contains("list-option__link--rename")) {
-        nameSetting();
-      }
 
-      /* 
-        如果在編輯清單名稱的狀態下，點按的既不是「重新命名」按鈕，
-        也不是 main__name 本身的話，就將 main__name 設定回 readonly。
-        設定回 readonly 屬性後，如果內容與原本的內容有所變化，就會觸發 change 事件
-        調用 saveEditedName() 函數來儲存改變。
-       */
-      if (
-        nameIsEditing &&
-        !e.target.classList.contains("main__name") &&
-        !e.target.classList.contains("list-option__link--rename")
-      ) {
-        document
-          .querySelector(".main__name")
-          .setAttribute("readonly", "readonly");
-      }
 
       // ! 注意 All.js、Top.js 目前都還沒改，需要做更改，複製以下的過去
       // * 置頂星號

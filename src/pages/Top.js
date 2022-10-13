@@ -15,14 +15,13 @@ import {
   openListOption,
   changeTopByTodoItem,
   changeTopByEditModal,
+  closeEditNameModal,
+  saveNameSetting,
+  clearColorSelectorActive,
 } from "../layout/main.js";
+import { createNewList, listIsAdding } from "../layout/nav.js";
 
-import {
-  getAllPage,
-  getAllTodos,
-  hide,
-  unhide,
-} from "../utils/function.js";
+import { getAllPage, getAllTodos, hide, unhide } from "../utils/function.js";
 
 export const Top = {
   mount: function () {
@@ -94,13 +93,38 @@ export const Top = {
 
   listener: {
     click: function (e) {
+      // * 清單名稱設定相關(editNameModal)
+      // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
+      if (e.target.id === "edit-name-close") {
+        // 關閉 editNameModal & modalOverlay
+        closeEditNameModal();
+        closeModalOverlay();
+      }
+
+      // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (listIsAdding && e.target.id === "edit-name-close") {
+        // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+        createNewList(e);
+      }
+
+      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (nameIsEditing && e.target.id === "edit-name-close") {
+        saveNameSetting(e);
+      }
+
+      // 控制顏色選擇器的 active 顯示
+      if (e.target.classList.contains("modal__color-block")) {
+        clearColorSelectorActive(e);
+      }
+    
+
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
       openListOption(e);
       // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
-       // * confirmModal 的全局設定(只要用到 confirmModal 就需要此設定)
+      // * confirmModal 的全局設定(只要用到 confirmModal 就需要此設定)
       // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal
       // 至於是否要接著一起關閉 modal-overlay，取決於目前是否為 listIsRemoving 狀態，
       // 如果現在是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後都意味著對話框將結束，

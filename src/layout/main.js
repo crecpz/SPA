@@ -11,7 +11,7 @@ import {
   setTodo,
   unhide,
 } from "../utils/function.js";
-import { activeNavLists, createNewListName, renderCustomList } from "./nav.js";
+import { activeNavLists, renderCustomList } from "./nav.js";
 
 // 用來表示目前的各種操作狀態
 export let nameIsEditing = false; // 正在編輯清單名稱
@@ -57,11 +57,13 @@ document.querySelector("#todo-submit").addEventListener("click", setTodo);
 export function nameSetting() {
   // 變更 nameEditing 狀態
   nameIsEditing = true;
-  // 取得當前清單名稱
-  const currentPageName = getCurrentPage().name;
+
+  // 從當前頁面資料中取得: 1.當前清單名稱  2.當前頁面的 color-block 顏色號碼
+  const {name:currentPageName , color} = getCurrentPage();
+
   // 開啟 modal-overlay & editNameModal
   openModalOverlay();
-  openEditNameModal(currentPageName); // @ 現在是在清單名稱設定，所以傳入的是當前清單名稱
+  openEditNameModal(currentPageName, color); // @ 現在是在清單名稱設定，所以傳入的是當前清單名稱
 }
 
 /**
@@ -79,6 +81,8 @@ export function saveNameSetting(e) {
   setStorage(DATA);
   // 重新渲染
   Router();
+  // 也一併重新渲染 nav
+  renderCustomList();
   // 恢復 nameIsEditing 狀態
   nameIsEditing = false;
 }
@@ -382,15 +386,24 @@ export function removeTodo(removeTodoId) {
 
 /**
  * * 開啟編輯清單名稱 editNameModal
- * * 給予裡面 input 的 placeholder &  value 一個 defaultName (預設名稱)
- * * 反白 value 文字(為了更容易編輯)
- * @param {*} defaultName 預設名稱: 此預設名稱將套用到 editNameModal 中 input 的 value 與 placeholder 中
- *
- * 註:
- * 若此函數是在新增新清單時(listAdding = true)被調用，則 defaultName 將會傳入的是下一個順位的清單名稱；
- * 若此函數是在清單名稱設定時(listEditing = true)被調用，則 defaultName 將會傳入的是當前清單名稱。
+ * 1.此函數調用的時機為當使用者按下「新增自訂清單」或「清單名稱設定」時所觸發
+ * 2.給予 editNameModal 裡面 input 的 placeholder &  value 一個 defaultName (預設名稱)
+ * 3.反白 value 文字(為了更容易編輯)
+ * 4.
+ * 
+ * @param {*} defaultName 預設名稱
+ * - defaultName 將套用到 editNameModal 中 input 的 value 與 placeholder 中
+ * - 若此函數是在新增新清單時(listAdding = true)被調用，則 defaultName 將會傳入的是下一個順位的清單名稱；
+ * - 若此函數是在清單名稱設定時(listEditing = true)被調用，則 defaultName 將會傳入的是當前清單名稱。
+ * @param {*} color
+ * - color 作為顯示在 editNameModal 中的顏色選擇器上套用 active 的指標
+ * - 若此函數是在新增新清單時(listAdding = true)被調用，由於頁面 Object 才剛被建立出來，所以 Object 內
+ *   的 color 屬性不會有任何的值，所以調用 openEditNameModal() 時，我只傳入第一個參數(defaultName)，而
+ *   不會傳入第二個參數(color)，使 color 變成 undefined。接著使用含樹的預設值 color = 1 ，代表 : 
+ *   只要沒有傳入參數，自動將顏色設為 1。
+ * - 若此函數是在清單名稱設定時(listEditing = true)被調用，則 color 傳入的是當前清單 color。
  */
-export function openEditNameModal(defaultName) {
+export function openEditNameModal(defaultName, color = '1') {
   //  取得 editNameModal DOM
   const editNameModal = document.querySelector("#edit-name-modal");
   editNameModal.classList.add("modal--active");
@@ -400,6 +413,10 @@ export function openEditNameModal(defaultName) {
   input.value = defaultName;
   // 反白文字內容
   setTimeout(() => input.select(), 300);
+  // 取得與傳入的 color 參數匹配的 DOM elelment，將其套用 active
+  clearColorSelectorActive();
+  const activeColorBlock = editNameModal.querySelector(`[data-color="${color}"]`);
+  activeColorBlock.classList.add('modal__color-block--active');
 }
 
 /**
@@ -411,15 +428,14 @@ export function closeEditNameModal() {
 }
 
 /**
- * * 控制在 editNameModal 中的顏色選擇器 active 的狀態
+ * * 清除在 editNameModal 中的顏色選擇器 active 的狀態
  * @param {*} e
  */
-export function colorSelectorActive(e) {
+export function clearColorSelectorActive() {
   const colorBlocks = document.querySelectorAll(".modal__color-block");
   colorBlocks.forEach((colorBlocks) =>
     colorBlocks.classList.remove("modal__color-block--active")
   );
-  e.target.classList.add("modal__color-block--active");
 }
 
 /**
@@ -440,13 +456,11 @@ export function getEditNameResult(e) {
     // 如果使用者有輸入內容，則該內容將成為新的清單名稱
     newName = editName.value;
   }
-
-  // ! 關於顏色，如果使用的是 class 呢? 10 種不同的 class?
-  // todo - 獲取顏色
+  // 獲取顏色
   const color = editNameModal.querySelector(".modal__color-block--active")
     .dataset.color;
 
-  // todo - 返回物件 {name:"", color:""}
+  // 返回物件 {name:"", color:""}
   return {
     name: newName,
     color: color,

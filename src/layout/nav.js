@@ -38,21 +38,21 @@ document.querySelector(".wrapper").addEventListener("click", (e) => {
  */
 export function renderCustomList() {
   const currentPageId = getCurrentPageId();
-  let lists = DATA.custom.map((list) => {
+  let lists = DATA.custom.map(({id, name, color}) => {
     return `
-      <li id="${list.id}" 
+      <li id="${id}" 
           class="custom-list__item nav__list-item 
-                ${list.id === currentPageId ? "nav__list-item--active" : null}"
-          >
+                ${id === currentPageId ? "nav__list-item--active" : null}"
+      >
           <a class="nav__list-link nav__list-link--custom-list" 
-              href="#/customlist/${list.id}">
-              <div class="custom-list__color"></div>
-              ${list.name}
+              href="#/customlist/${id}">
+              <div class="custom-list__color color-block color-block-${color}"></div>
+              ${name}
           </a>
       </li>
     `;
-  });
-  customList.innerHTML = lists.join("");
+  }).join("");
+  customList.innerHTML = lists;
 }
 
 /**

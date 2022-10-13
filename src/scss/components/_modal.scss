@@ -109,16 +109,18 @@
       &::before {
         content: "\f00c";
         @include flex($jc: center, $ai: center);
+        @include rounded-full();
+        @include text(sm);
+        font: var(--fa-font-solid);
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        font: var(--fa-font-solid);
-        // @include text(sm);
         width: 2.25rem;
         height: 2.25rem;
         color: var(--secondary-color);
         border: 2px solid var(--secondary-color);
+        font-size: 20px;
       }
 
       // &::after {
