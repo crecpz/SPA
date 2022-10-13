@@ -595,9 +595,11 @@ export function changeTopByEditModal(e) {
  * 控制 dropdown 展開與收合
  */
 export function dropdownSwitch(e) {
+  console.log(e.target)
   const dropdownCover = e.target.nextElementSibling;
   const todos = dropdownCover.children[0];
-  const dropdownArrow = e.target.children[0];
+  const dropdownArrow = e.target.querySelector('.dropdown__arrow');
+
   dropdownCover.style.height = `${todos.clientHeight}px`;
 
   if (dropdownCover.clientHeight) {

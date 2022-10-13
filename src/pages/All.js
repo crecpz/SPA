@@ -31,7 +31,6 @@ export const All = {
   render: function () {
     //  將有頁面的物件資料放進 allPages
     const allPages = getAllPage();
-    console.log(allPages);
     const dropdownsContent = allPages
       .map(({ id, name, content, color }) => {
         // 判斷如果 content 沒任何內容，就渲染空字串就好
@@ -40,30 +39,27 @@ export const All = {
         } else {
           return `
             <li class="dropdown">
-              <div class="dropdown__name color-block-${
-                color === "" ? "1" : color
-              }">
-                <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+              <div class="dropdown__name">
+                ${color && `<div class="dropdown__color-block color-block color-block-${color}"></div>`}
                 ${name}
+                <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
               </div>
-              <div class="dropdown__cover color-border-${
-                color === "" ? "1" : color
-              }">
+              <div class="dropdown__cover">
                 <ul class="todo">
                   ${content
                     .map(({ id, checked, content, top }) => {
                       return `
                         <li id="${id}" class="todo__item">
-                        <label class="todo__checkbox checkbox">
-                          <input type="checkbox" class="checkbox__input" ${
-                            checked ? "checked" : ""
-                          }>
-                          <div class="checkbox__appearance"></div>
-                        </label>
-                        <p class="todo__content">${content}</p>
-                        <i class="top ${
-                          top ? "fa-solid" : "fa-regular"
-                        } fa-star"></i> 
+                          <label class="todo__checkbox checkbox">
+                            <input type="checkbox" class="checkbox__input" ${
+                              checked ? "checked" : ""
+                            }>
+                            <div class="checkbox__appearance"></div>
+                          </label>
+                          <p class="todo__content">${content}</p>
+                          <i class="top ${
+                            top ? "fa-solid" : "fa-regular"
+                          } fa-star"></i> 
                       </li>
                       `;
                     })

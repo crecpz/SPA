@@ -17,47 +17,15 @@
   }
 }
 
+// $border-width: 2px;
 
-$border-width: 2px;
+// // color-border 跟上方意思一樣，差異在於設定的是 border
+// .color-border-1{
+//   border: $border-width solid var(--primary-color);
+// }
 
-// color-border 跟上方意思一樣，差異在於設定的是 border
-.color-border-1{
-  border: $border-width solid var(--primary-color);
-}
-
-@for $i from 2 through 10 {
-  .color-border-#{$i} {
-    border: $border-width solid var(--color-type-#{$i});
-  }
-}
-
-// .color-block-1{
-//   background-color: ;
-// }
-// .color-block-2{
-//   background-color: ;
-// }
-// .color-block-3{
-//   background-color: ;
-// }
-// .color-block-4{
-//   background-color: ;
-// }
-// .color-block-5{
-//   background-color: ;
-// }
-// .color-block-6{
-//   background-color: ;
-// }
-// .color-block-7{
-//   background-color: ;
-// }
-// .color-block-8{
-//   background-color: ;
-// }
-// .color-block-9{
-//   background-color: ;
-// }
-// .color-block-10{
-//   background-color: ;
+// @for $i from 2 through 10 {
+//   .color-border-#{$i} {
+//     border: $border-width solid var(--color-type-#{$i});
+//   }
 // }
