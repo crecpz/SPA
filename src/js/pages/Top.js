@@ -1,27 +1,10 @@
-import {
-  clickToCloseListOption,
-  closeModalOverlay,
-  changeCheckbox,
-  scrollBarFix,
-  closeConfirmModal,
-  closeEditModal,
-  removeTodoConfirm,
-  listIsRemoving,
-  nameIsEditing,
-  todoIsEditing,
-  todoEditing,
-  removeTodo,
-  saveEditedTodo,
-  openListOption,
-  changeTopByTodoItem,
-  changeTopByEditModal,
-  closeEditNameModal,
-  saveNameSetting,
-  clearColorSelectorActive,
-} from "../layout/main.js";
-import { createNewList, listIsAdding } from "../layout/nav.js";
+import { scrollBarFix } from "../function/fix.js";
+import { getAllPage, getAllTodos, hide, unhide } from "../function/helper.js";
+import { clearColorSelectorActive, closeConfirmModal, closeEditModal, closeEditNameModal, closeModalOverlay, createNewList, listIsAdding, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
+import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, removeTodo, saveEditedTodo } from "../function/storage.js";
+import { clickToCloseListOption, openListOption } from "../function/ui.js";
 
-import { getAllPage, getAllTodos, hide, unhide } from "../utils/function.js";
+
 
 export const Top = {
   mount: function () {
@@ -191,11 +174,6 @@ export const Top = {
     change: function (e) {
       //* 變更 checkbox 狀態
       changeCheckbox(e);
-
-      // // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
-      // if (nameIsEditing && e.target.classList.contains("main__name")) {
-      //   // saveEditedName();
-      // }
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {

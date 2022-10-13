@@ -1,8 +1,7 @@
-//Router
-import { Router } from "./routes/Router.js";
-import { updateMode } from "./utils/mode.js";
-import { appHeight } from "./utils/function.js";
-import { renderCustomList, activeNavLists } from "./layout/nav.js";
+import { updateMode } from "./function/mode.js";
+import { activeNavLists, renderCustomList } from "./function/ui.js";
+import {Router} from "./routes/Router.js";
+import {appHeight} from "./function/fix.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);

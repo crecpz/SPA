@@ -1,6 +1,6 @@
 // 引入路徑模組
 import { NotFound } from "../pages/NotFound.js";
-import { addListener, removeAllListeners } from "../utils/eventListerer.js";
+import { addListener, removeAllListeners } from "../function/eventListerer.js";
 import { Route } from "./Route.js";
 
 /**

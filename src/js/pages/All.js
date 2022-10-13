@@ -1,26 +1,31 @@
+import { scrollBarFix } from "../function/fix.js";
+import { getAllPage, hide, unhide } from "../function/helper.js";
 import {
-  clickToCloseListOption,
-  closeModalOverlay,
-  changeCheckbox,
-  scrollBarFix,
+  clearColorSelectorActive,
   closeConfirmModal,
   closeEditModal,
-  removeTodoConfirm,
+  closeEditNameModal,
+  closeModalOverlay,
+  createNewList,
+  listIsAdding,
   listIsRemoving,
-  todoIsEditing,
+  removeTodoConfirm,
   todoEditing,
+  todoIsEditing,
+} from "../function/modal.js";
+import {
+  changeCheckbox,
+  changeTopByEditModal,
+  changeTopByTodoItem,
   removeTodo,
   saveEditedTodo,
-  openListOption,
-  changeTopByTodoItem,
-  changeTopByEditModal,
+} from "../function/storage.js";
+import {
+  clickToCloseListOption,
   dropdownSwitch,
-  closeEditNameModal,
-  clearColorSelectorActive,
-} from "../layout/main.js";
-import { createNewList, listIsAdding } from "../layout/nav.js";
-
-import { DATA, getAllPage, hide, unhide } from "../utils/function.js";
+  openListOption,
+} from "../function/ui.js";
+hide;
 
 export const All = {
   mount: function () {
@@ -39,7 +44,10 @@ export const All = {
           return `
             <li class="dropdown">
               <div class="dropdown__name">
-                ${color && `<div class="dropdown__color-block color-block color-block-${color}"></div>`}
+                ${
+                  color &&
+                  `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+                }
                 ${name}
                 <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
               </div>
@@ -206,12 +214,6 @@ export const All = {
       }
     },
 
-    scroll: (e) => {
-      // if(e.target.classList.contains('main__content-list')){
-      //   console.log(1)
-      // }
-    },
-
     change: function (e) {
       // checkbox
       changeCheckbox(e);
@@ -223,5 +225,3 @@ export const All = {
     },
   },
 };
-
-// function

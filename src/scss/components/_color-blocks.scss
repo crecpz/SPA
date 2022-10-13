@@ -5,13 +5,14 @@
   @include rounded-full();
 }
 
+// ! 因為 --primary-color 會與 dropdown、overview 的顏色介面相同，故不使用 --primary-color
 // 首個 color-block 我將其預設為 --primary-color (他會隨著光線模式調整)
-.color-block-1 {
-  background-color: var(--primary-color);
-}
+// .color-block-1 {
+//   background-color: var(--primary-color);
+// }
 
-// 產生第 2 ~ 第 10 的 class
-@for $i from 2 through 10 {
+// 產生第 1 ~ 第 10 的 class
+@for $i from 1 through 10 {
   .color-block-#{$i} {
     background-color:  var(--color-type-#{$i});
   }

@@ -1,30 +1,9 @@
-import { DATA, hide, unhide } from "../utils/function.js";
+import { scrollBarFix } from "../function/fix.js";
+import { fillZero, getAllPage, getAllTodos, getCurrentPage, getCurrentTodo, hide, unhide } from "../function/helper.js";
+import { clearColorSelectorActive, closeConfirmModal, closeEditModal, closeEditNameModal, closeModalOverlay, createNewList, listIsAdding, listIsRemoving, nameIsEditing, nameSetting, removeList, removeListConfirm, removeTodoConfirm, saveNameSetting, todoEditing, todoIsEditing } from "../function/modal.js";
+import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
+import { clickToCloseListOption, dropdownSwitch, openListOption } from "../function/ui.js";
 
-import {
-  clickToCloseListOption,
-  removeList,
-  removeListConfirm,
-  closeModalOverlay,
-  changeCheckbox,
-  scrollBarFix,
-  closeConfirmModal,
-  closeEditModal,
-  removeTodoConfirm,
-  listIsRemoving,
-  nameIsEditing,
-  nameSetting,
-  todoIsEditing,
-  todoEditing,
-  removeTodo,
-  saveEditedTodo,
-  openListOption,
-  changeTopByTodoItem,
-  changeTopByEditModal,
-  closeEditNameModal,
-  clearColorSelectorActive,
-  saveNameSetting,
-} from "../layout/main.js";
-import { createNewList, listIsAdding } from "../layout/nav.js";
 
 export const CustomList = {
   mount: function () {
@@ -93,7 +72,7 @@ export const CustomList = {
   },
 
   listener: {
-    click: function (e) {
+    click:  (e)=> {
       // * 清單名稱設定相關(editNameModal)
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
@@ -214,7 +193,7 @@ export const CustomList = {
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
-        saveEditedTodo(e);
+        saveEditedTodo(e); 
       }
     },
   },

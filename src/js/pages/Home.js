@@ -1,10 +1,13 @@
+import { scrollBarFix } from "../function/fix.js";
+import { fillZero, getAllTodos } from "../function/helper.js";
 import {
     clearColorSelectorActive,
     closeEditNameModal,
-    scrollBarFix,
-} from "../layout/main.js";
-import { createNewList, listIsAdding } from "../layout/nav.js";
-import { DATA, fillZero, getAllTodos } from "../utils/function.js";
+    closeModalOverlay,
+    createNewList,
+    listIsAdding,
+} from "../function/modal.js";
+import { DATA } from "../function/storage.js";
 
 export const Home = {
     mount: function () {
@@ -41,7 +44,6 @@ export const Home = {
 
         // 準備將要顯示的內容
         const contentsWillBeDisplayed = [cloneAll, cloneTop, ...custom];
-        console.log(contentsWillBeDisplayed)
         // 利用 map 遍歷 overviewData
         const overviewCards = contentsWillBeDisplayed
             .map(({ name: pageName, content, isCustom, id, color }) => {
@@ -52,13 +54,12 @@ export const Home = {
                 const percentage = isNaN(Math.round((completed / all) * 100))
                     ? "0"
                     : fillZero(Math.round((completed / all) * 100));
-
                 return `
                     <a href="#/${isCustom ? "customlist/" + id : id
                     }" class="overview__link">
                         <div class="overview__header">
-                        ${color && `<div class="overview__color-block color-block color-block-${color}"></div>`}
-                        ${pageName}
+                            ${color && `<div class="overview__color-block color-block color-block-${color}"></div>`}
+                            ${pageName}
                         </div>
                         <div class="overview__content">
                             <div class="overview__text overview__text--column">待完成
