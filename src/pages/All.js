@@ -8,7 +8,6 @@ import {
   removeTodoConfirm,
   listIsRemoving,
   nameIsEditing,
-  saveEditedName,
   todoIsEditing,
   todoEditing,
   removeTodo,
@@ -200,7 +199,7 @@ export const All = {
 
       // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
       if (nameIsEditing && e.target.classList.contains("main__name")) {
-        saveEditedName();
+        // saveEditedName();
       }
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發

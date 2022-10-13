@@ -2,7 +2,7 @@ import { modeSwitcher } from "../utils/mode.js";
 import { createUniqueId, setStorage } from "../utils/function.js";
 import { DATA, getCurrentPageId } from "../utils/function.js";
 import {
-  editName,
+  nameSetting,
   getEditNameResult,
   openEditNameModal,
   openModalOverlay,
@@ -161,13 +161,13 @@ export function listCounter(numList) {
 const addBtn = document.querySelector("#add-list-btn");
 const customList = document.querySelector(".custom-list");
 
-addBtn.addEventListener("click", addCustomList);
+addBtn.addEventListener("click", listAdding);
 
 /**
- * ? 此函數包含整個 customList 從新建、儲存 storage 、渲染的動作。
- * @param {*} e
+ * * 彈出 editNameModal 視窗(for 新增自訂清單)
+ * 調用時機為使用者按下「新增自訂清單」後
  */
-function addCustomList() {
+function listAdding() {
   // 新增清單模式設為 true
   listIsAdding = true;
 
@@ -178,14 +178,13 @@ function addCustomList() {
     navSwitcher();
   }
 
+  //  獲取最新的清單名稱
+  const newListName = createNewListName();
+
   // @ 開啟 modal-overlay & editNameModal
   openModalOverlay();
-  openEditNameModal(); // @ --> 現在 placeholder 就會是最新的未命名清單順位
-
+  openEditNameModal(newListName); // @ 現在 editNamemodal 內 input 的 placeholder & value 就會是最新的未命名清單順位
 }
-      //  1.建立一個頁面的物件
-        //  2.將其存進 localStorage
-        //  3.將頁面導向到最新的清單
 
 /**
  * * 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
@@ -195,7 +194,7 @@ function addCustomList() {
  * 4.調整 nav active 指向
  * 5.恢復 listIsAdding 為 false
  */
-export function createCustomList(e) {
+export function createNewList(e) {
   // 取得使用者編輯清單名稱後的最終結果
   const { name: listName, color: listColorBlock } = getEditNameResult(e);
 
@@ -212,6 +211,7 @@ export function createCustomList(e) {
   setStorage(DATA);
 
   // 將頁面導向到當前最新新增的頁
+  // (此步驟在跳轉的過程中會觸發到 Router()，所以不需要再進行渲染)
   window.location.hash = `/customlist/${
     DATA.custom[DATA.custom.length - 1].id
   }`;
@@ -225,7 +225,6 @@ export function createCustomList(e) {
   // 新增清單模式設為 false
   listIsAdding = false;
 }
-
 
 /**
  * * 根據現有的未命名清單，產生最新的清單名稱，例如: 未命名清單(2)。

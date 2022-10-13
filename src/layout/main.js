@@ -48,74 +48,89 @@ export function clickToCloseListOption(e) {
   }
 }
 
-// 監聽 submit 按鈕
-const todoSubmit = document.querySelector("#todo-submit");
-todoSubmit.addEventListener("click", setTodo);
+// 監聽 todo submit 按鈕
+document.querySelector("#todo-submit").addEventListener("click", setTodo);
 
 /**
- * 編輯自訂清單的名稱
+ * * 彈出 editNameModal 視窗(for 清單名稱設定)
  */
-export function editName() {
-  // // 將目前 nameEditing 改成 true，表示編輯清單名稱中
-  // nameIsEditing = true;
-  // const editTarget = document.querySelector(".main__name");
-  // editTarget.removeAttribute("readonly");
-  // editTarget.select();
-  // // @ 開啟 modal-overlay & editNameModal
-  // openModalOverlay();
-  // openEditNameModal();
-  // @ 調用編輯清單名
-  // editName();
+export function nameSetting() {
+  // 變更 nameEditing 狀態
+  nameIsEditing = true;
+  // 取得當前清單名稱
+  const currentPageName = getCurrentPage().name;
+  // 開啟 modal-overlay & editNameModal
+  openModalOverlay();
+  openEditNameModal(currentPageName); // @ 現在是在清單名稱設定，所以傳入的是當前清單名稱
 }
 
 /**
- * 儲存已經改動的清單名稱
- * @param {*} e
+ * * 儲存使用者在編輯現有清單名稱後的內容
+ * @param {*} e event
  */
-export function saveEditedName() {
-  // 取得 input
-  const editTarget = document.querySelector(".main__name");
-
-  // 如果輸入的內容為空，則替此內容新增內容
-  if (editTarget.value.trim() === "") {
-    // 獲取現有清單
-    const allCustomListName = DATA.custom.map((i) => i.name);
-    // 提取清單尾數。
-    // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
-    // (因為如果初始值是 1 ，在後續的計算中，下一個順位將會是 0)
-    const extractNumberList =
-      extractUnnamedNumber(allCustomListName).length === 0
-        ? [1]
-        : extractUnnamedNumber(allCustomListName);
-
-    // 得出最新的數字
-    const newNumber = listCounter(extractNumberList);
-
-    // 給予目前的清單新名稱
-    editTarget.value = `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
-  }
-
-  // 更新 DATA 中的資料
-  const currentPage = getCurrentPage();
-  currentPage.name = editTarget.value;
-
-  // 更新該頁中的 todo obj 內的 srcName
-  currentPage.content.forEach(
-    (todoObj) => (todoObj.srcName = editTarget.value)
-  );
-
-  // 存入 localStorage
+export function saveNameSetting(e) {
+  // 取得使用者編輯清單名稱後的最終結果
+  const { name: listName, color: listColorBlock } = getEditNameResult(e);
+  // 取得當前頁面
+  const currentPage = DATA.custom.find(({ id }) => id === getCurrentPageId());
+  currentPage.name = listName;
+  currentPage.color = listColorBlock;
+  // 將改變存進 localStorage
   setStorage(DATA);
-
-  // 重新渲染新的名稱上去 nav
-  renderCustomList();
-
-  // input 設定回 readonly 屬性
-  editTarget.setAttribute("readonly", "readonly");
-
-  // nameEditing 設回 false
+  // 重新渲染
+  Router();
+  // 恢復 nameIsEditing 狀態
   nameIsEditing = false;
 }
+
+// /**
+//  * 儲存已經改動的清單名稱
+//  * @param {*} e
+//  */
+// export function saveEditedName() {
+//   // 取得 input
+//   const editTarget = document.querySelector(".main__name");
+
+//   // 如果輸入的內容為空，則替此內容新增內容
+//   if (editTarget.value.trim() === "") {
+//     // 獲取現有清單
+//     const allCustomListName = DATA.custom.map((i) => i.name);
+//     // 提取清單尾數。
+//     // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
+//     // (因為如果初始值是 1 ，在後續的計算中，下一個順位將會是 0)
+//     const extractNumberList =
+//       extractUnnamedNumber(allCustomListName).length === 0
+//         ? [1]
+//         : extractUnnamedNumber(allCustomListName);
+
+//     // 得出最新的數字
+//     const newNumber = listCounter(extractNumberList);
+
+//     // 給予目前的清單新名稱
+//     editTarget.value = `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
+//   }
+
+//   // 更新 DATA 中的資料
+//   const currentPage = getCurrentPage();
+//   currentPage.name = editTarget.value;
+
+//   // 更新該頁中的 todo obj 內的 srcName
+//   currentPage.content.forEach(
+//     (todoObj) => (todoObj.srcName = editTarget.value)
+//   );
+
+//   // 存入 localStorage
+//   setStorage(DATA);
+
+//   // 重新渲染新的名稱上去 nav
+//   renderCustomList();
+
+//   // input 設定回 readonly 屬性
+//   editTarget.setAttribute("readonly", "readonly");
+
+//   // nameEditing 設回 false
+//   nameIsEditing = false;
+// }
 
 /**
  * * 開啟 modal-overlay
@@ -367,20 +382,22 @@ export function removeTodo(removeTodoId) {
 
 /**
  * * 開啟編輯清單名稱 editNameModal
- * * 取得最新的清單名稱
- * * 將裡面 input 的 placeholder &  value 屬性設定為最新的清單名稱
+ * * 給予裡面 input 的 placeholder &  value 一個 defaultName (預設名稱)
  * * 反白 value 文字(為了更容易編輯)
+ * @param {*} defaultName 預設名稱: 此預設名稱將套用到 editNameModal 中 input 的 value 與 placeholder 中
+ *
+ * 註:
+ * 若此函數是在新增新清單時(listAdding = true)被調用，則 defaultName 將會傳入的是下一個順位的清單名稱；
+ * 若此函數是在清單名稱設定時(listEditing = true)被調用，則 defaultName 將會傳入的是當前清單名稱。
  */
-export function openEditNameModal() {
-  //  獲取最新的清單名稱
-  const newListName = createNewListName();
+export function openEditNameModal(defaultName) {
   //  取得 editNameModal DOM
   const editNameModal = document.querySelector("#edit-name-modal");
   editNameModal.classList.add("modal--active");
   // 設定 input 內的 placeholder &  value 屬性
   const input = editNameModal.querySelector("#list-name");
-  input.placeholder = newListName;
-  input.value = newListName;
+  input.placeholder = defaultName;
+  input.value = defaultName;
   // 反白文字內容
   setTimeout(() => input.select(), 300);
 }
@@ -498,8 +515,6 @@ export function changeCheckbox(e) {
 
 /**
  * * 改變置頂星號(top)的狀態，最後儲存結果至 localStorage
- * @param {*} e event
- * ! 參數原本是 e，現在我改成 Id
  */
 export function changeTop(todoObj) {
   todoObj.top = !todoObj.top;
@@ -517,7 +532,7 @@ export function changeTopByTodoItem(e) {
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
   // 判斷目前 top 是否是由 false ---> true (只有非置頂 ---> 置頂)
-  // @ 書寫中
+  // ! pinTodo 的必要性? (1)
   if (!currentTodo.top) {
     pinTodo(currentTodoId, currentTodo);
   }
@@ -539,7 +554,8 @@ export function changeTopByTodoItem(e) {
 }
 
 /**
- * * 反轉置頂星號的狀態(處理來自 editModal 所觸發的事件)
+ * * 反轉置頂星號的狀態
+ * 此函式僅處理來自 editModal 所觸發的事件，不會處理
  * @param {*} e
  */
 export function changeTopByEditModal(e) {
@@ -547,7 +563,8 @@ export function changeTopByEditModal(e) {
   const currentTodoId = e.target.closest(".modal__form").dataset.id;
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
-  // @ 書寫中
+
+  // ! pinTodo 的必要性? (2)
   if (!currentTodo.top) {
     pinTodo(currentTodoId, currentTodo);
   }

@@ -8,7 +8,6 @@ import {
   removeTodoConfirm,
   listIsRemoving,
   nameIsEditing,
-  saveEditedName,
   todoIsEditing,
   todoEditing,
   removeTodo,
@@ -176,10 +175,10 @@ export const Top = {
       //* 變更 checkbox 狀態
       changeCheckbox(e);
 
-      // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
-      if (nameIsEditing && e.target.classList.contains("main__name")) {
-        saveEditedName();
-      }
+      // // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
+      // if (nameIsEditing && e.target.classList.contains("main__name")) {
+      //   // saveEditedName();
+      // }
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {

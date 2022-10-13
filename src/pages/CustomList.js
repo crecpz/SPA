@@ -13,8 +13,7 @@ import {
   removeTodoConfirm,
   listIsRemoving,
   nameIsEditing,
-  editName,
-  saveEditedName,
+  nameSetting,
   todoIsEditing,
   todoEditing,
   removeTodo,
@@ -28,8 +27,9 @@ import {
   colorSelectorActive,
   getEditNameResult,
   setListName,
+  saveNameSetting,
 } from "../layout/main.js";
-import { createCustomList, listIsAdding } from "../layout/nav.js";
+import { createNewList, listIsAdding } from "../layout/nav.js";
 
 export const CustomList = {
   mount: function () {
@@ -105,16 +105,11 @@ export const CustomList = {
         // window.getComputedStyle(e.target).getPropertyValue('background-color')
       }
 
-      // openModalOverlay();
-      // openEditNameModal();
-
       // @ 新功能 ↓
 
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
-        
         // 關閉 editNameModal & modalOverlay
-        // ! 以下只是暫時關閉，為了長期顯示
         closeEditNameModal();
         closeModalOverlay();
       }
@@ -122,12 +117,12 @@ export const CustomList = {
       // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
       if (listIsAdding && e.target.id === "edit-name-close") {
         // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
-        createCustomList(e);
+        createNewList(e);
       }
 
       // 當使用者在 「 nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
-      if(nameIsEditing && e.target.id === "edit-name-close"){
-
+      if (nameIsEditing && e.target.id === "edit-name-close") {
+        saveNameSetting(e)
       }
 
       // 控制顏色選擇器的 active 顯示
@@ -173,11 +168,10 @@ export const CustomList = {
         removeList(e);
       }
 
-      // * listOption - 清單重新命名
+      // * listOption - 清單名稱設定
       // 清單重新命名
       if (e.target.classList.contains("list-option__link--rename")) {
-        // nameIsEditing = true;
-        editName();
+        nameSetting();
       }
 
       /* 
@@ -250,10 +244,10 @@ export const CustomList = {
       //* 變更 checkbox 狀態
       changeCheckbox(e);
 
-      // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
-      if (nameIsEditing && e.target.classList.contains("main__name")) {
-        saveEditedName();
-      }
+      // // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
+      // if (nameIsEditing && e.target.classList.contains("main__name")) {
+      //   // saveEditedName();
+      // }
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
@@ -264,7 +258,7 @@ export const CustomList = {
     keyup: (e) => {
       if (e.key === "Enter") {
         // 如果清單重新命名時下按 enter 可儲存編輯
-        saveEditedName();
+        // saveEditedName();
       }
     },
   },
