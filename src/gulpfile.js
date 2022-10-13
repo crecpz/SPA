@@ -9,7 +9,7 @@ function buildCSS() {
     .pipe(sass({outputStyle: 'compressed'}))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write('./maps'))
-    .pipe(dest('css'))
+    .pipe(dest('../dist/css'))
 }
 
 function watchSCSS(){

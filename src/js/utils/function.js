@@ -278,8 +278,6 @@ export function pinTodo(todoId, todoObj) {
   const topTodo = currentTodoArray.find(({id}) => id === todoId);
   const newArr = [topTodo, ...filteredArray];
 
-  console.log('newArr: ', newArr)
-
   currentTodoOriginPage.content = newArr;
 
   Router();

@@ -7,7 +7,6 @@ import {
   closeEditModal,
   removeTodoConfirm,
   listIsRemoving,
-  nameIsEditing,
   todoIsEditing,
   todoEditing,
   removeTodo,
