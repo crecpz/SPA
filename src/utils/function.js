@@ -18,13 +18,13 @@ export function getStorage() {
         {
           id: "all",
           name: "全部",
-          color: "",
+          color: "1",
           content: [],
         },
         {
           id: "top",
           name: "置頂",
-          color: "",
+          color: "1", // @ 這其實用不到，除非 dropdown 會放 top 的內容，那就需要顏色
           content: [
             //   {
             //     checked: false,

@@ -16,7 +16,10 @@ import {
   changeTopByTodoItem,
   changeTopByEditModal,
   dropdownSwitch,
+  closeEditNameModal,
+  clearColorSelectorActive,
 } from "../layout/main.js";
+import { createNewList, listIsAdding } from "../layout/nav.js";
 
 import { DATA, getAllPage, hide, unhide } from "../utils/function.js";
 
@@ -28,20 +31,24 @@ export const All = {
   render: function () {
     //  將有頁面的物件資料放進 allPages
     const allPages = getAllPage();
-
+    console.log(allPages);
     const dropdownsContent = allPages
-      .map(({ id, name, content }) => {
+      .map(({ id, name, content, color }) => {
         // 判斷如果 content 沒任何內容，就渲染空字串就好
         if (content.length === 0 || id === "top") {
           return "";
         } else {
           return `
             <li class="dropdown">
-              <div class="dropdown__name">
+              <div class="dropdown__name color-block-${
+                color === "" ? "1" : color
+              }">
                 <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
                 ${name}
               </div>
-              <div class="dropdown__cover">
+              <div class="dropdown__cover color-border-${
+                color === "" ? "1" : color
+              }">
                 <ul class="todo">
                   ${content
                     .map(({ id, checked, content, top }) => {
@@ -74,7 +81,7 @@ export const All = {
         <div class="main__content-header">
           <div class="container">
             <div class="main__name-wrapper">
-              <div class="main__color-block"></div>
+              <div class="main__color-block main__color-block--default"></div>
               <h2 class="main__name">全部</h2>
             </div>
             <!-- 清單選單按鈕 -->
@@ -105,6 +112,24 @@ export const All = {
 
   listener: {
     click: function (e) {
+      // * 清單名稱設定相關(editNameModal)
+      // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
+      if (e.target.id === "edit-name-close") {
+        // 關閉 editNameModal & modalOverlay
+        closeEditNameModal();
+        closeModalOverlay();
+      }
+      // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (listIsAdding && e.target.id === "edit-name-close") {
+        // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+        createNewList(e);
+      }
+      // 控制顏色選擇器的 active 顯示
+      if (e.target.classList.contains("modal__color-block")) {
+        clearColorSelectorActive();
+        e.target.classList.add("modal__color-block--active");
+      }
+
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
       openListOption(e);
@@ -187,20 +212,14 @@ export const All = {
     },
 
     scroll: (e) => {
-      if(e.target.classList.contains('main__content-list')){
-        console.log(1)
-      }
-      // console.log(e.target.scrollTop);
+      // if(e.target.classList.contains('main__content-list')){
+      //   console.log(1)
+      // }
     },
 
     change: function (e) {
       // checkbox
       changeCheckbox(e);
-
-      // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
-      if (nameIsEditing && e.target.classList.contains("main__name")) {
-        // saveEditedName();
-      }
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {

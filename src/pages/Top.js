@@ -63,7 +63,7 @@ export const Top = {
         <div class="main__content-header">
             <div class="container">
               <div class="main__name-wrapper">
-                <div class="main__color-block"></div>
+                <div class="main__color-block main__color-block--default"></div>
                 <h2 class="main__name">${pageName}</h2>
               </div>
               <!-- 清單選單按鈕 -->
@@ -100,23 +100,16 @@ export const Top = {
         closeEditNameModal();
         closeModalOverlay();
       }
-
       // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
       if (listIsAdding && e.target.id === "edit-name-close") {
         // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
         createNewList(e);
       }
-
-      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
-      if (nameIsEditing && e.target.id === "edit-name-close") {
-        saveNameSetting(e);
-      }
-
       // 控制顏色選擇器的 active 顯示
       if (e.target.classList.contains("modal__color-block")) {
-        clearColorSelectorActive(e);
+        clearColorSelectorActive();
+        e.target.classList.add("modal__color-block--active");
       }
-    
 
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption

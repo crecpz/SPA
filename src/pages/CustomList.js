@@ -33,7 +33,7 @@ export const CustomList = {
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
-    const { name: pageName, content: pageContent , color} = pageData;
+    const { name: pageName, content: pageContent, color } = pageData;
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
@@ -95,32 +95,31 @@ export const CustomList = {
   listener: {
     click: function (e) {
       // * 清單名稱設定相關(editNameModal)
-      // 開啟清單名稱設定
-      if (e.target.classList.contains("list-option__link--rename")) {
-        nameSetting();
-      }
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
         // 關閉 editNameModal & modalOverlay
         closeEditNameModal();
         closeModalOverlay();
       }
-
       // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
       if (listIsAdding && e.target.id === "edit-name-close") {
         // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
         createNewList(e);
       }
-
-      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
-      if (nameIsEditing && e.target.id === "edit-name-close") {
-        saveNameSetting(e);
-      }
-
       // 控制顏色選擇器的 active 顯示
       if (e.target.classList.contains("modal__color-block")) {
         clearColorSelectorActive();
         e.target.classList.add("modal__color-block--active");
+      }
+
+      // @ listOption --> 清單名稱設定
+      // 開啟清單名稱設定
+      if (e.target.classList.contains("list-option__link--rename")) {
+        nameSetting();
+      }
+      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (nameIsEditing && e.target.id === "edit-name-close") {
+        saveNameSetting(e);
       }
 
       // * listOption 開啟 & 關閉
@@ -159,9 +158,6 @@ export const CustomList = {
         removeList(e);
       }
 
-
-
-      // ! 注意 All.js、Top.js 目前都還沒改，需要做更改，複製以下的過去
       // * 置頂星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
@@ -211,25 +207,14 @@ export const CustomList = {
         removeTodo(removeTodoId);
       }
     },
+
     change: (e) => {
       //* 變更 checkbox 狀態
       changeCheckbox(e);
 
-      // // * 偵測在 nameIsEditing 為 true 的狀態下 change 事件是否由 .main__name 觸發
-      // if (nameIsEditing && e.target.classList.contains("main__name")) {
-      //   // saveEditedName();
-      // }
-
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
         saveEditedTodo(e);
-      }
-    },
-
-    keyup: (e) => {
-      if (e.key === "Enter") {
-        // 如果清單重新命名時下按 enter 可儲存編輯
-        // saveEditedName();
       }
     },
   },

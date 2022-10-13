@@ -1,19 +1,35 @@
 @use "abstracts" as *;
 
+// color 全局設定
 .color-block {
   @include rounded-full();
 }
 
+// 首個 color-block 我將其預設為 --primary-color (他會隨著光線模式調整)
 .color-block-1 {
   background-color: var(--primary-color);
 }
 
+// 產生第 2 ~ 第 10 的 class
 @for $i from 2 through 10 {
   .color-block-#{$i} {
-    background-color: var(--color-block-#{$i});
+    background-color:  var(--color-type-#{$i});
   }
 }
 
+
+$border-width: 2px;
+
+// color-border 跟上方意思一樣，差異在於設定的是 border
+.color-border-1{
+  border: $border-width solid var(--primary-color);
+}
+
+@for $i from 2 through 10 {
+  .color-border-#{$i} {
+    border: $border-width solid var(--color-type-#{$i});
+  }
+}
 
 // .color-block-1{
 //   background-color: ;

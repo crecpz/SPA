@@ -10,8 +10,8 @@
     grid-template-columns: repeat(2, minmax(300px, 360px));
   }
 
-  @include md  {
-    grid-template-columns: minmax(auto, 360px) ;
+  @include md {
+    grid-template-columns: minmax(auto, 360px);
     gap: 2rem;
   }
 
@@ -24,22 +24,29 @@
   }
 
   &__header {
+    @include flex($ai: center);
     @include text(sm);
     font-weight: bold;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    padding-top: .75rem;
-    padding-bottom: .75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
     color: var(--secondary-color);
     background-color: var(--primary-color);
 
     @include sm {
       padding-left: 1rem;
       padding-right: 1rem;
-  
-      padding-top: .5rem;
-      padding-bottom: .5rem;
+
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
+  }
+
+  &__color-block {
+    margin-right: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   &__content {
@@ -57,7 +64,7 @@
     // font-weight: bold;
     @include flex($jc: space-between, $ai: center);
 
-    &--column{
+    &--column {
       @include flex($dir: column);
       text-align: center;
     }
@@ -83,23 +90,21 @@
   }
 }
 
-
 .progress {
   @include flex($dir: column);
   grid-column: 1/-1;
   margin-top: 1.5rem;
 
-  &__value{
-
+  &__value {
   }
 
-  &__outer{
+  &__outer {
     margin-top: 0.5rem;
-    height: .5rem;
+    height: 0.5rem;
     border: 1px solid var(--primary-color);
   }
 
-  &__inner{
+  &__inner {
     height: 100%;
     background-color: var(--primary-color);
   }

@@ -131,7 +131,10 @@
   &__color-block{
     width: .625rem;
     margin-right: 2rem;
-    // background-color: var(--primary-color);
+
+    &--default{
+      background-color: var(--primary-color);
+    }
   }
 
   &__content-list {
