@@ -48,7 +48,7 @@
     transform: translateY(0%);
   }
 
-  // 刪除清單的確認框
+  // 刪除列表的確認框
   &--confirm {
     z-index: 15; // @ modal--confirm 的 z-index 層級會比 modal--edit 來得高
   }
@@ -58,7 +58,7 @@
     position: fixed;
   }
 
-  // 編輯清單名稱的對話框(包含選色)
+  // 編輯列表名稱的對話框(包含選色)
   &--eidt-name {
     position: fixed;
   }

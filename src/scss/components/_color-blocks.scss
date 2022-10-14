@@ -11,6 +11,10 @@
 //   background-color: var(--primary-color);
 // }
 
+.color-block--default {
+  background-color: var(--primary-color);
+}
+
 // 產生第 1 ~ 第 10 的 class
 @for $i from 1 through 10 {
   .color-block-#{$i} {

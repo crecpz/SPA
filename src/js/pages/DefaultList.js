@@ -1,27 +1,22 @@
 import { scrollBarFix } from "../function/fix.js";
-import { getAllPage, getAllTodos, hide, unhide } from "../function/helper.js";
-import { clearColorSelectorActive, closeConfirmModal, closeEditModal, closeEditNameModal, closeModalOverlay, createNewList, listIsAdding, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
+import { fillZero, getAllPage, getAllTodos, getCurrentPage, getCurrentTodo, hide, unhide } from "../function/helper.js";
+import { clearColorSelectorActive, closeConfirmModal, closeEditModal, closeEditNameModal, closeModalOverlay, createNewList, listIsAdding, listIsRemoving, nameIsEditing, nameSetting, removeList, removeListConfirm, removeTodoConfirm, saveNameSetting, todoEditing, todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
-import { clickToCloseListOption, openListOption } from "../function/ui.js";
+import { clickToCloseListOption, dropdownSwitch, openListOption } from "../function/ui.js";
 
 
-
-export const Top = {
+export const DefaultList = {
   mount: function () {
     scrollBarFix();
   },
 
   render: function () {
-    // 因為本頁的名稱確定不會做變動，所以這裡直接指定列表名稱
-    const pageName = "重要";
+    console.log(DATA)
+    const pageObj = DATA.default.find(({id}) => id === "defaultlist");
+    const {name:pageName, color, id, content: pageContent} = pageObj;
+    console.log(pageObj)
+  
 
-    // 集成所有的頁面物件
-    const allPages = getAllPage();
-
-    // 找出所有 top 屬性帶有 true 的 todo Object，放入 pageContent 中
-    const pageContent = getAllTodos().filter((todo) => todo.top === true);
-
-    // 遍歷 pageContent: 準備好所有會在 Top.js 會出現的 todoList
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
@@ -45,29 +40,29 @@ export const Top = {
         <!-- 主內容區 header -->
         <div class="main__content-header">
             <div class="container">
-              <div class="main__name-wrapper">
-                <div class="main__color-block color-block--default"></div>
-                <h2 class="main__name">${pageName}</h2>
-              </div>
-              <!-- 列表選單按鈕 -->
-              <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-              <!-- 列表選單 -->
-              <ul class="list-options">
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link">編輯</a>
-                  </li>
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link">排序</a>
-                  </li>
-              </ul>
-          </div>
+                <div class="main__name-wrapper">
+                    <div class="main__color-block color-block--default"></div>
+                    <input type="text" class="main__name" value="${pageName}" readonly>
+                </div>
+                <!-- 列表選單按鈕 -->
+                <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
+                <!-- 列表選單 -->
+                <ul class="list-options">
+                    <li class="list-option">
+                      <a href="javascript:;" class="list-option__link">編輯</a>
+                    </li>
+                    <li class="list-option">
+                      <a href="javascript:;" class="list-option__link">排序</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- main content list -->
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                ${todoContent}
+                  ${todoContent}
                 </ul>
             </div>
         </div>
@@ -75,24 +70,7 @@ export const Top = {
   },
 
   listener: {
-    click: function (e) {
-      // * 列表名稱設定相關(editNameModal)
-      // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
-      if (e.target.id === "edit-name-close") {
-        // 關閉 editNameModal & modalOverlay
-        closeEditNameModal();
-        closeModalOverlay();
-      }
-      // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
-      if (listIsAdding && e.target.id === "edit-name-close") {
-        // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
-        createNewList(e);
-      }
-      // 控制顏色選擇器的 active 顯示
-      if (e.target.classList.contains("modal__color-block")) {
-        clearColorSelectorActive();
-        e.target.classList.add("modal__color-block--active");
-      }
+    click:  (e)=> {
 
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
@@ -116,17 +94,14 @@ export const Top = {
           closeModalOverlay();
         }
       }
-      
-      // ! 這個函式之後再回過頭來看在重要取消後何去何從
+
+
       // * 重要星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
         changeTopByTodoItem(e);
-      } else if (
         // 如果上述方法獲取不到內容，則代表使用者現在點擊的是位於 editModal 的星星
-        e.target.classList.contains("modal__top") || // 使用者可能點的是 label
-        e.target.classList.contains("top") // 使用者可能點的是 <i> tag
-      ) {
+      } else if (e.target.classList.contains("modal__top")) {
         changeTopByEditModal(e);
       }
 
@@ -144,16 +119,16 @@ export const Top = {
       }
 
       // * 刪除單項 todo
-      // 確認階段 - 跳出確認框
+      // 刪除單項 todo - 確認階段，跳出確認框
       if (e.target.id === "edit-delete") {
-        // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉)
+        // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉，萬一使用者改變主意，按下取消)
         hide("#edit-modal");
         // 取得 todo id ，並將其傳進 removeTodoConfirm 中做確認
         const removeTodoId = e.target.closest(".modal__form").dataset.id;
         removeTodoConfirm(removeTodoId);
       }
 
-      // 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
+      // 刪除單項 todo - 使用者按下取消: 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
       if (todoIsEditing && e.target.id === "confirm-cancel") {
         // 關閉 confirmModal
         closeConfirmModal();
@@ -161,7 +136,7 @@ export const Top = {
         unhide("#edit-modal");
       }
 
-      // 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
+      // 刪除單項 todo - 使用者確定刪除: 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
       if (todoIsEditing && e.target.id === "confirm-yes") {
         // 取得欲刪除的 todo 的 id (透過位於 .modal__form 中的 data-id 屬性取得 id)
         const removeTodoId =
@@ -171,13 +146,13 @@ export const Top = {
       }
     },
 
-    change: function (e) {
+    change: (e) => {
       //* 變更 checkbox 狀態
       changeCheckbox(e);
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
-        saveEditedTodo(e);
+        saveEditedTodo(e); 
       }
     },
   },

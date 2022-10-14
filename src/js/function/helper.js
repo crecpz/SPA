@@ -146,25 +146,25 @@ export function unhide(selector) {
 }
 
 /**
- * 接收一個 Array 作為參數，該 Array 包含所有目前的 「未命名清單」。
+ * 接收一個 Array 作為參數，該 Array 包含所有目前的 「未命名列表」。
  *
- * ex: `[ "未命名清單", "未命名清單(1)", "未命名清單(4)" ]`
+ * ex: `[ "未命名列表", "未命名列表(1)", "未命名列表(4)" ]`
  *
- * 提取出所有「未命名清單」後的數字，並將數字排序後並返回一個數字陣列
- * @param {*} listArr 所有「未命名清單」陣列
+ * 提取出所有「未命名列表」後的數字，並將數字排序後並返回一個數字陣列
+ * @param {*} listArr 所有「未命名列表」陣列
  * @returns 返回一個經過大小排序的數字陣列。
  */
 export function extractUnnamedNumber(listArr) {
   return (
     listArr
-      // 匹配開頭為「未命名清單(X)」及頭尾名為 「未命名清單」的元素
-      .filter((list) => /^未命名清單(?=\(\d+\)$)|^未命名清單$/.test(list))
+      // 匹配開頭為「未命名列表(X)」及頭尾名為 「未命名列表」的元素
+      .filter((list) => /^未命名列表(?=\(\d+\)$)|^未命名列表$/.test(list))
       .map((list) => {
         // 取出數字部分
         if (list.match(/\d+/)) {
           return Number(list.match(/\d+/)[0]);
-        } else if (list.match(/\d+/) === null && list === "未命名清單") {
-          // 如果遇到「未命名清單」純文字，將其設為 0
+        } else if (list.match(/\d+/) === null && list === "未命名列表") {
+          // 如果遇到「未命名列表」純文字，將其設為 0
           return 0;
         }
       })
@@ -174,11 +174,11 @@ export function extractUnnamedNumber(listArr) {
 }
 
 /**
- * 計算目前最新的未命名清單後的編號應該為多少。
- * 此函數接收一個 `Array` 作為參數，該 Array 必須包含目前所有的未命名清單的編號。
+ * 計算目前最新的未命名列表後的編號應該為多少。
+ * 此函數接收一個 `Array` 作為參數，該 Array 必須包含目前所有的未命名列表的編號。
  * ex: `[1, 3, 5]`
  * @param {*} numList
- * @returns 返回應一個數字，該數字即為「未命名清單」編號的最新順位。
+ * @returns 返回應一個數字，該數字即為「未命名列表」編號的最新順位。
  */
 export function listCounter(numList) {
   let i = 0;
@@ -192,14 +192,14 @@ export function listCounter(numList) {
 }
 
 /**
- * * 根據現有的未命名清單，產生最新的清單名稱，例如: 未命名清單(2)。
- * @returns "未命名清單" + (一個數字)
+ * * 根據現有的未命名列表，產生最新的列表名稱，例如: 未命名列表(2)。
+ * @returns "未命名列表" + (一個數字)
  */
 export function createNewListName() {
-  // 獲取現有清單
+  // 獲取現有列表
   const allCustomListName = DATA.custom.map((i) => i.name);
-  // 提取清單尾數。
-  // 提取的清單尾數為空，則在陣列內給予其初始值 1 並返回
+  // 提取列表尾數。
+  // 提取的列表尾數為空，則在陣列內給予其初始值 1 並返回
   // (因為如果初始值是 1 ，在後續的計算中，下一個順位將會是 0)
   const extractNumberList =
     extractUnnamedNumber(allCustomListName).length === 0
@@ -208,5 +208,5 @@ export function createNewListName() {
   // 得出最新的數字
   const newNumber = listCounter(extractNumberList);
   // 如果新的數字是 0，則後面加個空字串
-  return `未命名清單${newNumber === 0 ? "" : `(${newNumber})`}`;
+  return `未命名列表${newNumber === 0 ? "" : `(${newNumber})`}`;
 }

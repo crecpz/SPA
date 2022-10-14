@@ -26,29 +26,29 @@ export function getStorage() {
     JSON.parse(localStorage.getItem("todoLocalData")) || {
       default: [
         {
+          id: "defaultlist",
+          name: "預設列表",
+          // color: "",
+          content: [],
+        },
+        {
           id: "all",
           name: "全部",
-          color: "",
+          // color: "",
           content: [],
         },
         {
           id: "top",
           name: "重要",
-          color: "", // @ 這其實用不到，除非 dropdown 會放 top 的內容，那就需要顏色
-          content: [
-            //   {
-            //     checked: false,
-            //     content: "this is todo A.",
-            //     top: true, // 凡是在 top 內的都是 true
-            //   },
-          ],
+          // color: "", // @ 這其實用不到，除非 dropdown 會放 top 的內容，那就需要顏色
+          content: [],
         },
       ],
 
       custom: [
         // {
         //   id: "",
-        //   name: "未命名清單",
+        //   name: "未命名列表",
         //   color: "",
         //   content: [
         // {

@@ -1,5 +1,11 @@
 import { scrollBarFix } from "../function/fix.js";
-import { fillZero, getAllPage, getAllTodos, hide, unhide } from "../function/helper.js";
+import {
+    fillZero,
+    getAllPage,
+    getAllTodos,
+    hide,
+    unhide,
+} from "../function/helper.js";
 import {
     clearColorSelectorActive,
     closeConfirmModal,
@@ -28,12 +34,9 @@ import {
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
-
-
-
 export const Home = {
     state: {
-        view: "grid-view"
+        view: "grid-view",
     },
 
     mount: function () {
@@ -41,13 +44,10 @@ export const Home = {
     },
 
     render: function () {
-
         const currentView = Home.state.view;
-        let contentsWillBeDisplayed = '';
-
+        let contentsWillBeDisplayed = "";
 
         if (currentView === "grid-view") {
-
             // * --------------------------- grid-view  -----------------------------------
             // 準備「全部」總覽卡片:
             // 1.從 DATA.default 拷貝一個「 all 」物件
@@ -86,6 +86,8 @@ export const Home = {
                         return "";
                     }
 
+                    console.log(color);
+
                     // 全部數量
                     const all = content.length;
                     // 未完成數量
@@ -100,8 +102,9 @@ export const Home = {
                     <a href="#/${isCustom ? "customlist/" + id : id
                         }" class="overview__link">
                         <div class="overview__header">
-                            ${color &&
-                        `<div class="overview__color-block color-block color-block-${color}"></div>`
+                            ${color
+                            ? `<div class="overview__color-block color-block color-block-${color}"></div>`
+                            : ""
                         }
                             ${pageName}
                         </div>
@@ -129,68 +132,68 @@ export const Home = {
                 `;
                 })
                 .join("");
-
         } else if (currentView === "list-view") {
-
             // * --------------------------- list-view  -----------------------------------
 
             //  將有頁面的物件資料放進 allPages
             const allPages = getAllPage();
-            contentsWillBeDisplayed = allPages
-                .map(({ name, content, color }) => {
-                    // 判斷如果 content 沒任何內容，就渲染空字串就好
-                    if (content.length === 0) {
-                        return "";
-                    } else {
-                        return `
-            <li class="dropdown">
-                <div class="dropdown__name">
-                ${color &&
-                            `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+            contentsWillBeDisplayed = allPages.map(({ name, content, color }) => {
+                // 判斷如果 content 沒任何內容，就渲染空字串就好
+                if (content.length === 0) {
+                    return "";
+                } else {
+                    return `
+                        <li class="dropdown">
+                            <div class="dropdown__name">
+                                ${color
+                                    ? `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+                                    : ""
+                                }
+                                ${name}
+                                <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                            </div>
+                            <div class="dropdown__cover">
+                                <ul class="todo">
+                                    ${
+                                        content.map(({ id, checked, content, top }) => {
+                                            return `
+                                                <li id="${id}" class="todo__item">
+                                                    <label class="todo__checkbox checkbox">
+                                                        <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""
+                                                            }>
+                                                        <div class="checkbox__appearance"></div>
+                                                    </label>
+                                                    <p class="todo__content">${content}</p>
+                                                    <i class="top ${top ? "fa-solid" : "fa-regular" } fa-star"></i> 
+                                                </li>`;
+                                        }).join("")
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    `;
                             }
-                ${name}
-                <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
-              </div>
-              <div class="dropdown__cover">
-                <ul class="todo">
-                  ${content
-                                .map(({ id, checked, content, top }) => {
-                                    return `
-                        <li id="${id}" class="todo__item">
-                          <label class="todo__checkbox checkbox">
-                            <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""
-                                        }>
-                            <div class="checkbox__appearance"></div>
-                          </label>
-                          <p class="todo__content">${content}</p>
-                          <i class="top ${top ? "fa-solid" : "fa-regular"
-                                        } fa-star"></i> 
-                      </li>
-                      `;
-                                })
-                                .join("")}
-                </ul>
-              </div>
-            </li>
-          `;
-                    }
-                })
-                .join("");
+                        }).join("");
         }
-
 
         return `
             <!-- 主內容區 header -->
             <div class="main__content-header">
                 <div class="container">
                     <div class="main__name-wrapper">
-                        <div class="main__color-block main__color-block--default"></div>
+                        <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
                         <div class="main__button-group">
-                            <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view" ? "main__view-btn--active" : ""}">
+                            <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view"
+                ? "main__view-btn--active"
+                : ""
+            }">
                                 <i class="fa-solid fa-table-cells-large"></i>
                             </button>
-                            <button data-view="list-view" class="main__view-btn btn ${currentView === "list-view" ? "main__view-btn--active" : ""}">
+                            <button data-view="list-view" class="main__view-btn btn ${currentView === "list-view"
+                ? "main__view-btn--active"
+                : ""
+            }">
                                 <i class="fa-solid fa-list-ul"></i>
                             </button>
                         </div>
@@ -210,10 +213,9 @@ export const Home = {
         `;
     },
 
-
     listener: {
         click: (e) => {
-            // * 清單名稱設定相關(editNameModal)
+            // * 列表名稱設定相關(editNameModal)
             // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
             if (e.target.id === "edit-name-close") {
                 // 關閉 editNameModal & modalOverlay
@@ -222,7 +224,7 @@ export const Home = {
             }
             // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
             if (listIsAdding && e.target.id === "edit-name-close") {
-                // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+                // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
                 createNewList(e);
             }
             // 控制顏色選擇器的 active 顯示
@@ -233,7 +235,6 @@ export const Home = {
 
             // * 變更列表視圖
             if (e.target.classList.contains("main__view-btn")) {
-
                 // 偵測使用者點擊的 view 模式，來改變 state 的值，
                 // 此 state 的值用來決定本頁要渲染的 view 模式
                 Home.state.view = e.target.dataset.view;
@@ -241,7 +242,7 @@ export const Home = {
                 document
                     .querySelectorAll(".main__view-btn")
                     .forEach((btn) => btn.classList.remove("main__view-btn--active"));
-                e.target.classList.add('main__view-btn--active');
+                e.target.classList.add("main__view-btn--active");
 
                 if (e.target.id === "grid-view") {
                     Home.state.view = "grid-view";
@@ -254,7 +255,7 @@ export const Home = {
                 Router();
             }
 
-            // * 清單名稱設定相關(editNameModal)
+            // * 列表名稱設定相關(editNameModal)
             // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
             if (e.target.id === "edit-name-close") {
                 // 關閉 editNameModal & modalOverlay
@@ -263,7 +264,7 @@ export const Home = {
             }
             // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
             if (listIsAdding && e.target.id === "edit-name-close") {
-                // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+                // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
                 createNewList(e);
             }
             // 控制顏色選擇器的 active 顯示
@@ -271,12 +272,6 @@ export const Home = {
                 clearColorSelectorActive();
                 e.target.classList.add("modal__color-block--active");
             }
-
-            // * listOption 開啟 & 關閉
-            // // 判斷是否要開啟 listOption
-            // openListOption(e);
-            // // 點擊任意處來關閉 listOption
-            // clickToCloseListOption(e);
 
             // * dropdown 切換
             if (e.target.classList.contains("dropdown__name")) {
@@ -314,7 +309,6 @@ export const Home = {
 
             // * 開啟編輯視窗
             if (e.target.classList.contains("todo__item")) {
-                
                 todoEditing(e);
             }
 

@@ -40,12 +40,12 @@ export const CustomList = {
                     <div class="main__color-block color-block-${color}"></div>
                     <input type="text" class="main__name" value="${pageName}" readonly>
                 </div>
-                <!-- 清單選單按鈕 -->
+                <!-- 列表選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-                <!-- 清單選單 -->
+                <!-- 列表選單 -->
                 <ul class="list-options">
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link list-option__link--rename">清單名稱設定</a>
+                      <a href="javascript:;" class="list-option__link list-option__link--rename">列表名稱設定</a>
                     </li>
                     <li class="list-option">
                       <a href="javascript:;" class="list-option__link">編輯</a>
@@ -54,7 +54,7 @@ export const CustomList = {
                       <a href="javascript:;" class="list-option__link">排序</a>
                     </li>
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link list-option__link--remove">刪除清單</a>
+                      <a href="javascript:;" class="list-option__link list-option__link--remove">刪除列表</a>
                     </li>
                 </ul>
             </div>
@@ -73,7 +73,7 @@ export const CustomList = {
 
   listener: {
     click:  (e)=> {
-      // * 清單名稱設定相關(editNameModal)
+      // * 列表名稱設定相關(editNameModal)
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
         // 關閉 editNameModal & modalOverlay
@@ -82,7 +82,7 @@ export const CustomList = {
       }
       // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
       if (listIsAdding && e.target.id === "edit-name-close") {
-        // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+        // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
         createNewList(e);
       }
       // 控制顏色選擇器的 active 顯示
@@ -91,8 +91,8 @@ export const CustomList = {
         e.target.classList.add("modal__color-block--active");
       }
 
-      // @ listOption --> 清單名稱設定
-      // 開啟清單名稱設定
+      // @ listOption --> 列表名稱設定
+      // 開啟列表名稱設定
       if (e.target.classList.contains("list-option__link--rename")) {
         nameSetting();
       }
@@ -124,16 +124,16 @@ export const CustomList = {
         }
       }
 
-      // * listOption - 刪除清單功能
-      // 刪除清單 step1 - 偵測使用者是否有點擊 "刪除清單" 來決定是否開啟 "確認刪除 modal"
+      // * listOption - 刪除列表功能
+      // 刪除列表 step1 - 偵測使用者是否有點擊 "刪除列表" 來決定是否開啟 "確認刪除 modal"
       if (e.target.classList.contains("list-option__link--remove")) {
         // 確認刪除過程
         removeListConfirm();
       }
 
-      // 刪除清單 step2 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
+      // 刪除列表 step2 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
       if (listIsRemoving && e.target.id === "confirm-yes") {
-        // 刪除清單在 DATA 中的資料
+        // 刪除列表在 DATA 中的資料
         removeList(e);
       }
 

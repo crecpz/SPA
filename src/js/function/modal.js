@@ -5,21 +5,21 @@ import { activeNavLists, navSwitcher, removeNavActive, renderCustomList } from "
 
 
 // 用來表示目前的各種操作狀態
-export let nameIsEditing = false; // 正在編輯清單名稱
+export let nameIsEditing = false; // 正在編輯列表名稱
 export let todoIsEditing = false; //  正在編輯單項 todo
 export let listIsRemoving = false; // 正在刪除單項 todo
-export let listIsAdding = false; // 正在新增自訂清單
+export let listIsAdding = false; // 正在新增自訂列表
 
 /**
- * * 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+ * * 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
  * 1.此函數調用時機為: 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕" 時
- * 2.先取得使用者編輯清單名稱後的最終結果
- * 3.新增一個新的清單物件至 DATA 中，並將 2.的結果套用進該 Object 中，存至 localStorage
+ * 2.先取得使用者編輯列表名稱後的最終結果
+ * 3.新增一個新的列表物件至 DATA 中，並將 2.的結果套用進該 Object 中，存至 localStorage
  * 4.調整 nav active 指向
  * 5.恢復 listIsAdding 為 false
  */
 export function createNewList(e) {
-  // 取得使用者編輯清單名稱後的最終結果
+  // 取得使用者編輯列表名稱後的最終結果
   const { name: listName, color: listColorBlock } = getEditNameResult(e);
 
   // 在 DATA 中新增新的 nav 資料
@@ -45,54 +45,54 @@ export function createNewList(e) {
   // 渲染 customList 至 nav 中
   renderCustomList();
 
-  // 新增清單模式設為 false
+  // 新增列表模式設為 false
   listIsAdding = false;
 }
 
 /**
- * * 彈出 editNameModal 視窗(for 新增自訂清單)
- * 調用時機為使用者按下「新增自訂清單」後
+ * * 彈出 editNameModal 視窗(for 新增自訂列表)
+ * 調用時機為使用者按下「新增自訂列表」後
  */
 export function listAdding() {
-  // 新增清單模式設為 true
+  // 新增列表模式設為 true
   listIsAdding = true;
 
-  // 如果目前螢幕的寬度 < 1024px，讓 「新增自訂清單」 按紐被點擊時收起 nav
+  // 如果目前螢幕的寬度 < 1024px，讓 「新增自訂列表」 按紐被點擊時收起 nav
   // 防止 nav 遮蓋到頁面名稱而不知道要命名
   const smallerThan1024 = window.matchMedia("(max-width: 1024px)");
   if (smallerThan1024.matches) {
     navSwitcher();
   }
 
-  //  獲取最新的清單名稱
+  //  獲取最新的列表名稱
   const newListName = createNewListName();
 
   // @ 開啟 modal-overlay & editNameModal
   openModalOverlay();
-  openEditNameModal(newListName); // @ 現在 editNamemodal 內 input 的 placeholder & value 就會是最新的未命名清單順位
+  openEditNameModal(newListName); // @ 現在 editNamemodal 內 input 的 placeholder & value 就會是最新的未命名列表順位
 }
 
 /**
- * * 彈出 editNameModal 視窗(for 清單名稱設定)
+ * * 彈出 editNameModal 視窗(for 列表名稱設定)
  */
 export function nameSetting() {
   // 變更 nameEditing 狀態
   nameIsEditing = true;
 
-  // 從當前頁面資料中取得: 1.當前清單名稱  2.當前頁面的 color-block 顏色號碼
+  // 從當前頁面資料中取得: 1.當前列表名稱  2.當前頁面的 color-block 顏色號碼
   const { name: currentPageName, color } = getCurrentPage();
 
   // 開啟 modal-overlay & editNameModal
   openModalOverlay();
-  openEditNameModal(currentPageName, color); // @ 現在是在清單名稱設定，所以傳入的是當前清單名稱
+  openEditNameModal(currentPageName, color); // @ 現在是在列表名稱設定，所以傳入的是當前列表名稱
 }
 
 /**
- * * 儲存使用者在編輯現有清單名稱後的內容
+ * * 儲存使用者在編輯現有列表名稱後的內容
  * @param {*} e event
  */
 export function saveNameSetting(e) {
-  // 取得使用者編輯清單名稱後的最終結果
+  // 取得使用者編輯列表名稱後的最終結果
   const { name: listName, color: listColorBlock } = getEditNameResult(e);
   // 取得當前頁面
   const currentPage = DATA.custom.find(({ id }) => id === getCurrentPageId());
@@ -238,7 +238,7 @@ export function closeEditModal() {
 }
 
 /**
- * * 「 使用者按下刪除清單 ---> confirmModal 跳出 」 的確認過程
+ * * 「 使用者按下刪除列表 ---> confirmModal 跳出 」 的確認過程
  * (跳出 confirmModal 後，使用者後續刪除的行為會寫在 removeList() 內)
  */
 export function removeListConfirm() {
@@ -273,23 +273,23 @@ export function removeTodoConfirm(todoId) {
 }
 
 /**
- * * 開啟編輯清單名稱 editNameModal
- * 1.此函數調用的時機為當使用者按下「新增自訂清單」或「清單名稱設定」時所觸發
+ * * 開啟編輯列表名稱 editNameModal
+ * 1.此函數調用的時機為當使用者按下「新增自訂列表」或「列表名稱設定」時所觸發
  * 2.給予 editNameModal 裡面 input 的 placeholder &  value 一個 defaultName (預設名稱)
  * 3.反白 value 文字(為了更容易編輯)
  * 4.
  *
  * @param {*} defaultName 預設名稱
  * - defaultName 將套用到 editNameModal 中 input 的 value 與 placeholder 中
- * - 若此函數是在新增新清單時(listAdding = true)被調用，則 defaultName 將會傳入的是下一個順位的清單名稱；
- * - 若此函數是在清單名稱設定時(listEditing = true)被調用，則 defaultName 將會傳入的是當前清單名稱。
+ * - 若此函數是在新增新列表時(listAdding = true)被調用，則 defaultName 將會傳入的是下一個順位的列表名稱；
+ * - 若此函數是在列表名稱設定時(listEditing = true)被調用，則 defaultName 將會傳入的是當前列表名稱。
  * @param {*} color
  * - color 作為顯示在 editNameModal 中的顏色選擇器上套用 active 的指標
- * - 若此函數是在新增新清單時(listAdding = true)被調用，由於頁面 Object 才剛被建立出來，所以 Object 內
+ * - 若此函數是在新增新列表時(listAdding = true)被調用，由於頁面 Object 才剛被建立出來，所以 Object 內
  *   的 color 屬性不會有任何的值，所以調用 openEditNameModal() 時，我只傳入第一個參數(defaultName)，而
  *   不會傳入第二個參數(color)，使 color 變成 undefined。接著使用含樹的預設值 color = 1 ，代表 :
  *   只要沒有傳入參數，自動將顏色設為 1。
- * - 若此函數是在清單名稱設定時(listEditing = true)被調用，則 color 傳入的是當前清單 color。
+ * - 若此函數是在列表名稱設定時(listEditing = true)被調用，則 color 傳入的是當前列表 color。
  */
 export function openEditNameModal(defaultName, color = "1") {
   //  取得 editNameModal DOM
@@ -310,7 +310,7 @@ export function openEditNameModal(defaultName, color = "1") {
 }
 
 /**
- * * 關閉編輯清單名稱的 modal
+ * * 關閉編輯列表名稱的 modal
  */
 export function closeEditNameModal() {
   const editNameModal = document.querySelector("#edit-name-modal");
@@ -329,13 +329,13 @@ export function clearColorSelectorActive() {
 }
 
 /**
- * * 取得使用者編輯清單名稱後的最終結果
+ * * 取得使用者編輯列表名稱後的最終結果
  */
 export function getEditNameResult(e) {
   // todo - 獲取 editNameModal DOM 元素
   const editNameModal = e.target.closest("#edit-name-modal");
 
-  // todo - 獲取清單名稱 input 的內容
+  // todo - 獲取列表名稱 input 的內容
   const editName = editNameModal.querySelector("#list-name");
   let newName = "";
   // 如果使用者留下空白，那就使用預設值。
@@ -343,7 +343,7 @@ export function getEditNameResult(e) {
   if (editName.value.trim() === "") {
     newName = editName.placeholder;
   } else {
-    // 如果使用者有輸入內容，則該內容將成為新的清單名稱
+    // 如果使用者有輸入內容，則該內容將成為新的列表名稱
     newName = editName.value;
   }
   // 獲取顏色
@@ -359,10 +359,10 @@ export function getEditNameResult(e) {
 
 
 /**
- * * 刪除清單在 DATA 中的資料
+ * * 刪除列表在 DATA 中的資料
  */
 export function removeList(e) {
-  // 取得當前清單頁面的資料
+  // 取得當前列表頁面的資料
   const currentPage = getCurrentPage();
 
   // 存放接下來頁面的去向 (此處存放的是一段網址)
@@ -384,7 +384,7 @@ export function removeList(e) {
   // 刪除在 DATA 中該頁的資料
   DATA.custom = DATA.custom.filter((page) => page.id !== currentPage.id);
 
-  // 重新渲染 nav 自訂清單的 UI
+  // 重新渲染 nav 自訂列表的 UI
   renderCustomList();
 
   // 存到 localStorage

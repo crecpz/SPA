@@ -83,7 +83,7 @@ export function dropdownSwitch(e) {
 // 監聽 todo submit 按鈕
 document.querySelector("#todo-submit").addEventListener("click", setTodo);
 
-// 監聽新增自訂清單按鈕
+// 監聽新增自訂列表按鈕
 const addBtn = document.querySelector("#add-list-btn");
 addBtn.addEventListener("click", listAdding);
 
@@ -126,6 +126,7 @@ export function removeNavActive() {
 export function activeNavLists() {
   const id = getCurrentPageId();
   const activeTarget = navContent.querySelector(`#${id}`);
+  console.log(navContent)
   activeTarget.classList.add("nav__list-item--active");
 }
 
@@ -153,7 +154,7 @@ document.querySelectorAll(".nav__list").forEach((navList) => {
       // 更新 active
       e.target.closest("li").classList.add("nav__list-item--active");
 
-      // 如果目前螢幕的寬度 < 576px 點擊任一清單就把清單收合
+      // 如果目前螢幕的寬度 < 576px 點擊任一列表就把列表收合
       const smallerThan576 = window.matchMedia("(max-width: 576px)");
 
       // If media query matches

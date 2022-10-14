@@ -17,6 +17,7 @@ import {
   changeCheckbox,
   changeTopByEditModal,
   changeTopByTodoItem,
+  DATA,
   removeTodo,
   saveEditedTodo,
 } from "../function/storage.js";
@@ -27,14 +28,15 @@ import {
 } from "../function/ui.js";
 
 
+
+
 export const All = {
   mount: function () {
     scrollBarFix();
   },
 
   render: function () {
-
-    // ! 下午將 All.js 的內容「複製」到 Home.js 並做改動
+    console.log(DATA)
 
     //  將有頁面的物件資料放進 allPages
     const allPages = getAllPage();
@@ -90,9 +92,9 @@ export const All = {
               <div class="main__color-block main__color-block--default"></div>
               <h2 class="main__name">全部</h2>
             </div>
-            <!-- 清單選單按鈕 -->
+            <!-- 列表選單按鈕 -->
             <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-            <!-- 清單選單 -->
+            <!-- 列表選單 -->
             <ul class="list-options">
                 <li class="list-option">
                   <a href="javascript:;" class="list-option__link">編輯</a>
@@ -117,7 +119,7 @@ export const All = {
 
   listener: {
     click: function (e) {
-      // * 清單名稱設定相關(editNameModal)
+      // * 列表名稱設定相關(editNameModal)
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
         // 關閉 editNameModal & modalOverlay
@@ -126,7 +128,7 @@ export const All = {
       }
       // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
       if (listIsAdding && e.target.id === "edit-name-close") {
-        // 彙整使用者在 editNameModal 輸入的內容，套用到新的清單名稱設定上
+        // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
         createNewList(e);
       }
       // 控制顏色選擇器的 active 顯示
