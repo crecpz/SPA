@@ -31,7 +31,7 @@
     background-color: var(--danger-color);
   }
 
-  &--remove{
+  &--remove {
     @include text(md);
     color: var(--primary-color);
 
@@ -40,12 +40,12 @@
     }
   }
 
-  // 新增自訂清單按鈕 
-  &--custom-list{
+  // 新增自訂清單按鈕
+  &--custom-list {
     @include text(base);
     width: calc(100% - 4.5rem);
-    padding-top: .75rem;
-    padding-bottom: .75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
     margin-top: auto;
     margin-left: auto;
     margin-right: auto;
@@ -71,15 +71,33 @@
   // modal 內按鈕
   &--modal {
     @include text(normal);
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }
 
   // 新增新清單跳出的 modal 內的完成按鈕
-  &--add-list-modal{
+  &--add-list-modal {
     margin-top: 1.5rem;
+  }
+}
+
+// 總覽頁面中 main 標題旁的變更視圖按鈕
+.main__view-btn {
+  @include text(sm);
+  padding: 0.25rem 0.75rem;
+  color: var(--primary-color);
+  border-radius: deep-map-get($border-radius, base);
+
+  &--active {
+    // background-color: var(--tertiary-color);
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+  }
+
+  i {
+    pointer-events: none;
   }
 }
 
@@ -104,7 +122,7 @@
   }
 }
 
-// hamburger 
+// hamburger
 .hamburger {
   @include flex($dir: column, $jc: space-between);
   width: 40px;

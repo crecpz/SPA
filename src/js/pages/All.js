@@ -25,7 +25,7 @@ import {
   dropdownSwitch,
   openListOption,
 } from "../function/ui.js";
-hide;
+
 
 export const All = {
   mount: function () {
@@ -33,12 +33,15 @@ export const All = {
   },
 
   render: function () {
+
+    // ! 下午將 All.js 的內容「複製」到 Home.js 並做改動
+
     //  將有頁面的物件資料放進 allPages
     const allPages = getAllPage();
     const dropdownsContent = allPages
-      .map(({ id, name, content, color }) => {
+      .map(({ name, content, color }) => {
         // 判斷如果 content 沒任何內容，就渲染空字串就好
-        if (content.length === 0 || id === "top") {
+        if (content.length === 0) {
           return "";
         } else {
           return `
@@ -100,7 +103,6 @@ export const All = {
             </ul>
           </div>
         </div>
-
 
         <!-- main content list -->
         <div class="main__content-list">

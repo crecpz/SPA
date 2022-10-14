@@ -43,6 +43,7 @@ export function getCurrentTodo(currentTodoId) {
   // 取得當前頁面物件資料
   const currentPage = getCurrentPage();
 
+
   // 先從當前頁面資料取得當前 todo
   const currentTodoObj = currentPage.content.find(
     (todoItem) => todoItem.id === currentTodoId

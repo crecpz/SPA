@@ -1,7 +1,5 @@
 @use "abstracts" as *;
 
-
-
 .main {
   display: grid;
   grid-template-rows: 4.375rem 1fr auto;
@@ -19,13 +17,10 @@
       但此處仍有 width 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
       *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
   */
-  transition-property: color, background-color, border, width; 
-  transition-duration: $mode-transition-duration, 
-                        $mode-transition-duration, 
-                        $mode-transition-duration,
-                        $collapse-transition-duration;
+  transition-property: color, background-color, border, width;
+  transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration,
+    $collapse-transition-duration;
 
-                        
   &.nav-open {
     width: calc(100% - 23.4375rem);
 
@@ -33,7 +28,6 @@
       width: 100%;
     }
   }
-
 
   &__header {
     @include flex($ai: center);
@@ -52,20 +46,18 @@
         但此處仍有 width 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
         *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
     */
-    transition-property: color, background-color, border, width; 
-    transition-duration: $mode-transition-duration, 
-                          $mode-transition-duration, 
-                          $mode-transition-duration,
-                          $collapse-transition-duration;
-                          
+    transition-property: color, background-color, border, width;
+    transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration,
+      $collapse-transition-duration;
+
     &.nav-open {
       width: calc(100% - 23.4375rem);
-  
+
       @include lg {
         width: 100%;
       }
     }
-  
+
     @include padding-x;
 
     .container {
@@ -85,15 +77,15 @@
   &__content-header {
     @include flex($jc: center);
     @include padding-x;
-    position: sticky; // 09/04: 這邊考慮用 fixed 
+    position: sticky; // 09/04: 這邊考慮用 fixed
     z-index: 5;
     top: 70px;
-    
+
     color: var(--primary-color);
     background-color: var(--secondary-color);
-    
+
     width: 100%;
-    margin-top: 4rem;        
+    margin-top: 4rem;
 
     @include sm {
       margin-top: 3rem;
@@ -113,26 +105,32 @@
     height: 100%;
   }
 
-  &__name{
+  &__name {
     @include text(xl);
     width: 100%;
     font-weight: bold;
     border: 0;
     background-color: transparent;
     color: var(--primary-color);
-    letter-spacing: .15em;
-    
+    letter-spacing: 0.15em;
 
     @include sm {
       @include text(lg);
-    }  
+    }
   }
 
-  &__color-block{
-    width: .625rem;
+  &__button-group {
+    @include flex;
+    align-self: center;
+    // border: 1px solid var(--primary-color);
+    // border-radius: deep-map-get($border-radius, base);
+  }
+
+  &__color-block {
+    width: 0.625rem;
     margin-right: 2rem;
 
-    &--default{
+    &--default {
       background-color: var(--primary-color);
     }
   }
@@ -146,11 +144,10 @@
     padding-right: 0px; /* exact value is given in JavaScript code */
 
     @include padding-x;
-    
+
     .container {
       // overflow-y: scroll;
       max-width: $max-width;
-
     }
   }
 }
