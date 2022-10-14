@@ -1,8 +1,20 @@
 import { Router } from "../routes/Router.js";
-import { createUniqueId, getAllPage, getCurrentPage, getCurrentPageId, getCurrentTodo, getPage, unhide } from "./helper.js";
-import { closeEditModal, closeModalOverlay, getEditNameResult, nameIsEditing } from "./modal.js";
+import {
+  createUniqueId,
+  getAllPage,
+  getCurrentPage,
+  getCurrentPageId,
+  getCurrentTodo,
+  getPage,
+  unhide,
+} from "./helper.js";
+import {
+  closeEditModal,
+  closeModalOverlay,
+  getEditNameResult,
+  nameIsEditing,
+} from "./modal.js";
 import { activeNavLists, renderCustomList } from "./ui.js";
-
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
 export const DATA = getStorage();
@@ -153,8 +165,6 @@ export function saveEditedTodo(e) {
   setStorage(DATA);
 }
 
-
-
 /**
  * * 刪除 todo 在 DATA 中的資料
  */
@@ -197,7 +207,7 @@ export function removeTodo(removeTodoId) {
  * 會根據觸發時哪邊能獲取得到 id ，來決定 currentTodoId 的值
  * @param {*} e event
  */
- export function changeCheckbox(e) {
+export function changeCheckbox(e) {
   // 如果 change 事件所觸發的 e.target 包含 .checkbox__input class
   if (e.target.classList.contains("checkbox__input")) {
     // 此變量存放當前 todo id
@@ -243,25 +253,30 @@ export function changeTop(todoObj) {
 
 /**
  * * 反轉重要星號的狀態(處理來自 todoItem 所觸發的事件)
- * @param {*} e
  */
 export function changeTopByTodoItem(e) {
   // 從 .todo__item 取得 id
   const currentTodoId = e.target.closest(".todo__item").id;
+
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
-  // 判斷目前 top 是否是由 false ---> true (只有非重要 ---> 重要)
-  // ! pinTodo 的必要性? (1)
-  if (!currentTodo.top) {
-    pinTodo(currentTodoId, currentTodo);
-  }
+
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
-  // 渲染
-  Router();
+
+  // 改變星號的樣式
+  e.target.classList.toggle("fa-solid");
+  e.target.classList.toggle("fa-regular");
+
+  // 如果此頁位於 top，則 todo 在被按下星號後，立即渲染，讓該項從此頁消失
+  if (getCurrentPageId() === "top") {
+    Router();
+  }
+
   // 檢查於重要頁面中產生的 todo 當中，已經不再被重要的 todo
   // 將其移至 「all」 資料中
   const currentPageId = getCurrentPageId();
+
   if (
     currentPageId === "top" && // 如果目前位於重要頁面
     !currentTodo.top && // 且當前 todo 不再是重要狀態(星星被摘除)
@@ -273,24 +288,21 @@ export function changeTopByTodoItem(e) {
 }
 
 /**
- * * 反轉重要星號的狀態
- * 此函式僅處理來自 editModal 所觸發的事件，不會處理
- * @param {*} e
+ * * 反轉重要星號的狀態(處理來自 editModal 所觸發的事件)
  */
 export function changeTopByEditModal(e) {
   // 從他們的上層找 dataset.id (我將 todo 的 id 使用 dataset 的方式放在 modal__form)
   const currentTodoId = e.target.closest(".modal__form").dataset.id;
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
-
-  // ! pinTodo 的必要性? (2)
-  if (!currentTodo.top) {
-    pinTodo(currentTodoId, currentTodo);
-  }
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
-  // 渲染出最新的改變(此渲染會影響的元素僅是顯示在 todoItem 上面的星星，位於 editModal 上的星星不會有任何變化)
-  Router();
+
+  // 如果此頁位於 top，則 todo 在被按下星號後，立即渲染，讓該項從此頁消失
+  if (getCurrentPageId() === "top") {
+    Router();
+  }
+  
   // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
   e.target.children[0].classList.toggle("fa-solid");
   e.target.children[0].classList.toggle("fa-regular");
