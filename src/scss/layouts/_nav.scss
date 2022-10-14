@@ -80,6 +80,7 @@
     i {
       @include text(md);
       margin-right: 1.5rem;
+      pointer-events: none;
     }
   }
 

@@ -45,18 +45,27 @@ export const Home = {
         // 準備將要顯示的內容
         const contentsWillBeDisplayed = [cloneAll, cloneTop, ...custom];
         // 利用 map 遍歷 overviewData
+        console.log(DATA)
         const overviewCards = contentsWillBeDisplayed
             .map(({ name: pageName, content, isCustom, id, color }) => {
-                // 以下分別為: 全部數量、未完成數量、已完成數量、完成百分比
+
+                // 如果 content 裡面沒內容，則不渲染 overview 卡片
+                if (content.length === 0) {
+                    return ""
+                } 
+
+                // 全部數量
                 const all = content.length;
+                // 未完成數量
                 const unCompleted = content.filter((todo) => !todo.checked).length;
+                // 已完成數量
                 const completed = content.filter((todo) => todo.checked).length;
+                // 完成百分比
                 const percentage = isNaN(Math.round((completed / all) * 100))
                     ? "0"
                     : fillZero(Math.round((completed / all) * 100));
                 return `
-                    <a href="#/${isCustom ? "customlist/" + id : id
-                    }" class="overview__link">
+                    <a href="#/${isCustom ? "customlist/" + id : id}" class="overview__link">
                         <div class="overview__header">
                             ${color && `<div class="overview__color-block color-block color-block-${color}"></div>`}
                             ${pageName}
@@ -83,8 +92,7 @@ export const Home = {
                         </div>
                     </a>
                 `;
-            })
-            .join("");
+            }).join("");
 
         return `
             <!-- 主內容區 header -->
