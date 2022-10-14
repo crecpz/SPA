@@ -161,7 +161,7 @@ export const All = {
         }
       }
 
-      // * 置頂星號
+      // * 重要星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
         changeTopByTodoItem(e);

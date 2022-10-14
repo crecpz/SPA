@@ -1,7 +1,7 @@
 import { scrollBarFix } from "../function/fix.js";
 import { getAllPage, getAllTodos, hide, unhide } from "../function/helper.js";
 import { clearColorSelectorActive, closeConfirmModal, closeEditModal, closeEditNameModal, closeModalOverlay, createNewList, listIsAdding, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
-import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, removeTodo, saveEditedTodo } from "../function/storage.js";
+import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
 import { clickToCloseListOption, openListOption } from "../function/ui.js";
 
 
@@ -13,7 +13,7 @@ export const Top = {
 
   render: function () {
     // 因為本頁的名稱確定不會做變動，所以這裡直接指定清單名稱
-    const pageName = "置頂";
+    const pageName = "重要";
 
     // 集成所有的頁面物件
     const allPages = getAllPage();
@@ -116,9 +116,9 @@ export const Top = {
           closeModalOverlay();
         }
       }
-
-      // ! 這個函式之後再回過頭來看在置頂取消後何去何從
-      // * 置頂星號
+      
+      // ! 這個函式之後再回過頭來看在重要取消後何去何從
+      // * 重要星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
         changeTopByTodoItem(e);

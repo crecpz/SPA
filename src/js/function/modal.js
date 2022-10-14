@@ -215,7 +215,7 @@ export function openEditModal({ id, checked, content, top }) {
         </label>
         <button class="modal__check-option modal__top">
           <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i>
-          置頂
+          重要
         </button>
         </div>
         <div class="modal__btn-group">

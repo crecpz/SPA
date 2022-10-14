@@ -24,7 +24,7 @@ export const Home = {
         // 2.替換 content 屬性: content 內原本只包含來自「All.js」自身的 todo，現在改放入所有的 todo 進去
         cloneAll.content = getAllTodos();
 
-        // 準備「置頂」總覽卡片:
+        // 準備「重要」總覽卡片:
         // 1.從 DATA.default 拷貝一個「 top 」物件
         const cloneTop = Object.assign(
             {},

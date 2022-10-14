@@ -21,7 +21,7 @@ export function getStorage() {
         },
         {
           id: "top",
-          name: "置頂",
+          name: "重要",
           color: "", // @ 這其實用不到，除非 dropdown 會放 top 的內容，那就需要顏色
           content: [
             //   {
@@ -93,12 +93,12 @@ export function setTodo() {
 }
 
 /**
- * * 接收一個在「置頂」被取消的 todo 物件，將該物件從「top」移動至「all」
- * 1.判斷被取消置頂的 todo 是否來自於 Top.js 本身
+ * * 接收一個在「重要」被取消的 todo 物件，將該物件從「top」移動至「all」
+ * 1.判斷被取消重要的 todo 是否來自於 Top.js 本身
  * 2.若來自於 Top.js 本身，將該 todo 資料移動到 DATA.default 的 all 物件中
  * 3.移動過去之前，將 srcId、srcName 更改成屬於 all
  * 4.移動過去之後，該項 todo 將不再屬於 top，而是屬於 all 物件
- * @param {*} moveTodoObj 被取消置頂的 todo Object
+ * @param {*} moveTodoObj 被取消重要的 todo Object
  */
 export function moveTopToAll(moveTodoObj) {
   // 取得 DATA 中的 top 物件後，過濾掉與 moveTodoObj
@@ -110,7 +110,7 @@ export function moveTopToAll(moveTodoObj) {
   // 取得 DATA.default 中的 all 物件，並將 moveTodoObj 放入 all 物件中的 content Array 中
   const all = getPage("all");
   all.content.unshift(moveTodoObj);
-  // 取消置頂後及時更新頁面
+  // 取消重要後及時更新頁面
   Router();
   // 儲存變更至 localStorage
   setStorage(DATA);
@@ -126,7 +126,7 @@ export function pinTodo(todoId, todoObj) {
   const currentTodoArray = currentTodoOriginPage.content;
   // todo - 更該順序: 將點擊到的 todo 放到第一個，其餘的順序不更改
   // todo - 利用 todoId，將 currentTodoArray 做 filter， 過濾掉該項 todo
-  // todo - 創建一個新的 []，使用 spread operator 放入置頂的元素跟剩下的元素
+  // todo - 創建一個新的 []，使用 spread operator 放入重要的元素跟剩下的元素
   const filteredArray = currentTodoArray.filter(({ id }) => id !== todoId);
   const topTodo = currentTodoArray.find(({ id }) => id === todoId);
   const newArr = [topTodo, ...filteredArray];
@@ -233,7 +233,7 @@ export function removeTodo(removeTodoId) {
 }
 
 /**
- * * 改變置頂星號(top)的狀態，最後儲存結果至 localStorage
+ * * 改變重要星號(top)的狀態，最後儲存結果至 localStorage
  */
 export function changeTop(todoObj) {
   todoObj.top = !todoObj.top;
@@ -242,7 +242,7 @@ export function changeTop(todoObj) {
 }
 
 /**
- * * 反轉置頂星號的狀態(處理來自 todoItem 所觸發的事件)
+ * * 反轉重要星號的狀態(處理來自 todoItem 所觸發的事件)
  * @param {*} e
  */
 export function changeTopByTodoItem(e) {
@@ -250,7 +250,7 @@ export function changeTopByTodoItem(e) {
   const currentTodoId = e.target.closest(".todo__item").id;
   // 取得當前 todo 資料
   const currentTodo = getCurrentTodo(currentTodoId);
-  // 判斷目前 top 是否是由 false ---> true (只有非置頂 ---> 置頂)
+  // 判斷目前 top 是否是由 false ---> true (只有非重要 ---> 重要)
   // ! pinTodo 的必要性? (1)
   if (!currentTodo.top) {
     pinTodo(currentTodoId, currentTodo);
@@ -259,21 +259,21 @@ export function changeTopByTodoItem(e) {
   changeTop(currentTodo);
   // 渲染
   Router();
-  // 檢查於置頂頁面中產生的 todo 當中，已經不再被置頂的 todo
+  // 檢查於重要頁面中產生的 todo 當中，已經不再被重要的 todo
   // 將其移至 「all」 資料中
   const currentPageId = getCurrentPageId();
   if (
-    currentPageId === "top" && // 如果目前位於置頂頁面
-    !currentTodo.top && // 且當前 todo 不再是置頂狀態(星星被摘除)
-    currentTodo.srcId === "top" // 且該項 todo 是在置頂頁面被創建出來的話
+    currentPageId === "top" && // 如果目前位於重要頁面
+    !currentTodo.top && // 且當前 todo 不再是重要狀態(星星被摘除)
+    currentTodo.srcId === "top" // 且該項 todo 是在重要頁面被創建出來的話
   ) {
-    // 上述條件若符合，代表該項 todo 不該出現在「置頂」，必須將其移至資料中的 「all」 內
+    // 上述條件若符合，代表該項 todo 不該出現在「重要」，必須將其移至資料中的 「all」 內
     moveTopToAll(currentTodo);
   }
 }
 
 /**
- * * 反轉置頂星號的狀態
+ * * 反轉重要星號的狀態
  * 此函式僅處理來自 editModal 所觸發的事件，不會處理
  * @param {*} e
  */
