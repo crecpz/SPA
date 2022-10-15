@@ -298,11 +298,19 @@ export function changeTopByEditModal(e) {
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
 
-  // 如果此頁位於 top，則 todo 在被按下星號後，立即渲染，讓該項從此頁消失
+  // 如果此頁位於 top，則 todo 在被按下星號後(無論是在 todiItem 還是在 editModal)，
+  // 立即觸發渲染，讓該項從此頁消失。
   if (getCurrentPageId() === "top") {
     Router();
+  } else {
+    // 如果此頁不是位於 top，則在按下星號後不渲染。
+    // 在不渲染的情況下，直接透過 click editModal 內的星星來改變 todoItem 內的星星樣式
+    // ? 不渲染的原因是:如果在 dropdown 會在渲染過後初始化，除非 dropdown 的開合有被儲存，那渲染就沒問題
+    const starInTodoItem = document.querySelector(`#${currentTodoId} .top`);
+    starInTodoItem.classList.toggle("fa-solid");
+    starInTodoItem.classList.toggle("fa-regular");
   }
-  
+
   // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
   e.target.children[0].classList.toggle("fa-solid");
   e.target.children[0].classList.toggle("fa-regular");
