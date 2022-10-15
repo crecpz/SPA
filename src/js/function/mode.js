@@ -31,5 +31,5 @@ function modeSwitcher(e) {
   }
 }
 
-export { updateMode, modeSwitcher };
+export { getCurrentTheme, updateMode, modeSwitcher };
 

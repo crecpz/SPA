@@ -40,15 +40,13 @@ export function getCurrentPage() {
  * @returns 返回 todo 物件
  */
 export function getCurrentTodo(currentTodoId) {
-
   const allPages = getAllPage();
   return allPages
     .map(({ content }) => content) // 取得 content 屬性
     .reduce((acc, cur) => acc.concat(cur), []) // 攤平
     .find(({ id }) => id === currentTodoId); // 找出 todo Object
 
-
-    //! --------------- 以下原版(上面應該更簡便，不先在當前頁面找了，而是全部都找) ------- 
+  //! --------------- 以下原版(上面應該更簡便，不先在當前頁面找了，而是全部都找) -------
   // // 取得當前頁面物件資料
   // const currentPage = getCurrentPage();
 
@@ -217,4 +215,16 @@ export function createNewListName() {
   const newNumber = listCounter(extractNumberList);
   // 如果新的數字是 0，則後面加個空字串
   return `未命名列表${newNumber === 0 ? "" : `(${newNumber})`}`;
+}
+
+/**
+ * * 取得並返回特定 css 變量名稱內的值
+ * @param {*} cssVar css 變量名稱 (string)
+ * @returns 返回該變量內的值
+ */
+export function getCssVarValue(cssVar) {
+  const root = document.querySelector(":root");
+  const rootComputedStyle = getComputedStyle(root);
+  const varValue = rootComputedStyle.getPropertyValue(cssVar);
+  return varValue;
 }
