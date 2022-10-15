@@ -1,7 +1,8 @@
 import { updateMode } from "./function/mode.js";
 import { activeNavLists, renderCustomList } from "./function/ui.js";
-import {Router} from "./routes/Router.js";
-import {appHeight} from "./function/fix.js";
+import { Router } from "./routes/Router.js";
+import { appHeight, hideTodoForm } from "./function/fix.js";
+import { Home } from "./pages/Home.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
@@ -24,3 +25,7 @@ window.addEventListener("load", activeNavLists);
 // 解決手機瀏覽器無法剛好只占滿整版的問題
 window.addEventListener("resize", appHeight);
 window.addEventListener("DOMContentLoaded", appHeight);
+
+// 於 home 的 grid-view 狀態隱藏 todoForm
+window.addEventListener("DOMContentLoaded", hideTodoForm)
+window.addEventListener("hashchange", hideTodoForm)

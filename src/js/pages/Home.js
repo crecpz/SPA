@@ -50,6 +50,13 @@ export const Home = {
         // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
         const currentView = Home.state.view;
         let contentsWillBeDisplayed = "";
+        
+        if(currentView === "grid-view"){
+            document.querySelector('.todo-form').classList.add('hidden');
+        } else {
+            document.querySelector('.todo-form').classList.remove('hidden');
+        }
+        
 
         // * --------------------------- grid-view  -----------------------------------
 
@@ -213,7 +220,7 @@ export const Home = {
                 e.target.classList.add("modal__color-block--active");
             }
 
-            // * 變更列表視圖
+            // * 變更列表 view 模式
             if (e.target.classList.contains("main__view-btn")) {
                 // 偵測使用者點擊的 view 模式，來改變 state 的值，
                 // 此 state 的值用來決定本頁要渲染的 view 模式
