@@ -1,9 +1,44 @@
 import { scrollBarFix } from "../function/fix.js";
-import { fillZero, getAllPage, getAllTodos, getCurrentPage, getCurrentTodo, hide, unhide } from "../function/helper.js";
-import { clearColorSelectorActive, closeConfirmModal, closeEditModal, closeEditNameModal, closeModalOverlay, createNewList, listIsAdding, listIsRemoving, nameIsEditing, nameSetting, removeList, removeListConfirm, removeTodoConfirm, saveNameSetting, todoEditing, todoIsEditing } from "../function/modal.js";
-import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
-import { clickToCloseListOption, dropdownSwitch, openListOption } from "../function/ui.js";
-
+import {
+  fillZero,
+  getAllPage,
+  getAllTodos,
+  getCurrentPage,
+  getCurrentTodo,
+  hide,
+  unhide,
+} from "../function/helper.js";
+import {
+  clearColorSelectorActive,
+  closeConfirmModal,
+  closeEditModal,
+  closeEditNameModal,
+  closeModalOverlay,
+  createNewList,
+  listIsAdding,
+  listIsRemoving,
+  nameIsEditing,
+  nameSetting,
+  removeList,
+  removeListConfirm,
+  removeTodoConfirm,
+  saveNameSetting,
+  todoEditing,
+  todoIsEditing,
+} from "../function/modal.js";
+import {
+  changeCheckbox,
+  changeTopByEditModal,
+  changeTopByTodoItem,
+  DATA,
+  removeTodo,
+  saveEditedTodo,
+} from "../function/storage.js";
+import {
+  clickToCloseListOption,
+  dropdownSwitch,
+  openListOption,
+} from "../function/ui.js";
 
 export const DefaultList = {
   mount: function () {
@@ -11,11 +46,9 @@ export const DefaultList = {
   },
 
   render: function () {
-    console.log(DATA)
-    const pageObj = DATA.default.find(({id}) => id === "defaultlist");
-    const {name:pageName, color, id, content: pageContent} = pageObj;
-    console.log(pageObj)
-  
+    // 找出此頁面 object
+    const pageObj = DATA.default.find(({ id }) => id === "defaultlist");
+    const { name: pageName, color, id, content: pageContent } = pageObj;
 
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
@@ -70,8 +103,7 @@ export const DefaultList = {
   },
 
   listener: {
-    click:  (e)=> {
-
+    click: (e) => {
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
       openListOption(e);
@@ -94,7 +126,6 @@ export const DefaultList = {
           closeModalOverlay();
         }
       }
-
 
       // * 重要星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
@@ -152,7 +183,7 @@ export const DefaultList = {
 
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
-        saveEditedTodo(e); 
+        saveEditedTodo(e);
       }
     },
   },

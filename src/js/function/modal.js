@@ -173,7 +173,8 @@ export function createConfirmModalContent(confirmContent) {
  * * 「 使用者按下 todoItem ---> editModal 跳出 」 的過程
  * 1.透過 e.target 取得 id，獲取 todo Object
  * 2.開啟 modal-overlay
- * 3.調用 openEditModal 讓 editModal 打開
+ * 3.調用 openEditModal() 讓 editModal 打開，
+ *    並將 todo Object 傳入 openEditModal() 作為參數
  */
 export function todoEditing(e) {
   // 開始編輯

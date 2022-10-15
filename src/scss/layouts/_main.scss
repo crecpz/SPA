@@ -103,6 +103,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
   }
 
   &__name {
@@ -122,17 +123,12 @@
   &__button-group {
     @include flex;
     align-self: center;
-    // border: 1px solid var(--primary-color);
-    // border-radius: deep-map-get($border-radius, base);
   }
 
   &__color-block {
     width: 0.625rem;
+    flex-shrink: 0; // 防止大小被壓縮而在每個頁面中顯示的大小不同
     margin-right: 2rem;
-
-    // &--default {
-    //   background-color: var(--primary-color);
-    // }
   }
 
   &__content-list {
@@ -146,7 +142,6 @@
     @include padding-x;
 
     .container {
-      // overflow-y: scroll;
       max-width: $max-width;
     }
   }

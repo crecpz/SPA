@@ -3,6 +3,7 @@ import {
     fillZero,
     getAllPage,
     getAllTodos,
+    getPage,
     hide,
     unhide,
 } from "../function/helper.js";
@@ -44,40 +45,29 @@ export const Home = {
     },
 
     render: function () {
+        // @ 提醒: 
+        // 1.在「總覽」中並不打算顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
+        // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
         const currentView = Home.state.view;
         let contentsWillBeDisplayed = "";
 
+        // * --------------------------- grid-view  -----------------------------------
+
         if (currentView === "grid-view") {
-            // * --------------------------- grid-view  -----------------------------------
-            // 準備「全部」總覽卡片:
-            // 1.從 DATA.default 拷貝一個「 all 」物件
-            const cloneAll = Object.assign(
-                {},
-                DATA.default.find(({ id }) => id === "all")
-            );
-            // 2.替換 content 屬性: content 內原本只包含來自「All.js」自身的 todo，現在改放入所有的 todo 進去
-            cloneAll.content = getAllTodos();
+            // * 準備「預設列表」總覽卡片:
+            const defaultlist = getPage("defaultlist");
 
-            // 準備「重要」總覽卡片:
-            // 1.從 DATA.default 拷貝一個「 top 」物件
-            const cloneTop = Object.assign(
-                {},
-                DATA.default.find(({ id }) => id === "top")
-            );
-            // 2.替換 content 屬性: content 內原本只包含來自「top.js」自身的 todo，現在改放入所有帶有星號的 todo 進去
-            cloneTop.content = getAllTodos().filter(({ top }) => top === true);
-
-            // 準備 custom 總覽卡片
+            // * 準備自訂列表總覽卡片
+            // 如果頁面物件是來自於 customlist ，則為頁面物件新增一個 isCustom 的屬性並設為 true，
+            // 此屬性可以在下面遍歷的時候用來判斷 <a> 的 href 內容是否該加 customlist/。
+            // (因為 customlist 的網址結構跟其他頁面不同)
             const custom = DATA.custom;
-
-            // 如果頁面物件是來自於 custom ，則為頁面物件新增一個 isCustom = true
-            // 此屬性可以在遍歷的時候用來辨別 <a> 的 href 內容是否該加 customlist/
             custom.forEach((pageObj) => {
                 pageObj.isCustom = true;
             });
 
-            // 準備將要顯示的內容
-            const contentArray = [cloneAll, cloneTop, ...custom];
+            // 將上述準備的的內容放入陣列
+            const contentArray = [defaultlist, ...custom];
             // 利用 map 遍歷 overviewData
             contentsWillBeDisplayed = contentArray
                 .map(({ name: pageName, content, isCustom, id, color }) => {
@@ -85,8 +75,6 @@ export const Home = {
                     if (content.length === 0) {
                         return "";
                     }
-
-                    console.log(color);
 
                     // 全部數量
                     const all = content.length;
@@ -132,12 +120,27 @@ export const Home = {
                 `;
                 })
                 .join("");
+
         } else if (currentView === "list-view") {
             // * --------------------------- list-view  -----------------------------------
-
             //  將有頁面的物件資料放進 allPages
-            const allPages = getAllPage();
-            contentsWillBeDisplayed = allPages.map(({ name, content, color }) => {
+            const contentArray = getAllPage().filter(({ id }) => id !== "top");
+            contentsWillBeDisplayed = contentArray.map(({ name, content, color }) => {
+                // 每一個 dropdown 內的 todoList 內容
+                const todoListInDropdown = content.map(({ id, checked, content, top }) => {
+                    return `
+                        <li id="${id}" class="todo__item">
+                            <label class="todo__checkbox checkbox">
+                                <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""}>
+                                <div class="checkbox__appearance"></div>
+                            </label>
+                            <p class="todo__content">${content}</p>
+                            <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+                        </li>
+                    `;
+                }).join("")
+
+
                 // 判斷如果 content 沒任何內容，就渲染空字串就好
                 if (content.length === 0) {
                     return "";
@@ -145,35 +148,19 @@ export const Home = {
                     return `
                         <li class="dropdown">
                             <div class="dropdown__name">
-                                ${color
-                                    ? `<div class="dropdown__color-block color-block color-block-${color}"></div>`
-                                    : ""
-                                }
+                                ${color ? `<div class="dropdown__color-block color-block color-block-${color}"></div>` : ""}
                                 ${name}
                                 <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
                             </div>
                             <div class="dropdown__cover">
                                 <ul class="todo">
-                                    ${
-                                        content.map(({ id, checked, content, top }) => {
-                                            return `
-                                                <li id="${id}" class="todo__item">
-                                                    <label class="todo__checkbox checkbox">
-                                                        <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""
-                                                            }>
-                                                        <div class="checkbox__appearance"></div>
-                                                    </label>
-                                                    <p class="todo__content">${content}</p>
-                                                    <i class="top ${top ? "fa-solid" : "fa-regular" } fa-star"></i> 
-                                                </li>`;
-                                        }).join("")
-                                    }
+                                    ${todoListInDropdown}
                                 </ul>
                             </div>
                         </li>
                     `;
-                            }
-                        }).join("");
+                }
+            }).join("");
         }
 
         return `
@@ -184,16 +171,10 @@ export const Home = {
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
                         <div class="main__button-group">
-                            <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view"
-                ? "main__view-btn--active"
-                : ""
-            }">
+                            <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view" ? "main__view-btn--active" : ""}">
                                 <i class="fa-solid fa-table-cells-large"></i>
                             </button>
-                            <button data-view="list-view" class="main__view-btn btn ${currentView === "list-view"
-                ? "main__view-btn--active"
-                : ""
-            }">
+                            <button data-view="list-view" class="main__view-btn btn ${currentView === "list-view" ? "main__view-btn--active" : ""}">
                                 <i class="fa-solid fa-list-ul"></i>
                             </button>
                         </div>
@@ -206,8 +187,7 @@ export const Home = {
                 <div class="container">
                 ${currentView === "grid-view"
                 ? `<div class="overview">${contentsWillBeDisplayed}</div>`
-                : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`
-            }
+                : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`}
                 </div>
             </div>
         `;
@@ -278,7 +258,7 @@ export const Home = {
                 dropdownSwitch(e);
             }
 
-            // * confirmModal 的全局設定(只要用到 confirmModal 就需要此設定)
+            // * confirmModal 的全局設定
             // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal
             // 至於是否要接著一起關閉 modal-overlay，取決於目前是否為 listIsRemoving 狀態，
             // 如果現在是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後都意味著對話框將結束，

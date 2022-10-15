@@ -32,12 +32,6 @@ export function getStorage() {
           content: [],
         },
         {
-          id: "all",
-          name: "全部",
-          // color: "",
-          content: [],
-        },
-        {
           id: "top",
           name: "重要",
           // color: "", // @ 這其實用不到，除非 dropdown 會放 top 的內容，那就需要顏色
@@ -80,23 +74,31 @@ export function setTodo() {
     // 存放使用者輸入的文字內容
     const todoValue = todoInput.value.trim();
 
-    // 取得目前頁面的所在位置(取得頁面ID)
+    // 取得當前所在頁面的頁面 id
     const currentPageId = getCurrentPageId();
+    // 設定 todo 的 srcId, srcName 屬性:
+    // srcId: 當前 todo 被創建時所屬的來源 id。
+    //  除非當前頁面位於 "home"，src 屬性將被指定為 defaultlist；
+    //  否則一般情況下，todo 創建時所屬的來源 id 就是 currentPageId。
+    const todoCreatedSourceId =
+      getCurrentPageId() === "home" ? "defaultlist" : currentPageId;
+    // srcName: 當前 todo 被創建時所屬的頁面名稱
+    const todoCreatedSourceName = getPage(todoCreatedSourceId).name;
 
     // 建構 todo Obecjt
     const todo = {
       id: createUniqueId(),
       checked: false,
       content: todoValue,
-      top: currentPageId === "top", // 凡是在 top 內的都是 true
-      srcId: getCurrentPageId(),
-      srcName: getCurrentPage().name,
+      top: todoCreatedSourceId === "top", // 凡是在 top 內的都是 true
+      srcId: todoCreatedSourceId,
+      srcName: todoCreatedSourceName,
     };
 
     // 取得所有的頁面資料，並找出與目前頁面 id 相匹配的資料，
     // 在 content 內加入新 todo
     const allPage = getAllPage();
-    allPage.find((i) => i.id === currentPageId).content.unshift(todo);
+    allPage.find((i) => i.id === todoCreatedSourceId).content.unshift(todo);
 
     setStorage(DATA);
     todoInput.value = "";
@@ -105,47 +107,24 @@ export function setTodo() {
 }
 
 /**
- * * 接收一個在「重要」被取消的 todo 物件，將該物件從「top」移動至「all」
- * 1.判斷被取消重要的 todo 是否來自於 Top.js 本身
- * 2.若來自於 Top.js 本身，將該 todo 資料移動到 DATA.default 的 all 物件中
- * 3.移動過去之前，將 srcId、srcName 更改成屬於 all
- * 4.移動過去之後，該項 todo 將不再屬於 top，而是屬於 all 物件
+ * * 接收一個在「重要」頁面被取消星號的 todo 物件，並將該物件資料從「top」移動至「defaultlsit」
  * @param {*} moveTodoObj 被取消重要的 todo Object
  */
-export function moveTopToAll(moveTodoObj) {
-  // 取得 DATA 中的 top 物件後，過濾掉與 moveTodoObj
+export function moveTopToDefaultlist(moveTodoObj) {
+  // 取得 DATA 中的 top 物件後，剔除掉 moveTodoObj
   const top = getPage("top");
   top.content = top.content.filter((todoObj) => todoObj !== moveTodoObj);
-  // 將 srcId、srcName 做更改
-  moveTodoObj.srcName = "全部";
-  moveTodoObj.srcId = "all";
-  // 取得 DATA.default 中的 all 物件，並將 moveTodoObj 放入 all 物件中的 content Array 中
-  const all = getPage("all");
-  all.content.unshift(moveTodoObj);
-  // 取消重要後及時更新頁面
-  Router();
+
+  // 取得 moveTodoObj 移動目的地物件，解構賦值出屬性
+  const { id, name, content } = getPage("defaultlist");
+  // 將 moveTodoObj 的 srcId、srcName 更改成目的地物件的屬性
+  moveTodoObj.srcName = name;
+  moveTodoObj.srcId = id;
+  // 在目的地屬性的 content 陣列中，加入 moveTodoObj
+  content.unshift(moveTodoObj);
+
   // 儲存變更至 localStorage
   setStorage(DATA);
-}
-
-//@ 以下的函數會放到 changeTopByTodoItem 、changeTopByEditModal 兩個函數中，放置位置: 在取得到他們各自的 ID 、獲取到 todoObj 之後
-export function pinTodo(todoId, todoObj) {
-  // 取得該 todo 的原始 Array:
-  const { srcId } = todoObj;
-  const allPages = getAllPage();
-  // 在所有頁面中尋找與 srcId 符合的頁面，找到之後，取得 content 屬性
-  const currentTodoOriginPage = allPages.find(({ id }) => id === srcId);
-  const currentTodoArray = currentTodoOriginPage.content;
-  // todo - 更該順序: 將點擊到的 todo 放到第一個，其餘的順序不更改
-  // todo - 利用 todoId，將 currentTodoArray 做 filter， 過濾掉該項 todo
-  // todo - 創建一個新的 []，使用 spread operator 放入重要的元素跟剩下的元素
-  const filteredArray = currentTodoArray.filter(({ id }) => id !== todoId);
-  const topTodo = currentTodoArray.find(({ id }) => id === todoId);
-  const newArr = [topTodo, ...filteredArray];
-
-  currentTodoOriginPage.content = newArr;
-
-  Router();
 }
 
 /**
@@ -197,9 +176,7 @@ export function removeTodo(removeTodoId) {
 }
 
 /**
- *
  * * 反轉 checkbox 值，最後儲存結果至 localStorage
- *
  * 注意: checkbox 可能來自於兩個地方:
  * 1.位於 todoItem 中
  * 2.位於 editModal 中
@@ -273,17 +250,15 @@ export function changeTopByTodoItem(e) {
     Router();
   }
 
-  // 檢查於重要頁面中產生的 todo 當中，已經不再被重要的 todo
-  // 將其移至 「all」 資料中
+  // 檢查於「重要」頁面中產生的 todo 當中，是否有被取消的 todo 將其移至 「defaultlist」 資料中
   const currentPageId = getCurrentPageId();
-
   if (
-    currentPageId === "top" && // 如果目前位於重要頁面
-    !currentTodo.top && // 且當前 todo 不再是重要狀態(星星被摘除)
-    currentTodo.srcId === "top" // 且該項 todo 是在重要頁面被創建出來的話
+    currentPageId === "top" && // 如果目前位於「重要」頁面
+    !currentTodo.top && // 且當前 todo 的 top 屬性為 false (星星被摘除)
+    currentTodo.srcId === "top" // 且該項 todo 最初是在「重要」頁面被創建出來的話
   ) {
-    // 上述條件若符合，代表該項 todo 不該出現在「重要」，必須將其移至資料中的 「all」 內
-    moveTopToAll(currentTodo);
+    // 上述條件若符合，代表該項 todo 現在不該繼續存留在「重要」頁面中
+    moveTopToDefaultlist(currentTodo); // 移動到 defaultlist
   }
 }
 

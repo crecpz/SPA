@@ -126,7 +126,6 @@ export function removeNavActive() {
 export function activeNavLists() {
   const id = getCurrentPageId();
   const activeTarget = navContent.querySelector(`#${id}`);
-  console.log(navContent)
   activeTarget.classList.add("nav__list-item--active");
 }
 
