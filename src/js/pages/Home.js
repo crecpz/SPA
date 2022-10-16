@@ -30,7 +30,9 @@ import {
 } from "../function/storage.js";
 import {
     clickToCloseListOption,
+    createEmptyMsg,
     dropdownSwitch,
+    emptyMsg,
     openListOption,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
@@ -48,9 +50,11 @@ export const Home = {
         // @ 提醒: 
         // 1.在「總覽」中並不打算顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
         // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
+
         const currentView = Home.state.view;
         let contentsWillBeDisplayed = "";
         
+        // 於 home 的 grid-view 狀態隱藏 todoForm
         if(currentView === "grid-view"){
             document.querySelector('.todo-form').classList.add('hidden');
         } else {
@@ -64,7 +68,7 @@ export const Home = {
             // * 準備「預設列表」總覽卡片:
             const defaultlist = getPage("defaultlist");
 
-            // * 準備自訂列表總覽卡片
+            // * 準備「自訂列表」總覽卡片
             // 如果頁面物件是來自於 customlist ，則為頁面物件新增一個 isCustom 的屬性並設為 true，
             // 此屬性可以在下面遍歷的時候用來判斷 <a> 的 href 內容是否該加 customlist/。
             // (因為 customlist 的網址結構跟其他頁面不同)
@@ -75,13 +79,22 @@ export const Home = {
 
             // 將上述準備的的內容放入陣列
             const contentArray = [defaultlist, ...custom];
+            const contentArray2 = getAllPage().filter(({ id }) => id !== "top");
+            // console.log(contentArray,contentArray2)
             // 利用 map 遍歷 overviewData
             contentsWillBeDisplayed = contentArray
                 .map(({ name: pageName, content, isCustom, id, color }) => {
+
                     // 如果 content 裡面沒內容，則不渲染 overview 卡片
                     if (content.length === 0) {
-                        return "";
+                        return '';
+                        // return  createEmptyMsg(
+                        //     emptyMsg.top.msgText,
+                        //     emptyMsg.top.svgTag,
+                        //     "green"
+                        // );
                     }
+
 
                     // 全部數量
                     const all = content.length;
@@ -94,44 +107,44 @@ export const Home = {
                         ? "0"
                         : fillZero(Math.round((completed / all) * 100));
                     return `
-                    <a href="#/${isCustom ? "customlist/" + id : id
-                        }" class="overview__link">
-                        <div class="overview__header">
-                            ${color
-                            ? `<div class="overview__color-block color-block color-block-${color}"></div>`
-                            : ""
-                        }
-                            ${pageName}
-                        </div>
-                        <div class="overview__content">
-                            <div class="overview__text overview__text--column">待完成
-                                <span class="overview__number overview__number--lg">${unCompleted}</span>
+                        <a href="#/${isCustom ? "customlist/" + id : id}" class="overview__link">
+                            <div class="overview__header">
+                                ${color === "default"
+                                    ? ""
+                                    : `<div class="overview__color-block color-block color-block-${color}"></div>`
+                                }
+                                ${pageName}
                             </div>
-                            <div class="overview__group">
-                                <div class="overview__text">全部
-                                    <span class="overview__number overview__number--sm">${all}</span>
+                            <div class="overview__content">
+                                <div class="overview__text overview__text--column">待完成
+                                    <span class="overview__number overview__number--lg">${unCompleted}</span>
+                                </div>
+                                <div class="overview__group">
+                                    <div class="overview__text">全部
+                                        <span class="overview__number overview__number--sm">${all}</span>
+                                        </div>
+                                        <div class="overview__text">已完成
+                                        <span class="overview__number overview__number--sm">${completed}</span>
+                                        </div>
+                                </div>
+                                <div class="overview__progress-bar progress">
+                                <span class="progress__value">${percentage}%
+                                </span>
+                                <div class="progress__outer">
+                                        <div class="progress__inner" style="width:${percentage}%"></div>
                                     </div>
-                                    <div class="overview__text">已完成
-                                    <span class="overview__number overview__number--sm">${completed}</span>
-                                    </div>
-                            </div>
-                            <div class="overview__progress-bar progress">
-                            <span class="progress__value">${percentage}%
-                            </span>
-                            <div class="progress__outer">
-                                    <div class="progress__inner" style="width:${percentage}%"></div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                `;
+                        </a>
+                    `;
                 })
                 .join("");
 
         } else if (currentView === "list-view") {
             // * --------------------------- list-view  -----------------------------------
-            //  將有頁面的物件資料放進 allPages
+            //  將頁面的物件資料放進 allPages (排除 top 頁面)
             const contentArray = getAllPage().filter(({ id }) => id !== "top");
+            console.log(contentArray)
             contentsWillBeDisplayed = contentArray.map(({ name, content, color }) => {
                 // 每一個 dropdown 內的 todoList 內容
                 const todoListInDropdown = content.map(({ id, checked, content, top }) => {
@@ -148,14 +161,18 @@ export const Home = {
                 }).join("")
 
 
-                // 判斷如果 content 沒任何內容，就渲染空字串就好
+                // 如果 content 沒任何內容，就渲染空字串
                 if (content.length === 0) {
                     return "";
                 } else {
                     return `
                         <li class="dropdown">
                             <div class="dropdown__name">
-                                ${color ? `<div class="dropdown__color-block color-block color-block-${color}"></div>` : ""}
+                                ${
+                                    color === "default"
+                                        ? "" 
+                                        : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+                                }
                                 ${name}
                                 <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
                             </div>
@@ -169,6 +186,9 @@ export const Home = {
                 }
             }).join("");
         }
+
+        
+
 
         return `
             <!-- 主內容區 header -->
@@ -192,13 +212,20 @@ export const Home = {
             <!-- main content list -->
             <div class="main__content-list">
                 <div class="container">
+
                 ${currentView === "grid-view"
-                ? `<div class="overview">${contentsWillBeDisplayed}</div>`
-                : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`}
+                    ? `<div class="overview">${contentsWillBeDisplayed}</div>`
+                    : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`
+                }
                 </div>
             </div>
         `;
     },
+
+//     ${currentView === "grid-view"
+//     ? `<div class="overview">${contentsWillBeDisplayed}</div>`
+//     : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`
+//     }
 
     listener: {
         click: (e) => {

@@ -36,7 +36,9 @@ import {
 } from "../function/storage.js";
 import {
   clickToCloseListOption,
+  createEmptyMsg,
   dropdownSwitch,
+  emptyMsg,
   openListOption,
 } from "../function/ui.js";
 
@@ -68,6 +70,15 @@ export const DefaultList = {
         `;
       })
       .join("");
+      
+      
+    const emptyMsgContent = createEmptyMsg(
+      emptyMsg.defaultlist.msgText,
+      emptyMsg.defaultlist.svgTag,
+      "green"
+    );
+
+    console.log(pageContent.length )
 
     return `
         <!-- 主內容區 header -->
@@ -95,7 +106,11 @@ export const DefaultList = {
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                  ${todoContent}
+                  ${
+                    pageContent.length === 0
+                      ?  emptyMsgContent
+                      : todoContent
+                  }
                 </ul>
             </div>
         </div>

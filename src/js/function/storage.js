@@ -28,13 +28,13 @@ export function getStorage() {
         {
           id: "defaultlist",
           name: "預設列表",
-          // color: "",
+          color: "default",
           content: [],
         },
         {
           id: "top",
           name: "重要",
-          // color: "", // @ 這其實用不到，除非 dropdown 會放 top 的內容，那就需要顏色
+          color: "default",
           content: [],
         },
       ],
