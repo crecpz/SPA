@@ -12,6 +12,10 @@
   &__text {
     @include text(sm);
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 3rem;
+
+    @include sm{
+      @include text(base);
+    }
   }
 }

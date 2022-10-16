@@ -51,22 +51,29 @@ export const Home = {
         // 1.在「總覽」中並不打算顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
         // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
 
+        // 存放目前 view 模式
         const currentView = Home.state.view;
-        let contentsWillBeDisplayed = "";
-        
+
         // 於 home 的 grid-view 狀態隱藏 todoForm
         if(currentView === "grid-view"){
             document.querySelector('.todo-form').classList.add('hidden');
         } else {
             document.querySelector('.todo-form').classList.remove('hidden');
         }
-        
+    
+        // 存放 grid-view 或是 list-view 的內容 (實際會放哪種內容在內取決於 currentView)
+        let viewContent = "";
+    
+
+        // 獲取所有的頁面物件資料(排除 top 頁面)
+        const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
+        console.log(pageContentObjects)
 
         // * --------------------------- grid-view  -----------------------------------
 
         if (currentView === "grid-view") {
             // * 準備「預設列表」總覽卡片:
-            const defaultlist = getPage("defaultlist");
+            // const defaultlist = getPage("defaultlist");
 
             // * 準備「自訂列表」總覽卡片
             // 如果頁面物件是來自於 customlist ，則為頁面物件新增一個 isCustom 的屬性並設為 true，
@@ -78,23 +85,17 @@ export const Home = {
             });
 
             // 將上述準備的的內容放入陣列
-            const contentArray = [defaultlist, ...custom];
-            const contentArray2 = getAllPage().filter(({ id }) => id !== "top");
+            // const contentArray = [defaultlist, ...custom];
+            // const contentArray2 = getAllPage().filter(({ id }) => id !== "top");
             // console.log(contentArray,contentArray2)
             // 利用 map 遍歷 overviewData
-            contentsWillBeDisplayed = contentArray
+            viewContent = pageContentObjects
                 .map(({ name: pageName, content, isCustom, id, color }) => {
 
                     // 如果 content 裡面沒內容，則不渲染 overview 卡片
                     if (content.length === 0) {
                         return '';
-                        // return  createEmptyMsg(
-                        //     emptyMsg.top.msgText,
-                        //     emptyMsg.top.svgTag,
-                        //     "green"
-                        // );
                     }
-
 
                     // 全部數量
                     const all = content.length;
@@ -142,11 +143,9 @@ export const Home = {
 
         } else if (currentView === "list-view") {
             // * --------------------------- list-view  -----------------------------------
-            //  將頁面的物件資料放進 allPages (排除 top 頁面)
-            const contentArray = getAllPage().filter(({ id }) => id !== "top");
-            console.log(contentArray)
-            contentsWillBeDisplayed = contentArray.map(({ name, content, color }) => {
-                // 每一個 dropdown 內的 todoList 內容
+
+            viewContent = pageContentObjects.map(({ name, content, color }) => {
+                // * 每一個 dropdown 內的 todoList 結構
                 const todoListInDropdown = content.map(({ id, checked, content, top }) => {
                     return `
                         <li id="${id}" class="todo__item">
@@ -160,35 +159,67 @@ export const Home = {
                     `;
                 }).join("")
 
-
-                // 如果 content 沒任何內容，就渲染空字串
+                // * 每一個 dropdown 的結構
                 if (content.length === 0) {
+                    // 如果 content 沒任何內容，就渲染空字串
                     return "";
                 } else {
                     return `
-                        <li class="dropdown">
-                            <div class="dropdown__name">
-                                ${
-                                    color === "default"
-                                        ? "" 
-                                        : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
-                                }
-                                ${name}
-                                <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
-                            </div>
-                            <div class="dropdown__cover">
-                                <ul class="todo">
-                                    ${todoListInDropdown}
-                                </ul>
-                            </div>
-                        </li>
-                    `;
+                    <li class="dropdown">
+                        <div class="dropdown__name">
+                            ${
+                                color === "default"
+                                    ? "" 
+                                    : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+                            }
+                            ${name}
+                            <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="dropdown__cover">
+                            <ul class="todo">
+                                ${todoListInDropdown}
+                            </ul>
+                        </div>
+                    </li>
+                `;
                 }
+
             }).join("");
         }
 
-        
+        // * 決定最終要顯示什麼到 .main__content-list 內
+        // 存放 .main__content-list 內要顯示的內容
+        let contentsWillBeDisplayed = '';
 
+        // 檢查 pageContentObjects 中所有物件的 content 屬性，看看是否全部都沒有內容
+        // (如果全部都沒內容就必須讓 empty-msg 出現)
+        const noContent = pageContentObjects.every((pageObj) => pageObj.content.length === 0);
+        // contentsWillBeDisplayed 的內容將會是以下狀況其一:
+        // 1. currentView === grid-view, noContent === true ---> contentsWillBeDisplayed = grid-view 專用的 emptyMsg
+        // 2. currentView === grid-view, noContent === false ---> contentsWillBeDisplayed =  grid-view 的內容
+        // 3. currentView === list-view, noContent === true ---> contentsWillBeDisplayed = list-view 專用的 emptyMsg
+        // 4. currentView === list-view, noContent === false ---> contentsWillBeDisplayed = list-view 的內容
+        if(currentView === "grid-view") {
+            if(noContent){
+                contentsWillBeDisplayed = createEmptyMsg(
+                    emptyMsg.home.gridView.msgText,
+                    emptyMsg.home.gridView.svgTag,
+                    "green"
+                );
+            } else {
+                contentsWillBeDisplayed = `<div class="overview">${viewContent}</div>`
+            }
+        } else { 
+            if(noContent){
+                contentsWillBeDisplayed = createEmptyMsg(
+                    emptyMsg.home.listView.msgText,
+                    emptyMsg.home.listView.svgTag,
+                    "green"
+                );
+            } else {
+                contentsWillBeDisplayed = `<ul class="dropdowns"> ${viewContent}</ul>`;
+            }
+        }
 
         return `
             <!-- 主內容區 header -->
@@ -212,20 +243,12 @@ export const Home = {
             <!-- main content list -->
             <div class="main__content-list">
                 <div class="container">
-
-                ${currentView === "grid-view"
-                    ? `<div class="overview">${contentsWillBeDisplayed}</div>`
-                    : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`
-                }
+                    ${contentsWillBeDisplayed}
                 </div>
             </div>
         `;
     },
 
-//     ${currentView === "grid-view"
-//     ? `<div class="overview">${contentsWillBeDisplayed}</div>`
-//     : `<ul class="dropdowns"> ${contentsWillBeDisplayed}</ul>`
-//     }
 
     listener: {
         click: (e) => {
