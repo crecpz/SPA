@@ -29,6 +29,7 @@ import {
     saveEditedTodo,
 } from "../function/storage.js";
 import {
+    
     clickToCloseListOption,
     createEmptyMsg,
     dropdownSwitch,
@@ -147,7 +148,7 @@ export const Home = {
                 // * 每一個 dropdown 內的 todoList 結構
                 const todoListInDropdown = content.map(({ id, checked, content, top }) => {
                     return `
-                        <li id="${id}" class="todo__item">
+                        <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
                             <label class="todo__checkbox checkbox">
                                 <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""}>
                                 <div class="checkbox__appearance"></div>
@@ -220,7 +221,7 @@ export const Home = {
         }
 
         return `
-            <!-- 主內容區 header -->
+            <!-- 主內容區 - header -->
             <div class="main__content-header">
                 <div class="container">
                     <div class="main__name-wrapper">
@@ -234,11 +235,21 @@ export const Home = {
                                 <i class="fa-solid fa-list-ul"></i>
                             </button>
                         </div>
+                        <!-- list-option-btn -->
+                        <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
+                        <ul class="list-options">
+                            <li class="list-option">
+                            <a href="javascript:;" class="list-option__link">編輯</a>
+                            </li>
+                            <li class="list-option">
+                            <a href="javascript:;" class="list-option__link">排序</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- main content list -->
+            <!-- 主內容區 - list -->
             <div class="main__content-list">
                 <div class="container">
                     ${contentsWillBeDisplayed}
@@ -290,23 +301,6 @@ export const Home = {
                 Router();
             }
 
-            // * 列表名稱設定相關(editNameModal)
-            // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
-            if (e.target.id === "edit-name-close") {
-                // 關閉 editNameModal & modalOverlay
-                closeEditNameModal();
-                closeModalOverlay();
-            }
-            // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
-            if (listIsAdding && e.target.id === "edit-name-close") {
-                // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
-                createNewList(e);
-            }
-            // 控制顏色選擇器的 active 顯示
-            if (e.target.classList.contains("modal__color-block")) {
-                clearColorSelectorActive();
-                e.target.classList.add("modal__color-block--active");
-            }
 
             // * dropdown 切換
             if (e.target.classList.contains("dropdown__name")) {
@@ -342,12 +336,12 @@ export const Home = {
                 changeTopByEditModal(e);
             }
 
-            // * 開啟編輯視窗
+            // * 開啟編輯 todoItem 視窗
             if (e.target.classList.contains("todo__item")) {
                 todoEditing(e);
             }
 
-            // * 關閉編輯視窗
+            // * 關閉編輯 todoItem 視窗
             if (e.target.id === "edit-close") {
                 // 關閉 edit-modal
                 closeEditModal();
@@ -384,7 +378,7 @@ export const Home = {
         },
 
         change: function (e) {
-            // checkbox
+            //* 變更 checkbox 狀態
             changeCheckbox(e);
 
             // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發

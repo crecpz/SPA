@@ -167,7 +167,7 @@ export function removeTodo(removeTodoId) {
   // 存至 localStorage
   setStorage(DATA);
 
-  // 關閉編輯視窗與 modalOverlay
+  // 關閉編輯 todoItem 視窗與 modalOverlay
   closeEditModal();
   closeModalOverlay();
 
@@ -187,10 +187,11 @@ export function removeTodo(removeTodoId) {
 export function changeCheckbox(e) {
   // 如果 change 事件所觸發的 e.target 包含 .checkbox__input class
   if (e.target.classList.contains("checkbox__input")) {
-    // 此變量存放當前 todo id
+    // 此變量會用來存放當前 todo id
     let currentTodoId;
-    // 此變量用來存取目前事件處發是否來自於 editModal
-    let triggerFromEditModal = false;
+    // 此變量用來存取目前事件觸發是否來自於 editModal
+    let triggerFromEditModal;
+    
 
     // 如果 e.target 向上尋找可以找到 .todo__item (代表目前所點擊)
     if (e.target.closest(".todo__item")) {
@@ -206,6 +207,12 @@ export function changeCheckbox(e) {
     // 翻轉 checkbox 值
     getCurrentTodo(currentTodoId).checked =
       !getCurrentTodo(currentTodoId).checked;
+
+    // 翻轉顏色淡化狀態(注意: 只是改外觀。另外，已經在下一次要 render 的 HTML 中
+    // 根據 checked 的狀態來決定是否放入 .todo__item--isChecked 的判斷式了)
+    const currentTodoItemDOM = document.getElementById(currentTodoId);
+    currentTodoItemDOM.classList.toggle('todo__item--isChecked');
+    
 
     // 若事件觸發來自 editModal
     if (triggerFromEditModal) {

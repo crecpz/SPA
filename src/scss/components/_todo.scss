@@ -11,37 +11,12 @@
     border-bottom: 1px solid var(--tertiary-color);
     cursor: pointer;
   }
-  
 
-  // ! ↓ 以下為舊的 checkbox 目前已經不需要
-  // &__checkbox {
-  //   position: absolute; 
-  //   opacity: 0;
-  //   height: 0;
-  //   width: 0;
-  // }
-
-  // &__checkbox:checked ~ &__checkmark {
-  //   &::before {
-  //     content: "";
-  //     position: absolute;
-  //     left: 50%;
-  //     top: 50%;
-  //     transform: translate(-50%, -50%);
-  //     width: 65%;
-  //     height: 65%;
-  //     background-color: var(--primary-color);
-  //   }
-  // }
-
-  // &__checkmark {
-  //   position: relative;
-  //   flex: 0 0 auto;
-  //   width: 1.25rem;
-  //   height: 1.25rem;
-  //   border: 1.75px solid var(--primary-color);
-  // }
-    // ! ↑ 以上為舊的 checkbox 目前已經不需要
+  &__item--isChecked {
+    :is(.todo__checkbox, .todo__content, .top){
+      opacity: .5;
+    }
+  }
 
   &__content {
     @include text(base);

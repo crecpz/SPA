@@ -4,10 +4,11 @@ import { listAdding, listIsAdding } from "./modal.js";
 import { modeSwitcher } from "./mode.js";
 import { DATA, setTodo } from "./storage.js";
 
-// nav 中存放 custom 的容器
-const customList = document.querySelector(".custom-list");
+// * nav 中存放 custom 的容器
+const customListDOM = document.querySelector(".custom-list");
+
 /**
- * 渲染 customList 至 nav 中
+ * * 渲染 customList 至 nav 中
  */
 export function renderCustomList() {
   const currentPageId = getCurrentPageId();
@@ -27,12 +28,12 @@ export function renderCustomList() {
     `;
     })
     .join("");
-  customList.innerHTML = lists;
+  customListDOM.innerHTML = lists;
 }
 
 /**
+ * * 用於展開 listOption。
  * 點擊 listOptionBtn 會調用此函數。
- * 此函數用於展開 listOption。
  */
 export function openListOption(e) {
   // 控制 listOption 展開與收合
@@ -43,6 +44,7 @@ export function openListOption(e) {
 }
 
 /**
+ * * 點擊任意處來關閉 listOption
  * 此函數功能為當 `listOption` 是開啟的狀態下偵測使用者點擊了什麼，
  * 只要 `listOptions` 是開啟的狀態下且點擊的不是 `listOptionBtn`，
  * 就將 `listOptionBtn` 調用一次 `click()`。(所以 `listOptionBtn` 會被關閉)
@@ -61,7 +63,7 @@ export function clickToCloseListOption(e) {
 }
 
 /**
- * 控制 dropdown 展開與收合
+ * * 控制 dropdown 展開與收合
  */
 export function dropdownSwitch(e) {
   const dropdownCover = e.target.nextElementSibling;
@@ -164,8 +166,8 @@ document.querySelectorAll(".nav__list").forEach((navList) => {
     }
   });
 });
-// @ 備用 class="empty-msg__svg"
-// ! 所有 svg 確認 viewbox 上的最後兩個值顯示的是 width & height 的值之後，刪掉 width & height
+
+// * 此物件存放當頁面內容為空的時候要顯示的訊息
 export const emptyMsg = {
   home: {
     gridView: {

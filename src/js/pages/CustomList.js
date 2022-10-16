@@ -54,7 +54,7 @@ export const CustomList = {
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item">
+                <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
                   <label class="todo__checkbox checkbox">
                     <input type="checkbox" class="checkbox__input" ${
                       checked ? "checked" : ""
@@ -77,16 +77,16 @@ export const CustomList = {
     );
 
     return `
-        <!-- 主內容區 header -->
+        <!-- 主內容區 - header -->
         <div class="main__content-header">
             <div class="container">
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block-${color}"></div>
                     <h2 class="main__name">${pageName}</h2>
                 </div>
-                <!-- 列表選單按鈕 -->
+                <!-- list-option-btn -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-                <!-- 列表選單 -->
+                <!-- list-options -->
                 <ul class="list-options">
                     <li class="list-option">
                       <a href="javascript:;" class="list-option__link list-option__link--rename">列表名稱設定</a>
@@ -104,7 +104,7 @@ export const CustomList = {
             </div>
         </div>
 
-        <!-- main content list -->
+        <!-- 主內容區 - list -->
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
@@ -194,12 +194,12 @@ export const CustomList = {
         changeTopByEditModal(e);
       }
 
-      // * 開啟編輯視窗
+      // * 開啟編輯 todoItem 視窗
       if (e.target.classList.contains("todo__item")) {
         todoEditing(e);
       }
 
-      // * 關閉編輯視窗
+      // * 關閉編輯 todoItem 視窗
       if (e.target.id === "edit-close") {
         // 關閉 edit-modal
         closeEditModal();
