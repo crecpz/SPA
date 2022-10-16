@@ -228,3 +228,6 @@ export function getCssVarValue(cssVar) {
   const varValue = rootComputedStyle.getPropertyValue(cssVar);
   return varValue;
 }
+
+// const color = '1';
+// console.log(getCssVarValue(`--color-type-${color}`))

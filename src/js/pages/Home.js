@@ -183,7 +183,6 @@ export const Home = {
                     </li>
                 `;
                 }
-
             }).join("");
         }
 
@@ -204,7 +203,7 @@ export const Home = {
                 contentsWillBeDisplayed = createEmptyMsg(
                     emptyMsg.home.gridView.msgText,
                     emptyMsg.home.gridView.svgTag,
-                    "green"
+                    "#888"
                 );
             } else {
                 contentsWillBeDisplayed = `<div class="overview">${viewContent}</div>`
@@ -214,7 +213,7 @@ export const Home = {
                 contentsWillBeDisplayed = createEmptyMsg(
                     emptyMsg.home.listView.msgText,
                     emptyMsg.home.listView.svgTag,
-                    "green"
+                    "#888"
                 );
             } else {
                 contentsWillBeDisplayed = `<ul class="dropdowns"> ${viewContent}</ul>`;

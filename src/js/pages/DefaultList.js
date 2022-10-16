@@ -75,7 +75,7 @@ export const DefaultList = {
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.defaultlist.msgText,
       emptyMsg.defaultlist.svgTag,
-      "green"
+      "#888"
     );
 
     console.log(pageContent.length )

@@ -84,7 +84,7 @@ export const Top = {
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.top.msgText,
       emptyMsg.top.svgTag,
-      "green"
+      "#888"
     );
 
     return `

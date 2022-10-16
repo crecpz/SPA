@@ -3,6 +3,7 @@ import {
   fillZero,
   getAllPage,
   getAllTodos,
+  getCssVarValue,
   getCurrentPage,
   getCurrentTodo,
   hide,
@@ -72,7 +73,7 @@ export const CustomList = {
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.customlist.msgText,
       emptyMsg.customlist.svgTag,
-      "green"
+      getCssVarValue(`--color-type-${color}`)
     );
 
     return `
