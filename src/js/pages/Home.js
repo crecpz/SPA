@@ -67,7 +67,6 @@ export const Home = {
 
         // 獲取所有的頁面物件資料(排除 top 頁面)
         const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
-        console.log(pageContentObjects)
 
         // * --------------------------- grid-view  -----------------------------------
 

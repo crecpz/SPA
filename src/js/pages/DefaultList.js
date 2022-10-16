@@ -78,8 +78,6 @@ export const DefaultList = {
       "#888"
     );
 
-    console.log(pageContent.length )
-
     return `
         <!-- 主內容區 header -->
         <div class="main__content-header">

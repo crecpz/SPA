@@ -1,4 +1,5 @@
 import { Home } from "../pages/Home.js";
+import { NotFound } from "../pages/NotFound.js";
 
 /**
  * * 修正 mobile 100vh 的問題
@@ -25,7 +26,7 @@ export function scrollBarFix() {
  * 預設是先將 .todo-form 加上 .hidden class (display: none)，可以顯示時才將 .hidden class remove
  */
 export function hideTodoForm(){
-  if (location.hash === "#/" && Home.state.view === "grid-view") {
+  if (location.hash === "#/" && Home.state.view === "grid-view" || NotFound.state.isNotFount) {
     document.querySelector('.todo-form').classList.add('hidden');
   } else {
     document.querySelector('.todo-form').classList.remove('hidden');
