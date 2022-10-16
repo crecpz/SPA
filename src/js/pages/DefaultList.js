@@ -50,7 +50,7 @@ export const DefaultList = {
   render: function () {
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "defaultlist");
-    const { name: pageName, color, id, content: pageContent } = pageObj;
+    const { name: pageName, content: pageContent } = pageObj;
 
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
@@ -84,7 +84,7 @@ export const DefaultList = {
             <div class="container">
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block--default"></div>
-                    <input type="text" class="main__name" value="${pageName}" readonly>
+                    <h2 class="main__name">${pageName}</h2>
                 </div>
                 <!-- 列表選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>

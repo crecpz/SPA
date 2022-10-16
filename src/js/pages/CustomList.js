@@ -82,7 +82,7 @@ export const CustomList = {
             <div class="container">
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block-${color}"></div>
-                    <input type="text" class="main__name" value="${pageName}" readonly>
+                    <h2 class="main__name">${pageName}</h2>
                 </div>
                 <!-- 列表選單按鈕 -->
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
