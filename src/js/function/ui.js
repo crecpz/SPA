@@ -1,3 +1,4 @@
+
 import { NotFound } from "../pages/NotFound.js";
 import { getCurrentPage, getCurrentPageId } from "./helper.js";
 import { listAdding, listIsAdding } from "./modal.js";
@@ -125,7 +126,7 @@ export function removeNavActive() {
  * 最後將其加上 active 的 class。
  */
 export function activeNavLists() {
-  if(!NotFound.state.isNotFount){
+  if(!NotFound.state.isNotFound){
     const id = getCurrentPageId();
     const activeTarget = navContent.querySelector(`#${id}`);
     activeTarget.classList.add("nav__list-item--active");
@@ -228,13 +229,13 @@ export function createEmptyMsg(msgText, svgTag, svgColor) {
  * 且獲取當前網址列中的字串不是 "home"，則代表目前是 isNotFound 狀態。
  * 
  * 補充: 為什麼需要 currentPageId !== "home" 這個條件? 
- * 因為在 home 頁面調用 getCurrentPage() 也會獲取到 undefined，
- * home 在 DATA 中並沒有存放資料。所以如果該頁不是 home，就代表目前
- * 是 isNotFound 狀態。
+ * 因為 home 在 DATA 中並沒有存放資料，在 home 頁面調用 getCurrentPage() 
+ * 也會獲取到 undefined，所以如果該頁不是 home 卻獲取到 undefined 的話就
+ * 代表目前是 isNotFound 狀態。
  */
-export function switchNotFound(){
+export function switchNotFoundState(){
   const currentPageObj = getCurrentPage();
   const currentPageId = getCurrentPageId();
-  NotFound.state.isNotFount =
+  NotFound.state.isNotFound =
     !currentPageObj && currentPageId !== "home" ? true : false;
 }

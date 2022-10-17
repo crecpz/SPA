@@ -2,6 +2,7 @@
 import { NotFound } from "../pages/NotFound.js";
 import { addListener, removeAllListeners } from "../function/eventListerer.js";
 import { Route } from "./Route.js";
+import { getCurrentPage, getCurrentPageId } from "../function/helper.js";
 
 /**
  *
@@ -77,9 +78,19 @@ export const Router = () => {
 
   // 得到目前路徑(對應route)
   const path = location.hash.slice(1).toLowerCase();
-
+  
   // 找出對應頁面
-  const { component = NotFound , props = {} } = getComponent(path, Route);
+  let { component = NotFound , props = {} } = getComponent(path, Route);
+  
+  
+  // 若嘗試獲取當前頁面的 Object 得到 undefined，
+  // 且獲取當前網址列中尾端的字串不是 "home"，則代表目前的頁面不存在。
+  if(!getCurrentPage() && getCurrentPageId() !== 'home'){
+    // 將 component 設成 NotFound
+    component = NotFound;
+  }
+
+
   const mainContent = document.querySelector(".main__content");
 
   // 將元件內容渲染至畫面

@@ -1,10 +1,10 @@
 export const NotFound = {
   state: {
-    isNotFount: true,
+    isNotFound: '',
   },
   render: () => {
     // 此頁只要觸發 render 就將 isNotFount 設為 true
-    NotFound.state.isNotFount = true
+    NotFound.state.isNotFound = true
 
     return `
       <div class="not-found">

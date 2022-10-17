@@ -29,7 +29,6 @@ import {
     saveEditedTodo,
 } from "../function/storage.js";
 import {
-    
     clickToCloseListOption,
     createEmptyMsg,
     dropdownSwitch,
@@ -37,6 +36,7 @@ import {
     openListOption,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
+
 
 export const Home = {
     state: {
@@ -235,16 +235,6 @@ export const Home = {
                                 <i class="fa-solid fa-list-ul"></i>
                             </button>
                         </div>
-                        <!-- list-option-btn -->
-                        <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-                        <ul class="list-options">
-                            <li class="list-option">
-                            <a href="javascript:;" class="list-option__link">編輯</a>
-                            </li>
-                            <li class="list-option">
-                            <a href="javascript:;" class="list-option__link">排序</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>

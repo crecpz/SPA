@@ -31,6 +31,7 @@ import {
   changeTopByEditModal,
   changeTopByTodoItem,
   DATA,
+  removeCompleted,
   removeTodo,
   saveEditedTodo,
 } from "../function/storage.js";
@@ -90,12 +91,15 @@ export const DefaultList = {
                 <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 <!-- list-options -->
                 <ul class="list-options">
-                    <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">編輯</a>
-                    </li>
-                    <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">排序</a>
-                    </li>
+                  <li class="list-option">
+                    <a href="javascript:;" class="list-option__link">編輯</a>
+                  </li>
+                  <li class="list-option">
+                    <a href="javascript:;" class="list-option__link">排序</a>
+                  </li>
+                  <li class="list-option list-option--remove-completed">
+                    <a href="javascript:;" class="list-option__link">清除完成事項</a>
+                  </li>
                 </ul>
             </div>
         </div>
@@ -123,7 +127,7 @@ export const DefaultList = {
       // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
-      // * confirmModal 的全局設定(只要用到 confirmModal 就需要此設定)
+      // * confirmModal 的全局設定
       // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal
       // 至於是否要接著一起關閉 modal-overlay，取決於目前是否為 listIsRemoving 狀態，
       // 如果現在是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後都意味著對話框將結束，
@@ -138,6 +142,11 @@ export const DefaultList = {
           // 關閉 modal-overlay
           closeModalOverlay();
         }
+      }
+
+      // * 清除完成事項
+      if(e.target.classList.contains('list-option--remove-completed')){
+        removeCompleted(); 
       }
 
       // * 重要星號

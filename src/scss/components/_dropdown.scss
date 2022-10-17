@@ -3,7 +3,9 @@
 $dropdown-transition-speed: 250ms;
 
 .dropdown {
-  padding-top: 1.5rem;
+  &:not(:first-child){
+    padding-top: 1.5rem;
+  }
 
   &__color-block {
     width: 18px;

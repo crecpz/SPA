@@ -1,7 +1,13 @@
 import { updateMode } from "./function/mode.js";
-import { activeNavLists, renderCustomList, switchNotFound } from "./function/ui.js";
+import {
+  activeNavLists,
+  renderCustomList,
+  switchNotFoundState,
+} from "./function/ui.js";
 import { Router } from "./routes/Router.js";
-import { appHeight, hideTodoForm } from "./function/fix.js";
+import { appHeight } from "./function/fix.js";
+import { NotFound } from "./pages/NotFound.js";
+import { Home } from "./pages/Home.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
@@ -25,9 +31,24 @@ window.addEventListener("load", activeNavLists);
 window.addEventListener("resize", appHeight);
 window.addEventListener("DOMContentLoaded", appHeight);
 
+// 切換 NotFound.js 中的 isNotFound 狀態
+window.addEventListener("hashchange", switchNotFoundState);
+
 // 於 home 的 grid-view 狀態隱藏 todoForm
 window.addEventListener("DOMContentLoaded", hideTodoForm);
 window.addEventListener("hashchange", hideTodoForm);
 
-// 切換 NotFound.js 中的 isNotFound 狀態
-window.addEventListener("hashchange", switchNotFound);
+/**
+ * * 當目前頁面是總覽且當前 view 是 grid-view 時，不需要顯示 .todo-form。
+ * 預設是先將 .todo-form 加上 .hidden class (display: none)，可以顯示時才將 .hidden class remove
+ */
+export function hideTodoForm() {
+  if (
+    (location.hash === "#/" && Home.state.view === "grid-view") ||
+    NotFound.state.isNotFound
+  ) {
+    document.querySelector(".todo-form").classList.add("hidden");
+  } else {
+    document.querySelector(".todo-form").classList.remove("hidden");
+  }
+}

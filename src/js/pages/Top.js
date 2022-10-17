@@ -25,6 +25,7 @@ import {
   changeTopByEditModal,
   changeTopByTodoItem,
   DATA,
+  removeCompleted,
   removeTodo,
   saveEditedTodo,
 } from "../function/storage.js";
@@ -41,23 +42,11 @@ export const Top = {
   },
 
   render: function () {
-    // ? 測試中-----------------------------------
-    // console.log(getCssVarValue("--primary-color"));
-
-    // const c =
-    //   getCurrentTheme() === "dark"
-    //     ? getCssVarValue("--primary-color")
-    //     : getCssVarValue("--secondary-color");
-    // console.log(c);
-    let c = "red";
-
-    // ? 測試中-----------------------------------
-
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "top");
     // 提取出 pageName
     const { name: pageName } = pageObj;
-    // 找出所有 top 屬性帶有 true 的 todo Object，放入 pageContent 中
+    // 找出所有 todo 物件中 top 屬性是 true 的元素，存入 pageContent 中
     const pageContent = getAllTodos().filter((todo) => todo.top === true);
 
     // 遍歷 pageContent: 準備好所有會在 Top.js 會出現的 todoList
@@ -163,7 +152,11 @@ export const Top = {
         }
       }
 
-      // ! 這個函式之後再回過頭來看在重要取消後何去何從
+        // * 清除完成事項
+        if(e.target.classList.contains('list-option--remove-completed')){
+        removeCompleted(); 
+      }
+
       // * 重要星號
       // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
       if (e.target.tagName === "I" && e.target.closest(".todo__item")) {

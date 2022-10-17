@@ -297,3 +297,24 @@ export function changeTopByEditModal(e) {
   e.target.children[0].classList.toggle("fa-solid");
   e.target.children[0].classList.toggle("fa-regular");
 }
+
+/**
+ * 
+ */
+export function removeCompleted(){
+  // const 
+}
+
+/**
+ * - 總覽 list-view ★★★★★
+ *    
+ * 
+ * - 預設列表 ★☆☆☆☆
+ *    很單純，只要找到該頁面的物件之後，從 content 屬性中剔除掉所有 checked === true 的項目
+ * 
+ * - 重要 ★★★★☆
+ * 
+ * - 自訂列表 ★☆☆☆☆
+ *    很單純，只要找到該頁面的物件之後，從 content 屬性中剔除掉所有 checked === true 的項目
+ * 
+ */
