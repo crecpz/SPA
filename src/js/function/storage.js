@@ -2,6 +2,7 @@ import { Router } from "../routes/Router.js";
 import {
   createUniqueId,
   getAllPage,
+  getAllTodos,
   getCurrentPage,
   getCurrentPageId,
   getCurrentTodo,
@@ -191,7 +192,6 @@ export function changeCheckbox(e) {
     let currentTodoId;
     // 此變量用來存取目前事件觸發是否來自於 editModal
     let triggerFromEditModal;
-    
 
     // 如果 e.target 向上尋找可以找到 .todo__item (代表目前所點擊)
     if (e.target.closest(".todo__item")) {
@@ -211,8 +211,7 @@ export function changeCheckbox(e) {
     // 翻轉顏色淡化狀態(注意: 只是改外觀。另外，已經在下一次要 render 的 HTML 中
     // 根據 checked 的狀態來決定是否放入 .todo__item--isChecked 的判斷式了)
     const currentTodoItemDOM = document.getElementById(currentTodoId);
-    currentTodoItemDOM.classList.toggle('todo__item--isChecked');
-    
+    currentTodoItemDOM.classList.toggle("todo__item--isChecked");
 
     // 若事件觸發來自 editModal
     if (triggerFromEditModal) {
@@ -299,22 +298,67 @@ export function changeTopByEditModal(e) {
 }
 
 /**
- * 
+ *
  */
-export function removeCompleted(){
-  // const 
+export function removeCompleted() {
+  const currentPageId = getCurrentPageId();
+
+  switch (currentPageId) {
+    case "home":
+      console.log("home");
+      break;
+
+    case "top":
+      removeCompletedFromTop();
+      break;
+
+    case "defaultlist":
+      console.log("defaultlist");
+      break;
+
+    default:
+      console.log("其他");
+      break;
+  }
+
+  // for home
+  function removeCompletedFromHome() {
+    
+  }
+
+  // for top
+  function removeCompletedFromTop() {
+    // const allPage = getAllPage();
+    for (let pageType in DATA) {
+      DATA[pageType].forEach((pageObj, index) => {
+        DATA[pageType][index].content = pageObj.content.filter(
+          (todoObj) => todoObj.checked === false
+        );
+        // console.log(pageObj.content.filter(todoObj => todoObj.checked === false))
+      });
+    }
+
+    Router();
+    console.log(DATA);
+  }
+
+  // for customlist、defaultlist
+  function removeCompletedFromCurrentPage() {}
 }
 
 /**
- * - 總覽 list-view ★★★★★
- *    
- * 
- * - 預設列表 ★☆☆☆☆
+ * @ 困難點在於: 總覽跟重要，必須深入每一個 obj 刪除他的內容
+ *
+ * - 在「總覽 list-view」按下刪除已完成  ★★★★★
+ *    - 找出每一個 DATA 中的 page Object 中 checked === true 的物件
+ *
+ * - 在「預設列表」按下刪除已完成  ★☆☆☆☆
  *    很單純，只要找到該頁面的物件之後，從 content 屬性中剔除掉所有 checked === true 的項目
- * 
- * - 重要 ★★★★☆
- * 
- * - 自訂列表 ★☆☆☆☆
+ *
+ * - 在「重要」按下刪除已完成 ★★★★☆
+ *    - 找出每一個 DATA 中的 page Object 中找出 top === true && checked === true 的元素，刪除它
+ *
+ * - 在「自訂列表」按下刪除已完成 ★☆☆☆☆
  *    很單純，只要找到該頁面的物件之後，從 content 屬性中剔除掉所有 checked === true 的項目
- * 
+ *
  */

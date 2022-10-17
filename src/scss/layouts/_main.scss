@@ -92,21 +92,47 @@
     }
 
     .container {
+      // @include flex($jc: space-between, $ai: center);
       position: relative;
-      @include flex($jc: space-between, $ai: center);
       max-width: $max-width;
+
+      @include flex($dir: column, $ai: flex-end);
+      width: 100%;
     }
   }
 
   &__name-wrapper {
-    @include flex;
+    // ?
+    display: grid;
+    // justify-items: start;
+    justify-content: start;
+    grid-template-columns: auto auto 1fr;
+    //?
+
     position: relative;
     width: 100%;
     height: 100%;
     min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
+    // @include flex;
+    // position: relative;
+    // width: 100%;
+    // height: 100%;
+    // min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
+  }
+
+
+  &__color-block {
+    //? 
+    grid-column: 1/2;
+    grid-row: 1/2;
+
+    width: 0.625rem;
+    flex-shrink: 0; // 防止大小被壓縮而在每個頁面中顯示的大小不同
+    margin-right: 2rem;
   }
 
   &__name {
+    grid-row: 1/2;
     @include text(xl);
     width: 100%;
     font-weight: bold;
@@ -120,15 +146,22 @@
     }
   }
 
-  &__button-group {
-    @include flex;
-    align-self: center;
+  &__list-option-btn{
+    margin-left: auto;
+    grid-row: 1/2;
   }
 
-  &__color-block {
-    width: 0.625rem;
-    flex-shrink: 0; // 防止大小被壓縮而在每個頁面中顯示的大小不同
-    margin-right: 2rem;
+  &__clear-completed-btn{
+    grid-column: 3/4;
+    grid-row: 1/2;
+  }
+
+  &__button-group {
+    margin-left: 1rem;
+    // grid-column: 3/4;
+    @include flex;
+    grid-row: 1/2;
+    // align-self: center;
   }
 
   &__content-list {

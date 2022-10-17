@@ -227,6 +227,7 @@ export const Home = {
                     <div class="main__name-wrapper">
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
+                        <button class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed">清除完成事項</button>
                         <div class="main__button-group">
                             <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view" ? "main__view-btn--active" : ""}">
                                 <i class="fa-solid fa-table-cells-large"></i>
@@ -349,7 +350,7 @@ export const Home = {
                 removeTodoConfirm(removeTodoId);
             }
 
-            // 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
+           // 使用者反悔 - 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
             if (todoIsEditing && e.target.id === "confirm-cancel") {
                 // 關閉 confirmModal
                 closeConfirmModal();
@@ -357,7 +358,7 @@ export const Home = {
                 unhide("#edit-modal");
             }
 
-            // 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
+            // 使用者確定要刪除 - 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
             if (todoIsEditing && e.target.id === "confirm-yes") {
                 // 取得欲刪除的 todo 的 id (透過位於 .modal__form 中的 data-id 屬性取得 id)
                 const removeTodoId =

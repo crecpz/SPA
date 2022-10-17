@@ -44,8 +44,10 @@ export const Top = {
   render: function () {
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "top");
+
     // 提取出 pageName
     const { name: pageName } = pageObj;
+
     // 找出所有 todo 物件中 top 屬性是 true 的元素，存入 pageContent 中
     const pageContent = getAllTodos().filter((todo) => todo.top === true);
 
@@ -79,22 +81,25 @@ export const Top = {
     return `
         <!-- 主內容區 - header -->
         <div class="main__content-header">
-            <div class="container">
-              <div class="main__name-wrapper">
-                <div class="main__color-block color-block--default"></div>
-                <h2 class="main__name">${pageName}</h2>
-              </div>
+          <div class="container">
+            <div class="main__name-wrapper">
+              <div class="main__color-block color-block--default"></div>
+              <h2 class="main__name">${pageName}</h2>
               <!-- list-option-btn -->
-              <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
-              <!-- list-options -->
-              <ul class="list-options">
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link">編輯</a>
-                  </li>
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link">排序</a>
-                  </li>
-              </ul>
+              <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
+            </div>
+            <!-- list-options -->
+            <ul class="list-options">
+                <li class="list-option">
+                  <a href="javascript:;" class="list-option__link">編輯</a>
+                </li>
+                <li class="list-option">
+                  <a href="javascript:;" class="list-option__link">排序</a>
+                </li>
+                <li class="list-option">
+                  <a href="javascript:;" class="list-option__link list-option__link--remove-completed">清除完成事項</a>
+                </li>
+            </ul>
           </div>
         </div>
 
@@ -152,8 +157,8 @@ export const Top = {
         }
       }
 
-        // * 清除完成事項
-        if(e.target.classList.contains('list-option--remove-completed')){
+      // * 清除完成事項
+      if(e.target.classList.contains('list-option__link--remove-completed')){
         removeCompleted(); 
       }
 
@@ -192,7 +197,7 @@ export const Top = {
         removeTodoConfirm(removeTodoId);
       }
 
-      // 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
+      // 使用者反悔 - 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
       if (todoIsEditing && e.target.id === "confirm-cancel") {
         // 關閉 confirmModal
         closeConfirmModal();
@@ -200,17 +205,13 @@ export const Top = {
         unhide("#edit-modal");
       }
 
-      // 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
+      // 使用者確定要刪除 - 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
       if (todoIsEditing && e.target.id === "confirm-yes") {
         // 取得欲刪除的 todo 的 id (透過位於 .modal__form 中的 data-id 屬性取得 id)
         const removeTodoId =
           e.target.closest("#confirm-modal").nextElementSibling.children[0]
             .dataset.id;
         removeTodo(removeTodoId);
-      }
-
-      // ? 測試中
-      if (e.target.classList.contains("mode-btn")) {
       }
     },
 

@@ -5,6 +5,14 @@
   @include button-reset;
   cursor: pointer;
 
+  &--sm {
+    @include text(normal);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
   // 搜尋按鈕
   &--search {
     font-size: 1.25rem;
@@ -38,6 +46,13 @@
     i {
       pointer-events: none;
     }
+  }
+
+  // 清除已完成(Home.js)
+  &--clear-completed{
+    // white-space: nowrap;
+    flex-shrink: 0;
+    // margin-top: 1rem;
   }
 
   // 新增自訂列表按鈕
@@ -91,7 +106,6 @@
   border-radius: deep-map-get($border-radius, base);
 
   &--active {
-    // background-color: var(--tertiary-color);
     color: var(--secondary-color);
     background-color: var(--primary-color);
   }

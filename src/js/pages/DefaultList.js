@@ -86,9 +86,9 @@ export const DefaultList = {
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block--default"></div>
                     <h2 class="main__name">${pageName}</h2>
+                    <!-- list-option-btn -->
+                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 </div>
-                <!-- list-option-btn -->
-                <button class="btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
                 <!-- list-options -->
                 <ul class="list-options">
                   <li class="list-option">
@@ -97,8 +97,8 @@ export const DefaultList = {
                   <li class="list-option">
                     <a href="javascript:;" class="list-option__link">排序</a>
                   </li>
-                  <li class="list-option list-option--remove-completed">
-                    <a href="javascript:;" class="list-option__link">清除完成事項</a>
+                  <li class="list-option">
+                    <a href="javascript:;" class="list-option__link list-option__link--remove-completed">清除完成事項</a>
                   </li>
                 </ul>
             </div>
@@ -145,7 +145,7 @@ export const DefaultList = {
       }
 
       // * 清除完成事項
-      if(e.target.classList.contains('list-option--remove-completed')){
+      if(e.target.classList.contains('list-option__link--remove-completed')){
         removeCompleted(); 
       }
 
@@ -172,7 +172,7 @@ export const DefaultList = {
       }
 
       // * 刪除單項 todo
-      // 刪除單項 todo - 確認階段，跳出確認框
+      // 確認階段 - 跳出確認框
       if (e.target.id === "edit-delete") {
         // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉，萬一使用者改變主意，按下取消)
         hide("#edit-modal");
@@ -181,7 +181,7 @@ export const DefaultList = {
         removeTodoConfirm(removeTodoId);
       }
 
-      // 刪除單項 todo - 使用者按下取消: 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
+      // 使用者反悔 - 若使用者在 todoEditing 模式下按下了取消按鈕，代表使用者決定不刪除此項 todo
       if (todoIsEditing && e.target.id === "confirm-cancel") {
         // 關閉 confirmModal
         closeConfirmModal();
@@ -189,7 +189,7 @@ export const DefaultList = {
         unhide("#edit-modal");
       }
 
-      // 刪除單項 todo - 使用者確定刪除: 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
+      // 使用者確定要刪除 - 若使用者在 todoEditing 模式下按下了 confirm-yes 按鈕，代表使用者確定要刪除此項 todo
       if (todoIsEditing && e.target.id === "confirm-yes") {
         // 取得欲刪除的 todo 的 id (透過位於 .modal__form 中的 data-id 屬性取得 id)
         const removeTodoId =
