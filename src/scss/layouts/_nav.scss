@@ -61,6 +61,14 @@
     cursor: pointer;
     transition: background-color map-get($map: $transition-duration, $key: hover);
 
+    &:nth-child(2){
+      i {
+        margin-left: 3px;
+        width: 29px;
+      }
+    }
+
+
     @include hover-query {
       &:hover {
         background-color: var(--tertiary-color);
@@ -81,6 +89,7 @@
       @include text(md);
       margin-right: 1.5rem;
       pointer-events: none;
+      width: 2rem;
     }
   }
 

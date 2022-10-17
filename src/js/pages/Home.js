@@ -159,7 +159,7 @@ export const Home = {
                     `;
                 }).join("")
 
-                // * 每一個 dropdown 的結構
+                // * 每一個 dropdown 結構
                 if (content.length === 0) {
                     // 如果 content 沒任何內容，就渲染空字串
                     return "";
