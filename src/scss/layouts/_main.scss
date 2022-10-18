@@ -136,7 +136,7 @@
     letter-spacing: 0.15em;
 
     @include sm {
-      @include text(lg);
+      @include text(md);
     }
   }
 

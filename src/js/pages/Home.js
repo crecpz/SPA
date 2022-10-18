@@ -1,9 +1,6 @@
-// import { scrollBarFix } from "../function/fix.js";
 import {
     fillZero,
     getAllPage,
-    getAllTodos,
-    getPage,
     hide,
     unhide,
 } from "../function/helper.js";
@@ -30,11 +27,9 @@ import {
     saveEditedTodo,
 } from "../function/storage.js";
 import {
-    clickToCloseListOption,
     createEmptyMsg,
     dropdownSwitch,
     emptyMsg,
-    openListOption,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 

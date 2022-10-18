@@ -6,6 +6,7 @@ import {
   getCurrentPage,
   getCurrentPageId,
   getCurrentTodo,
+  getCurrentTodoOriginArray,
   getPage,
   unhide,
 } from "./helper.js";
@@ -146,7 +147,7 @@ export function saveEditedTodo(e) {
 }
 
 /**
- * * 刪除 todo 在 DATA 中的資料
+ * * 刪除單項 todo 在 DATA 中的資料
  */
 export function removeTodo(removeTodoId) {
   // @註: 以下註解中的 todo 皆代表要刪除的 todo
@@ -305,45 +306,77 @@ export function removeCompleted() {
 
   switch (currentPageId) {
     case "home":
-      console.log("home");
+      removeCompleted(homeCallback);
       break;
 
     case "top":
-      removeCompletedFromTop();
+      removeCompleted(topCallback);
       break;
 
     case "defaultlist":
+      removeCompletedFromCurrentPage();
       console.log("defaultlist");
       break;
 
     default:
-      console.log("其他");
+      removeCompletedFromCurrentPage();
       break;
   }
 
-  // for home
-  function removeCompletedFromHome() {
-    
-  }
+  setStorage(DATA);
+  Router();
 
-  // for top
-  function removeCompletedFromTop() {
-    // const allPage = getAllPage();
+  /**
+   * * 清除已完成 - 遍歷 DATA 內所有的物件，過濾掉已完成的 todo(根據所在的頁面不同，有不同的過濾方式)
+   * 1. 此函數適用於當前頁面是 Home (list-view) 或是 Top 時
+   * 2. 接收一個 callback function 作為參數，該 callback function 用來決定過濾的條件
+   * 3. 透過上方的 switch() 決定傳入的 callback 為何
+   * 4. 如果當前頁面位於 Home，則會將 homeCallback 傳入；如果當前頁面位於 Top 則會將 topCallback 傳入。
+   * @param {*} callback 接收 `homeCallback` 或 `topCallback` 作為參數
+   */
+  function removeCompleted(callback) {
     for (let pageType in DATA) {
       DATA[pageType].forEach((pageObj, index) => {
-        DATA[pageType][index].content = pageObj.content.filter(
-          (todoObj) => todoObj.checked === false
-        );
-        // console.log(pageObj.content.filter(todoObj => todoObj.checked === false))
+        DATA[pageType][index].content = pageObj.content.filter(callback);
       });
     }
-
-    Router();
-    console.log(DATA);
   }
 
-  // for customlist、defaultlist
-  function removeCompletedFromCurrentPage() {}
+  /**
+   * * 清除已完成 - 刪除自身頁面資料中 checked === true 的 todo
+   * 此頁面適用於 defaultlist & customlist，因為他們的 todo 都各自存放在各自的資料中
+   */
+  function removeCompletedFromCurrentPage() {
+    const currentPage = getCurrentPage();
+    currentPage.content = currentPage.content.filter(
+      ({ checked }) => checked === false
+    );
+  }
+
+  /**
+   * * 在 Home 頁面清除已完成時傳入 removeCompleted() 的參數
+   * @param {*} todoObj
+   * @returns 返回所有 todoObj.checked === true 的 todo
+   */
+  function homeCallback(todoObj) {
+    return todoObj.checked === false;
+  }
+
+  /**
+   * * 在 Top 頁面清除已完成時傳入 removeCompleted() 的參數
+   * @param {*} todoObj
+   * @returns 由於 removeCompleted() 檢查 DATA 內所有的物件，
+   * 為了防止刪除到其他頁面的資料，返回值(能繼續留在清單內的 todo)必須要注意該 todo 是來自於哪裡:
+   * 1. 只要在 Top 頁面以外的 todo 都必須被留下來(todoObj.top === false)
+   * 2. 至於在 Top 頁面以內的 todo ，必須要是還沒被勾選為已完成(todoObj.top === true && checked === false)
+   *    才可繼續被留在清單
+   */
+  function topCallback(todoObj) {
+    return (
+      todoObj.top === false ||
+      (todoObj.top === true && todoObj.checked === false)
+    );
+  }
 }
 
 /**

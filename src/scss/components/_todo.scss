@@ -12,9 +12,14 @@
     cursor: pointer;
   }
 
+  .checkbox__appearance {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
   &__item--isChecked {
-    :is(.todo__checkbox, .todo__content, .top){
-      opacity: .5;
+    :is(.todo__checkbox, .todo__content, .top) {
+      opacity: 0.5;
     }
   }
 
@@ -24,6 +29,12 @@
     margin-left: 1.25rem;
     margin-right: 1.25rem;
     pointer-events: none;
+
+    @include sm {
+      @include text(normal);
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
   }
 
   .top {

@@ -45,30 +45,10 @@ export function getCurrentTodo(currentTodoId) {
     .map(({ content }) => content) // 取得 content 屬性
     .reduce((acc, cur) => acc.concat(cur), []) // 攤平
     .find(({ id }) => id === currentTodoId); // 找出 todo Object
-
-  //! --------------- 以下原版(上面應該更簡便，不先在當前頁面找了，而是全部都找) -------
-  // // 取得當前頁面物件資料
-  // const currentPage = getCurrentPage();
-
-  // // 先從當前頁面資料取得當前 todo
-  // const currentTodoObj = currentPage.content.find(
-  //   (todoItem) => todoItem.id === currentTodoId
-  // );
-
-  // // 如果在當前頁面資料當中已找到 todo Object ，則返回該 todo Object
-  // if (currentTodoObj) return currentTodoObj;
-
-  // // 如果找不到(undefined)，要往其他頁面資料去尋找:
-  // const allPages = getAllPage();
-  // return allPages
-  //   .filter(({ id }) => id !== currentPage.id) // 過濾掉當前頁面物件資料
-  //   .map(({ content }) => content) // 取得 content 屬性
-  //   .reduce((acc, cur) => acc.concat(cur), []) // 攤平
-  //   .find(({ id }) => id === currentTodoId); // 找出 todo Object
 }
 
 /**
- * * 取得某個 todo 在 DATA 中所屬的 Array 並返回
+ * * 取得某個 todo 在 DATA 中所屬的 Array 並返回該 Array
  * @param {*} currentTodoId 接收一個 id 字符串作為參數
  * @returns 返回該 todo 在 DATA 中所屬的 Array
  */

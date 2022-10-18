@@ -162,6 +162,12 @@
     color: var(--primary-color);
     column-gap: 1.5rem;
     margin-top: 1.5625rem;
+
+    // // 在 modal 內的 checkbox 讓他保有正常大小
+    // .checkbox__appearance{
+    //   width: 20px;
+    //   height: 20px;
+    // }
   }
 
   &__check-option {
