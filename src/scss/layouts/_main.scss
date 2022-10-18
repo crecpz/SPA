@@ -172,7 +172,8 @@
     margin-top: 4rem;
     width: 100%;
     overflow: auto;
-    padding-right: 0px; /* exact value is given in JavaScript code */
+    // padding-right: 0px; /* exact value is given in JavaScript code */
+    
 
     @include sm{
       margin-top: 3rem;

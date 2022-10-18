@@ -1,4 +1,4 @@
-import { scrollBarFix } from "../function/fix.js";
+// import { scrollBarFix } from "../function/fix.js";
 import {
   fillZero,
   getAllPage,
@@ -46,7 +46,7 @@ import {
 
 export const CustomList = {
   mount: function () {
-    scrollBarFix();
+    // scrollBarFix();
   },
 
   render: function (props) {
@@ -102,7 +102,7 @@ export const CustomList = {
                       <a href="javascript:;" class="list-option__link list-option__link--remove">刪除列表</a>
                     </li>
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link list-option__link--remove-completed">清除完成事項</a>
+                      <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
                     </li>
                 </ul>
             </div>
@@ -190,8 +190,8 @@ export const CustomList = {
       }
 
       // * 清除完成事項
-      if(e.target.classList.contains('list-option__link--remove-completed')){
-        removeCompleted();
+      if(e.target.id=== 'remove-completed'){
+        removeCompleted(); 
       }
 
       // * 重要星號

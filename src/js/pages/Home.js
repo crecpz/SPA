@@ -1,4 +1,4 @@
-import { scrollBarFix } from "../function/fix.js";
+// import { scrollBarFix } from "../function/fix.js";
 import {
     fillZero,
     getAllPage,
@@ -25,6 +25,7 @@ import {
     changeTopByEditModal,
     changeTopByTodoItem,
     DATA,
+    removeCompleted,
     removeTodo,
     saveEditedTodo,
 } from "../function/storage.js";
@@ -44,7 +45,7 @@ export const Home = {
     },
 
     mount: function () {
-        scrollBarFix();
+        // scrollBarFix();
     },
 
     render: function () {
@@ -227,7 +228,7 @@ export const Home = {
                     <div class="main__name-wrapper">
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
-                        <button class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed
+                        <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed
                                         ${currentView === "grid-view" ? "hidden" : ""}
                         ">
                             清除完成事項
@@ -319,6 +320,11 @@ export const Home = {
                 }
             }
 
+            // * 清除完成事項
+            if(e.target.id=== 'remove-completed'){
+                removeCompleted(); 
+            }
+            
             // * 重要星號
             // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
             if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
