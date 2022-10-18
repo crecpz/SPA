@@ -227,8 +227,12 @@ export const Home = {
                     <div class="main__name-wrapper">
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
-                        <button class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed">清除完成事項</button>
-                        <div class="main__button-group">
+                        <button class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed
+                                        ${currentView === "grid-view" ? "hidden" : ""}
+                        ">
+                            清除完成事項
+                        </button>
+                        <div class="main__view-btns">
                             <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view" ? "main__view-btn--active" : ""}">
                                 <i class="fa-solid fa-table-cells-large"></i>
                             </button>

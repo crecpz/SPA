@@ -102,32 +102,26 @@
   }
 
   &__name-wrapper {
-    // ?
-    display: grid;
-    // justify-items: start;
-    justify-content: start;
-    grid-template-columns: auto auto 1fr;
-    //?
-
     position: relative;
+    display: grid;
+    justify-content: start;
+    justify-items: end;
+    align-items: center;
+    grid-template-columns: auto auto 1fr;
     width: 100%;
     height: 100%;
     min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
-    // @include flex;
-    // position: relative;
-    // width: 100%;
-    // height: 100%;
-    // min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
+    @include sm {
+      grid-template-rows: auto auto;
+      row-gap: 1rem;
+    }
   }
 
-
   &__color-block {
-    //? 
     grid-column: 1/2;
     grid-row: 1/2;
-
+    align-self: stretch;
     width: 0.625rem;
-    flex-shrink: 0; // 防止大小被壓縮而在每個頁面中顯示的大小不同
     margin-right: 2rem;
   }
 
@@ -146,33 +140,43 @@
     }
   }
 
-  &__list-option-btn{
+  &__list-option-btn {
     margin-left: auto;
     grid-row: 1/2;
   }
 
-  &__clear-completed-btn{
+  // Home.js 內的清除已完成
+  &__clear-completed-btn {
     grid-column: 3/4;
     grid-row: 1/2;
+
+    @include sm {
+      grid-row: 2/3;
+    }
   }
 
-  &__button-group {
-    margin-left: 1rem;
-    // grid-column: 3/4;
+  //  Home.js 內的 view 切換鈕
+  &__view-btns {
     @include flex;
+    margin-left: 1rem;
     grid-row: 1/2;
-    // align-self: center;
+
+    @include sm {
+      justify-self: end;
+    }
   }
 
   &__content-list {
     @include flex($jc: center);
+    @include padding-x;
     margin-top: 4rem;
     width: 100%;
-
     overflow: auto;
     padding-right: 0px; /* exact value is given in JavaScript code */
 
-    @include padding-x;
+    @include sm{
+      margin-top: 3rem;
+    };
 
     .container {
       max-width: $max-width;
