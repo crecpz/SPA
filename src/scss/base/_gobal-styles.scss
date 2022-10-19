@@ -36,10 +36,6 @@ html {
     box-sizing: inherit;
     text-decoration: none;
     line-height: 1.5;
-
-    transition-property: color, background-color, border;
-    transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration;
-    transition-timing-function: ease-in-out;
 }
 
 body {

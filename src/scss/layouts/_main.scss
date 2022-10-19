@@ -13,13 +13,8 @@
   color: var(--primary-color);
   background-color: var(--secondary-color);
 
-  /*  雖然在 *{} 內已經定義了全站的 transition 屬性了(color, background-color)，
-      但此處仍有 width 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
-      *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
-  */
-  transition-property: color, background-color, border, width;
-  transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration,
-    $collapse-transition-duration;
+  transition-property: width;
+  transition-duration: $collapse-transition-duration;
 
   &.nav-open {
     width: calc(100% - 23.4375rem);
@@ -42,13 +37,8 @@
     color: var(--primary-color);
     background-color: var(--secondary-color);
 
-    /*  雖然在 *{} 內已經定義了全站的 transition 屬性了(color, background-color)，
-        但此處仍有 width 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
-        *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
-    */
-    transition-property: color, background-color, border, width;
-    transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration,
-      $collapse-transition-duration;
+    transition-property:  width;
+    transition-duration: $collapse-transition-duration;
 
     &.nav-open {
       width: calc(100% - 23.4375rem);

@@ -3,7 +3,6 @@
 .nav {
   position: absolute;
   z-index: 15;
-  // left: -23.4375rem;
   left: -100%;
 
   display: grid;
@@ -18,13 +17,9 @@
   background-color: var(--secondary-color);
   color: var(--primary-color);
 
-  /*  雖然在 *{} 內已經定義了全站的 transition 屬性了(color, background-color)，
-      但此處仍有 left 要設定成 transition ， 若在此處寫 transition ，將會覆蓋
-      *{} 內已經定義的全站 transition 屬性，所以這裡在 *{} 的基礎上，手動再設定一次。
-  */
-  transition-property: color, background-color, border, left;
-  transition-duration: $mode-transition-duration, $mode-transition-duration, $mode-transition-duration,
-    $collapse-transition-duration;
+
+  transition-property: left;
+  transition-duration: $collapse-transition-duration;
 
   // 當 .nav 與 .nav-open 同時存在:
   &.nav-open {
