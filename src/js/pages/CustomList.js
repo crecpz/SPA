@@ -93,7 +93,7 @@ export const CustomList = {
                 <!-- list-options -->
                 <ul class="list-options">
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link list-option__link--rename">列表名稱設定</a>
+                      <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
                     </li>
                     <li class="list-option">
                       <a href="javascript:;" class="list-option__link">編輯</a>
@@ -102,7 +102,7 @@ export const CustomList = {
                       <a href="javascript:;" class="list-option__link">排序</a>
                     </li>
                     <li class="list-option">
-                      <a href="javascript:;" class="list-option__link list-option__link--remove">刪除列表</a>
+                      <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
                     </li>
                     <li class="list-option">
                       <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
@@ -133,9 +133,9 @@ export const CustomList = {
       // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
-      // * listOption 編輯列表名稱
+      // * listOption > 編輯列表名稱
       // 開啟列表名稱設定
-      if (e.target.classList.contains("list-option__link--rename")) {
+      if (e.target.id === "rename-list") {
         nameSetting();
       }
       // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
@@ -143,9 +143,9 @@ export const CustomList = {
         saveNameSetting(e);
       }
 
-      // * listOption - 刪除列表功能
+      // * listOption > 刪除列表功能
       // 刪除列表 step1 - 偵測使用者是否有點擊 "刪除列表" 來決定是否開啟 "確認刪除 modal"
-      if (e.target.classList.contains("list-option__link--remove")) {
+      if (e.target.id === "remove-list") {
         // 確認刪除過程
         removeListConfirm();
       }

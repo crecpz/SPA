@@ -221,16 +221,18 @@ export const Home = {
                             清除完成事項
                         </button>
                         <div class="main__view-btns">
-                            <button data-view="grid-view" class="main__view-btn btn ${currentView === "grid-view"
-                ? "main__view-btn--active"
-                : ""
-            }">
+                            <button data-view="grid-view" class="main__view-btn btn 
+                                ${currentView === "grid-view"
+                                    ? "main__view-btn--active"
+                                    : ""
+                                }">
                                 <i class="fa-solid fa-table-cells-large"></i>
                             </button>
-                            <button data-view="list-view" class="main__view-btn btn ${currentView === "list-view"
-                ? "main__view-btn--active"
-                : ""
-            }">
+                            <button data-view="list-view" class="main__view-btn btn 
+                                ${currentView === "list-view"
+                                    ? "main__view-btn--active"
+                                    : ""
+                                }">
                                 <i class="fa-solid fa-list-ul"></i>
                             </button>
                         </div>
