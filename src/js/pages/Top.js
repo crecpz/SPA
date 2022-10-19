@@ -19,7 +19,6 @@ import {
   todoEditing,
   todoIsEditing,
 } from "../function/modal.js";
-import { getCurrentTheme } from "../function/mode.js";
 import {
   changeCheckbox,
   changeTopByEditModal,

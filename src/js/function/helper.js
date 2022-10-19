@@ -6,8 +6,11 @@ import { DATA } from "../function/storage.js";
  */
 export function getAllPage() {
   const allPage = [];
+  
   for (let pageType in DATA) {
-    allPage.push(...DATA[pageType]);
+    if(Array.isArray(DATA[pageType])){
+      allPage.push(...DATA[pageType]);
+    }
   }
   return allPage;
 }

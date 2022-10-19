@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW" class="dark">
+<html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,11 +36,12 @@
                     <div class="hamburger__bar"></div>
                 </button>
 
-                <!-- dark/light mode -->
-                <div id="mode-btns" class="nav__mode-btns">
+                <!-- mode -->
+                <!-- <div id="mode-btns" class="nav__mode-btns">
                     <button id="light-mode-btn" class="btn mode-btn mode-btn--light mode-btn--active">Light</button>
                     <button id="dark-mode-btn" class="btn mode-btn mode-btn--dark">Dark</button>
-                </div>
+                </div> -->
+                <button id="mode-btn" class="mode-btn mode-btn--change"><i class="fa-solid fa-circle-half-stroke"></i></button>
             </div>
 
             <div class="nav__content">
@@ -89,6 +90,7 @@
                 </div>
             </header>
 
+            <!-- 主內容渲染區域 -->
             <section class="main__content"></section>
 
             <!-- 輸入框 -->
@@ -102,11 +104,11 @@
     </div>
 
     <div class="modal-overlay overlay">
-        <!-- * confirm modal -->
+        <!--  confirm modal -->
         <div id="confirm-modal" class="modal modal--confirm"></div>
-        <!-- * edit todo modal -->
+        <!--  edit todo modal -->
         <div id="edit-modal" class="modal modal--edit"></div>
-        <!-- * color picker -->
+        <!--  color picker -->
         <div id="edit-name-modal" class="modal modal--eidt-name">
             <form class="modal__form">
                 <p class="modal__title">列表名稱設定</p>

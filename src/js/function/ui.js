@@ -196,7 +196,10 @@ const navContent = document.querySelector(".nav__content");
 // 監聽整個頁面的 click 事件
 document.querySelector(".wrapper").addEventListener("click", (e) => {
   // 光線模式切換
-  modeSwitcher(e);
+  if(e.target.id === "mode-btn") {
+    modeSwitcher(e);
+  }
+  
 
   // 點擊漢堡鈕來開啟 nav
   if (e.target.id === "main-hamburger" || e.target.id === "nav-hamburger") {

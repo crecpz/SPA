@@ -116,7 +116,7 @@ export function setTodo(e) {
 export function moveTopToDefaultlist(moveTodoObj) {
   // 檢查於「重要」頁面中產生的 todo 當中，是否有被取消的 todo 將其移至 「defaultlist」 資料中
   const currentPageId = getCurrentPageId();
-  
+
   if (
     currentPageId === "top" && // 如果目前位於「重要」頁面
     !moveTodoObj.top && // 且當前 todo 的 top 屬性為 false (星星被摘除)
@@ -126,7 +126,7 @@ export function moveTopToDefaultlist(moveTodoObj) {
     // 取得 DATA 中的 top 物件後，剔除掉 moveTodoObj
     const top = getPage("top");
     top.content = top.content.filter((todoObj) => todoObj !== moveTodoObj);
-  
+
     // 取得 moveTodoObj 移動目的地物件，解構賦值出屬性
     const { id, name, content } = getPage("defaultlist");
     // 將 moveTodoObj 的 srcId、srcName 更改成目的地物件的屬性
@@ -134,7 +134,7 @@ export function moveTopToDefaultlist(moveTodoObj) {
     moveTodoObj.srcId = id;
     // 在目的地屬性的 content 陣列中，加入 moveTodoObj
     content.unshift(moveTodoObj);
-  
+
     // 儲存變更至 localStorage
     setStorage(DATA);
   }
@@ -324,7 +324,7 @@ export function changeTopByEditModal(e) {
   }
 
   // 移動到 defaultlist
-  moveTopToDefaultlist(currentTodo); 
+  moveTopToDefaultlist(currentTodo);
 }
 
 /**
@@ -365,9 +365,11 @@ export function removeCompleted() {
    */
   function removeCompleted(callback) {
     for (let pageType in DATA) {
-      DATA[pageType].forEach((pageObj, index) => {
-        DATA[pageType][index].content = pageObj.content.filter(callback);
-      });
+      if (Array.isArray(DATA[pageType])) {
+        DATA[pageType].forEach((pageObj, index) => {
+          DATA[pageType][index].content = pageObj.content.filter(callback);
+        });
+      }
     }
   }
 
