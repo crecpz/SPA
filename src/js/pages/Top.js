@@ -119,6 +119,7 @@ export const Top = {
       // * 列表名稱設定相關(editNameModal)
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
+        e.preventDefault();
         // 關閉 editNameModal & modalOverlay
         closeEditNameModal();
         closeModalOverlay();
@@ -140,13 +141,14 @@ export const Top = {
       // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
-      // * confirmModal 的全局設定(只要用到 confirmModal 就需要此設定)
+      // * confirmModal 設定
       // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal
       // 至於是否要接著一起關閉 modal-overlay，取決於目前是否為 listIsRemoving 狀態，
       // 如果現在是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後都意味著對話框將結束，
       // 如果現在不是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後可能還會有後續的對話框，
       // 這時就不必關閉 modalOverlay
       if (e.target.id === "confirm-cancel" || e.target.id === "confirm-yes") {
+        e.preventDefault();
         // 關閉 confirm modal
         closeConfirmModal();
 
@@ -181,6 +183,7 @@ export const Top = {
 
       // * 關閉編輯 todoItem 視窗
       if (e.target.id === "edit-close") {
+        e.preventDefault();
         // 關閉 edit-modal
         closeEditModal();
         // 關閉 modal-overlay
@@ -190,6 +193,7 @@ export const Top = {
       // * 刪除單項 todo
       // 確認階段 - 跳出確認框
       if (e.target.id === "edit-delete") {
+        e.preventDefault();
         // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉)
         hide("#edit-modal");
         // 取得 todo id ，並將其傳進 removeTodoConfirm 中做確認

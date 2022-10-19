@@ -55,7 +55,9 @@ export const CustomList = {
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
+                <li id="${id}" class="todo__item ${
+          checked ? "todo__item--isChecked" : ""
+        }">
                   <label class="todo__checkbox checkbox">
                     <input type="checkbox" class="checkbox__input" ${
                       checked ? "checked" : ""
@@ -112,11 +114,7 @@ export const CustomList = {
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                  ${
-                    pageContent.length === 0 
-                      ? emptyMsgContent
-                      : todoContent
-                  }
+                  ${pageContent.length === 0 ? emptyMsgContent : todoContent}
                 </ul>
             </div>
         </div>
@@ -128,6 +126,7 @@ export const CustomList = {
       // * 列表名稱設定相關(editNameModal)
       // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
       if (e.target.id === "edit-name-close") {
+        e.preventDefault();
         // 關閉 editNameModal & modalOverlay
         closeEditNameModal();
         closeModalOverlay();
@@ -143,29 +142,20 @@ export const CustomList = {
         e.target.classList.add("modal__color-block--active");
       }
 
-      // @ listOption --> 列表名稱設定
-      // 開啟列表名稱設定
-      if (e.target.classList.contains("list-option__link--rename")) {
-        nameSetting();
-      }
-      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
-      if (nameIsEditing && e.target.id === "edit-name-close") {
-        saveNameSetting(e);
-      }
-
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
       openListOption(e);
       // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
-      // * confirmModal 的全局設定(只要用到 confirmModal 就需要此設定)
+      // * confirmModal 設定
       // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal
       // 至於是否要接著一起關閉 modal-overlay，取決於目前是否為 listIsRemoving 狀態，
       // 如果現在是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後都意味著對話框將結束，
       // 如果現在不是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後可能還會有後續的對話框，
       // 這時就不必關閉 modalOverlay
       if (e.target.id === "confirm-cancel" || e.target.id === "confirm-yes") {
+        e.preventDefault();
         // 關閉 confirm modal
         closeConfirmModal();
 
@@ -176,22 +166,9 @@ export const CustomList = {
         }
       }
 
-      // * listOption - 刪除列表功能
-      // 刪除列表 step1 - 偵測使用者是否有點擊 "刪除列表" 來決定是否開啟 "確認刪除 modal"
-      if (e.target.classList.contains("list-option__link--remove")) {
-        // 確認刪除過程
-        removeListConfirm();
-      }
-
-      // 刪除列表 step2 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
-      if (listIsRemoving && e.target.id === "confirm-yes") {
-        // 刪除列表在 DATA 中的資料
-        removeList(e);
-      }
-
       // * 清除完成事項
-      if(e.target.id=== 'remove-completed'){
-        removeCompleted(); 
+      if (e.target.id === "remove-completed") {
+        removeCompleted();
       }
 
       // * 重要星號
@@ -210,6 +187,7 @@ export const CustomList = {
 
       // * 關閉編輯 todoItem 視窗
       if (e.target.id === "edit-close") {
+        e.preventDefault();
         // 關閉 edit-modal
         closeEditModal();
         // 關閉 modal-overlay
@@ -219,6 +197,7 @@ export const CustomList = {
       // * 刪除單項 todo
       // 確認階段 - 跳出確認框
       if (e.target.id === "edit-delete") {
+        e.preventDefault();
         // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉，萬一使用者改變主意，按下取消)
         hide("#edit-modal");
         // 取得 todo id ，並將其傳進 removeTodoConfirm 中做確認
@@ -241,6 +220,31 @@ export const CustomList = {
           e.target.closest("#confirm-modal").nextElementSibling.children[0]
             .dataset.id;
         removeTodo(removeTodoId);
+      }
+
+      // ! 以下只有本頁有
+
+      // * listOption 編輯列表名稱
+      // 開啟列表名稱設定
+      if (e.target.classList.contains("list-option__link--rename")) {
+        nameSetting();
+      }
+      // 當使用者在 「nameIsEditing 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (nameIsEditing && e.target.id === "edit-name-close") {
+        saveNameSetting(e);
+      }
+
+      // * listOption - 刪除列表功能
+      // 刪除列表 step1 - 偵測使用者是否有點擊 "刪除列表" 來決定是否開啟 "確認刪除 modal"
+      if (e.target.classList.contains("list-option__link--remove")) {
+        // 確認刪除過程
+        removeListConfirm();
+      }
+
+      // 刪除列表 step2 - 確認目前是否為 listRemoving 狀態，並偵測使用者是否有點擊"確定刪除"
+      if (listIsRemoving && e.target.id === "confirm-yes") {
+        // 刪除列表在 DATA 中的資料
+        removeList(e);
       }
     },
 

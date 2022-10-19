@@ -70,7 +70,8 @@ export function setStorage(data) {
 /**
  * * 建立新的 todo 資料，並加進當前頁面中
  */
-export function setTodo() {
+export function setTodo(e) {
+  e.preventDefault();
   const todoInput = document.querySelector("#todo-input");
   if (todoInput.value.trim() !== "") {
     // 存放使用者輸入的文字內容
@@ -299,7 +300,7 @@ export function changeTopByEditModal(e) {
 }
 
 /**
- *
+ * * 清除已完成的 todo，根據所在頁面不同，會調用不同的函數
  */
 export function removeCompleted() {
   const currentPageId = getCurrentPageId();

@@ -56,7 +56,9 @@ export const DefaultList = {
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
+                <li id="${id}" class="todo__item ${
+          checked ? "todo__item--isChecked" : ""
+        }">
                   <label class="todo__checkbox checkbox">
                     <input type="checkbox" class="checkbox__input" ${
                       checked ? "checked" : ""
@@ -71,8 +73,7 @@ export const DefaultList = {
         `;
       })
       .join("");
-      
-      
+
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.defaultlist.msgText,
       emptyMsg.defaultlist.svgTag,
@@ -108,11 +109,7 @@ export const DefaultList = {
         <div class="main__content-list">
             <div class="container">
                 <ul id="todo" class="todo">
-                  ${
-                    pageContent.length === 0
-                      ?  emptyMsgContent
-                      : todoContent
-                  }
+                  ${pageContent.length === 0 ? emptyMsgContent : todoContent}
                 </ul>
             </div>
         </div>
@@ -121,19 +118,39 @@ export const DefaultList = {
 
   listener: {
     click: (e) => {
+      // * 列表名稱設定相關(editNameModal)
+      // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
+      if (e.target.id === "edit-name-close") {
+        e.preventDefault();
+        // 關閉 editNameModal & modalOverlay
+        closeEditNameModal();
+        closeModalOverlay();
+      }
+      // 當使用者在 「 listIsAdding 狀態下」 按下 editNameModal 內的 "完成按鈕"
+      if (listIsAdding && e.target.id === "edit-name-close") {
+        // 彙整使用者在 editNameModal 輸入的內容，套用到新的列表名稱設定上
+        createNewList(e);
+      }
+      // 控制顏色選擇器的 active 顯示
+      if (e.target.classList.contains("modal__color-block")) {
+        clearColorSelectorActive();
+        e.target.classList.add("modal__color-block--active");
+      }
+
       // * listOption 開啟 & 關閉
       // 判斷是否要開啟 listOption
       openListOption(e);
       // 點擊任意處來關閉 listOption
       clickToCloseListOption(e);
 
-      // * confirmModal 的全局設定
+      // * confirmModal 設定
       // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal
       // 至於是否要接著一起關閉 modal-overlay，取決於目前是否為 listIsRemoving 狀態，
       // 如果現在是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後都意味著對話框將結束，
       // 如果現在不是 listIsRemoving 狀態，使用者在按下任何一個按鈕之後可能還會有後續的對話框，
       // 這時就不必關閉 modalOverlay
       if (e.target.id === "confirm-cancel" || e.target.id === "confirm-yes") {
+        e.preventDefault();
         // 關閉 confirm modal
         closeConfirmModal();
 
@@ -143,10 +160,10 @@ export const DefaultList = {
           closeModalOverlay();
         }
       }
-      
+
       // * 清除完成事項
-      if(e.target.id=== 'remove-completed'){
-        removeCompleted(); 
+      if (e.target.id === "remove-completed") {
+        removeCompleted();
       }
 
       // * 重要星號
@@ -165,6 +182,7 @@ export const DefaultList = {
 
       // * 關閉編輯 todoItem 視窗
       if (e.target.id === "edit-close") {
+        e.preventDefault();
         // 關閉 edit-modal
         closeEditModal();
         // 關閉 modal-overlay
@@ -174,6 +192,7 @@ export const DefaultList = {
       // * 刪除單項 todo
       // 確認階段 - 跳出確認框
       if (e.target.id === "edit-delete") {
+        e.preventDefault();
         // 隱藏 editModal (視覺上隱藏 editModal，並非真的關閉，萬一使用者改變主意，按下取消)
         hide("#edit-modal");
         // 取得 todo id ，並將其傳進 removeTodoConfirm 中做確認
