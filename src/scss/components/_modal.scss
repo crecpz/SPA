@@ -116,29 +116,7 @@
         border: 2px solid var(--secondary-color);
         font-size: 20px;
       }
-
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   right: 0%;
-      //   width: 0;
-      //   height: 0;
-      //   border-style: solid;
-      //   border-width: 0 20px 20px 0;
-      //   border-color: transparent var(--secondary-color) transparent transparent;
-      // }
     }
-
-    &:nth-child(1) {
-      // background-color: var(--primary-color);
-    }
-
-    // @for $i from 2 through 10 {
-    //   @debug $i;
-    //   &:nth-child(#{$i}) {
-    //     background-color: var(--color-block-#{$i});
-    //   }
-    // }
   }
 
   &__textarea {
@@ -153,6 +131,10 @@
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     background-color: transparent;
+
+    &:disabled{
+      opacity: 0.5;
+    }
   }
 
   &__check-options {
@@ -162,12 +144,7 @@
     color: var(--primary-color);
     column-gap: 1.5rem;
     margin-top: 1.5625rem;
-
-    // // 在 modal 內的 checkbox 讓他保有正常大小
-    // .checkbox__appearance{
-    //   width: 20px;
-    //   height: 20px;
-    // }
+    user-select: none;
   }
 
   &__check-option {
@@ -176,6 +153,11 @@
     column-gap: 0.5rem;
     color: var(--primary-color);
     cursor: pointer;
+
+    &--disabled {
+      pointer-events: none;
+      opacity: .5;
+    }
   }
 
   &__top {

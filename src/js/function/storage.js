@@ -114,20 +114,30 @@ export function setTodo(e) {
  * @param {*} moveTodoObj 被取消重要的 todo Object
  */
 export function moveTopToDefaultlist(moveTodoObj) {
-  // 取得 DATA 中的 top 物件後，剔除掉 moveTodoObj
-  const top = getPage("top");
-  top.content = top.content.filter((todoObj) => todoObj !== moveTodoObj);
-
-  // 取得 moveTodoObj 移動目的地物件，解構賦值出屬性
-  const { id, name, content } = getPage("defaultlist");
-  // 將 moveTodoObj 的 srcId、srcName 更改成目的地物件的屬性
-  moveTodoObj.srcName = name;
-  moveTodoObj.srcId = id;
-  // 在目的地屬性的 content 陣列中，加入 moveTodoObj
-  content.unshift(moveTodoObj);
-
-  // 儲存變更至 localStorage
-  setStorage(DATA);
+  // 檢查於「重要」頁面中產生的 todo 當中，是否有被取消的 todo 將其移至 「defaultlist」 資料中
+  const currentPageId = getCurrentPageId();
+  
+  if (
+    currentPageId === "top" && // 如果目前位於「重要」頁面
+    !moveTodoObj.top && // 且當前 todo 的 top 屬性為 false (星星被摘除)
+    moveTodoObj.srcId === "top" // 且該項 todo 最初是在「重要」頁面被創建出來的話
+  ) {
+    // 上述條件若符合，代表該項 todo 現在不該繼續存留在「重要」頁面中
+    // 取得 DATA 中的 top 物件後，剔除掉 moveTodoObj
+    const top = getPage("top");
+    top.content = top.content.filter((todoObj) => todoObj !== moveTodoObj);
+  
+    // 取得 moveTodoObj 移動目的地物件，解構賦值出屬性
+    const { id, name, content } = getPage("defaultlist");
+    // 將 moveTodoObj 的 srcId、srcName 更改成目的地物件的屬性
+    moveTodoObj.srcName = name;
+    moveTodoObj.srcId = id;
+    // 在目的地屬性的 content 陣列中，加入 moveTodoObj
+    content.unshift(moveTodoObj);
+  
+    // 儲存變更至 localStorage
+    setStorage(DATA);
+  }
 }
 
 /**
@@ -195,7 +205,7 @@ export function changeCheckbox(e) {
     // 此變量用來存取目前事件觸發是否來自於 editModal
     let triggerFromEditModal;
 
-    // 如果 e.target 向上尋找可以找到 .todo__item (代表目前所點擊)
+    // 如果 e.target 向上尋找可以找到 .todo__item
     if (e.target.closest(".todo__item")) {
       // currentTodoId 將是往上層尋找 .todo__item 的 id
       currentTodoId = e.target.closest(".todo__item").id;
@@ -210,10 +220,15 @@ export function changeCheckbox(e) {
     getCurrentTodo(currentTodoId).checked =
       !getCurrentTodo(currentTodoId).checked;
 
+    // if (!triggerFromEditModal) {
     // 翻轉顏色淡化狀態(注意: 只是改外觀。另外，已經在下一次要 render 的 HTML 中
     // 根據 checked 的狀態來決定是否放入 .todo__item--isChecked 的判斷式了)
     const currentTodoItemDOM = document.getElementById(currentTodoId);
     currentTodoItemDOM.classList.toggle("todo__item--isChecked");
+
+    // if(!currentTodoItemDOM && triggerFromEditModal){
+    //   console.log(true)
+    // }
 
     // 若事件觸發來自 editModal
     if (triggerFromEditModal) {
@@ -258,16 +273,8 @@ export function changeTopByTodoItem(e) {
     Router();
   }
 
-  // 檢查於「重要」頁面中產生的 todo 當中，是否有被取消的 todo 將其移至 「defaultlist」 資料中
-  const currentPageId = getCurrentPageId();
-  if (
-    currentPageId === "top" && // 如果目前位於「重要」頁面
-    !currentTodo.top && // 且當前 todo 的 top 屬性為 false (星星被摘除)
-    currentTodo.srcId === "top" // 且該項 todo 最初是在「重要」頁面被創建出來的話
-  ) {
-    // 上述條件若符合，代表該項 todo 現在不該繼續存留在「重要」頁面中
-    moveTopToDefaultlist(currentTodo); // 移動到 defaultlist
-  }
+  // 移動到 defaultlist
+  moveTopToDefaultlist(currentTodo);
 }
 
 /**
@@ -281,10 +288,32 @@ export function changeTopByEditModal(e) {
   // 反轉在資料中的 checkbox 值，並儲存
   changeTop(currentTodo);
 
-  // 如果此頁位於 top，則 todo 在被按下星號後(無論是在 todiItem 還是在 editModal)，
-  // 立即觸發渲染，讓該項從此頁消失。
+  //  editModal 內的星星 icon (<i> tag)
+  const editModalStarIcon = e.target.children[0];
+
+  // 反轉 editModal 內的星星 icon
+  // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
+  editModalStarIcon.classList.toggle("fa-solid");
+  editModalStarIcon.classList.toggle("fa-regular");
+
+  // 如果此頁位於 Top:
   if (getCurrentPageId() === "top") {
+    // 立即觸發渲染，此時 top === false 的 todo 將從會此頁消失
     Router();
+
+    // 如果 editModalStarIcon 的 classList 含有 "fa-regular"，代表現在該項 todo 的 top 被取消掉了。
+    // 防止編輯一個已經消失的 todo:
+    //  1.禁用 editModal 內 checkbox 的勾選功能
+    //  2.禁用 editModal 內 textarea 的輸入功能
+    const checkboxInEditModal = e.target.previousElementSibling;
+    const textareaInEditModal = e.target.parentElement.previousElementSibling;
+    if (editModalStarIcon.classList.contains("fa-regular")) {
+      textareaInEditModal.setAttribute("disabled", "true");
+      checkboxInEditModal.classList.add("modal__check-option--disabled");
+    } else {
+      textareaInEditModal.removeAttribute("disabled");
+      checkboxInEditModal.classList.remove("modal__check-option--disabled");
+    }
   } else {
     // 如果此頁不是位於 top，則在按下星號後不渲染。
     // 在不渲染的情況下，直接透過 click editModal 內的星星來改變 todoItem 內的星星樣式
@@ -294,9 +323,8 @@ export function changeTopByEditModal(e) {
     starInTodoItem.classList.toggle("fa-regular");
   }
 
-  // 因為 eidtModal 內的星星不是使用 checkbox 來做，所以不會在點擊之後就改變樣式，所以這邊要設定被按下去之後星星的樣式切換。
-  e.target.children[0].classList.toggle("fa-solid");
-  e.target.children[0].classList.toggle("fa-regular");
+  // 移動到 defaultlist
+  moveTopToDefaultlist(currentTodo); 
 }
 
 /**
