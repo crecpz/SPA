@@ -40,12 +40,11 @@ export const Home = {
     },
 
     mount: function () {
-        // scrollBarFix();
     },
 
     render: function () {
         // @ 提醒: 
-        // 1.在「總覽」中並不打算顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
+        // 1.在「總覽」中並不會顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
         // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
 
         // 存放目前 view 模式
@@ -68,23 +67,15 @@ export const Home = {
         // * --------------------------- grid-view  -----------------------------------
 
         if (currentView === "grid-view") {
-            // * 準備「預設列表」總覽卡片:
-            // const defaultlist = getPage("defaultlist");
-
             // * 準備「自訂列表」總覽卡片
             // 如果頁面物件是來自於 customlist ，則為頁面物件新增一個 isCustom 的屬性並設為 true，
             // 此屬性可以在下面遍歷的時候用來判斷 <a> 的 href 內容是否該加 customlist/。
             // (因為 customlist 的網址結構跟其他頁面不同)
-            const custom = DATA.custom;
-            custom.forEach((pageObj) => {
+            // const custom = DATA.custom;
+            DATA.custom.forEach((pageObj) => {
                 pageObj.isCustom = true;
             });
 
-            // 將上述準備的的內容放入陣列
-            // const contentArray = [defaultlist, ...custom];
-            // const contentArray2 = getAllPage().filter(({ id }) => id !== "top");
-            // console.log(contentArray,contentArray2)
-            // 利用 map 遍歷 overviewData
             viewContent = pageContentObjects
                 .map(({ name: pageName, content, isCustom, id, color }) => {
 
@@ -103,6 +94,7 @@ export const Home = {
                     const percentage = isNaN(Math.round((completed / all) * 100))
                         ? "0"
                         : fillZero(Math.round((completed / all) * 100));
+
                     return `
                         <a href="#/${isCustom ? "customlist/" + id : id}" class="overview__link">
                             <div class="overview__header">
@@ -190,10 +182,10 @@ export const Home = {
         // (如果全部都沒內容就必須讓 empty-msg 出現)
         const noContent = pageContentObjects.every((pageObj) => pageObj.content.length === 0);
         // contentsWillBeDisplayed 的內容將會是以下狀況其一:
-        // 1. currentView === grid-view, noContent === true ---> contentsWillBeDisplayed = grid-view 專用的 emptyMsg
-        // 2. currentView === grid-view, noContent === false ---> contentsWillBeDisplayed =  grid-view 的內容
-        // 3. currentView === list-view, noContent === true ---> contentsWillBeDisplayed = list-view 專用的 emptyMsg
-        // 4. currentView === list-view, noContent === false ---> contentsWillBeDisplayed = list-view 的內容
+        // 1. currentView === grid-view && noContent === true ---> contentsWillBeDisplayed = grid-view 專用的 emptyMsg
+        // 2. currentView === grid-view && noContent === false ---> contentsWillBeDisplayed =  grid-view 的內容
+        // 3. currentView === list-view && noContent === true ---> contentsWillBeDisplayed = list-view 專用的 emptyMsg
+        // 4. currentView === list-view && noContent === false ---> contentsWillBeDisplayed = list-view 的內容
         if(currentView === "grid-view") {
             if(noContent){
                 contentsWillBeDisplayed = createEmptyMsg(
@@ -224,7 +216,7 @@ export const Home = {
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
                         <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed
-                                        ${currentView === "grid-view" ? "hidden" : ""}
+                                        ${currentView === "grid-view" || noContent ? "hidden" : ""}
                         ">
                             清除完成事項
                         </button>
