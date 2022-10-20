@@ -55,7 +55,9 @@ export const Top = {
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
+                <li id="${id}" class="todo__item ${
+          checked ? "todo__item--isChecked" : ""
+        }">
                   <label class="todo__checkbox checkbox">
                     <input type="checkbox" class="checkbox__input" ${
                       checked ? "checked" : ""
@@ -70,7 +72,6 @@ export const Top = {
         `;
       })
       .join("");
-
 
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.top.msgText,
@@ -115,7 +116,7 @@ export const Top = {
   },
 
   listener: {
-    click: function (e) {
+    click: (e) => {
       // * 各頁面通用的 click 事件函數
       pageClickEvent(e);
 

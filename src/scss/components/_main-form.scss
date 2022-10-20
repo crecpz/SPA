@@ -1,0 +1,63 @@
+@use "abstracts" as *;
+
+
+.main__form{
+  grid-column: 1/-1;
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  z-index: 5;
+}
+
+.main__input{
+  @include text(base);
+  color: var(--primary-color);
+  width: 100%;
+  padding: .5rem .75rem;
+
+  background-color: var(--secondary-color);
+
+}
+
+.todo-form {
+  @include flex;
+  grid-row: 3;
+
+  &__input {
+    border: 1px solid var(--primary-color);
+  }
+
+  &__submit {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 1rem 1.5rem;
+  
+    i{
+      pointer-events: none;
+    }
+  }
+}
+
+
+.search {
+  width: 100%;
+  
+  
+  &__form{
+    position: relative;
+  }
+  
+  &__input{
+    padding-left: 3rem;
+    // border-radius: deep-map-get($border-radius, base);
+    border: 0;
+    border-bottom: 1px solid var(--primary-color);
+  }
+
+  i {
+    position: absolute;
+    left: 1.75rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

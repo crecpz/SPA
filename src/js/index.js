@@ -1,13 +1,14 @@
 import { updateMode } from "./function/mode.js";
-import {
-  activeNavLists,
-  renderCustomList,
-} from "./function/ui.js";
+import { activeNavLists, renderCustomList } from "./function/ui.js";
 import { Router } from "./routes/Router.js";
 import { appHeight } from "./function/fix.js";
 import { NotFound } from "./pages/NotFound.js";
 import { Home } from "./pages/Home.js";
-import { switchNotFoundState } from "./function/helper.js";
+import {
+  getCurrentPageId,
+  pageIsNotExist,
+  switchNotFoundState,
+} from "./function/helper.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
@@ -44,7 +45,8 @@ window.addEventListener("hashchange", hideTodoForm);
 export function hideTodoForm() {
   if (
     (location.hash === "#/" && Home.state.view === "grid-view") ||
-    NotFound.state.isNotFound
+    pageIsNotExist() ||
+    location.hash === "#/search"
   ) {
     document.querySelector(".todo-form").classList.add("hidden");
   } else {

@@ -237,3 +237,8 @@ export function pageIsNotExist() {
   // 既獲取不到物件、又不存在於 noDataPage 中，代表目前沒有這個頁面
   return !currentPageObj && notBelongAnyPage;
 }
+
+
+export function search(e){
+  
+}

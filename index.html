@@ -37,7 +37,8 @@
                 </button>
 
                 <!-- mode -->
-                <button id="mode-btn" class="mode-btn mode-btn--change"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                <button id="mode-btn" class="mode-btn mode-btn--change"><i
+                        class="fa-solid fa-circle-half-stroke"></i></button>
             </div>
 
             <div class="nav__content">
@@ -80,17 +81,35 @@
                         <div class="hamburger__bar"></div>
                         <div class="hamburger__bar"></div>
                     </button>
+                    
+                    <!-- search bar -->
+                    <div id="search" class="search hidden">
+                        <form class="main__form search__form">
+                            <input type="text" id="search-input" class="search__input main__input" />
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </form>
+                    </div>
+
+                    <!-- 返回按鈕 -->
+                    <button id="back-btn" class="btn btn--primary btn--xs hidden btn--back">回前頁</button>
+                    
                     <!-- seach btn -->
-                    <a href="#/search" class="btn btn--search"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <a href="#/search" id="search-btn" class="btn btn--search">
+                        <i class="fa-solid fa-magnifying-glass"></i></a>
                 </div>
             </header>
+
+            <!-- <div class="container">
+         
+            </div> -->
+
 
             <!-- 主內容渲染區域 -->
             <section class="main__content"></section>
 
             <!-- 輸入框 -->
-            <form class="todo-form hidden">
-                <input type="text" id="todo-input" class="todo-form__input">
+            <form class="main__form todo-form hidden">
+                <input type="text" id="todo-input" class="main__input todo__input">
                 <button id="todo-submit" class="btn todo-form__submit">
                     <i class="fa-solid fa-plus"></i>
                 </button>

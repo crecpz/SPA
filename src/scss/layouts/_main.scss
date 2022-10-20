@@ -162,9 +162,7 @@
     margin-top: 4rem;
     width: 100%;
     overflow: auto;
-    // padding-right: 0px; /* exact value is given in JavaScript code */
-    
-
+  
     @include sm{
       margin-top: 3rem;
     };
@@ -172,5 +170,11 @@
     .container {
       max-width: $max-width;
     }
+  }
+
+  &__search-result {
+    @include flex($jc: center, $ai:center);
+    width: 100%;
+    height: 100%;
   }
 }

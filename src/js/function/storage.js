@@ -2,21 +2,16 @@ import { Router } from "../routes/Router.js";
 import {
   createUniqueId,
   getAllPage,
-  getAllTodos,
   getCurrentPage,
   getCurrentPageId,
   getCurrentTodo,
-  getCurrentTodoOriginArray,
   getPage,
   unhide,
 } from "./helper.js";
 import {
   closeEditModal,
   closeModalOverlay,
-  getEditNameResult,
-  nameIsEditing,
 } from "./modal.js";
-import { activeNavLists, renderCustomList } from "./ui.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
 export const DATA = getStorage();
