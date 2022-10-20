@@ -18,6 +18,10 @@
     font-size: 1.25rem;
     color: var(--primary-color);
     margin-left: auto;
+
+    i {
+      pointer-events: none;
+    }
   }
 
   // 主要樣式

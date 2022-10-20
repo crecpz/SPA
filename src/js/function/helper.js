@@ -1,4 +1,5 @@
 import { DATA } from "../function/storage.js";
+import { NotFound } from "../pages/NotFound.js";
 
 /**
  * * 將所有頁面資料集合成一個 Array 並返回。
@@ -6,9 +7,9 @@ import { DATA } from "../function/storage.js";
  */
 export function getAllPage() {
   const allPage = [];
-  
+
   for (let pageType in DATA) {
-    if(Array.isArray(DATA[pageType])){
+    if (Array.isArray(DATA[pageType])) {
       allPage.push(...DATA[pageType]);
     }
   }
@@ -212,5 +213,27 @@ export function getCssVarValue(cssVar) {
   return varValue;
 }
 
-// const color = '1';
-// console.log(getCssVarValue(`--color-type-${color}`))
+/**
+ * * 切換 NotFound.js 中的 isNotFound 狀態
+ */
+export function switchNotFoundState() {
+  NotFound.state.isNotFound = pageIsNotExist();
+}
+
+/**
+ * * 判斷目前所在頁面是否存在
+ * @returns Boolean。 true: 不存在； false: 存在
+ */
+export function pageIsNotExist() {
+  // noDataPage 放的是在 DATA 內沒有存放資料的頁面(頁面ID)
+  const noDataPage = ["home", "search"];
+  // 取得當前頁面在 DATA 中的物件
+  const currentPageObj = getCurrentPage();
+  // 取得當前頁面 ID
+  const currentPageId = getCurrentPageId();
+  // 檢查 noDataPage 內的每一個項目是否不等於當前頁面 ID
+  const notBelongAnyPage = noDataPage.every((id) => id !== currentPageId);
+
+  // 既獲取不到物件、又不存在於 noDataPage 中，代表目前沒有這個頁面
+  return !currentPageObj && notBelongAnyPage;
+}
