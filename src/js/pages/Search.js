@@ -1,5 +1,6 @@
-import { getAllTodos } from "../function/helper.js";
-import { searchPageUnmount, searchPageMount, createEmptyMsg, emptyMsg } from "../function/ui.js";
+import { getAllTodos, getSearchResult, searchResult } from "../function/helper.js";
+import { createEmptyMsg, emptyMsg, switchSearchPage } from "../function/ui.js";
+import { Router } from "../routes/Router.js";
 
 export const Search = {
   state: {
@@ -7,11 +8,7 @@ export const Search = {
   },
 
   mount: () => {
-    searchPageMount();
-    // const backBtn = document.getElementById('back-btn');
-    // const searchBtn = document.getElementById('search-btn');
-    // backBtn.classList.remove('hidden');
-    // searchBtn.classList.add('hidden');
+
   },
 
   render: () => {
@@ -22,7 +19,25 @@ export const Search = {
       "#888"
     );
 
-    const result = '';
+    const noSearchResult = searchResult.length === 0;
+      console.log(searchResult)
+    const result = searchResult.length !== 0
+      ? searchResult.map(({ id, checked, content, top }) => {
+        return `
+          <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
+            <label class="todo__checkbox checkbox">
+              <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""}>
+              <div class="checkbox__appearance"></div>
+            </label>
+            <p class="todo__content">${content}</p>
+            <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+          </li>
+        `;
+      }).join("") 
+      : '<p class="text-center">找不到您輸入的內容</p>';
+
+    // console.log(noSearchResult)
+
 
     // <!-- 主內容區 - header -->
     // <div class="main__content-header">
@@ -35,12 +50,16 @@ export const Search = {
     //       </div>
     //     </div>
     // </div>
+
     return `
 
       <!-- 主內容區 - list -->
       <div class="main__search-result">
         <div class="container">
-          ${emptyMsgContent}
+          ${noSearchResult
+        ? emptyMsgContent
+        : `<ul id="todo" class="todo">${result}</ul>`
+      }
         </div>
       </div>
     `;
@@ -49,18 +68,15 @@ export const Search = {
   listener: {
     click: (e) => {
       if (e.target.id === "back-btn") {
-        searchPageUnmount();
+        switchSearchPage();
         history.back();
       }
     },
-
-    input: function (e) {
-      if(e.target.id === "search-input"){
-        const value = e.target.value;
-        const allTodo = getAllTodos()
-        console.log(
-          allTodo.filter(todo => todo.content.includes(value))
-        )
+    // && e.target.value.trim() !== ""
+    input: (e) => {
+      if (e.target.id === "search-input") {
+        getSearchResult(e);
+        Router();
       }
     },
   }

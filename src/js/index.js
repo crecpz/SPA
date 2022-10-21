@@ -1,5 +1,5 @@
 import { updateMode } from "./function/mode.js";
-import { activeNavLists, renderCustomList } from "./function/ui.js";
+import { activeNavLists, renderCustomList, switchSearchPage } from "./function/ui.js";
 import { Router } from "./routes/Router.js";
 import { appHeight } from "./function/fix.js";
 import { NotFound } from "./pages/NotFound.js";
@@ -47,9 +47,13 @@ export function hideTodoForm() {
     (location.hash === "#/" && Home.state.view === "grid-view") ||
     pageIsNotExist() ||
     location.hash === "#/search"
-  ) {
+    ) {
     document.querySelector(".todo-form").classList.add("hidden");
   } else {
     document.querySelector(".todo-form").classList.remove("hidden");
   }
 }
+
+
+window.addEventListener("DOMContentLoaded", switchSearchPage);
+window.addEventListener("hashchange", switchSearchPage);

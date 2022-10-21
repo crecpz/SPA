@@ -31,3 +31,7 @@
 .text-xs{
   @include text(xs);
 }
+
+.text-center {
+  text-align: center;
+}

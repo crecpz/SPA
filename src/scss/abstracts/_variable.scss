@@ -1,13 +1,3 @@
 @use "map" as *;
 // 通用的最大寬度，主要用在 main__header 、 main__content-list 、 todo-form  
 $max-width: 75rem;
-
-
-// dark/light 模式切換所需的 transition-property
-$mode-transition-property: color, background-color, border;
-
-// dark/light 模式切換所需的 transition-duration
-$mode-transition-duration: map-get($transition-duration, mode);
-
-// nav 收合時的速度
-$collapse-transition-duration: map-get($transition-duration, collapse);

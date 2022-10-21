@@ -14,7 +14,7 @@
   background-color: var(--secondary-color);
 
   transition-property: width;
-  transition-duration: $collapse-transition-duration;
+  transition-duration: map-get($transition-duration, collapse);;
 
   &.nav-open {
     width: calc(100% - 23.4375rem);
@@ -38,7 +38,7 @@
     background-color: var(--secondary-color);
 
     transition-property:  width;
-    transition-duration: $collapse-transition-duration;
+    transition-duration: map-get($transition-duration, collapse);
 
     &.nav-open {
       width: calc(100% - 23.4375rem);
@@ -174,7 +174,20 @@
 
   &__search-result {
     @include flex($jc: center, $ai:center);
+    @include padding-x;
     width: 100%;
     height: 100%;
+
+    .container {
+      @include flex($dir: column, $ai: center, $jc: center);
+      max-width: $max-width;
+      height: 100%;
+    }
+
+    .todo{
+      width: 100%;
+      justify-self: flex-start;
+      height: 100%;
+    }
   }
 }

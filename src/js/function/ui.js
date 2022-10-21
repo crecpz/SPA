@@ -1,5 +1,4 @@
 import {
-  getCurrentPage,
   getCurrentPageId,
   hide,
   pageIsNotExist,
@@ -356,27 +355,24 @@ export function createEmptyMsg(msgText, svgTag, svgColor) {
   `;
 }
 
-
-export function searchPageMount(){
+export function switchSearchPage(){
+  const currentPageId = getCurrentPageId();
+  const searchBtn = document.getElementById('search-btn');
   const searchDOM = document.getElementById('search');
   const backBtn = document.getElementById('back-btn');
-  const searchBtn = document.getElementById('search-btn');
   const mainHamburger = document.getElementById('main-hamburger');
-
-  backBtn.classList.remove('hidden');
-  searchBtn.classList.add('hidden');
-  mainHamburger.classList.add('hidden');
-  searchDOM.classList.remove('hidden');
-}
-
-export function searchPageUnmount(){
-  const searchDOM = document.getElementById('search');
-  const backBtn = document.getElementById('back-btn');
-  const searchBtn = document.getElementById('search-btn');
-  const mainHamburger = document.getElementById('main-hamburger');
-
-  backBtn.classList.add('hidden');
-  searchBtn.classList.remove('hidden');
-  mainHamburger.classList.remove('hidden');
-  searchDOM.classList.add('hidden');
+  
+  if(currentPageId === "search"){
+    removeNavActive();
+    searchBtn.classList.add('hidden');
+    searchDOM.classList.remove('hidden');
+    backBtn.classList.remove('hidden');
+    mainHamburger.classList.add('hidden');
+  } else{
+    activeNavLists();
+    searchBtn.classList.remove('hidden');
+    searchDOM.classList.add('hidden');
+    backBtn.classList.add('hidden');
+    mainHamburger.classList.remove('hidden');
+  }
 }

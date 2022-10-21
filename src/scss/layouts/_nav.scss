@@ -19,7 +19,7 @@
 
 
   transition-property: left;
-  transition-duration: $collapse-transition-duration;
+  transition-duration: map-get($transition-duration, collapse);;
 
   // 當 .nav 與 .nav-open 同時存在:
   &.nav-open {

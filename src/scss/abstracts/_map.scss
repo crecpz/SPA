@@ -17,7 +17,7 @@ $text: (
 
 // transition
 $transition-duration:(
-  mode: 250ms,// 光線模式切換的速度
+  base: 350ms,
   collapse: 350ms,// 主要用於nav選單左右收合
   hover: 100ms,
 );

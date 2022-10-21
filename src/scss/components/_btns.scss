@@ -24,7 +24,7 @@
   // 在進入 search 頁面時，.btn--search 將會隱藏，由 .btn--back 取而代之
   &--back {
     white-space: nowrap;
-    margin-left: auto;
+    margin-left: 1.5em;
   }
 
   // 搜尋按鈕
@@ -186,6 +186,6 @@
     pointer-events: none;
 
     transition-property: background-color;
-    transition-duration: $mode-transition-duration;
+    transition-duration: map-get($transition-duration, base);
   }
 }
