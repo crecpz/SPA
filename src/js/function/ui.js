@@ -77,11 +77,8 @@ export function pageClickEvent(e) {
   // 如果目前點擊的目標是 <i> tag，且向上層尋找可以找到 .todo__item
   if (e.target.tagName === "I" && e.target.closest(".todo__item")) {
     changeTopByTodoItem(e);
-  } else if (
+  } else if (e.target.classList.contains("modal__top")) {
     // 如果上述方法獲取不到內容，則代表使用者現在點擊的是位於 editModal 的星星
-    e.target.classList.contains("modal__top") || // 使用者可能點的是 label
-    e.target.classList.contains("top") // 使用者可能點的是 <i> tag
-  ) {
     changeTopByEditModal(e);
   }
 
@@ -355,19 +352,23 @@ export function createEmptyMsg(msgText, svgTag, svgColor) {
   `;
 }
 
+/**
+ * * 根據目前所在的頁面，來決定 Search 頁面的 UI 顯示與隱藏
+ */
 export function switchSearchPage(){
   const currentPageId = getCurrentPageId();
   const searchBtn = document.getElementById('search-btn');
   const searchDOM = document.getElementById('search');
   const backBtn = document.getElementById('back-btn');
   const mainHamburger = document.getElementById('main-hamburger');
-  
+
   if(currentPageId === "search"){
     removeNavActive();
     searchBtn.classList.add('hidden');
     searchDOM.classList.remove('hidden');
     backBtn.classList.remove('hidden');
     mainHamburger.classList.add('hidden');
+    searchDOM.querySelector('#search-input').focus();
   } else{
     activeNavLists();
     searchBtn.classList.remove('hidden');

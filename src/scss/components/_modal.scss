@@ -127,7 +127,7 @@
     margin-top: 1.5rem;
     resize: none;
     padding: 0.5rem;
-    letter-spacing: 0.15em;
+    letter-spacing: deep-map-get($text,spacing, base);
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     background-color: transparent;

@@ -123,7 +123,7 @@
     border: 0;
     background-color: transparent;
     color: var(--primary-color);
-    letter-spacing: 0.15em;
+    letter-spacing: deep-map-get($text,spacing, base);
 
     @include sm {
       @include text(md);
@@ -186,8 +186,8 @@
 
     .todo{
       width: 100%;
-      justify-self: flex-start;
       height: 100%;
+      margin-top: 2rem;
     }
   }
 }

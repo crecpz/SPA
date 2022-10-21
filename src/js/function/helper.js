@@ -242,7 +242,7 @@ export function pageIsNotExist() {
 export let searchResult = [];
 
 /**
- * * 取得搜尋頁面的搜尋結果，返回一個 Array 內存放著結果
+ * * 取得搜尋頁面的搜尋結果，返回一個存放結果的 Array
  * @param {*} e 搜尋結果 Array
  */
 export function getSearchResult(e) {
@@ -253,16 +253,17 @@ export function getSearchResult(e) {
   // 遍歷所有的 todo 物件，找出物件中 content 屬性與使用者輸入匹配的屬性
   searchResult = allTodo.reduce((resultArray, todoObj) => {
     const lowerCaseContent = todoObj.content.toLowerCase();
-    
+
     // 與使用者輸入有匹配的才會被放入 resultArray
-    if(lowerCaseContent.includes(value)){
+    if (lowerCaseContent.includes(value)) {
       resultArray.push(todoObj);
     }
     return resultArray;
-  }, [])
+  }, []);
 
-  // 如果使用者在觸發 input 事件後輸入框為 "" 則清空搜尋結果
   if (value.trim() === "") {
     searchResult = [];
   }
+
+  console.log(searchResult)
 }

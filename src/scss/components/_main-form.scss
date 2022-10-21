@@ -49,16 +49,24 @@
   }
   
   &__input{
-    padding-left: 3rem;
-    // border-radius: deep-map-get($border-radius, base);
+    padding-left: 2.25rem;
     border: 0;
     border-bottom: 1px solid var(--primary-color);
   }
 
   i {
     position: absolute;
-    left: 1.75rem;
-    top: 50%;
     transform: translate(-50%, -50%);
+    top: 50%;
+  }
+
+  .fa-magnifying-glass {
+    left: .75rem;
+  }
+
+  .fa-circle-xmark {
+    right: -0.75rem;
+    @include text(base);
+    cursor: pointer;
   }
 }

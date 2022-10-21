@@ -111,10 +111,10 @@ export function setTodo(e) {
 export function moveTopToDefaultlist(moveTodoObj) {
   // 檢查於「重要」頁面中產生的 todo 當中，是否有被取消的 todo 將其移至 「defaultlist」 資料中
   const currentPageId = getCurrentPageId();
+  // currentPageId === "top" && // 如果目前位於「重要」頁面
 
   if (
-    currentPageId === "top" && // 如果目前位於「重要」頁面
-    !moveTodoObj.top && // 且當前 todo 的 top 屬性為 false (星星被摘除)
+    !moveTodoObj.top && // 當前 todo 的 top 屬性為 false (星星被摘除)
     moveTodoObj.srcId === "top" // 且該項 todo 最初是在「重要」頁面被創建出來的話
   ) {
     // 上述條件若符合，代表該項 todo 現在不該繼續存留在「重要」頁面中
@@ -276,6 +276,7 @@ export function changeTopByTodoItem(e) {
  * * 反轉重要星號的狀態(處理來自 editModal 所觸發的事件)
  */
 export function changeTopByEditModal(e) {
+  e.preventDefault();
   // 從他們的上層找 dataset.id (我將 todo 的 id 使用 dataset 的方式放在 modal__form)
   const currentTodoId = e.target.closest(".modal__form").dataset.id;
   // 取得當前 todo 資料
