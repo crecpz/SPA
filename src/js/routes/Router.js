@@ -86,13 +86,6 @@ export const Router = () => {
   // 找出對應頁面
   let { component = NotFound, props = {} } = getComponent(path, Route);
 
-  // 若嘗試獲取當前頁面的 Object 得到 undefined，
-  // 且獲取當前網址列中尾端的字串不是 "home"，則代表目前的頁面不存在。
-  // if (!getCurrentPage() && getCurrentPageId() !== "home") {
-  //   // 將 component 設成 NotFound
-  //   component = NotFound;
-  // }
-
   if (pageIsNotExist()) {
     component = NotFound;
   }

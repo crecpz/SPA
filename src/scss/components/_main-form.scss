@@ -60,13 +60,15 @@
     top: 50%;
   }
 
+  // 搜尋 icon
   .fa-magnifying-glass {
     left: .75rem;
   }
 
+  // #clear-text-btn
   .fa-circle-xmark {
-    right: -0.75rem;
     @include text(base);
+    right: -0.75rem;
     cursor: pointer;
   }
 }

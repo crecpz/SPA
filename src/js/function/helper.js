@@ -1,5 +1,7 @@
 import { DATA } from "../function/storage.js";
 import { NotFound } from "../pages/NotFound.js";
+import { Search } from "../pages/Search.js";
+import { Router } from "../routes/Router.js";
 
 /**
  * * 將所有頁面資料集合成一個 Array 並返回。
@@ -225,7 +227,7 @@ export function switchNotFoundState() {
  * @returns Boolean。 true: 不存在； false: 存在
  */
 export function pageIsNotExist() {
-  // noDataPage 放的是在 DATA 內沒有存放資料的頁面(頁面ID)
+  // ↓ noDataPage 放的是在 DATA 內沒有存放資料的頁面(頁面ID)
   const noDataPage = ["home", "search"];
   // 取得當前頁面在 DATA 中的物件
   const currentPageObj = getCurrentPage();
@@ -233,9 +235,8 @@ export function pageIsNotExist() {
   const currentPageId = getCurrentPageId();
   // 檢查 noDataPage 內的每一個項目是否不等於當前頁面 ID
   const notBelongAnyPage = noDataPage.every((id) => id !== currentPageId);
-
   // 既獲取不到物件、又不存在於 noDataPage 中，代表目前沒有這個頁面
-  return !currentPageObj && notBelongAnyPage;
+  return !currentPageObj && notBelongAnyPage; // 返回 Boolean， true: 不存在； false: 存在
 }
 
 // * 用來存放搜尋到的結果
@@ -263,7 +264,20 @@ export function getSearchResult(e) {
 
   if (value.trim() === "") {
     searchResult = [];
+    // input 內沒有文字 -> clear-text-btn 隱藏
+    document.getElementById('clear-text-btn').classList.add('hidden');
+  } else {
+    // input 內有文字 -> clear-text-btn 顯示
+    document.getElementById('clear-text-btn').classList.remove('hidden');
   }
+}
 
-  console.log(searchResult)
+/**
+ * * 當使用者直接在 Search 頁面中將找到的結果刪除時，重新更新結果並顯示出來
+ * 此函數只在 search 使用
+ * @param {*} id 要刪除的 id 
+ */
+export function removeTodoInSearchResult(id){
+  searchResult = searchResult.filter(i => i.id !== id)
+  Router();
 }

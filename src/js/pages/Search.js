@@ -1,6 +1,6 @@
-import { getAllTodos, getSearchResult, hide, searchResult, unhide } from "../function/helper.js";
+import { getAllTodos, getSearchResult, hide, removeTodoInSearchResult, searchResult, unhide } from "../function/helper.js";
 import { closeConfirmModal, closeEditModal, closeModalOverlay, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
-import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, removeTodo, saveEditedTodo } from "../function/storage.js";
+import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
 import { createEmptyMsg, emptyMsg, switchSearchPage } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
@@ -20,7 +20,6 @@ export const Search = {
       emptyMsg.search.svgTag,
       "#888"
     );
-
 
     // * 準備要顯示出來的搜尋結果
     // 檢查 searchInput 是否為空
@@ -45,17 +44,17 @@ export const Search = {
         result =
           `<ul id="todo" class="todo">
             ${searchResult.map(({ id, checked, content, top }) => {
-            return `
-                    <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
-                      <label class="todo__checkbox checkbox">
-                        <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""}>
-                        <div class="checkbox__appearance"></div>
-                      </label>
-                      <p class="todo__content">${content}</p>
-                      <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
-                    </li>
-              `;
-          }).join("")
+              return `
+                      <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
+                        <label class="todo__checkbox checkbox">
+                          <input type="checkbox" class="checkbox__input" ${checked ? "checked" : ""}>
+                          <div class="checkbox__appearance"></div>
+                        </label>
+                        <p class="todo__content">${content}</p>
+                        <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+                      </li>
+                  `;
+            }).join("")
           }
           </ul >`;
       }
@@ -73,7 +72,7 @@ export const Search = {
 
   listener: {
     click: (e) => {
-      // * 偵測使用者是否在 Search 頁面按下返回
+      // * 偵測使用者是否在 Search 頁面按下 "#back-btn"
       if (e.target.id === "back-btn") {
         // 切換搜尋頁面 UI
         switchSearchPage();
@@ -86,9 +85,6 @@ export const Search = {
         e.target.previousElementSibling.value = '';
         Router()
       }
-
-
-
 
 
       // * confirmModal 設定
@@ -163,9 +159,8 @@ export const Search = {
           e.target.closest("#confirm-modal").nextElementSibling.children[0].dataset
             .id;
         removeTodo(removeTodoId);
-
-        // ! ??
-        Router();
+        // ! 重新更新結果並顯示出來(此 function 只在此頁使用)
+        removeTodoInSearchResult(removeTodoId)
       }
     },
 
@@ -185,6 +180,13 @@ export const Search = {
         getSearchResult(e);
         // 每次的 input 都觸發渲染
         Router();
+      }
+    },
+
+    keydown: (e) => {
+      // 防止 input 在使用者按下 enter 時自動刷新
+      if (e.keyCode === 13) {
+        e.preventDefault();
       }
     },
   }

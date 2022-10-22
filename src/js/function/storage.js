@@ -168,13 +168,13 @@ export function removeTodo(removeTodoId) {
   pageObjOfRemoveTarget.content = pageObjOfRemoveTarget.content.filter(
     ({ id }) => id !== removeTodoId
   );
-
-  // 重新 render
-  Router();
-
+  
   // 存至 localStorage
   setStorage(DATA);
-
+  
+  // 重新 render
+  Router();
+  
   // 關閉編輯 todoItem 視窗與 modalOverlay
   closeEditModal();
   closeModalOverlay();
