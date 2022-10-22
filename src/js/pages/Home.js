@@ -27,6 +27,7 @@ import {
     dropdownSwitch,
     emptyMsg,
     pageClickEvent,
+    scroll,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
@@ -36,7 +37,7 @@ export const Home = {
     },
 
     mount: function () { 
-        // scrollBarFix();
+       
     },
 
     render: function () {
@@ -379,7 +380,7 @@ export const Home = {
             }
         },
 
-        change: function (e) {
+        change: (e) =>{
             //* 變更 checkbox 狀態
             changeCheckbox(e);
 
@@ -388,5 +389,9 @@ export const Home = {
                 saveEditedTodo(e);
             }
         },
+
+        scroll: (e) =>{
+           
+        }
     },
 };

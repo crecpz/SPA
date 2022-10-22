@@ -47,7 +47,7 @@ import {
 
 export const DefaultList = {
   mount: function () {
-    // scrollBarFix();
+    scrollBarFix();
   },
 
   render: function () {

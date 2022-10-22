@@ -6,7 +6,7 @@
   left: -100%;
 
   display: grid;
-  grid-template-rows: 4.375rem auto 1fr;
+  grid-template-rows: deep-map-get($header-height, lg) auto 1fr;
   grid-column: 1/2;
   grid-row: 1/-1;
 
@@ -17,9 +17,22 @@
   background-color: var(--secondary-color);
   color: var(--primary-color);
 
-
   transition-property: left;
-  transition-duration: map-get($transition-duration, collapse);;
+  transition-duration: map-get($transition-duration, collapse);
+
+  @include sm {
+    border-right: 0;
+    grid-template-rows: deep-map-get($header-height, sm) auto 1fr;
+  }
+
+  &__list {
+    a {
+      @include text(sm);
+      @include sm {
+        @include text(base);
+      }
+    }
+  }
 
   // 當 .nav 與 .nav-open 同時存在:
   &.nav-open {
@@ -45,20 +58,22 @@
 
   &__content {
     @include flex($dir: column, $jc: flex-start);
-    height: calc(var(--app-height) - 4.375rem);
+    height: calc(var(--app-height) - deep-map-get($header-height, lg));
     padding-bottom: 1rem;
+
+    @include sm {
+      height: calc(var(--app-height) - deep-map-get($header-height, sm));
+    }
   }
 
-  // ------------------------- [ list 共同樣式 ] -------------------------
   &__list-item {
     @include flex($ai: center);
-    @include text(sm);
     cursor: pointer;
     transition: background-color map-get($map: $transition-duration, $key: hover);
 
     // @ 「預設列表」的 icon 較窄，所以造成 nav 列表文字左右分配不均，
     // @ 所以有特別設定過它的距離。
-    &:nth-child(2){
+    &:nth-child(2) {
       i {
         margin-left: 3px;
         width: 29px;
@@ -80,6 +95,12 @@
     padding-left: 2.25rem;
     padding-right: 2.25rem;
     color: var(--primary-color);
+
+    // nav 內的每一個 list-item 在 $sm 的設定
+    @include sm {
+      padding-top: 0.575rem;
+      padding-bottom: 0.575rem;
+    }
 
     i {
       @include text(md);
@@ -111,26 +132,21 @@
   }
 }
 
-// ------------------------- [ list 獨立樣式個別設定 ] -------------------------
-
 .default-list {
-  @include text(md);
   font-weight: 900;
   margin-top: 2rem;
 }
-
-// .custom-list-wrapper {
-//   @include flex($dir: column);
-//   grid-row: 3/-1;
-//   max-height: 70vh;
-//   margin-top: auto;
-// }
 
 .custom-list-title {
   @include text(md);
   @include flex($ai: center);
   margin-top: 2rem;
   white-space: nowrap;
+
+  @include sm {
+    margin-top: 1rem;
+    @include text(sm);
+  }
 
   &::before,
   &::after {
@@ -145,7 +161,6 @@
 
   &::before {
     margin-right: 1.125rem;
-    // width: 1.125rem;
   }
 
   &::after {
@@ -158,9 +173,12 @@
   margin-bottom: 2rem;
   overflow-y: scroll;
 
+  @include sm {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
   &__color {
-    // width: 1.75rem;
-    // height: 1.75rem;
     width: 2rem;
     height: 2rem;
     margin-right: 1.5rem;

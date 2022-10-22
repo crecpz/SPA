@@ -38,7 +38,7 @@ import {
 
 export const Top = {
   mount: function () {
-    // scrollBarFix();
+    scrollBarFix();
   },
 
   render: function () {

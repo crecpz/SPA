@@ -281,3 +281,6 @@ export function removeTodoInSearchResult(id){
   searchResult = searchResult.filter(i => i.id !== id)
   Router();
 }
+
+
+

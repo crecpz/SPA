@@ -1,6 +1,7 @@
 @use "abstracts" as *;
 
 .checkbox {
+  position: relative;
   cursor: pointer;
 
   &:hover {

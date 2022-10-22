@@ -3,7 +3,9 @@
 $dropdown-transition-speed: 250ms;
 
 .dropdown {
-  &:not(:first-child){
+  overflow: hidden;
+
+  &:not(:first-child) {
     padding-top: 1.5rem;
   }
 
@@ -24,12 +26,14 @@ $dropdown-transition-speed: 250ms;
     width: 100%;
     padding-left: 1rem;
     padding-right: 2rem;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     color: var(--secondary-color);
     background-color: var(--primary-color);
     cursor: pointer;
     user-select: none;
+    border-top-left-radius: map-get($border-radius, md);
+    border-top-right-radius: map-get($border-radius, md);
   }
 
   &__arrow {
@@ -50,7 +54,9 @@ $dropdown-transition-speed: 250ms;
     padding-right: 1.5rem;
     border: 1px solid var(--primary-color);
     overflow: hidden;
-    transition: height ease-in-out $dropdown-transition-speed;
+    transition: height ease-in-out $dropdown-transition-speed,
+      opacity ease-in-out deep-map-get($transition-duration, middle),
+      visibility ease-in-out deep-map-get($transition-duration, middle);
 
     &--closing {
       height: 0;

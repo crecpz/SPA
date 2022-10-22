@@ -3,7 +3,6 @@
 .main__form {
   grid-column: 1/-1;
   width: 100%;
-
   margin: 0 auto;
   z-index: 5;
 }
@@ -13,23 +12,28 @@
   color: var(--primary-color);
   width: 100%;
   padding: 0.5rem 0.75rem;
-
   background-color: var(--secondary-color);
 }
 
 .todo-form {
   @include flex;
-  grid-row: 3;
+  grid-row: 3/4;
   max-width: $max-width;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 
   &__input {
     border: 1px solid var(--primary-color);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 
   &__submit {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     padding: 1rem 1.5rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 
     i {
       pointer-events: none;
@@ -39,21 +43,22 @@
 
 .search {
   max-width: $max-width;
-  width: calc(100% - 80px);
-  // margin: 0 auto;
+  width: calc(100% - 5rem); // @ 減掉 80px 是因為「取消」按鈕
+
 
   &__form {
     position: relative;
-
-    // @include xxl {
-    //   width: calc(100% - 80px);
-    // }
   }
 
   &__input {
     padding-left: 2.25rem;
     border: 0;
     border-bottom: 1px solid var(--primary-color);
+
+    @include sm {
+      padding-top: .3125rem;
+      padding-bottom: .3125rem;
+    }
   }
 
   i {

@@ -47,7 +47,7 @@ import {
 
 export const CustomList = {
   mount: function () {
-    // scrollBarFix();
+    scrollBarFix();
   },
 
   render: function (props) {

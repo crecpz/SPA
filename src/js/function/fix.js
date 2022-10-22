@@ -1,5 +1,3 @@
-import { Home } from "../pages/Home.js";
-import { NotFound } from "../pages/NotFound.js";
 
 /**
  * * 修正 mobile 100vh 的問題
@@ -18,5 +16,4 @@ export function scrollBarFix() {
     mainContentList.offsetWidth - mainContentList.clientWidth
       ? mainContentList.offsetWidth - mainContentList.clientWidth + "px"
       : "";
-  // console.log(mainContentList.style.paddingRight);
 }

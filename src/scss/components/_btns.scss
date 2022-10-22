@@ -161,13 +161,18 @@
 // hamburger
 .hamburger {
   @include flex($dir: column, $jc: space-between);
-  width: 40px;
-  height: 20px;
+  width: 2.5rem;
+  height: 1.25rem;
   border: 0;
   background-color: transparent;
   cursor: pointer;
   transition-property: opacity, visibility;
   transition-duration: 500ms;
+
+  @include sm{
+    width: 2rem;
+    height: 1rem;
+  }
 
   &--nav {
     @include lg {

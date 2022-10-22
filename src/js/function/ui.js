@@ -1,4 +1,9 @@
-import { getCurrentPageId, hide, pageIsNotExist, unhide } from "./helper.js";
+import {
+  getCurrentPageId,
+  hide,
+  pageIsNotExist,
+  unhide,
+} from "./helper.js";
 import {
   clearColorSelectorActive,
   closeConfirmModal,
@@ -182,6 +187,7 @@ export function clickToCloseListOption(e) {
  * * 控制 dropdown 展開與收合
  */
 export function dropdownSwitch(e) {
+  let hasScrollBar;
   const dropdownCover = e.target.nextElementSibling;
   const todos = dropdownCover.children[0];
   const dropdownArrow = e.target.querySelector(".dropdown__arrow");
@@ -191,9 +197,11 @@ export function dropdownSwitch(e) {
   if (dropdownCover.clientHeight) {
     dropdownCover.style.height = `${0}px`;
     dropdownArrow.classList.add("dropdown__arrow--closing");
+    dropdownCover.classList.add("hide");
   } else {
     dropdownCover.style.height = `${todos.clientHeight}px`;
     dropdownArrow.classList.remove("dropdown__arrow--closing");
+    dropdownCover.classList.remove("hide");
   }
 }
 
@@ -374,4 +382,16 @@ export function switchSearchPage() {
     mainHamburger.classList.remove("hidden");
     searchInput.value = "";
   }
+}
+
+// @ 測試用: 用於表示仍可往上滑
+export function scroll() {
+  const mainContentList = document.querySelector(".main__content-list");
+  mainContentList.addEventListener("scroll", (e) => {
+    if (e.target.scrollTop) {
+      mainContentList.classList.add("main__content--shadowTop");
+    } else {
+      mainContentList.classList.remove("main__content--shadowTop");
+    }
+  });
 }

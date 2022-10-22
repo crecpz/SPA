@@ -6,22 +6,27 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 360px));
   gap: 3.75rem;
 
+  
+
   @include lg {
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
   }
 
   @include md {
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
-    // gap: 2rem;
   }
 
   @include sm {
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
+    column-gap: 3.75rem;
+    row-gap: 1.5rem;
   }
 
   &__link {
     border: 2px solid var(--primary-color);
     color: var(--primary-color);
+    border-radius: map-get($border-radius, md);
+    overflow: hidden;
   }
 
   &__header {
