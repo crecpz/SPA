@@ -1,4 +1,5 @@
 // import { scrollBarFix } from "../function/fix.js";
+import { scrollBarFix } from "../function/fix.js";
 import {
   fillZero,
   getAllPage,

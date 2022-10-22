@@ -1,27 +1,26 @@
 @use "abstracts" as *;
 
-
-.main__form{
+.main__form {
   grid-column: 1/-1;
   width: 100%;
-  max-width: $max-width;
+
   margin: 0 auto;
   z-index: 5;
 }
 
-.main__input{
+.main__input {
   @include text(base);
   color: var(--primary-color);
   width: 100%;
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
 
   background-color: var(--secondary-color);
-
 }
 
 .todo-form {
   @include flex;
   grid-row: 3;
+  max-width: $max-width;
 
   &__input {
     border: 1px solid var(--primary-color);
@@ -31,24 +30,27 @@
     background-color: var(--primary-color);
     color: var(--secondary-color);
     padding: 1rem 1.5rem;
-  
-    i{
+
+    i {
       pointer-events: none;
     }
   }
 }
 
-
 .search {
-  // max-width: ;
-  width: 100%;
-  
-  
-  &__form{
+  max-width: $max-width;
+  width: calc(100% - 80px);
+  // margin: 0 auto;
+
+  &__form {
     position: relative;
+
+    // @include xxl {
+    //   width: calc(100% - 80px);
+    // }
   }
-  
-  &__input{
+
+  &__input {
     padding-left: 2.25rem;
     border: 0;
     border-bottom: 1px solid var(--primary-color);
@@ -62,7 +64,7 @@
 
   // 搜尋 icon
   .fa-magnifying-glass {
-    left: .75rem;
+    left: 0.75rem;
   }
 
   // #clear-text-btn

@@ -23,8 +23,16 @@
 
   // 在進入 search 頁面時，.btn--search 將會隱藏，由 .btn--back 取而代之
   &--back {
-    white-space: nowrap;
-    margin-left: 1.5em;
+    display: none;
+    
+    position: absolute;
+    right: 36px;
+    
+    @include xxl{
+      white-space: nowrap;
+      margin-left: 1.5em;
+      position: static
+    }
   }
 
   // 搜尋按鈕

@@ -1,3 +1,4 @@
+import { scrollBarFix } from "../function/fix.js";
 import { fillZero, getAllPage, hide, unhide } from "../function/helper.js";
 import {
     clearColorSelectorActive,
@@ -34,7 +35,9 @@ export const Home = {
         view: "grid-view",
     },
 
-    mount: function () { },
+    mount: function () { 
+        // scrollBarFix();
+    },
 
     render: function () {
         // @ 提醒:

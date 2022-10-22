@@ -51,7 +51,15 @@
     @include padding-x;
 
     .container {
-      @include flex($jc: space-between, $ai: center);
+      // @include flex($jc: space-between, $ai: center);
+      @include flex($ai: center, $jc: center);
+
+
+
+      @include xxl {
+        max-width:$max-width;
+        margin: 0 auto;
+      }
     }
   }
 
@@ -67,7 +75,7 @@
   &__content-header {
     @include flex($jc: center);
     @include padding-x;
-    position: sticky; // 09/04: 這邊考慮用 fixed
+    position: sticky;
     z-index: 5;
     top: 70px;
 
@@ -82,7 +90,6 @@
     }
 
     .container {
-      // @include flex($jc: space-between, $ai: center);
       position: relative;
       max-width: $max-width;
 

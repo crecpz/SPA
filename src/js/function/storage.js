@@ -340,7 +340,6 @@ export function removeCompleted() {
 
     case "defaultlist":
       removeCompletedFromCurrentPage();
-      console.log("defaultlist");
       break;
 
     default:

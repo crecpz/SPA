@@ -12,11 +12,11 @@ export function appHeight() {
 // /**
 //  * * 使 scrollBar 不佔據任何空間但保有滾動條樣式與滾動的功能。
 //  */
-// export function scrollBarFix() {
-//   const mainContentList = document.querySelector(".main__content-list");
-//   mainContentList.style.paddingRight =
-//     mainContentList.offsetWidth - mainContentList.clientWidth
-//       ? mainContentList.offsetWidth - mainContentList.clientWidth + "px"
-//       : "";
-//   console.log(mainContentList.style.paddingRight);
-// }
+export function scrollBarFix() {
+  const mainContentList = document.querySelector(".main__content-list");
+  mainContentList.style.paddingRight =
+    mainContentList.offsetWidth - mainContentList.clientWidth
+      ? mainContentList.offsetWidth - mainContentList.clientWidth + "px"
+      : "";
+  // console.log(mainContentList.style.paddingRight);
+}
