@@ -12,6 +12,40 @@
     cursor: pointer;
   }
 
+  &__item--search {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr auto;
+    row-gap: 1rem;
+    width: 100%;
+    
+    .todo__checkbox{
+     grid-column: 1/2; 
+    }
+    
+    .todo__content{
+      grid-column: 2/3;
+    }
+    
+    .top{
+      grid-column: 3/-1;
+    }
+
+    // @ 此樣式只有在 Search.js 有，為了提供 Search 結果該 todo 的 srcName
+    .todo__info {
+      @include flex;
+      @include text(xs);
+      color: #888;
+      grid-column: 1/-1;
+      pointer-events: none;
+
+      i {
+        margin-right: .5rem;
+        @include text(base);
+      }
+    }
+  }
+
   .checkbox__appearance {
     height: 1.5rem;
     width: 1.5rem;
