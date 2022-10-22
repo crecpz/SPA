@@ -7,15 +7,16 @@
   gap: 3.75rem;
 
   @include lg {
-    grid-template-columns: repeat(2, minmax(300px, 360px));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
   }
 
   @include md {
-    grid-template-columns: minmax(auto, 360px);
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
+    // gap: 2rem;
   }
 
   @include sm {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
   }
 
   &__link {

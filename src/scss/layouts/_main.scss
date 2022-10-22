@@ -14,7 +14,7 @@
   background-color: var(--secondary-color);
 
   transition-property: width;
-  transition-duration: map-get($transition-duration, collapse);;
+  transition-duration: map-get($transition-duration, collapse);
 
   &.nav-open {
     width: calc(100% - 23.4375rem);
@@ -37,7 +37,7 @@
     color: var(--primary-color);
     background-color: var(--secondary-color);
 
-    transition-property:  width;
+    transition-property: width;
     transition-duration: map-get($transition-duration, collapse);
 
     &.nav-open {
@@ -54,10 +54,8 @@
       // @include flex($jc: space-between, $ai: center);
       @include flex($ai: center, $jc: center);
 
-
-
       @include xxl {
-        max-width:$max-width;
+        max-width: $max-width;
         margin: 0 auto;
       }
     }
@@ -75,9 +73,9 @@
   &__content-header {
     @include flex($jc: center);
     @include padding-x;
-    position: sticky;
-    z-index: 5;
-    top: 70px;
+    // position: sticky;
+    // top: 70px;
+    // z-index: 5;
 
     color: var(--primary-color);
     background-color: var(--secondary-color);
@@ -86,7 +84,7 @@
     margin-top: 4rem;
 
     @include sm {
-      margin-top: 3rem;
+      margin-top: 2.25rem;
     }
 
     .container {
@@ -108,9 +106,9 @@
     width: 100%;
     height: 100%;
     min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
+
     @include sm {
       grid-template-rows: auto auto;
-      row-gap: 1rem;
     }
   }
 
@@ -130,7 +128,7 @@
     border: 0;
     background-color: transparent;
     color: var(--primary-color);
-    letter-spacing: deep-map-get($text,spacing, base);
+    letter-spacing: deep-map-get($text, spacing, base);
 
     @include sm {
       @include text(md);
@@ -145,10 +143,10 @@
   // Home.js 內的清除已完成
   &__clear-completed-btn {
     grid-column: 3/4;
-    grid-row: 1/2;
-
+    grid-row: 2/-1;
+    
     @include sm {
-      grid-row: 2/3;
+      margin-top: 1rem;
     }
   }
 
@@ -169,10 +167,10 @@
     margin-top: 4rem;
     width: 100%;
     overflow: auto;
-  
-    @include sm{
-      margin-top: 3rem;
-    };
+
+    @include sm {
+      margin-top: 1.5rem;
+    }
 
     .container {
       max-width: $max-width;
@@ -180,7 +178,7 @@
   }
 
   &__search-result {
-    @include flex($jc: center, $ai:center);
+    @include flex($jc: center, $ai: center);
     @include padding-x;
     width: 100%;
     height: 100%;
@@ -191,7 +189,7 @@
       height: 100%;
     }
 
-    .todo{
+    .todo {
       width: 100%;
       height: 100%;
       margin-top: 2rem;

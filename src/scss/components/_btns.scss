@@ -74,12 +74,6 @@
     }
   }
 
-  // 清除已完成(Home.js)
-  &--clear-completed{
-    // white-space: nowrap;
-    flex-shrink: 0;
-    // margin-top: 1rem;
-  }
 
   // 新增自訂列表按鈕
   &--custom-list {

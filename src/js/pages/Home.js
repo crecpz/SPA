@@ -218,9 +218,7 @@ export const Home = {
                     <div class="main__name-wrapper">
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
-                        <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm btn--clear-completed
-                                        ${currentView === "grid-view" || noContent ? "hidden" : ""}
-                        ">
+                        <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--xs ${currentView === "grid-view" || noContent ? "hidden" : ""}">
                             清除完成事項
                         </button>
                         <div class="main__view-btns">
