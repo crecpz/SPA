@@ -54,9 +54,7 @@ $dropdown-transition-speed: 250ms;
     padding-right: 1.5rem;
     border: 1px solid var(--primary-color);
     overflow: hidden;
-    transition: height ease-in-out $dropdown-transition-speed,
-      opacity ease-in-out deep-map-get($transition-duration, middle),
-      visibility ease-in-out deep-map-get($transition-duration, middle);
+    transition: height ease-in-out $dropdown-transition-speed;
 
     &--closing {
       height: 0;

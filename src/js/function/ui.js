@@ -187,7 +187,6 @@ export function clickToCloseListOption(e) {
  * * 控制 dropdown 展開與收合
  */
 export function dropdownSwitch(e) {
-  let hasScrollBar;
   const dropdownCover = e.target.nextElementSibling;
   const todos = dropdownCover.children[0];
   const dropdownArrow = e.target.querySelector(".dropdown__arrow");
@@ -197,11 +196,11 @@ export function dropdownSwitch(e) {
   if (dropdownCover.clientHeight) {
     dropdownCover.style.height = `${0}px`;
     dropdownArrow.classList.add("dropdown__arrow--closing");
-    dropdownCover.classList.add("hide");
+    // dropdownCover.classList.add("hide");
   } else {
     dropdownCover.style.height = `${todos.clientHeight}px`;
     dropdownArrow.classList.remove("dropdown__arrow--closing");
-    dropdownCover.classList.remove("hide");
+    // dropdownCover.classList.remove("hide");
   }
 }
 
