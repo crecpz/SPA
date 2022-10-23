@@ -17,11 +17,16 @@
 
 .todo-form {
   @include flex;
-  grid-row: 3/4;
+  // grid-row: 3/4;
   max-width: $max-width;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-
+  
+  // @ test
+  position:fixed;
+  top: 100%;
+  transform: translateY(-100%);
+  
   &__input {
     border: 1px solid var(--primary-color);
     border-top-left-radius: 5px;

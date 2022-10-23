@@ -272,12 +272,5 @@ export const Home = {
                 saveEditedTodo(e);
             }
         },
-
-        touchend:(e) => { 
-            if(e.target.id === "todo-submit"){
-                // e.preventDefault();
-                // e.target.previousElementSibling.focus();
-            }
-        },
     },
 };
