@@ -162,7 +162,7 @@
 .hamburger {
   @include flex($dir: column, $jc: space-between);
   @include text(sm);
-  width: 2.5rem;
+  // width: 2.5rem;
   height: 1.25rem;
   border: 0;
   background-color: transparent;

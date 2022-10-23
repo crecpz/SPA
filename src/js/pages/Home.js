@@ -372,7 +372,7 @@ export const Home = {
 
         touchend:(e) => { 
             if(e.target.id === "todo-submit"){
-                // e.preventDefault();
+                e.preventDefault();
                 e.target.previousElementSibling.focus();
             }
         },
