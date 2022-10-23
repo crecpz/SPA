@@ -3,23 +3,17 @@
 .overview {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 360px));
-  gap: 3.75rem;
-
-  
-
-  @include lg {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
-  }
+  // grid-template-columns: repeat(auto-fill, minmax(300px, 360px));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3rem;
 
   @include md {
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
   }
-
+  
   @include sm {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
-    column-gap: 3.75rem;
     row-gap: 1.5rem;
+    // grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
   }
 
   &__link {

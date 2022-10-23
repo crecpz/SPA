@@ -128,6 +128,30 @@ export function pageClickEvent(e) {
 // * nav 中存放 custom 的容器
 const customListDOM = document.querySelector(".custom-list");
 
+// /**
+//  * * 渲染 customList 至 nav 中
+//  */
+// export function renderCustomList() {
+//   const currentPageId = getCurrentPageId();
+//   let lists = DATA.custom
+//     .map(({ id, name, color }) => {
+//       return `
+//       <li id="${id}" 
+//           class="custom-list__item nav__list-item 
+//                 ${id === currentPageId ? "nav__list-item--active" : null}"
+//       >
+//           <a class="nav__list-link nav__list-link--custom-list" 
+//               href="#/customlist/${id}">
+//               <div class="custom-list__color color-block color-block-${color}"></div>
+//               ${name}
+//           </a>
+//       </li>
+//     `;
+//     })
+//     .join("");
+//   customListDOM.innerHTML = lists;
+// }
+
 /**
  * * 渲染 customList 至 nav 中
  */
@@ -141,9 +165,11 @@ export function renderCustomList() {
                 ${id === currentPageId ? "nav__list-item--active" : null}"
       >
           <a class="nav__list-link nav__list-link--custom-list" 
-              href="#/customlist/${id}">
-              <div class="custom-list__color color-block color-block-${color}"></div>
-              ${name}
+              href="#/customlist/${id}"
+              title=${name}
+          >
+            <div class="custom-list__color color-block color-block-${color}"></div>
+            <p class="custom-list__name">${name}</p>
           </a>
       </li>
     `;
@@ -249,10 +275,11 @@ export function removeNavActive() {
  * 接著再使用此 id 來尋找在 nav 中與此 id 匹配的項目，
  * 最後將其加上 active 的 class。
  *
- * 注意:如果目前頁面是存在的，且目前的頁面 id 不是 search 才執行此函數內容。
- * 因為 search 是目前唯一一個頁面不需要有任何 active 在 nav 上面的頁面。
+ * ! 注意:如果目前頁面是存在的，且目前的頁面 id 不是 search，才執行此函數。
+ * ! 因為 search 是目前唯一一個頁面不需要有任何 active 在 nav 上面的頁面。
  */
 export function activeNavLists() {
+  removeNavActive();
   const currentPageId = getCurrentPageId();
   if (!pageIsNotExist() && currentPageId !== "search") {
     const activeTarget = navContent.querySelector(`#${currentPageId}`);

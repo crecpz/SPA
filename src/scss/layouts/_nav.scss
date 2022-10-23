@@ -93,7 +93,7 @@
     padding-top: 0.875rem;
     padding-bottom: 0.875rem;
     padding-left: 2.25rem;
-    padding-right: 2.25rem;
+    // padding-right: 2.25rem; // ! 右側應該是不用 padding
     color: var(--primary-color);
 
     // nav 內的每一個 list-item 在 $sm 的設定
@@ -183,5 +183,15 @@
     height: 2rem;
     margin-right: 1.5rem;
     pointer-events: none;
+    // flex-shrink: 0;
   }
+}
+
+.custom-list__name{
+  // @ 文字省略(必須是 block or inline-block，必須有寬度)
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 14.0625rem; // 此為視窗大於 576px 時的文字寬度
+  pointer-events: none; // 防止點按到此，點按到此會造成手機模式下點擊後自動收合 nav 的功能失效
 }

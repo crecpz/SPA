@@ -15,3 +15,18 @@ export function scrollBarFix() {
       ? mainContentList.offsetWidth - mainContentList.clientWidth + "px"
       : "";
 }
+
+/**
+ * * 取得所有 customList 的 DOM > 設定 customList 的最大寬度 > 一旦超出就將文字省略
+ */
+export function navCustomListTextOverflow(){
+  const customLists = document.querySelectorAll(".custom-list__name");
+  customLists.forEach((customList) => {
+    if (!(window.innerWidth >= 576)) {
+      customList.style.width = window.innerWidth - 125 + "px";
+    } else {
+      // 並非沒有設定寬度，而是 >= 576 的寬度已被設定在 _nav.scss 中的 .custom-list__name
+      customList.style.width = "";
+    }
+  });
+}
