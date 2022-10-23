@@ -66,6 +66,8 @@ export function setStorage(data) {
  * * 建立新的 todo 資料，並加進當前頁面中
  */
 export function setTodo(e) {
+  // console.log(  )
+  e.target.previousElementSibling.focus();
   e.preventDefault();
   const todoInput = document.querySelector("#todo-input");
   if (todoInput.value.trim() !== "") {

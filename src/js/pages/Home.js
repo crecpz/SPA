@@ -234,12 +234,6 @@ export const Home = {
     listener: {
         click: (e) => {
             pageClickEvent(e);
-            
-            if(e.target.id === "todo-submit"){
-                e.preventDefault();
-                e.target.previousElementSibling.focus();
-            }
-
             // ! 以下只有本頁有
             // * 變更列表 view 模式
             if (e.target.classList.contains("main__view-btn")) {
@@ -281,8 +275,8 @@ export const Home = {
 
         touchend:(e) => { 
             if(e.target.id === "todo-submit"){
-                e.preventDefault();
-                e.target.previousElementSibling.focus();
+                // e.preventDefault();
+                // e.target.previousElementSibling.focus();
             }
         },
     },
