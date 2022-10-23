@@ -1,4 +1,5 @@
 // import { scrollBarFix } from "../function/fix.js";
+import { scrollBarFix } from "../function/fix.js";
 import {
   getAllTodos,
 } from "../function/helper.js";
@@ -19,6 +20,9 @@ import {
 } from "../function/ui.js";
 
 export const Top = {
+  mount:()=> {
+    scrollBarFix();
+},
 
   render: function () {
     // 找出此頁面 object

@@ -1,3 +1,4 @@
+import { scrollBarFix } from "../function/fix.js";
 import { fillZero, getAllPage } from "../function/helper.js";
 import {
     todoIsEditing,
@@ -18,6 +19,10 @@ import { Router } from "../routes/Router.js";
 export const Home = {
     state: {
         view: "grid-view",
+    },
+
+    mount:()=> {
+        scrollBarFix();
     },
 
     render: function () {

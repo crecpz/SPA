@@ -1,7 +1,6 @@
 // import { scrollBarFix } from "../function/fix.js";
-import {
-  getCssVarValue,
-} from "../function/helper.js";
+import { scrollBarFix } from "../function/fix.js";
+import { getCssVarValue } from "../function/helper.js";
 import {
   listIsRemoving,
   nameIsEditing,
@@ -11,11 +10,7 @@ import {
   saveNameSetting,
   todoIsEditing,
 } from "../function/modal.js";
-import {
-  changeCheckbox,
-  DATA,
-  saveEditedTodo,
-} from "../function/storage.js";
+import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
 import {
   clickToCloseListOption,
   createEmptyMsg,
@@ -25,6 +20,9 @@ import {
 } from "../function/ui.js";
 
 export const CustomList = {
+  mount: () => {
+    scrollBarFix();
+  },
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
@@ -97,7 +95,7 @@ export const CustomList = {
         </div>
     `;
   },
-  
+
   listener: {
     click: (e) => {
       // * 各頁面通用的 click 事件函數

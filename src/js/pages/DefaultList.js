@@ -1,12 +1,7 @@
 // import { scrollBarFix } from "../function/fix.js";
-import {
-  todoIsEditing,
-} from "../function/modal.js";
-import {
-  changeCheckbox,
-  DATA,
-  saveEditedTodo,
-} from "../function/storage.js";
+import { scrollBarFix } from "../function/fix.js";
+import { todoIsEditing } from "../function/modal.js";
+import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
 import {
   clickToCloseListOption,
   createEmptyMsg,
@@ -16,6 +11,9 @@ import {
 } from "../function/ui.js";
 
 export const DefaultList = {
+  mount: () => {
+    scrollBarFix();
+  },
 
   render: function () {
     // 找出此頁面 object
