@@ -1,31 +1,13 @@
 // import { scrollBarFix } from "../function/fix.js";
 import {
   getAllTodos,
-  getCssVarValue,
-  getCurrentPage,
-  hide,
-  unhide,
 } from "../function/helper.js";
 import {
-  clearColorSelectorActive,
-  closeConfirmModal,
-  closeEditModal,
-  closeEditNameModal,
-  closeModalOverlay,
-  createNewList,
-  listIsAdding,
-  listIsRemoving,
-  removeTodoConfirm,
-  todoEditing,
   todoIsEditing,
 } from "../function/modal.js";
 import {
   changeCheckbox,
-  changeTopByEditModal,
-  changeTopByTodoItem,
   DATA,
-  removeCompleted,
-  removeTodo,
   saveEditedTodo,
 } from "../function/storage.js";
 import {
@@ -37,9 +19,6 @@ import {
 } from "../function/ui.js";
 
 export const Top = {
-  mount: function () {
-    scrollBarFix();
-  },
 
   render: function () {
     // 找出此頁面 object

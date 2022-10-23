@@ -1,54 +1,21 @@
 // import { scrollBarFix } from "../function/fix.js";
-import { scrollBarFix } from "../function/fix.js";
 import {
-  fillZero,
-  getAllPage,
-  getAllTodos,
-  getCurrentPage,
-  getCurrentTodo,
-  hide,
-  unhide,
-} from "../function/helper.js";
-import {
-  clearColorSelectorActive,
-  closeConfirmModal,
-  closeEditModal,
-  closeEditNameModal,
-  closeModalOverlay,
-  createNewList,
-  listIsAdding,
-  listIsRemoving,
-  nameIsEditing,
-  nameSetting,
-  removeList,
-  removeListConfirm,
-  removeTodoConfirm,
-  saveNameSetting,
-  todoEditing,
   todoIsEditing,
 } from "../function/modal.js";
 import {
   changeCheckbox,
-  changeTopByEditModal,
-  changeTopByTodoItem,
   DATA,
-  removeCompleted,
-  removeTodo,
   saveEditedTodo,
 } from "../function/storage.js";
 import {
   clickToCloseListOption,
   createEmptyMsg,
-  dropdownSwitch,
   emptyMsg,
   openListOption,
   pageClickEvent,
 } from "../function/ui.js";
 
 export const DefaultList = {
-  mount: function () {
-    scrollBarFix();
-  },
 
   render: function () {
     // 找出此頁面 object

@@ -1,25 +1,10 @@
-import { scrollBarFix } from "../function/fix.js";
-import { fillZero, getAllPage, hide, unhide } from "../function/helper.js";
+import { fillZero, getAllPage } from "../function/helper.js";
 import {
-    clearColorSelectorActive,
-    closeConfirmModal,
-    closeEditModal,
-    closeEditNameModal,
-    closeModalOverlay,
-    createNewList,
-    listIsAdding,
-    listIsRemoving,
-    removeTodoConfirm,
-    todoEditing,
     todoIsEditing,
 } from "../function/modal.js";
 import {
     changeCheckbox,
-    changeTopByEditModal,
-    changeTopByTodoItem,
     DATA,
-    removeCompleted,
-    removeTodo,
     saveEditedTodo,
 } from "../function/storage.js";
 import {
@@ -27,17 +12,12 @@ import {
     dropdownSwitch,
     emptyMsg,
     pageClickEvent,
-    scroll,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
 export const Home = {
     state: {
         view: "grid-view",
-    },
-
-    mount: function () { 
-       
     },
 
     render: function () {

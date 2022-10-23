@@ -1,54 +1,30 @@
 // import { scrollBarFix } from "../function/fix.js";
 import {
-  fillZero,
-  getAllPage,
-  getAllTodos,
   getCssVarValue,
-  getCurrentPage,
-  getCurrentTodo,
-  hide,
-  unhide,
 } from "../function/helper.js";
 import {
-  clearColorSelectorActive,
-  closeConfirmModal,
-  closeEditModal,
-  closeEditNameModal,
-  closeModalOverlay,
-  createNewList,
-  listIsAdding,
   listIsRemoving,
   nameIsEditing,
   nameSetting,
   removeList,
   removeListConfirm,
-  removeTodoConfirm,
   saveNameSetting,
-  todoEditing,
   todoIsEditing,
 } from "../function/modal.js";
 import {
   changeCheckbox,
-  changeTopByEditModal,
-  changeTopByTodoItem,
   DATA,
-  removeCompleted,
-  removeTodo,
   saveEditedTodo,
 } from "../function/storage.js";
 import {
   clickToCloseListOption,
   createEmptyMsg,
-  dropdownSwitch,
   emptyMsg,
   openListOption,
   pageClickEvent,
 } from "../function/ui.js";
 
 export const CustomList = {
-  mount: function () {
-    scrollBarFix();
-  },
 
   render: function (props) {
     const pageData = DATA.custom.find((page) => page.id === props.id);
