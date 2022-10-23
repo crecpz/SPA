@@ -74,7 +74,6 @@
     @include flex($dir: column, $ai: center);
     grid-column: 2/-1;
     grid-row: 2/3;
-    padding-bottom: 1.5rem;
     overflow-y: hidden;
 
     // &--shadowTop{
@@ -175,7 +174,9 @@
     @include padding-x;
     margin-top: 3rem;
     width: 100%;
-    overflow: auto;
+    // ! ↓ 改成指定 y 為 scroll，讓滾動條最初就佔位
+    // overflow: auto;
+    overflow-y: scroll;
 
     @include sm {
       margin-top: 1.5rem;

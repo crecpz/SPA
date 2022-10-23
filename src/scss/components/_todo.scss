@@ -18,16 +18,16 @@
     grid-template-rows: 1fr auto;
     row-gap: 1rem;
     width: 100%;
-    
-    .todo__checkbox{
-     grid-column: 1/2; 
+
+    .todo__checkbox {
+      grid-column: 1/2;
     }
-    
-    .todo__content{
+
+    .todo__content {
       grid-column: 2/3;
     }
-    
-    .top{
+
+    .top {
       grid-column: 3/-1;
     }
 
@@ -40,7 +40,7 @@
       pointer-events: none;
 
       i {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
         @include text(base);
       }
     }
@@ -54,6 +54,10 @@
   &__item--isChecked {
     :is(.todo__checkbox, .todo__content, .top) {
       opacity: 0.5;
+    }
+
+    .todo__content{
+      text-decoration: line-through;
     }
   }
 

@@ -1,14 +1,14 @@
 import { updateMode } from "./function/mode.js";
-import { activeNavLists, renderCustomList, switchSearchPage } from "./function/ui.js";
+import {
+  activeNavLists,
+  renderCustomList,
+  switchSearchPage,
+} from "./function/ui.js";
 import { Router } from "./routes/Router.js";
-import { appHeight } from "./function/fix.js";
+import { appHeight, navCustomListTextOverflow } from "./function/fix.js";
 import { NotFound } from "./pages/NotFound.js";
 import { Home } from "./pages/Home.js";
-import {
-  getCurrentPageId,
-  pageIsNotExist,
-  switchNotFoundState,
-} from "./function/helper.js";
+import { pageIsNotExist, switchNotFoundState } from "./function/helper.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
@@ -47,13 +47,16 @@ export function hideTodoForm() {
     (location.hash === "#/" && Home.state.view === "grid-view") ||
     pageIsNotExist() ||
     location.hash === "#/search"
-    ) {
+  ) {
     document.querySelector(".todo-form").classList.add("hidden");
   } else {
     document.querySelector(".todo-form").classList.remove("hidden");
   }
 }
 
-
 window.addEventListener("DOMContentLoaded", switchSearchPage);
 window.addEventListener("hashchange", switchSearchPage);
+
+// 處理 nav 中 customList 名稱過長時的字數省略
+window.addEventListener("resize", navCustomListTextOverflow);
+window.addEventListener("DOMContentLoaded", navCustomListTextOverflow);
