@@ -28,6 +28,13 @@ import {
   setTodo,
 } from "./storage.js";
 
+// * nav 狀態
+let navIsOpen = false;
+
+export function setNavIsOpen(){
+  navIsOpen = !navIsOpen
+}
+
 // * 各個頁面中的 click 事件函數
 export function pageClickEvent(e) {
   // * 列表名稱設定相關(editNameModal)
@@ -299,6 +306,8 @@ export function navSwitcher() {
   [wrapper, nav, main, mainHeader].forEach((elem) => {
     elem.classList.toggle("nav-open");
   });
+
+  setNavIsOpen();
 }
 
 // nav 中所有的選單點擊切換行為

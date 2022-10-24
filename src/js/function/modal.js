@@ -58,7 +58,7 @@ export function listAdding() {
   listIsAdding = true;
 
   // 如果目前螢幕的寬度 < 1024px，讓 「新增自訂列表」 按紐被點擊時收起 nav
-  // 防止 nav 遮蓋到頁面名稱而不知道要命名
+  // 防止 nav 遮蓋到頁面
   const smallerThan1024 = window.matchMedia("(max-width: 1024px)");
   if (smallerThan1024.matches) {
     navSwitcher();
@@ -258,7 +258,7 @@ export function removeListConfirm() {
 }
 
 /**
- // ? 萬一內容很長怎麼辦?
+ // ? 萬一內容很長怎麼辦? 
  * * 「 使用者按下刪除 todo ---> confirmModal 跳出 」 的確認過程
  * @param {*} todoId 欲刪除的 todoId
  */
@@ -278,7 +278,6 @@ export function removeTodoConfirm(todoId) {
  * 1.此函數調用的時機為當使用者按下「新增自訂列表」或「列表名稱設定」時所觸發
  * 2.給予 editNameModal 裡面 input 的 placeholder &  value 一個 defaultName (預設名稱)
  * 3.反白 value 文字(為了更容易編輯)
- * 4.
  *
  * @param {*} defaultName 預設名稱
  * - defaultName 將套用到 editNameModal 中 input 的 value 與 placeholder 中
@@ -333,10 +332,10 @@ export function clearColorSelectorActive() {
  * * 取得使用者編輯列表名稱後的最終結果
  */
 export function getEditNameResult(e) {
-  // todo - 獲取 editNameModal DOM 元素
+  // 獲取 editNameModal DOM 元素
   const editNameModal = e.target.closest("#edit-name-modal");
 
-  // todo - 獲取列表名稱 input 的內容
+  // 獲取列表名稱 input 的內容
   const editName = editNameModal.querySelector("#list-name");
   let newName = "";
   // 如果使用者留下空白，那就使用預設值。
