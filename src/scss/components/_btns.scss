@@ -95,8 +95,7 @@
   &--list-option {
     @include text(md);
     color: var(--primary-color);
-    padding-right: 0;
-    padding-left: 0;
+    padding: 0 .5rem; // 增加點選範圍
 
     i {
       pointer-events: none;

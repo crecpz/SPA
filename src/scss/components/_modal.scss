@@ -186,6 +186,7 @@
     @include flex($dir: column, $ai: center);
     color: var(--primary-color);
     text-align: center;
+    row-gap: 2rem;
 
     span:not(:first-child) {
       display: inline-block;
@@ -194,6 +195,8 @@
   }
 
   .confirm-content {
+    font-weight: bold;
+
     &::before {
       content: "「 ";
     }
@@ -205,7 +208,7 @@
   // btn-group 基礎樣式
   &__btn-group {
     @include flex($jc: center);
-    margin-top: 1.5em;
+    margin-top: 2rem;
 
     & > *:not(:first-child) {
       margin-left: 2rem;

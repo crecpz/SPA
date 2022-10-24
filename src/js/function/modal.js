@@ -155,13 +155,13 @@ export function createConfirmModalContent(confirmContent) {
 
   // 放入結構，並插入相對應的內容
   confirmModal.innerHTML = `
-    <p class="modal__text">
-        <span class="text-lg text-strong">刪除確認</span>
-        <span id="confirm-content" class="confirm-content text-base">
+    <div class="modal__text">
+        <p class="text-lg text-strong">刪除確認</p>
+        <p id="confirm-content" class="confirm-content text-base">
           ${confirmContent}
-        </span>
-        <span class="text-base text-normal">刪除之後將無法復原</span>
-    </p>
+        </p>
+        <p class="text-normal">刪除之後將無法復原</p>
+    </div>
     <div class="modal__btn-group">
         <button id="confirm-cancel" class="btn btn--primary btn--modal">取消</button>
         <button id="confirm-yes" class="btn btn--primary btn--modal btn--danger">確定刪除</button>
