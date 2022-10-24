@@ -35,6 +35,10 @@
   transition: 400ms ease-in-out;
   transition-property: transform, opacity, visibility;
 
+  @include sm {
+    max-width: 20rem;
+  }
+
   // 當 modal 被開啟時套用此 class
   &--active {
     visibility: visible;
@@ -92,10 +96,15 @@
   }
 
   &__color-block {
-    width: 42px;
-    height: 42px;
+    width: 2.625rem;
+    height: 2.625rem;
     cursor: pointer;
     background-color: var(--primary-color);
+
+    @include sm {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
 
     &--active {
       position: relative;
@@ -177,14 +186,17 @@
     @include flex($dir: column, $ai: center);
     color: var(--primary-color);
     text-align: center;
+    row-gap: 2rem;
 
     span:not(:first-child) {
       display: inline-block;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
   }
 
   .confirm-content {
+    font-weight: bold;
+
     &::before {
       content: "「 ";
     }
@@ -196,7 +208,7 @@
   // btn-group 基礎樣式
   &__btn-group {
     @include flex($jc: center);
-    margin-top: 1.5em;
+    margin-top: 2rem;
 
     & > *:not(:first-child) {
       margin-left: 2rem;

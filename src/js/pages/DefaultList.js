@@ -55,16 +55,10 @@ export const DefaultList = {
                     <div class="main__color-block color-block--default"></div>
                     <h2 class="main__name">${pageName}</h2>
                     <!-- list-option-btn -->
-                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
+                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                 </div>
                 <!-- list-options -->
                 <ul class="list-options">
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link">編輯</a>
-                  </li>
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link">排序</a>
-                  </li>
                   <li class="list-option">
                     <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
                   </li>

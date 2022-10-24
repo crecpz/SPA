@@ -344,7 +344,9 @@ export function removeCompleted() {
       removeCompletedFromCurrentPage();
       break;
 
+    // 若以上的 id 皆沒有被 switch 內的 case 中被匹配，則代表目前頁面在 customList 
     default:
+      // 跟 defaultlist 一樣，從當前頁面中刪除該項 todo
       removeCompletedFromCurrentPage();
       break;
   }

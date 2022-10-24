@@ -21,9 +21,6 @@ export const Home = {
         view: "grid-view",
     },
 
-    mount:()=> {
-        scrollBarFix();
-    },
 
     render: function () {
         // @ 提醒:

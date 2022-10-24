@@ -62,18 +62,12 @@ export const CustomList = {
                     <div class="main__color-block color-block-${color}"></div>
                     <h2 class="main__name">${pageName}</h2>
                     <!-- list-option-btn -->
-                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis"></i></button>
+                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                 </div>
                 <!-- list-options -->
                 <ul class="list-options">
                     <li class="list-option">
                       <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
-                    </li>
-                    <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">編輯</a>
-                    </li>
-                    <li class="list-option">
-                      <a href="javascript:;" class="list-option__link">排序</a>
                     </li>
                     <li class="list-option">
                       <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
