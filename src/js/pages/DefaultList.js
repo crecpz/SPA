@@ -52,10 +52,13 @@ export const DefaultList = {
         <div class="main__content-header">
             <div class="container">
                 <div class="main__name-wrapper">
-                    <div class="main__color-block color-block--default"></div>
-                    <h2 class="main__name">${pageName}</h2>
-                    <!-- list-option-btn -->
-                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  <div class="main__color-block color-block--default"></div>
+                  <h2 class="main__name">${pageName}</h2>
+                  <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm">
+                            清除完成事項
+                  </button>
+                  <!-- list-option-btn -->
+                  <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                 </div>
                 <!-- list-options -->
                 <ul class="list-options">
@@ -81,12 +84,6 @@ export const DefaultList = {
     click: (e) => {
       // * 各頁面通用的 click 事件函數
       pageClickEvent(e);
-
-      // * listOption 開啟 & 關閉
-      // 判斷是否要開啟 listOption
-      openListOption(e);
-      // 點擊任意處來關閉 listOption
-      clickToCloseListOption(e);
     },
 
     change: (e) => {

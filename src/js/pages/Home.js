@@ -204,12 +204,27 @@ export const Home = {
                     <div class="main__name-wrapper">
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
-                        <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--xs ${
-                          currentView === "grid-view" || noContent
+                        <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option
+                          ${
+                            currentView === "grid-view"
                             ? "hidden"
                             : ""
+                          }"
+                        >
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <!-- list-options -->
+                        <ul class="list-options list-options--home">
+                          <li class="list-option">
+                            <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
+                          </li>
+                        </ul>
+                        <button id="remove-completed" class="main__clear-completed-btn main__clear-completed-btn--home btn btn--primary btn--sm ${
+                          currentView === "grid-view" || noContent
+                          ? "hidden"
+                          : ""
                         }">
-                            清除完成事項
+                          清除完成事項
                         </button>
                         <div class="main__view-btns">
                             <button data-view="grid-view" class="main__view-btn btn 
