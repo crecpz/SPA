@@ -5,13 +5,13 @@
   @include button-reset;
   cursor: pointer;
 
-  &--xs {
-    @include text(normal);
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-    padding-left: .75rem;
-    padding-right: .75rem;
-  }
+  // &--xs {
+  //   @include text(normal);
+  //   padding-top: .25rem;
+  //   padding-bottom: .25rem;
+  //   padding-left: .75rem;
+  //   padding-right: .75rem;
+  // }
 
   &--sm {
     @include text(normal);

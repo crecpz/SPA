@@ -69,7 +69,7 @@
     }
   }
 
-    // main 中間部分內容區
+  // main 中間部分內容區
   &__content {
     @include flex($dir: column, $ai: center);
     grid-column: 2/-1;
@@ -96,10 +96,9 @@
     }
 
     .container {
+      @include flex($dir: column, $ai: flex-end);
       position: relative;
       max-width: $max-width;
-
-      @include flex($dir: column, $ai: flex-end);
       width: 100%;
     }
   }
@@ -125,7 +124,7 @@
     grid-row: 1/2;
     align-self: stretch;
     width: 0.625rem;
-    margin-right: 2rem;
+    margin-right: 1.5rem;
   }
 
   &__name {
@@ -138,23 +137,48 @@
     color: var(--primary-color);
     letter-spacing: deep-map-get($text, spacing, base);
 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     @include sm {
       @include text(md);
     }
   }
 
-  &__list-option-btn {
-    margin-left: auto;
-    grid-row: 1/2;
-  }
-
-  // Home.js 內的清除已完成
+  // 清除已完成按鈕
   &__clear-completed-btn {
+    white-space: nowrap;
     grid-column: 3/4;
     grid-row: 2/-1;
 
     @include sm {
-      margin-top: 1rem;
+      display: none;
+    }
+
+
+    // ! home.js 中 class 要移併刪掉
+    &--home {
+      // @include sm {
+      //   display: none;
+      // }
+      // @include sm {
+      //   margin-top: 1rem;
+      //   display: block;
+      // }
+    }
+  }
+
+  &__list-option-btn {
+    margin-left: 1.25rem;
+    grid-row: 1/2;
+
+    &--default-list {
+      display: none;
+
+      @include sm {
+        display: block;
+      }
     }
   }
 
@@ -172,8 +196,7 @@
   &__content-list {
     @include flex($jc: center);
     @include padding-x;
-    
-    
+
     margin-top: 3rem;
     width: 100%;
     // ! ↓ 改成指定 y 為 scroll，讓滾動條最初就佔位

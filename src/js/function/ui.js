@@ -30,6 +30,12 @@ import {
 
 // * 各個頁面中的 click 事件函數
 export function pageClickEvent(e) {
+  // * listOption 開啟 & 關閉
+  // 判斷是否要開啟 listOption
+  openListOption(e);
+  // 點擊任意處來關閉 listOption
+  clickToCloseListOption(e);
+
   // * 列表名稱設定相關(editNameModal)
   // 當使用者在 「任何情況下」 按下 editNameModal 內的 "完成按鈕"
   if (e.target.id === "edit-name-close") {
@@ -300,7 +306,7 @@ export function navSwitcher() {
     elem.classList.toggle("nav-open");
   });
 
-  setNavIsOpen();
+  // setNavIsOpen();
 }
 
 // nav 中所有的選單點擊切換行為

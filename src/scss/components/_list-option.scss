@@ -3,13 +3,10 @@
 .list-options {
   @include text(sm);
   position: absolute;
-  top: 3.125rem;
-  right: 2.25rem;
+  top: 4rem;
+  right: .75rem;
   z-index: 5;
 
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  
   border-radius: deep-map-get($border-radius, base);
   background-color: var(--secondary-color);
   outline: 1px solid;
@@ -17,26 +14,38 @@
   transform: scale(0);
   transform-origin: top right;
   transition: transform map-get($map: $transition-duration, $key: hover);
-
+  
   &--open {
     transform: scale(1);
+  }
+
+  &--home {
+    right: 7.025rem;
   }
 }
 
 .list-option {
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--tertiary-color);
+  }
+
+  &--custom-list {
+    display: none;
+
+    @include sm {
+      display: block;
+    }
+  }
 
   &__link {
     @include text(base);
     display: inline-block;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
     width: 100%;
-
-    transition: background-color 100ms, 
-      color 100ms;
+    transition: background-color 100ms, color 100ms;
 
     color: var(--primary-color);
 

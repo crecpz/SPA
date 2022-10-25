@@ -197,12 +197,21 @@
   .confirm-content {
     font-weight: bold;
 
-    &::before {
-      content: "「 ";
-    }
-    &::after {
-      content: " 」";
-    }
+    width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; // 行數
+    -webkit-box-orient: vertical;
+    white-space: normal;
+
+
+    // @ 暫時禁用，因為省略字串時後方括號會不見
+    // &::before {
+    //   content: "「 ";
+    // }
+    // &::after {
+    //   content: " 」";
+    // }
   }
 
   // btn-group 基礎樣式
