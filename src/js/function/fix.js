@@ -24,8 +24,13 @@ export function navCustomListTextOverflow() {
     if (!(window.innerWidth >= 576)) {
       customList.style.width = window.innerWidth - 125 + "px";
     } else {
-      // 並非沒有設定寬度，而是 >= 576 的寬度已被設定在 _nav.scss 中的 .custom-list__name
       customList.style.width = "";
+      // 注意，這不代表沒有為其設定寬度，而是視窗 >= 576 時，customList 不再使用 inline-style 設定寬度，而是設定在 _nav.scss 中的 .custom-list__name
     }
   });
+}
+
+export function mainNameTextOverflow(){
+  const mainName = document.querySelectorAll(".main__name");
+  // mainName
 }
