@@ -34,9 +34,10 @@
     grid-row: 1 / 2;
     position: fixed;
     z-index: 5;
-
+    
     width: 100%;
     height: deep-map-get($header-height, lg);
+    @include padding-x;
 
     border-bottom: 2px solid var(--primary-color);
     color: var(--primary-color);
@@ -49,22 +50,30 @@
       height: deep-map-get($header-height, sm);
     }
 
+
     &.nav-open {
       width: calc(100% - 23.4375rem);
-
       @include lg {
         width: 100%;
       }
     }
 
-    @include padding-x;
 
-    .container {
-      @include flex($ai: center, $jc: center);
-
-      @include xxl {
-        max-width: $max-width;
+    &-container {
+      width: 100%;
+      margin: 0 auto;
+      
+      &--normal {
+        @include flex($ai: center, $jc: center);
+      }
+      
+      &--search {
+        @include flex($ai: center, $jc: center);
         margin: 0 auto;
+        
+        @include xxl {
+          max-width: $max-width;
+        }
       }
     }
   }

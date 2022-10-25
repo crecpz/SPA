@@ -21,7 +21,7 @@ import {
 
 export const Top = {
   mount:()=> {
-    scrollBarFix();
+    scrollBarFix(".main__content-list");
 },
 
   render: function () {

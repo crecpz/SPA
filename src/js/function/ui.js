@@ -387,30 +387,45 @@ export function createEmptyMsg(msgText, svgTag, svgColor) {
 
 /**
  * * 根據目前所在的頁面，來決定 Search 頁面的 UI 顯示與隱藏
+ * 主要要是根據當前頁面位在哪一頁，來控制 main__header-container--normal
+ * 與 main__header-container--search 哪個顯示哪個隱藏，一次只會顯示一個。
  */
 export function switchSearchPage() {
   const currentPageId = getCurrentPageId();
-  const searchBtn = document.getElementById("search-btn");
-  const searchDOM = document.getElementById("search");
-  const searchInput = searchDOM.querySelector("#search-input");
-  const backBtn = document.getElementById("back-btn");
-  const mainHamburger = document.getElementById("main-hamburger");
+  const normalContainer = document.querySelector(
+    ".main__header-container--normal"
+  );
+  const searchContainer = document.querySelector(".main__header-container--search");
 
   if (currentPageId === "search") {
-    removeNavActive();
-    searchBtn.classList.add("hidden");
-    searchDOM.classList.remove("hidden");
-    backBtn.classList.remove("hidden");
-    mainHamburger.classList.add("hidden");
-    searchInput.focus();
+    normalContainer.classList.add("hidden");
+    searchContainer.classList.remove("hidden");
   } else {
-    activeNavLists();
-    searchBtn.classList.remove("hidden");
-    searchDOM.classList.add("hidden");
-    backBtn.classList.add("hidden");
-    mainHamburger.classList.remove("hidden");
-    searchInput.value = "";
+    searchContainer.classList.add("hidden");
+    normalContainer.classList.remove("hidden");
   }
+
+  // const searchBtn = document.getElementById("search-btn");
+  // const searchDOM = document.getElementById("search");
+  // const searchInput = searchDOM.querySelector("#search-input");
+  // const backBtn = document.getElementById("back-btn");
+  // const mainHamburger = document.getElementById("main-hamburger");
+
+  // if (currentPageId === "search") {
+  //   removeNavActive();
+  //   searchBtn.classList.add("hidden");
+  //   searchDOM.classList.remove("hidden");
+  //   backBtn.classList.remove("hidden");
+  //   mainHamburger.classList.add("hidden");
+  //   searchInput.focus();
+  // } else {
+  //   activeNavLists();
+  //   searchBtn.classList.remove("hidden");
+  //   searchDOM.classList.add("hidden");
+  //   backBtn.classList.add("hidden");
+  //   mainHamburger.classList.remove("hidden");
+  //   searchInput.value = "";
+  // }
 }
 
 // @ 測試用: 用於表示仍可往上滑
