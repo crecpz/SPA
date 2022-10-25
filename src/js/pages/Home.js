@@ -16,7 +16,7 @@ export const Home = {
   },
 
   mount: () => {
-    scrollBarFix();
+    scrollBarFix(".main__content-list");
   },
 
   render: function () {
@@ -219,7 +219,7 @@ export const Home = {
                             <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
                           </li>
                         </ul>
-                        <button id="remove-completed" class="main__clear-completed-btn main__clear-completed-btn--home btn btn--primary btn--sm ${
+                        <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm ${
                           currentView === "grid-view" || noContent
                           ? "hidden"
                           : ""

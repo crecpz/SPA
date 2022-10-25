@@ -32,9 +32,6 @@
                 <!-- hamburger -->
                 <button id="nav-hamburger" class="hamburger hamburger--nav">
                     <i class="fa-solid fa-bars"></i>
-                    <!-- <div class="hamburger__bar"></div>
-                    <div class="hamburger__bar"></div>
-                    <div class="hamburger__bar"></div> -->
                 </button>
 
                 <!-- mode -->
@@ -75,29 +72,31 @@
         <!-- 主內容區 -->
         <main id="main" class="main">
             <header id="main__header" class="main__header">
-                <div class="container">
+                <div class="main__header-container main__header-container--normal">
                     <!-- hamburger -->
                     <button id="main-hamburger" class="hamburger hamburger--main">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-
-                    <!-- search bar -->
-                    <div id="search" class="search hidden">
-                        <form class="main__form search__form">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="search-input" class="search__input main__input" />
-                            <i id="clear-text-btn" class="hidden fa-solid fa-circle-xmark"></i>
-                        </form>
-                    </div>
-
-                    <!-- 取消按鈕 -->
-                    <button id="back-btn" class="btn btn--primary btn--xs hidden btn--back">取消</button>
 
                     <!-- seach btn -->
                     <a href="#/search" id="search-btn" class="btn btn--search">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
                 </div>
+
+                <div class="main__header-container main__header-container--search hidden">
+                    <!-- search bar -->
+                    <div id="search" class="search">
+                        <form class="main__form search__form">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" class="search__input main__input" />
+                            <i id="clear-text-btn" class="hidden fa-solid fa-circle-xmark"></i>
+                        </form>
+                    </div>
+                    <!-- 取消按鈕 -->
+                    <button id="back-btn" class="btn btn--primary btn--xs btn--back">取消</button>
+                </div>
+
             </header>
 
             <!-- 主內容渲染區域 -->

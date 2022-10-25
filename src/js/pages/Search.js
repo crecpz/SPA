@@ -1,3 +1,4 @@
+import { scrollBarFix } from "../function/fix.js";
 import { getAllTodos, getSearchResult, hide, removeTodoInSearchResult, searchResult, unhide } from "../function/helper.js";
 import { closeConfirmModal, closeEditModal, closeModalOverlay, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
@@ -10,7 +11,12 @@ export const Search = {
   },
 
   mount: () => {
-
+    scrollBarFix(".main__search-result");
+    // const mainSearchResult = document.querySelector(".main__search-result");
+    // mainSearchResult.style.paddingRight =
+    //   mainSearchResult.offsetWidth - mainSearchResult.clientWidth
+    //     ? mainSearchResult.offsetWidth - mainSearchResult.clientWidth + "px"
+    //     : "";
   },
 
   render: () => {

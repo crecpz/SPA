@@ -12,7 +12,7 @@ import {
 
 export const DefaultList = {
   mount: () => {
-    scrollBarFix();
+    scrollBarFix(".main__content-list");
   },
 
   render: function () {
