@@ -1,4 +1,3 @@
-
 /**
  * * 修正 mobile 100vh 的問題
  */
@@ -19,7 +18,7 @@ export function scrollBarFix() {
 /**
  * * 取得所有 customList 的 DOM > 設定 customList 的最大寬度 > 一旦超出就將文字省略
  */
-export function navCustomListTextOverflow(){
+export function navCustomListTextOverflow() {
   const customLists = document.querySelectorAll(".custom-list__name");
   customLists.forEach((customList) => {
     if (!(window.innerWidth >= 576)) {
