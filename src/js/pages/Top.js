@@ -12,10 +12,8 @@ import {
   saveEditedTodo,
 } from "../function/storage.js";
 import {
-  clickToCloseListOption,
   createEmptyMsg,
   emptyMsg,
-  openListOption,
   pageClickEvent,
 } from "../function/ui.js";
 

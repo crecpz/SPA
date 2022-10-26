@@ -15,7 +15,7 @@ export const DefaultList = {
     scrollBarFix(".main__content-list");
   },
 
-  render: function () {
+  render: () => {
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "defaultlist");
     const { name: pageName, content: pageContent } = pageObj;

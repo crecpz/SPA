@@ -121,12 +121,10 @@ export const Search = {
         changeTopByEditModal(e);
       }
 
-
       // * 開啟編輯 todoItem 視窗
       if (e.target.classList.contains("todo__item")) {
         todoEditing(e);
       }
-
 
       // * 關閉編輯 todoItem 視窗
       if (e.target.id === "edit-close") {

@@ -19,7 +19,7 @@ export const Home = {
     scrollBarFix(".main__content-list");
   },
 
-  render: function () {
+  render: ()=> {
     // @ 提醒:
     // 1.在「總覽」中並不會顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
     // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
@@ -71,39 +71,39 @@ export const Home = {
             : fillZero(Math.round((completed / all) * 100));
 
           return `
-                        <a href="#/${
-                          isCustom ? "customlist/" + id : id
-                        }" class="overview__link">
-                            <div class="overview__header">
-                                ${
-                                  color === "default"
-                                    ? ""
-                                    : `<div class="overview__color-block color-block color-block-${color}"></div>`
-                                }
-                                ${pageName}
-                            </div>
-                            <div class="overview__content">
-                                <div class="overview__text overview__text--column">待完成
-                                    <span class="overview__number overview__number--lg">${unCompleted}</span>
-                                </div>
-                                <div class="overview__group">
-                                    <div class="overview__text">全部
-                                        <span class="overview__number overview__number--sm">${all}</span>
-                                        </div>
-                                        <div class="overview__text">已完成
-                                        <span class="overview__number overview__number--sm">${completed}</span>
-                                        </div>
-                                </div>
-                                <div class="overview__progress-bar progress">
-                                <span class="progress__value">${percentage}%
-                                </span>
-                                <div class="progress__outer">
-                                        <div class="progress__inner" style="width:${percentage}%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    `;
+                  <a href="#/${
+                    isCustom ? "customlist/" + id : id
+                  }" class="overview__link">
+                      <div class="overview__header">
+                          ${
+                            color === "default"
+                              ? ""
+                              : `<div class="overview__color-block color-block color-block-${color}"></div>`
+                          }
+                          ${pageName}
+                      </div>
+                      <div class="overview__content">
+                          <div class="overview__text overview__text--column">待完成
+                              <span class="overview__number overview__number--lg">${unCompleted}</span>
+                          </div>
+                          <div class="overview__group">
+                              <div class="overview__text">全部
+                                  <span class="overview__number overview__number--sm">${all}</span>
+                                  </div>
+                                  <div class="overview__text">已完成
+                                  <span class="overview__number overview__number--sm">${completed}</span>
+                                  </div>
+                          </div>
+                          <div class="overview__progress-bar progress">
+                          <span class="progress__value">${percentage}%
+                          </span>
+                          <div class="progress__outer">
+                                  <div class="progress__inner" style="width:${percentage}%"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              `;
         })
         .join("");
     } else if (currentView === "list-view") {

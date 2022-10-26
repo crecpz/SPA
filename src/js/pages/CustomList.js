@@ -12,10 +12,8 @@ import {
 } from "../function/modal.js";
 import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
 import {
-  clickToCloseListOption,
   createEmptyMsg,
   emptyMsg,
-  openListOption,
   pageClickEvent,
 } from "../function/ui.js";
 
@@ -24,7 +22,7 @@ export const CustomList = {
     scrollBarFix(".main__content-list");
   },
 
-  render: function (props) {
+  render:  (props) =>{
     const pageData = DATA.custom.find((page) => page.id === props.id);
     const { name: pageName, content: pageContent, color } = pageData;
     const todoContent = pageContent
