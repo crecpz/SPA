@@ -8,7 +8,7 @@ export function appHeight() {
 
 /**
  * * 使 scrollBar 不佔據任何空間但保有滾動條樣式與滾動的功能。
- * @param {*} DOMElement 接收一個 css 選擇器作為參數，該元素必須是要有滾動條
+ * @param {*} DOMElement 接收一個 css 選擇器作為參數，且該元素必須是要有滾動條
  */
 export function scrollBarFix(DOMElement) {
   const scrollBarElement = document.querySelector(DOMElement);

@@ -54,6 +54,7 @@
     padding-left: 2.25rem;
     border: 0;
     border-bottom: 1px solid var(--primary-color);
+    letter-spacing: deep-map-get($text, spacing, base);
 
     @include sm {
       padding-top: .3125rem;

@@ -12,14 +12,11 @@ export const Search = {
 
   mount: () => {
     scrollBarFix(".main__search-result");
-    // const mainSearchResult = document.querySelector(".main__search-result");
-    // mainSearchResult.style.paddingRight =
-    //   mainSearchResult.offsetWidth - mainSearchResult.clientWidth
-    //     ? mainSearchResult.offsetWidth - mainSearchResult.clientWidth + "px"
-    //     : "";
   },
 
   render: () => {
+
+
     // * 準備 emptyMsg
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.search.msgText,

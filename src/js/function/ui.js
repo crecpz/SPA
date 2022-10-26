@@ -400,6 +400,8 @@ export function switchSearchPage() {
   if (currentPageId === "search") {
     normalContainer.classList.add("hidden");
     searchContainer.classList.remove("hidden");
+    // 進入搜尋頁面後對 searchInput 加上 focus()
+    document.querySelector('#search-input').focus();
   } else {
     searchContainer.classList.add("hidden");
     normalContainer.classList.remove("hidden");
