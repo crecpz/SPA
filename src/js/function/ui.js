@@ -23,6 +23,41 @@ import {
   setTodo,
 } from "./storage.js";
 
+// * 檢查目前是否有已經被完成的 todo，只有在有被完成的 todo 存在時， remove-completed 按鈕才亮起。
+let hasCompletedTodo;
+
+window.addEventListener("DOMContentLoaded", setHasCompletedTodo);
+window.addEventListener("hashchange", setHasCompletedTodo);
+
+export function setHasCompletedTodo() {
+  setTimeout(()=> {
+    hasCompletedTodo = document.querySelectorAll('.todo__item--isChecked').length !== 0;
+    disabledRemoveCompleted();
+  }, 0)
+}
+
+
+export function disabledRemoveCompleted() {
+  const reomveCompletedBtn = document.getElementById("remove-completed");
+  hasCompletedTodo
+    ? reomveCompletedBtn.removeAttribute("disabled", "")
+    : reomveCompletedBtn.setAttribute("disabled", "");
+}
+
+// export function disabledRemoveCompleted(boolean){
+//   const reomveCompletedBtn = document.getElementById('remove-completed');
+//   boolean
+//     ? reomveCompletedBtn.setAttribute('disabled', '')
+//     : reomveCompletedBtn.removeAttribute('disabled', '');
+// }
+
+
+
+// 設定狀態 hasCompletedTodo 在 ui.js
+// 設定改變狀態的函式 checkHasCompletedTodo()，調用該函式來改變 hasCompletedTodo 狀態
+//
+// 設定監聽來
+
 // * 各個頁面中的 click 事件函數
 export function pageClickEvent(e) {
   // * listOption 開啟 & 關閉
@@ -128,30 +163,6 @@ export function pageClickEvent(e) {
 
 // * nav 中存放 custom 的容器
 const customListDOM = document.querySelector(".custom-list");
-
-// /**
-//  * * 渲染 customList 至 nav 中
-//  */
-// export function renderCustomList() {
-//   const currentPageId = getCurrentPageId();
-//   let lists = DATA.custom
-//     .map(({ id, name, color }) => {
-//       return `
-//       <li id="${id}"
-//           class="custom-list__item nav__list-item
-//                 ${id === currentPageId ? "nav__list-item--active" : null}"
-//       >
-//           <a class="nav__list-link nav__list-link--custom-list"
-//               href="#/customlist/${id}">
-//               <div class="custom-list__color color-block color-block-${color}"></div>
-//               ${name}
-//           </a>
-//       </li>
-//     `;
-//     })
-//     .join("");
-//   customListDOM.innerHTML = lists;
-// }
 
 /**
  * * 渲染 customList 至 nav 中
@@ -395,13 +406,15 @@ export function switchSearchPageUI() {
   const normalContainer = document.querySelector(
     ".main__header-container--normal"
   );
-  const searchContainer = document.querySelector(".main__header-container--search");
+  const searchContainer = document.querySelector(
+    ".main__header-container--search"
+  );
 
   if (currentPageId === "search") {
     normalContainer.classList.add("hidden");
     searchContainer.classList.remove("hidden");
     // 進入搜尋頁面後對 searchInput 加上 focus()
-    document.querySelector('#search-input').focus();
+    document.querySelector("#search-input").focus();
   } else {
     searchContainer.classList.add("hidden");
     normalContainer.classList.remove("hidden");

@@ -34,7 +34,7 @@
     grid-row: 1 / 2;
     position: fixed;
     z-index: 5;
-    
+
     width: 100%;
     height: deep-map-get($header-height, lg);
     @include padding-x;
@@ -50,7 +50,6 @@
       height: deep-map-get($header-height, sm);
     }
 
-
     &.nav-open {
       width: calc(100% - 23.4375rem);
       @include lg {
@@ -58,19 +57,18 @@
       }
     }
 
-
     &-container {
       width: 100%;
       margin: 0 auto;
-      
+
       &--normal {
         @include flex($ai: center, $jc: center);
       }
-      
+
       &--search {
         @include flex($ai: center, $jc: center);
         margin: 0 auto;
-        
+
         @include xxl {
           max-width: $max-width;
         }
@@ -165,7 +163,6 @@
       display: none;
     }
 
-
     // ! home.js 中 class 要移併刪掉
     &--home {
       // @include sm {
@@ -199,6 +196,33 @@
 
     @include sm {
       justify-self: end;
+    }
+  }
+
+  // 總覽頁面中 main 標題旁的變更視圖按鈕
+  &__view-btn {
+    @include text(sm);
+    padding: 0.25rem 0.75rem;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    opacity: 1;
+
+    &:nth-child(1){
+      border-top-left-radius: deep-map-get($border-radius, base);
+      border-bottom-left-radius: deep-map-get($border-radius, base);
+    }
+
+    &:nth-child(2){
+      border-top-right-radius: deep-map-get($border-radius, base);
+      border-bottom-right-radius: deep-map-get($border-radius, base);
+    }
+
+    &--active {    
+      opacity: 0.8;
+    }
+
+    i {
+      pointer-events: none;
     }
   }
 

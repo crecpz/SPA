@@ -8,10 +8,8 @@ import {
   getPage,
   unhide,
 } from "./helper.js";
-import {
-  closeEditModal,
-  closeModalOverlay,
-} from "./modal.js";
+import { closeEditModal, closeModalOverlay } from "./modal.js";
+import { setHasCompletedTodo } from "./ui.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
 export const DATA = getStorage();
@@ -170,13 +168,13 @@ export function removeTodo(removeTodoId) {
   pageObjOfRemoveTarget.content = pageObjOfRemoveTarget.content.filter(
     ({ id }) => id !== removeTodoId
   );
-  
+
   // 存至 localStorage
   setStorage(DATA);
-  
+
   // 重新 render
   Router();
-  
+
   // 關閉編輯 todoItem 視窗與 modalOverlay
   closeEditModal();
   closeModalOverlay();
@@ -223,10 +221,6 @@ export function changeCheckbox(e) {
     const currentTodoItemDOM = document.getElementById(currentTodoId);
     currentTodoItemDOM.classList.toggle("todo__item--isChecked");
 
-    // if(!currentTodoItemDOM && triggerFromEditModal){
-    //   console.log(true)
-    // }
-
     // 若事件觸發來自 editModal
     if (triggerFromEditModal) {
       // 一併更改在 DOM 中顯示的 todoItem checkbox 狀態 (注意: 只是改外觀，沒有存入 localStorage)
@@ -234,9 +228,11 @@ export function changeCheckbox(e) {
         .children[0].children[0];
       currentTodoCheckbox.checked = !currentTodoCheckbox.checked;
     }
+    // 儲存變更
+    setStorage(DATA);
+
+    setHasCompletedTodo();
   }
-  // 儲存變更
-  setStorage(DATA);
 }
 
 /**
@@ -344,7 +340,7 @@ export function removeCompleted() {
       removeCompletedFromCurrentPage();
       break;
 
-    // 若以上的 id 皆沒有被 switch 內的 case 中被匹配，則代表目前頁面在 customList 
+    // 若以上的 id 皆沒有被 switch 內的 case 中被匹配，則代表目前頁面在 customList
     default:
       // 跟 defaultlist 一樣，從當前頁面中刪除該項 todo
       removeCompletedFromCurrentPage();
@@ -353,6 +349,8 @@ export function removeCompleted() {
 
   setStorage(DATA);
   Router();
+
+  setHasCompletedTodo();
 
   /**
    * * 清除已完成 - 遍歷 DATA 內所有的物件，過濾掉已完成的 todo(根據所在的頁面不同，有不同的過濾方式)
@@ -384,7 +382,7 @@ export function removeCompleted() {
   }
 
   /**
-   * * 在 Home 頁面清除已完成時傳入 removeCompleted() 的參數
+   * * 在 Home 頁面清除已完成時傳入 removeCompleted() 的 callback
    * @param {*} todoObj
    * @returns 返回所有 todoObj.checked === true 的 todo
    */
@@ -393,7 +391,7 @@ export function removeCompleted() {
   }
 
   /**
-   * * 在 Top 頁面清除已完成時傳入 removeCompleted() 的參數
+   * * 在 Top 頁面中，按下清除已完成時傳入 removeCompleted() 的 callback
    * @param {*} todoObj
    * @returns 由於 removeCompleted() 檢查 DATA 內所有的物件，
    * 為了防止刪除到其他頁面的資料，返回值(能繼續留在清單內的 todo)必須要注意該 todo 是來自於哪裡:

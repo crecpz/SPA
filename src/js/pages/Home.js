@@ -7,6 +7,7 @@ import {
   dropdownSwitch,
   emptyMsg,
   pageClickEvent,
+  setHasCompletedTodo,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
@@ -19,7 +20,7 @@ export const Home = {
     scrollBarFix(".main__content-list");
   },
 
-  render: ()=> {
+  render: () => {
     // @ 提醒:
     // 1.在「總覽」中並不會顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
     // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
@@ -205,11 +206,7 @@ export const Home = {
                         <div class="main__color-block color-block--default"></div>
                         <h2 class="main__name">總覽</h2>
                         <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option
-                          ${
-                            currentView === "grid-view"
-                            ? "hidden"
-                            : ""
-                          }"
+                          ${currentView === "grid-view" ? "hidden" : ""}"
                         >
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
@@ -221,8 +218,8 @@ export const Home = {
                         </ul>
                         <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm ${
                           currentView === "grid-view" || noContent
-                          ? "hidden"
-                          : ""
+                            ? "hidden"
+                            : ""
                         }">
                           清除完成事項
                         </button>
@@ -262,25 +259,26 @@ export const Home = {
       pageClickEvent(e);
       // ! 以下只有本頁有
       // * 變更列表 view 模式
-      if (e.target.classList.contains("main__view-btn")) {
+      if (
+        e.target.classList.contains("main__view-btn") &&
+        e.target.dataset.view !== Home.state.view // 重複點按相同的按鈕不需要執行
+      ) {
         // 偵測使用者點擊的 view 模式，來改變 state 的值，
         // 此 state 的值用來決定本頁要渲染的 view 模式
         Home.state.view = e.target.dataset.view;
 
+        // 取消任一被按下的 view btn，並將最新按到的 active
         document
           .querySelectorAll(".main__view-btn")
           .forEach((btn) => btn.classList.remove("main__view-btn--active"));
         e.target.classList.add("main__view-btn--active");
 
-        if (e.target.id === "grid-view") {
-          Home.state.view = "grid-view";
-        }
-
-        if (e.target.id === "list-view") {
-          Home.state.view = "list-view";
-        }
-
         Router();
+
+        // if(e.target.dataset.view === "list-view"){
+        //   setHasCompletedTodo();
+        //   console.log(1)
+        // }
       }
 
       // * dropdown 切換

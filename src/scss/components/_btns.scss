@@ -5,6 +5,11 @@
   @include button-reset;
   cursor: pointer;
 
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
   &--xs {
     @include text(normal);
     padding-top: .25rem;
@@ -117,22 +122,6 @@
   }
 }
 
-// 總覽頁面中 main 標題旁的變更視圖按鈕
-.main__view-btn {
-  @include text(sm);
-  padding: 0.25rem 0.75rem;
-  color: var(--primary-color);
-  border-radius: deep-map-get($border-radius, base);
-
-  &--active {
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-  }
-
-  i {
-    pointer-events: none;
-  }
-}
 
 // mode-btn (光線模式)  之後回來處理，這邊要重寫
 .mode-btn {

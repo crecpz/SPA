@@ -3,9 +3,9 @@
 .overview {
   display: grid;
   justify-content: center;
-  // grid-template-columns: repeat(auto-fill, minmax(300px, 360px));
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 3rem;
+  padding-bottom: 1.5rem; // 與 dropdown 底部與視窗邊界的距離相同
 
   @include md {
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
@@ -13,7 +13,6 @@
   
   @include sm {
     row-gap: 1.5rem;
-    // grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
   }
 
   &__link {
