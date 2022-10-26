@@ -8,7 +8,7 @@ function buildCSS() {
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}))
     .pipe(autoprefixer())
-    .pipe(sourcemaps.write('./maps'))
+    // .pipe(sourcemaps.write('./maps'))
     .pipe(dest('../dist/css'))
 }
 
