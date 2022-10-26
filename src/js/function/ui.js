@@ -390,7 +390,7 @@ export function createEmptyMsg(msgText, svgTag, svgColor) {
  * 主要要是根據當前頁面位在哪一頁，來控制 main__header-container--normal
  * 與 main__header-container--search 哪個顯示哪個隱藏，一次只會顯示一個。
  */
-export function switchSearchPage() {
+export function switchSearchPageUI() {
   const currentPageId = getCurrentPageId();
   const normalContainer = document.querySelector(
     ".main__header-container--normal"

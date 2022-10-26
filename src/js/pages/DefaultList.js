@@ -3,10 +3,8 @@ import { scrollBarFix } from "../function/fix.js";
 import { todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
 import {
-  clickToCloseListOption,
   createEmptyMsg,
   emptyMsg,
-  openListOption,
   pageClickEvent,
 } from "../function/ui.js";
 

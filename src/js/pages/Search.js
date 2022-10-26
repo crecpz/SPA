@@ -2,7 +2,7 @@ import { scrollBarFix } from "../function/fix.js";
 import { getAllTodos, getSearchResult, hide, removeTodoInSearchResult, searchResult, unhide } from "../function/helper.js";
 import { closeConfirmModal, closeEditModal, closeModalOverlay, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
-import { createEmptyMsg, emptyMsg, switchSearchPage } from "../function/ui.js";
+import { createEmptyMsg, emptyMsg, switchSearchPageUI } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
 export const Search = {
@@ -79,7 +79,7 @@ export const Search = {
       // * 偵測使用者是否在 Search 頁面按下 "#back-btn"
       if (e.target.id === "back-btn") {
         // 切換搜尋頁面 UI
-        switchSearchPage();
+        switchSearchPageUI();
         // 返回上一頁
         history.back();
       }

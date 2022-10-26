@@ -2,11 +2,10 @@ import { updateMode } from "./function/mode.js";
 import {
   activeNavLists,
   renderCustomList,
-  switchSearchPage,
+  switchSearchPageUI,
 } from "./function/ui.js";
 import { Router } from "./routes/Router.js";
 import { appHeight, navCustomListTextOverflow } from "./function/fix.js";
-import { NotFound } from "./pages/NotFound.js";
 import { Home } from "./pages/Home.js";
 import { pageIsNotExist, switchNotFoundState } from "./function/helper.js";
 
@@ -54,9 +53,13 @@ export function hideTodoForm() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", switchSearchPage);
-window.addEventListener("hashchange", switchSearchPage);
+// 在載入時或 hashchange 時切換 search 的 UI
+window.addEventListener("DOMContentLoaded", switchSearchPageUI);
+window.addEventListener("hashchange", switchSearchPageUI);
 
 // 處理 nav 中 customList 名稱過長時的字數省略
 window.addEventListener("resize", navCustomListTextOverflow);
 window.addEventListener("DOMContentLoaded", navCustomListTextOverflow);
+
+// 在 hashchange 時改變 nav 的 active
+window.addEventListener("hashchange", activeNavLists);
