@@ -273,12 +273,12 @@ export const Home = {
           .forEach((btn) => btn.classList.remove("main__view-btn--active"));
         e.target.classList.add("main__view-btn--active");
 
+        if(e.target.dataset.view === "list-view"){
+          setHasCompletedTodo();
+          console.log(1)
+        }
         Router();
 
-        // if(e.target.dataset.view === "list-view"){
-        //   setHasCompletedTodo();
-        //   console.log(1)
-        // }
       }
 
       // * dropdown 切換

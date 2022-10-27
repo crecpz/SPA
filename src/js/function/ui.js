@@ -40,8 +40,11 @@ export function setHasCompletedTodo() {
 export function disabledRemoveCompleted() {
   const reomveCompletedBtn = document.getElementById("remove-completed");
   hasCompletedTodo
-    ? reomveCompletedBtn.removeAttribute("disabled", "")
-    : reomveCompletedBtn.setAttribute("disabled", "");
+  ? reomveCompletedBtn.removeAttribute("disabled", "")
+  : reomveCompletedBtn.setAttribute("disabled", "");
+  console.log(reomveCompletedBtn)
+  // console.log('hasCompletedTodo',hasCompletedTodo)
+  // console.log('hasAttribute',reomveCompletedBtn.hasAttribute("disabled"))
 }
 
 // export function disabledRemoveCompleted(boolean){

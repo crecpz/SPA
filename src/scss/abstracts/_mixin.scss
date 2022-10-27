@@ -1,6 +1,6 @@
 @use "./function" as *;
-@use "./map" as *;
 @use "./break-point" as *;
+@use "./map" as *;
 
 @mixin flex($dir: row, $jc: flex-start, $ai: stretch, $wrap: nowrap) {
   display: flex;

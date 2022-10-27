@@ -3,6 +3,7 @@
 // color 全局設定
 .color-block {
   @include rounded-full();
+  flex-shrink: 0;
 }
 
 .color-block--default {
