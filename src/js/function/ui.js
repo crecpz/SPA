@@ -30,36 +30,56 @@ window.addEventListener("DOMContentLoaded", setHasCompletedTodo);
 window.addEventListener("hashchange", setHasCompletedTodo);
 
 export function setHasCompletedTodo() {
-  setTimeout(()=> {
-    hasCompletedTodo = document.querySelectorAll('.todo__item--isChecked').length !== 0;
-    disabledRemoveCompleted();
-  }, 0)
+  setTimeout(() => {
+    hasCompletedTodo =
+      document.querySelectorAll(".todo__item--isChecked").length !== 0;
+    removeCompletedBtnSwitcher();
+  }, 0);
 }
 
+export function removeCompletedBtnSwitcher() {
+  const reomveCompletedBtns = document.querySelectorAll(".remove-completed");
+  const listOptions = document.querySelector(".list-options");
+  const mainListOptionBtn = document.querySelector(".main__list-option-btn");
 
-export function disabledRemoveCompleted() {
-  const reomveCompletedBtn = document.getElementById("remove-completed");
-  hasCompletedTodo
-  ? reomveCompletedBtn.removeAttribute("disabled", "")
-  : reomveCompletedBtn.setAttribute("disabled", "");
-  console.log(reomveCompletedBtn)
-  // console.log('hasCompletedTodo',hasCompletedTodo)
-  // console.log('hasAttribute',reomveCompletedBtn.hasAttribute("disabled"))
+  if (hasCompletedTodo) {
+    reomveCompletedBtns.forEach((btn) => {
+      btn.classList.remove("not-allowed");
+      if (btn.tagName === "BUTTON") {
+        btn.removeAttribute("disabled", "");
+      }
+    });
+  } else {
+    reomveCompletedBtns.forEach((btn) => {
+      btn.classList.add("not-allowed");
+      if (btn.tagName === "BUTTON") {
+        btn.setAttribute("disabled", "");
+      }
+    });
+  }
+
+  // if (hasCompletedTodo) {
+  //   reomveCompletedBtns.forEach((btn) => {
+  //     if (btn.tagName === "BUTTON") {
+  //       btn.removeAttribute("disabled", "");
+  //     } else {
+  //       listOptions.children.length === 1
+  //         ? mainListOptionBtn.classList.remove("hidden")
+  //         : btn.classList.remove("hidden");
+  //     }
+  //   });
+  // } else {
+  //   reomveCompletedBtns.forEach((btn) => {
+  //     if (btn.tagName === "BUTTON") {
+  //       btn.setAttribute("disabled", "");
+  //     } else {
+  //       listOptions.children.length === 1
+  //         ? mainListOptionBtn.classList.add("hidden")
+  //         : btn.classList.add("hidden");
+  //     }
+  //   });
+  // }
 }
-
-// export function disabledRemoveCompleted(boolean){
-//   const reomveCompletedBtn = document.getElementById('remove-completed');
-//   boolean
-//     ? reomveCompletedBtn.setAttribute('disabled', '')
-//     : reomveCompletedBtn.removeAttribute('disabled', '');
-// }
-
-
-
-// 設定狀態 hasCompletedTodo 在 ui.js
-// 設定改變狀態的函式 checkHasCompletedTodo()，調用該函式來改變 hasCompletedTodo 狀態
-//
-// 設定監聽來
 
 // * 各個頁面中的 click 事件函數
 export function pageClickEvent(e) {
@@ -108,7 +128,7 @@ export function pageClickEvent(e) {
   }
 
   // * 清除完成事項
-  if (e.target.id === "remove-completed") {
+  if (e.target.classList.contains("remove-completed") && (!e.target.classList.contains('not-allowed'))) {
     removeCompleted();
   }
 
@@ -218,10 +238,16 @@ export function clickToCloseListOption(e) {
   const listOptionsIsOpened =
     listOptions.classList.contains("list-options--open");
   const clickingListOptionBtn = e.target.classList.contains("btn--list-option");
+  const clickingNotAllowed = e.target.classList.contains("not-allowed");
 
-  if (listOptionsIsOpened && !clickingListOptionBtn) {
+
+  if (listOptionsIsOpened && !clickingListOptionBtn && !clickingNotAllowed) {
     listOptionBtn.click();
   }
+
+  // if(!e.target.classList.contains('not-allowed')){
+  //   listOptionBtn.click();
+  // }
 }
 
 /**

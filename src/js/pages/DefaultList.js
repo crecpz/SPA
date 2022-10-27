@@ -52,8 +52,8 @@ export const DefaultList = {
                 <div class="main__name-wrapper">
                   <div class="main__color-block color-block--default"></div>
                   <h2 class="main__name">${pageName}</h2>
-                  <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm">
-                            清除完成事項
+                  <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm not-allowed" disabled="">
+                    清除完成事項
                   </button>
                   <!-- list-option-btn -->
                   <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
@@ -61,7 +61,7 @@ export const DefaultList = {
                 <!-- list-options -->
                 <ul class="list-options">
                   <li class="list-option">
-                    <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
+                    <a href="javascript:;" class="list-option__link remove-completed">清除完成事項</a>
                   </li>
                 </ul>
             </div>

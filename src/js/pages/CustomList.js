@@ -59,7 +59,7 @@ export const CustomList = {
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block-${color}"></div>
                     <h2 class="main__name">${pageName}</h2>
-                    <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm">清除完成事項</button>
+                    <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm not-allowed" disabled="">清除完成事項</button>
                     <!-- list-option-btn -->
                     <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                 </div>
@@ -72,7 +72,7 @@ export const CustomList = {
                       <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
                     </li>
                     <li class="list-option list-option--custom-list">
-                      <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
+                      <a href="javascript:;" class="list-option__link remove-completed">清除完成事項</a>
                     </li>
                 </ul>
             </div>

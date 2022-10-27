@@ -107,30 +107,32 @@ export const Home = {
               `;
         })
         .join("");
-    } else if (currentView === "list-view") {
-      // * --------------------------- list-view  -----------------------------------
 
-      viewContent = pageContentObjects
-        .map(({ name, content, color }) => {
+    } else if (currentView === "list-view") {
+
+      // * --------------------------- list-view  -----------------------------------
+      
+      // const hasCompletedTodo = 
+      // console.log(hasCompletedTodo)
+  
+      viewContent = pageContentObjects.map(({ name, content, color }) => {
           // * 每一個 dropdown 內的 todoList 結構
           const todoListInDropdown = content
             .map(({ id, checked, content, top }) => {
               return `
-                        <li id="${id}" class="todo__item ${
-                checked ? "todo__item--isChecked" : ""
-              }">
-                            <label class="todo__checkbox checkbox">
-                                <input type="checkbox" class="checkbox__input" ${
-                                  checked ? "checked" : ""
-                                }>
-                                <div class="checkbox__appearance"></div>
-                            </label>
-                            <p class="todo__content">${content}</p>
-                            <i class="top ${
-                              top ? "fa-solid" : "fa-regular"
-                            } fa-star"></i> 
-                        </li>
-                    `;
+                <li id="${id}" class="todo__item ${ checked ? "todo__item--isChecked" : ""}">
+                    <label class="todo__checkbox checkbox">
+                        <input type="checkbox" class="checkbox__input" ${
+                          checked ? "checked" : ""
+                        }>
+                        <div class="checkbox__appearance"></div>
+                    </label>
+                    <p class="todo__content">${content}</p>
+                    <i class="top ${
+                      top ? "fa-solid" : "fa-regular"
+                    } fa-star"></i> 
+                </li>
+              `;
             })
             .join("");
 
@@ -140,23 +142,23 @@ export const Home = {
             return "";
           } else {
             return `
-                    <li class="dropdown">
-                        <div class="dropdown__name">
-                            ${
-                              color === "default"
-                                ? ""
-                                : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
-                            }
-                            ${name}
-                            <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="dropdown__cover">
-                            <ul class="todo">
-                                ${todoListInDropdown}
-                            </ul>
-                        </div>
-                    </li>
-                `;
+              <li class="dropdown">
+                  <div class="dropdown__name">
+                      ${
+                        color === "default"
+                          ? ""
+                          : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+                      }
+                      ${name}
+                      <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                  </div>
+                  <div class="dropdown__cover">
+                      <ul class="todo">
+                          ${todoListInDropdown}
+                      </ul>
+                  </div>
+              </li>
+            `;
           }
         })
         .join("");
@@ -213,14 +215,14 @@ export const Home = {
                         <!-- list-options -->
                         <ul class="list-options list-options--home">
                           <li class="list-option">
-                            <a href="javascript:;" id="remove-completed" class="list-option__link">清除完成事項</a>
+                            <a href="javascript:;" class="list-option__link remove-completed">清除完成事項</a>
                           </li>
                         </ul>
-                        <button id="remove-completed" class="main__clear-completed-btn btn btn--primary btn--sm ${
+                        <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
                           currentView === "grid-view" || noContent
                             ? "hidden"
                             : ""
-                        }">
+                        } not-allowed">
                           清除完成事項
                         </button>
                         <div class="main__view-btns">
@@ -278,7 +280,6 @@ export const Home = {
           console.log(1)
         }
         Router();
-
       }
 
       // * dropdown 切換
