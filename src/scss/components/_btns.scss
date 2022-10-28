@@ -23,8 +23,6 @@
 
   // 在進入 search 頁面時，.btn--search 將會隱藏，由 .btn--back 取而代之
   &--back {
-    // display: none;
-    
     position: absolute;
     right: 36px;
     
@@ -143,8 +141,7 @@
 // hamburger
 .hamburger {
   @include flex($dir: column, $jc: space-between);
-  @include text(sm);
-  height: 1.25rem;
+  @include text(md);
   border: 0;
   background-color: transparent;
   cursor: pointer;
@@ -154,10 +151,6 @@
   i {
     pointer-events: none;
     color: var(--primary-color);
-  }
-
-  @include sm{
-
   }
 
   &--nav {

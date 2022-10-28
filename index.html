@@ -24,19 +24,17 @@
 <body>
     <div id="wrapper" class="wrapper">
         <div class="body-overlay overlay"></div>
-
         <!-- 側邊nav -->
         <nav id="nav" class="nav">
-
             <div class="nav__header">
-                <!-- hamburger -->
+                <!-- 收起 nav 按鈕 -->
                 <button id="nav-hamburger" class="hamburger hamburger--nav">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-angle-left"></i>
                 </button>
-
-                <!-- mode -->
-                <button id="mode-btn" class="mode-btn mode-btn--change"><i
-                        class="fa-solid fa-circle-half-stroke"></i></button>
+                <!-- mode 切換 -->
+                <button id="mode-btn" class="mode-btn mode-btn--change">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                </button>
             </div>
 
             <div class="nav__content">
@@ -62,11 +60,11 @@
                     自訂列表
                 </h3>
                 <ul class="nav__list custom-list"></ul>
-                <button id="add-list-btn" class="btn btn--primary btn--custom-list"><i
-                        class="fa-solid fa-plus"></i>新增自訂列表</button>
+                <button id="add-list-btn" class="btn btn--primary btn--custom-list">
+                    <i class="fa-solid fa-plus"></i>新增自訂列表
+                </button>
             </div>
         </nav>
-
 
 
         <!-- 主內容區 -->
@@ -89,14 +87,14 @@
                     <div id="search" class="search">
                         <form class="main__form search__form">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="search-input" class="search__input main__input" placeholder="搜尋待辦事項"/>
+                            <input type="text" id="search-input" class="search__input main__input"
+                                placeholder="搜尋待辦事項" />
                             <i id="clear-text-btn" class="hidden fa-solid fa-circle-xmark"></i>
                         </form>
                     </div>
                     <!-- 取消按鈕 -->
                     <button id="back-btn" class="btn btn--primary btn--xs btn--back">取消</button>
                 </div>
-
             </header>
 
             <!-- 主內容渲染區域 -->

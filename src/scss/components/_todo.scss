@@ -76,6 +76,7 @@
   }
 
   .top {
+    @include text(sm);
     margin-left: auto;
     color: var(--primary-color);
   }

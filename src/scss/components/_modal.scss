@@ -146,6 +146,16 @@
     }
   }
 
+  &__warn-text{
+    @include text(normal);
+
+    i {
+      @include text(sm);
+      color: var(--color-type-5);
+      margin-right: 0.75rem;
+    }
+  }
+
   &__check-options {
     @include flex;
     grid-column: 2 / -1;

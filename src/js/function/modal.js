@@ -160,7 +160,7 @@ export function createConfirmModalContent(confirmContent) {
         <p id="confirm-content" class="confirm-content text-base">
           ${confirmContent}
         </p>
-        <p class="text-normal">刪除之後將無法復原</p>
+        <p class="modal__warn-text"><i class="fa-solid fa-triangle-exclamation"></i>刪除之後將無法復原</p>
     </div>
     <div class="modal__btn-group">
         <button id="confirm-cancel" class="btn btn--primary btn--modal">取消</button>
