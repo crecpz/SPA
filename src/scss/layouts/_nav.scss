@@ -3,7 +3,7 @@
 .nav {
   position: absolute;
   z-index: 10;
-  left: -100%;
+  transform: translateX(-100%);
 
   display: grid;
   grid-template-rows: deep-map-get($header-height, lg) auto 1fr;
@@ -17,7 +17,7 @@
   background-color: var(--secondary-color);
   color: var(--primary-color);
 
-  transition-property: left;
+  transition-property: transform;
   transition-duration: map-get($transition-duration, collapse);
 
   @include sm {
@@ -36,7 +36,7 @@
 
   // 當 .nav 與 .nav-open 同時存在:
   &.nav-open {
-    left: 0;
+    transform: translateX(0);
 
     // .nav 的兄弟元素 .main 內的 .hamburger--main 會被隱藏
     & + .main .hamburger--main {
