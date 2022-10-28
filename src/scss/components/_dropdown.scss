@@ -35,6 +35,13 @@ $dropdown-transition-speed: 250ms;
     // border-top-right-radius: map-get($border-radius, base);
   }
 
+  &__name-text{
+    pointer-events: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   &__arrow {
     @include text(xs);
     margin-left: auto;

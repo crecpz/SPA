@@ -76,13 +76,13 @@ export const Home = {
                   <a href="#/${
                     isCustom ? "customlist/" + id : id
                   }" class="overview__link">
-                      <div class="overview__header">
+                      <div class="overview__header" title="${pageName}">
                           ${
                             color === "default"
                               ? ""
                               : `<div class="overview__color-block color-block color-block-${color}"></div>`
                           }
-                          ${pageName}
+                          <p class="overview__name-text">${pageName}</p>
                       </div>
                       <div class="overview__content">
                           <div class="overview__text overview__text--column">待完成
@@ -90,18 +90,17 @@ export const Home = {
                           </div>
                           <div class="overview__group">
                               <div class="overview__text">全部
-                                  <span class="overview__number overview__number--sm">${all}</span>
-                                  </div>
-                                  <div class="overview__text">已完成
-                                  <span class="overview__number overview__number--sm">${completed}</span>
-                                  </div>
+                                <span class="overview__number overview__number--sm">${all}</span>
+                              </div>
+                              <div class="overview__text">已完成
+                                <span class="overview__number overview__number--sm">${completed}</span>
+                              </div>
                           </div>
                           <div class="overview__progress-bar progress">
-                          <span class="progress__value">${percentage}%
-                          </span>
-                          <div class="progress__outer">
-                                  <div class="progress__inner" style="width:${percentage}%"></div>
-                              </div>
+                            <span class="progress__value">${percentage}%</span>
+                            <div class="progress__outer">
+                                <div class="progress__inner" style="width:${percentage}%"></div>
+                            </div>
                           </div>
                       </div>
                   </a>
@@ -141,13 +140,13 @@ export const Home = {
           } else {
             return `
               <li class="dropdown">
-                  <div class="dropdown__name">
+                  <div class="dropdown__name" title="${name}">
                     ${
                       color === "default"
                         ? ""
                         : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
                     }
-                    ${name}
+                    <p class="dropdown__name-text">${name}</p>
                     <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
                   </div>
                   <div class="dropdown__cover">

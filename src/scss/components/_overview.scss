@@ -33,12 +33,20 @@
     color: var(--secondary-color);
     background-color: var(--primary-color);
 
+
     @include sm {
       padding-left: 1rem;
       padding-right: 1rem;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
     }
+  }
+
+  &__name-text{
+    pointer-events: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
   }
 
   &__color-block {
