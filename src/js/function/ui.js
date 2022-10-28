@@ -1,3 +1,4 @@
+import { Home } from "../pages/Home.js";
 import { getCurrentPageId, hide, pageIsNotExist, unhide } from "./helper.js";
 import {
   clearColorSelectorActive,
@@ -23,8 +24,6 @@ import {
   setTodo,
 } from "./storage.js";
 
-
-
 // * 檢查目前是否有已經被完成的 todo (此變用來決定 remove-completed 按鈕是否要亮起)
 export let hasCompletedTodo;
 
@@ -38,16 +37,16 @@ export function switchRemoveCompletedBtn() {
   setTimeout(() => {
     hasCompletedTodo =
       document.querySelectorAll(".todo__item--isChecked").length !== 0;
-      const reomveCompletedBtns = document.querySelectorAll(".remove-completed");
-      if (hasCompletedTodo) {
-        reomveCompletedBtns.forEach((btn) => {
-          btn.classList.remove("not-allowed");
-        });
-      } else {
-        reomveCompletedBtns.forEach((btn) => {
-          btn.classList.add("not-allowed");
-        });
-      }
+    const reomveCompletedBtns = document.querySelectorAll(".remove-completed");
+    if (hasCompletedTodo) {
+      reomveCompletedBtns.forEach((btn) => {
+        btn.classList.remove("not-allowed");
+      });
+    } else {
+      reomveCompletedBtns.forEach((btn) => {
+        btn.classList.add("not-allowed");
+      });
+    }
   }, 0);
 }
 
@@ -98,7 +97,10 @@ export function pageClickEvent(e) {
   }
 
   // * 清除完成事項
-  if (e.target.classList.contains("remove-completed") && (!e.target.classList.contains('not-allowed'))) {
+  if (
+    e.target.classList.contains("remove-completed") &&
+    !e.target.classList.contains("not-allowed")
+  ) {
     removeCompleted();
   }
 
@@ -178,7 +180,8 @@ export function renderCustomList() {
           </a>
       </li>
     `;
-    }).join("");
+    })
+    .join("");
   customListDOM.innerHTML = lists;
 }
 
@@ -364,6 +367,22 @@ export const emptyMsg = {
 };
 
 /**
+ * * 當目前頁面是總覽且當前 view 是 grid-view 時，不需要顯示 .todo-form。
+ * 預設是先將 .todo-form 加上 .hidden class (display: none)，可以顯示時才將 .hidden class remove
+ */
+export function hideTodoForm() {
+  if (
+    (location.hash === "#/" && Home.state.view === "grid-view") ||
+    pageIsNotExist() ||
+    location.hash === "#/search"
+  ) {
+    document.querySelector(".todo-form").classList.add("hidden");
+  } else {
+    document.querySelector(".todo-form").classList.remove("hidden");
+  }
+}
+
+/**
  * * 建立一個當頁面內容為空的時候要顯示的訊息
  * @param {*} msgText 訊息文字內容
  * @param {*} svgTag 要顯示的 <svg> tag
@@ -410,38 +429,49 @@ export function switchSearchPageUI() {
     searchContainer.classList.add("hidden");
     normalContainer.classList.remove("hidden");
   }
-
-  // const searchBtn = document.getElementById("search-btn");
-  // const searchDOM = document.getElementById("search");
-  // const searchInput = searchDOM.querySelector("#search-input");
-  // const backBtn = document.getElementById("back-btn");
-  // const mainHamburger = document.getElementById("main-hamburger");
-
-  // if (currentPageId === "search") {
-  //   removeNavActive();
-  //   searchBtn.classList.add("hidden");
-  //   searchDOM.classList.remove("hidden");
-  //   backBtn.classList.remove("hidden");
-  //   mainHamburger.classList.add("hidden");
-  //   searchInput.focus();
-  // } else {
-  //   activeNavLists();
-  //   searchBtn.classList.remove("hidden");
-  //   searchDOM.classList.add("hidden");
-  //   backBtn.classList.add("hidden");
-  //   mainHamburger.classList.remove("hidden");
-  //   searchInput.value = "";
-  // }
 }
 
-// @ 測試用: 用於表示仍可往上滑
-export function scroll() {
-  const mainContentList = document.querySelector(".main__content-list");
-  mainContentList.addEventListener("scroll", (e) => {
-    if (e.target.scrollTop) {
-      mainContentList.classList.add("main__content--shadowTop");
-    } else {
-      mainContentList.classList.remove("main__content--shadowTop");
-    }
+// // @ 測試用: 用於表示仍可往上滑
+// export function scroll() {
+//   const mainContentList = document.querySelector(".main__content-list");
+//   mainContentList.addEventListener("scroll", (e) => {
+//     if (e.target.scrollTop) {
+//       mainContentList.classList.add("main__content--shadowTop");
+//     } else {
+//       mainContentList.classList.remove("main__content--shadowTop");
+//     }
+//   });
+// }
+
+export function loader() {
+  const loader = document.querySelector("#loader");
+  const loaderCircle = document.querySelector(".loader__circle");
+
+  const loaderText = document.querySelector(".loader__text");
+  const loaderWord = document.querySelectorAll(".loader__word");
+
+  loaderWord.forEach((word, index) => {
+    setTimeout(() => {
+      loaderCircle.classList.add("active");
+    }, 500);
+
+    setTimeout(() => {
+      word.classList.add("active");
+    }, (index + 1) * 250);
+
+    // setTimeout(() => {
+    //   loaderText.classList.add("active");
+    // }, 1000);
+
+    setTimeout(() => {
+      loader.style.transform = "translateY(-100vh)";
+    }, 2000);
+
+    // ? 用不到
+    // setTimeout(() => {
+    //   loaderText.classList.add("fade");
+    //   // loaderCircle.classList.add('active');
+    //   loaderCircle.classList.add('fade');
+    // }, 1800);
   });
 }

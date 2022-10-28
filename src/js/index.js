@@ -1,6 +1,8 @@
 import { updateMode } from "./function/mode.js";
 import {
   activeNavLists,
+  hideTodoForm,
+  loader,
   renderCustomList,
   switchSearchPageUI,
 } from "./function/ui.js";
@@ -37,21 +39,7 @@ window.addEventListener("hashchange", switchNotFoundState);
 // 於 home 的 grid-view 狀態隱藏 todoForm
 window.addEventListener("DOMContentLoaded", hideTodoForm);
 window.addEventListener("hashchange", hideTodoForm);
-/**
- * * 當目前頁面是總覽且當前 view 是 grid-view 時，不需要顯示 .todo-form。
- * 預設是先將 .todo-form 加上 .hidden class (display: none)，可以顯示時才將 .hidden class remove
- */
-export function hideTodoForm() {
-  if (
-    (location.hash === "#/" && Home.state.view === "grid-view") ||
-    pageIsNotExist() ||
-    location.hash === "#/search"
-  ) {
-    document.querySelector(".todo-form").classList.add("hidden");
-  } else {
-    document.querySelector(".todo-form").classList.remove("hidden");
-  }
-}
+
 
 // 在載入時或 hashchange 時切換 search 的 UI
 window.addEventListener("DOMContentLoaded", switchSearchPageUI);
@@ -63,3 +51,6 @@ window.addEventListener("DOMContentLoaded", navCustomListTextOverflow);
 
 // 在 hashchange 時改變 nav 的 active
 window.addEventListener("hashchange", activeNavLists);
+
+// loader 動畫
+window.addEventListener("DOMContentLoaded", loader);

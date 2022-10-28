@@ -72,11 +72,6 @@
   width: 6.25rem;
   height: 6.25rem;
   pointer-events: none;
-
-  &.preload * {
-    animation-duration: 0s !important;
-    -webkit-animation-duration: 0s !important;
-  }
 }
 
 .circle-1,

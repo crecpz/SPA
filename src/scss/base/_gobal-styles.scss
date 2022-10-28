@@ -39,7 +39,9 @@ html {
 }
 
 body {
-    font-family: "Noto Serif TC", serif;
+    // font-family: "Noto Serif TC", serif;
+    font-family: "Fira Code","Noto Serif TC", serif;
+
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -54,14 +56,9 @@ body {
     }
 }
 
-body.preload * {
-    animation-duration: 0s !important;
-    -webkit-animation-duration: 0s !important;
-}
-
 input,
 textarea {
-    font-family: "Noto Serif TC", serif;
+    font-family: "Fira Code","Noto Serif TC", serif;
 }
 
 button {
