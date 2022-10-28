@@ -6,8 +6,9 @@ import {
   createEmptyMsg,
   dropdownSwitch,
   emptyMsg,
+  hasCompletedTodo,
   pageClickEvent,
-  setHasCompletedTodo,
+  switchRemoveCompletedBtn,
 } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
@@ -111,10 +112,7 @@ export const Home = {
     } else if (currentView === "list-view") {
 
       // * --------------------------- list-view  -----------------------------------
-      
-      // const hasCompletedTodo = 
-      // console.log(hasCompletedTodo)
-  
+        
       viewContent = pageContentObjects.map(({ name, content, color }) => {
           // * 每一個 dropdown 內的 todoList 結構
           const todoListInDropdown = content
@@ -144,18 +142,18 @@ export const Home = {
             return `
               <li class="dropdown">
                   <div class="dropdown__name">
-                      ${
-                        color === "default"
-                          ? ""
-                          : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
-                      }
-                      ${name}
-                      <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                    ${
+                      color === "default"
+                        ? ""
+                        : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
+                    }
+                    ${name}
+                    <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
                   </div>
                   <div class="dropdown__cover">
-                      <ul class="todo">
-                          ${todoListInDropdown}
-                      </ul>
+                    <ul class="todo">
+                        ${todoListInDropdown}
+                    </ul>
                   </div>
               </li>
             `;
@@ -215,14 +213,14 @@ export const Home = {
                         <!-- list-options -->
                         <ul class="list-options list-options--home">
                           <li class="list-option">
-                            <a href="javascript:;" class="list-option__link remove-completed">清除完成事項</a>
+                            <a href="javascript:;" class="list-option__link remove-completed ${ hasCompletedTodo ? "" : "not-allowed"}">清除完成事項</a>
                           </li>
                         </ul>
                         <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
                           currentView === "grid-view" || noContent
                             ? "hidden"
                             : ""
-                        } not-allowed">
+                        } ${ hasCompletedTodo ? "" : "not-allowed"}">
                           清除完成事項
                         </button>
                         <div class="main__view-btns">
@@ -276,8 +274,7 @@ export const Home = {
         e.target.classList.add("main__view-btn--active");
 
         if(e.target.dataset.view === "list-view"){
-          setHasCompletedTodo();
-          console.log(1)
+          switchRemoveCompletedBtn();
         }
         Router();
       }

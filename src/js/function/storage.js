@@ -9,7 +9,7 @@ import {
   unhide,
 } from "./helper.js";
 import { closeEditModal, closeModalOverlay } from "./modal.js";
-import { setHasCompletedTodo } from "./ui.js";
+import { switchRemoveCompletedBtn } from "./ui.js";
 
 // 初次載入時取得 localStorage 中的資料並存進變量中
 export const DATA = getStorage();
@@ -231,7 +231,7 @@ export function changeCheckbox(e) {
     // 儲存變更
     setStorage(DATA);
 
-    setHasCompletedTodo();
+    switchRemoveCompletedBtn();
   }
 }
 
@@ -350,7 +350,7 @@ export function removeCompleted() {
   setStorage(DATA);
   Router();
 
-  setHasCompletedTodo();
+  switchRemoveCompletedBtn();
 
   /**
    * * 清除已完成 - 遍歷 DATA 內所有的物件，過濾掉已完成的 todo(根據所在的頁面不同，有不同的過濾方式)

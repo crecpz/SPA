@@ -23,62 +23,32 @@ import {
   setTodo,
 } from "./storage.js";
 
-// * 檢查目前是否有已經被完成的 todo，只有在有被完成的 todo 存在時， remove-completed 按鈕才亮起。
-let hasCompletedTodo;
 
-window.addEventListener("DOMContentLoaded", setHasCompletedTodo);
-window.addEventListener("hashchange", setHasCompletedTodo);
 
-export function setHasCompletedTodo() {
+// * 檢查目前是否有已經被完成的 todo (此變用來決定 remove-completed 按鈕是否要亮起)
+export let hasCompletedTodo;
+
+window.addEventListener("DOMContentLoaded", switchRemoveCompletedBtn);
+window.addEventListener("hashchange", switchRemoveCompletedBtn);
+
+/**
+ * * 檢查目前頁面中是否存在已經被勾選的 todo，將結果存進 hasCompletedTodo，並改變「清除已完成」按鈕亮起狀態
+ */
+export function switchRemoveCompletedBtn() {
   setTimeout(() => {
     hasCompletedTodo =
       document.querySelectorAll(".todo__item--isChecked").length !== 0;
-    removeCompletedBtnSwitcher();
+      const reomveCompletedBtns = document.querySelectorAll(".remove-completed");
+      if (hasCompletedTodo) {
+        reomveCompletedBtns.forEach((btn) => {
+          btn.classList.remove("not-allowed");
+        });
+      } else {
+        reomveCompletedBtns.forEach((btn) => {
+          btn.classList.add("not-allowed");
+        });
+      }
   }, 0);
-}
-
-export function removeCompletedBtnSwitcher() {
-  const reomveCompletedBtns = document.querySelectorAll(".remove-completed");
-  const listOptions = document.querySelector(".list-options");
-  const mainListOptionBtn = document.querySelector(".main__list-option-btn");
-
-  if (hasCompletedTodo) {
-    reomveCompletedBtns.forEach((btn) => {
-      btn.classList.remove("not-allowed");
-      if (btn.tagName === "BUTTON") {
-        btn.removeAttribute("disabled", "");
-      }
-    });
-  } else {
-    reomveCompletedBtns.forEach((btn) => {
-      btn.classList.add("not-allowed");
-      if (btn.tagName === "BUTTON") {
-        btn.setAttribute("disabled", "");
-      }
-    });
-  }
-
-  // if (hasCompletedTodo) {
-  //   reomveCompletedBtns.forEach((btn) => {
-  //     if (btn.tagName === "BUTTON") {
-  //       btn.removeAttribute("disabled", "");
-  //     } else {
-  //       listOptions.children.length === 1
-  //         ? mainListOptionBtn.classList.remove("hidden")
-  //         : btn.classList.remove("hidden");
-  //     }
-  //   });
-  // } else {
-  //   reomveCompletedBtns.forEach((btn) => {
-  //     if (btn.tagName === "BUTTON") {
-  //       btn.setAttribute("disabled", "");
-  //     } else {
-  //       listOptions.children.length === 1
-  //         ? mainListOptionBtn.classList.add("hidden")
-  //         : btn.classList.add("hidden");
-  //     }
-  //   });
-  // }
 }
 
 // * 各個頁面中的 click 事件函數
@@ -208,8 +178,7 @@ export function renderCustomList() {
           </a>
       </li>
     `;
-    })
-    .join("");
+    }).join("");
   customListDOM.innerHTML = lists;
 }
 
@@ -240,14 +209,9 @@ export function clickToCloseListOption(e) {
   const clickingListOptionBtn = e.target.classList.contains("btn--list-option");
   const clickingNotAllowed = e.target.classList.contains("not-allowed");
 
-
   if (listOptionsIsOpened && !clickingListOptionBtn && !clickingNotAllowed) {
     listOptionBtn.click();
   }
-
-  // if(!e.target.classList.contains('not-allowed')){
-  //   listOptionBtn.click();
-  // }
 }
 
 /**
@@ -263,11 +227,9 @@ export function dropdownSwitch(e) {
   if (dropdownCover.clientHeight) {
     dropdownCover.style.height = `${0}px`;
     dropdownArrow.classList.add("dropdown__arrow--closing");
-    // dropdownCover.classList.add("hide");
   } else {
     dropdownCover.style.height = `${todos.clientHeight}px`;
     dropdownArrow.classList.remove("dropdown__arrow--closing");
-    // dropdownCover.classList.remove("hide");
   }
 }
 

@@ -5,11 +5,6 @@
   @include button-reset;
   cursor: pointer;
 
-  // &:disabled {
-  //   opacity: .5;
-  //   cursor: not-allowed;
-  // }
-
   &--xs {
     @include text(normal);
     padding-top: .25rem;

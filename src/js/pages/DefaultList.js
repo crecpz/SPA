@@ -5,6 +5,7 @@ import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
 import {
   createEmptyMsg,
   emptyMsg,
+  hasCompletedTodo,
   pageClickEvent,
 } from "../function/ui.js";
 
@@ -52,7 +53,7 @@ export const DefaultList = {
                 <div class="main__name-wrapper">
                   <div class="main__color-block color-block--default"></div>
                   <h2 class="main__name">${pageName}</h2>
-                  <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm not-allowed" disabled="">
+                  <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${ hasCompletedTodo ? "" : "not-allowed"}">
                     清除完成事項
                   </button>
                   <!-- list-option-btn -->
@@ -61,7 +62,7 @@ export const DefaultList = {
                 <!-- list-options -->
                 <ul class="list-options">
                   <li class="list-option">
-                    <a href="javascript:;" class="list-option__link remove-completed">清除完成事項</a>
+                    <a href="javascript:;" class="list-option__link remove-completed ${ hasCompletedTodo ? "" : "not-allowed"}">清除完成事項</a>
                   </li>
                 </ul>
             </div>
