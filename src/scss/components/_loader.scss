@@ -13,7 +13,7 @@
   &__container {
     @include flex($dir: column, $ai: center, $jc: center);
     height: 100%;
-    padding-bottom: 6rem;
+    padding-bottom: 7rem;
   }
 
   &__circle {
@@ -23,9 +23,8 @@
     height: 4.0625rem;
     border: 2px solid var(--primary-color);
     opacity: 0;
-    transition: transform 1000ms ease-in-out, opacity 800ms ease-in-out;
     transform: rotate(225deg);
-
+    transition: transform 1000ms ease-in-out, opacity 800ms ease-in-out;
 
     &.active {
       opacity: 1;
@@ -37,44 +36,42 @@
     }
   }
 
-  /*
-
-
-                <div class="absolute left-1/2 top-3/4 -translate-x-1/2 -translate-y-1/2 w-0 h-1 opacity-90 rounded-sm bg-secondary origin-left animate-tick
-                before:content-[''] before:absolute before:bottom-0 before:right-0 before:w-1 before:h-0 before:opacity-90 before:rounded-sm before:bg-inherit before:animate-tick-before
-                ">
-                </div>
-
-
-*/
-
   &__tick {
     position: absolute;
-    left: 44%;
-    top: 54%;
+    left: 50%;
+    top: 36%;
     transform: translate(-50%, -50%);
-    width: 3px;
-    height: 23px;
+    width: 0px;
+    height: 3px;
     background-color: var(--primary-color);
-    border-radius: map-get($border-radius, sm);
+    border-radius: map-get($border-radius, lg);
+    border-radius: 10px;
+    transform-origin: top;
 
-    @include sm {
-      height: 16px;
+    &--animate {
+      animation: tick 300ms ease-in-out forwards;
+      &::before {
+        animation: tick-before 300ms ease-in-out forwards 200ms;
+      }
+
+      @include sm {
+        animation: tick-sm 300ms ease-in-out forwards;
+        &::before {
+          animation: tick-before-sm 300ms ease-in-out forwards 200ms;
+        }
+      }
     }
-    
+
     &::before {
       content: "";
       position: absolute;
       left: 0;
       top: 0;
-      width: 14px;
-      height: 3px;
+      width: 3px;
+      height: 0px;
       background-color: var(--primary-color);
       transform: rotate(0deg);
-      
-      @include sm {
-        width: 10px;
-      }
+      border-radius: 10px;
     }
   }
 
@@ -82,17 +79,15 @@
     @include text(xl);
     color: var(--primary-color);
     text-align: center;
-    transition: transform 1000ms ease-in-out, opacity 800ms ease-in-out;
-    margin-top: 3rem;
+    opacity: 0;
+    transform: translateY(30%);
+    margin-top: 2rem;
+    transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
 
-    // ? 想嘗試將所有單字 + 圈圈 一併一起伏上來 ---> 打勾 ---> 整體往上提 收走
-    // https://www.youtube.com/watch?v=2ak37WrbSDg&t=13s
-
-    // transform: translateY(20%);
-    // &.active {
-    //   transform: translateY(0%);
-    //   opacity: 1;
-    // }
+    &.active {
+      transform: translateY(0%);
+      opacity: 1;
+    }
 
     @include sm {
       @include text(md);
@@ -101,7 +96,6 @@
 
   &__word {
     display: inline-block;
-    opacity: 0;
     transform: translateY(20%);
     transition: all 500ms ease-in-out;
 

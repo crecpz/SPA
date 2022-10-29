@@ -443,35 +443,32 @@ export function switchSearchPageUI() {
 //   });
 // }
 
+/**
+ * * 載入動畫
+ */
 export function loader() {
   const loader = document.querySelector("#loader");
   const loaderCircle = document.querySelector(".loader__circle");
-
+  const loaderTick = document.querySelector(".loader__tick");
   const loaderText = document.querySelector(".loader__text");
-  const loaderWord = document.querySelectorAll(".loader__word");
 
-  loaderWord.forEach((word, index) => {
-    setTimeout(() => {
-      loaderCircle.classList.add("active");
-    }, 500);
+  // 圓圈
+  setTimeout(() => {
+    loaderCircle.classList.add("active");
+  }, 100);
 
-    setTimeout(() => {
-      word.classList.add("active");
-    }, (index + 1) * 250);
+  // 勾勾
+  setTimeout(() => {
+    loaderTick.classList.add("loader__tick--animate");
+  }, 800);
 
-    // setTimeout(() => {
-    //   loaderText.classList.add("active");
-    // }, 1000);
+  // 文字
+  setTimeout(() => {
+    loaderText.classList.add("active");
+  }, 1400);
 
-    setTimeout(() => {
-      loader.style.transform = "translateY(-100vh)";
-    }, 2000);
-
-    // ? 用不到
-    // setTimeout(() => {
-    //   loaderText.classList.add("fade");
-    //   // loaderCircle.classList.add('active');
-    //   loaderCircle.classList.add('fade');
-    // }, 1800);
-  });
+  // loader 背景
+  setTimeout(() => {
+    loader.style.transform = "translateY(-100vh)";
+  }, 2500);
 }
