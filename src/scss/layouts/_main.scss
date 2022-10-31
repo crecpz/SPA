@@ -98,6 +98,10 @@
     width: 100%;
     margin-top: 4rem;
 
+    @include lg {
+      margin-top: 3rem;
+    }
+
     @include sm {
       margin-top: 2.25rem;
     }
