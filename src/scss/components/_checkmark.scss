@@ -4,10 +4,11 @@
   position: relative;
   cursor: pointer;
 
-  &:hover {
-    .checkbox__appearance {
-      background-color: var(--tertiary-color);
-      // box-shadow: 0 0 20px 15px var(--tertiary-color);
+  @include hover-query(){
+    &:hover {
+      .checkbox__appearance {
+        background-color: var(--tertiary-color);
+      }
     }
   }
 }

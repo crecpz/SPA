@@ -6,11 +6,10 @@
   top: 4rem;
   right: .75rem;
   z-index: 5;
-
-  border-radius: deep-map-get($border-radius, base);
+  border: 1px solid var(--primary-color);
+  border-radius: deep-map-get($border-radius, md);
   background-color: var(--secondary-color);
-  outline: 1px solid;
-
+  overflow: hidden;
   transform: scale(0);
   transform-origin: top right;
   transition: transform map-get($map: $transition-duration, $key: hover);

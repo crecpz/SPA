@@ -112,6 +112,7 @@
   // 新增新列表跳出的 modal 內的完成按鈕
   &--add-list-modal {
     margin-top: 2rem;
+    grid-column: 1/-1;
   }
 }
 
