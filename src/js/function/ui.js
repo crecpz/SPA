@@ -470,5 +470,8 @@ export function loader() {
   // loader 背景
   setTimeout(() => {
     loader.style.transform = "translateY(-100vh)";
+    loader.addEventListener('transitionend', ()=> {
+      loader.style.display = 'none';
+    })
   }, 2500);
 }
