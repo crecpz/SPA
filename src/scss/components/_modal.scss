@@ -25,7 +25,7 @@
   visibility: hidden;
   opacity: 0;
   transform: translateY(40%);
-  
+
   padding: 2rem;
   width: 100%;
   max-width: 22.1875rem;
@@ -137,23 +137,23 @@
     margin-top: 1.5rem;
     resize: none;
     padding: 0.5rem;
-    letter-spacing: deep-map-get($text,spacing, base);
+    letter-spacing: deep-map-get($text, spacing, base);
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     background-color: transparent;
 
-    &:disabled{
+    &:disabled {
       opacity: 0.5;
     }
   }
 
-  &__warn-text{
+  &__warn-text {
     @include text(normal);
 
     i {
       @include text(sm);
       color: var(--color-type-5);
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 
@@ -176,7 +176,7 @@
 
     &--disabled {
       pointer-events: none;
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 
@@ -209,12 +209,17 @@
     font-weight: bold;
 
     width: 100%;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; // 行數
-    -webkit-box-orient: vertical;
-    white-space: normal;
+    // overflow: hidden;
+    // display: -webkit-box;
+    // -webkit-line-clamp: 2; // 行數
+    // -webkit-box-orient: vertical;
+    // white-space: normal;
 
+    letter-spacing: 0.15em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
 
     // @ 暫時禁用，因為省略字串時後方括號會不見
     // &::before {
