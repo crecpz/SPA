@@ -36,6 +36,7 @@
       @include flex($ai: center);
       @include text(xs);
       grid-column: 1/-1;
+      padding-left: 2.625rem;
       color: #888;
       pointer-events: none;
 
