@@ -21,7 +21,8 @@
   }
 
   &.nav-open {
-    width: calc(100% - 23.4375rem);
+    // width: calc(100% - 23.4375rem);
+    width: calc(100% - 21.25rem);
 
     @include lg {
       width: 100%;
@@ -51,7 +52,8 @@
     }
 
     &.nav-open {
-      width: calc(100% - 23.4375rem);
+      width: calc(100% - 21.25rem);
+      // width: calc(100% - 23.4375rem);
       @include lg {
         width: 100%;
       }
@@ -82,10 +84,6 @@
     grid-column: 2/-1;
     grid-row: 2/3;
     overflow-y: hidden;
-
-    // &--shadowTop{
-    //   box-shadow: inset 0px 8px 8px 0 #eee;
-    // }
   }
 
   &__content-header {
@@ -94,12 +92,11 @@
 
     color: var(--primary-color);
     background-color: var(--secondary-color);
-
     width: 100%;
-    margin-top: 4rem;
+    margin-top: 3rem;
 
-    @include lg {
-      margin-top: 3rem;
+    @include xl {
+      // margin-top: 3rem;
     }
 
     @include sm {
@@ -140,7 +137,7 @@
 
   &__name {
     grid-row: 1/2;
-    @include text(xl);
+    @include text(lg);
     width: 100%;
     font-weight: bold;
     border: 0;

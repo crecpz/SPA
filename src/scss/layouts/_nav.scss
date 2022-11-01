@@ -27,10 +27,11 @@
 
   &__list {
     a {
-      @include text(sm);
-      @include sm {
-        @include text(base);
-      }
+      @include text(base);
+
+      // @include xl {
+      //   @include text(base);
+      // }
     }
   }
 
@@ -87,19 +88,13 @@
     }
   }
 
-  &__list-link {
+  &__list-link {  
     display: block;
     width: 100%;
-    padding-top: 0.875rem;
-    padding-bottom: 0.875rem;
+    padding-top: .625rem;
+    padding-bottom: .625rem;
     padding-left: 2.25rem;
     color: var(--primary-color);
-
-    // nav 內的每一個 list-item 在 $sm 的設定
-    @include sm {
-      padding-top: 0.575rem;
-      padding-bottom: 0.575rem;
-    }
 
     i {
       @include text(md);
@@ -137,14 +132,13 @@
 }
 
 .custom-list-title {
-  @include text(md);
+  @include text(sm);
   @include flex($ai: center);
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   white-space: nowrap;
 
   @include sm {
     margin-top: 1rem;
-    @include text(sm);
   }
 
   &::before,

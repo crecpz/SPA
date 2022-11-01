@@ -99,8 +99,7 @@ button {
 .wrapper {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 375px) 1fr;
-    // grid-template-columns: minmax(0, 100%) 1fr;
+    grid-template-columns: minmax(0, 340px) 1fr;
     grid-template-rows: 4.375rem 1fr;
     font-weight: 600;
     height: 100%;
