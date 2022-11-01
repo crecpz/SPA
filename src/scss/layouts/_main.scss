@@ -183,9 +183,13 @@
 
   //  Home.js 內的 view 切換鈕
   &__view-btns {
-    @include flex;
+    @include flex($jc: center);
     margin-left: 1rem;
     grid-row: 1/2;
+
+    // ? 
+    max-width: 90px;
+    width: 100%;
 
     @include sm {
       justify-self: end;
@@ -199,6 +203,8 @@
     background-color: var(--primary-color);
     color: var(--secondary-color);
     opacity: 1;
+
+    width: 50%;
 
     &:nth-child(1){
       border-top-left-radius: deep-map-get($border-radius, base);
