@@ -33,15 +33,19 @@
 
     // @ 此樣式只有在 Search.js 有，為了提供 Search 結果該 todo 的 srcName
     .todo__info {
-      @include flex;
+      @include flex($ai: center);
       @include text(xs);
-      color: #888;
       grid-column: 1/-1;
+      color: #888;
       pointer-events: none;
 
       i {
-        margin-right: 0.5rem;
         @include text(base);
+        margin-right: 0.5rem;
+      }
+
+      span {
+        white-space: nowrap
       }
     }
   }
