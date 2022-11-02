@@ -14,7 +14,7 @@ $dropdown-transition-speed: 450ms;
 
   &__name {
     @include flex($ai: center);
-    @include text(sm);
+    @include text(base);
     position: sticky;
     top: 0;
     z-index: 4;
@@ -73,7 +73,6 @@ $dropdown-transition-speed: 450ms;
       border: 0;
       visibility: hidden;
       opacity: 0;
-      // height: 0;
     }
   }
 }
