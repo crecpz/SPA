@@ -227,11 +227,14 @@ export function dropdownSwitch(e) {
 
   dropdownCover.style.height = `${todos.clientHeight}px`;
 
+  
   if (dropdownCover.clientHeight) {
     dropdownCover.style.height = `${0}px`;
+    dropdownCover.classList.add("dropdown__cover--closing");
     dropdownArrow.classList.add("dropdown__arrow--closing");
   } else {
     dropdownCover.style.height = `${todos.clientHeight}px`;
+    dropdownCover.classList.remove("dropdown__cover--closing");
     dropdownArrow.classList.remove("dropdown__arrow--closing");
   }
 }

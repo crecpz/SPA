@@ -1,6 +1,6 @@
 @use "abstracts" as *;
 
-$dropdown-transition-speed: 250ms;
+$dropdown-transition-speed: 450ms;
 
 .dropdown {
   padding-bottom: 1.5rem;
@@ -21,15 +21,20 @@ $dropdown-transition-speed: 250ms;
     font-weight: bold;
     width: 100%;
     padding-left: 1rem;
-    padding-right: 2rem;
+    padding-right: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     color: var(--secondary-color);
     background-color: var(--primary-color);
     cursor: pointer;
     user-select: none;
+    outline: 1px solid var(--primary-color);
     // border-top-left-radius: map-get($border-radius, base);
     // border-top-right-radius: map-get($border-radius, base);
+
+    @include sm {
+      @include text(base);
+    }
   }
 
   &__name-text{
@@ -55,12 +60,20 @@ $dropdown-transition-speed: 250ms;
   &__cover {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    border: 2px solid var(--primary-color);
+
+    outline: 1px solid var(--primary-color);
     overflow: hidden;
-    transition: height ease-in-out $dropdown-transition-speed;
+    // border: 2px solid var(--primary-color);
+    // transition: height ease-in-out $dropdown-transition-speed;
+
+    
+    transition: all ease-in-out $dropdown-transition-speed;
 
     &--closing {
-      height: 0;
+      border: 0;
+      visibility: hidden;
+      opacity: 0;
+      // height: 0;
     }
   }
 }
