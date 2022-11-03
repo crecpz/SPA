@@ -23,15 +23,13 @@ export const CustomList = {
     scrollBarFix(".main__content-list");
   },
 
-  render:  (props) =>{
+  render: (props) => {
     const pageData = DATA.custom.find((page) => page.id === props.id);
     const { name: pageName, content: pageContent, color } = pageData;
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item ${
-          checked ? "todo__item--isChecked" : ""
-        }">
+                <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
                   <label class="todo__checkbox checkbox">
                     <input type="checkbox" class="checkbox__input" ${
                       checked ? "checked" : ""
@@ -39,13 +37,9 @@ export const CustomList = {
                     <div class="checkbox__appearance"></div>
                   </label>
                   <p class="todo__content">${content}</p>
-                  <i class="top ${
-                    top ? "fa-solid" : "fa-regular"
-                  } fa-star"></i> 
-                </li>
-        `;
-      })
-      .join("");
+                  <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+                </li>`;
+      }).join("");
 
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.customlist.msgText,
@@ -54,39 +48,43 @@ export const CustomList = {
     );
 
     return `
-        <!-- 主內容區 - header -->
-        <div class="main__content-header">
-            <div class="container">
-                <div class="main__name-wrapper">
-                    <div class="main__color-block color-block-${color}"></div>
-                    <h2 class="main__name">${pageName}</h2>
-                    <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${ hasCompletedTodo ? "" : "not-allowed"}">清除完成事項</button>
-                    <!-- list-option-btn -->
-                    <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                </div>
-                <!-- list-options -->
-                <ul class="list-options">
-                    <li class="list-option">
-                      <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
-                    </li>
-                    <li class="list-option">
-                      <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
-                    </li>
-                    <li class="list-option list-option--custom-list">
-                      <a href="javascript:;" class="list-option__link remove-completed ${ hasCompletedTodo ? "" : "not-allowed"}">清除完成事項</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      <!-- 主內容區 - header -->
+      <div class="main__content-header">
+          <div class="container">
+              <div class="main__name-wrapper">
+                  <div class="main__color-block color-block-${color}"></div>
+                  <h2 class="main__name">${pageName}</h2>
+                  <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
+                    hasCompletedTodo ? "" : "not-allowed"
+                  }">清除完成事項</button>
+                  <!-- list-option-btn -->
+                  <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
+              <!-- list-options -->
+              <ul class="list-options">
+                  <li class="list-option">
+                    <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
+                  </li>
+                  <li class="list-option">
+                    <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
+                  </li>
+                  <li class="list-option list-option--custom-list">
+                    <a href="javascript:;" class="list-option__link remove-completed ${
+                      hasCompletedTodo ? "" : "not-allowed"
+                    }">清除完成事項</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
 
-        <!-- 主內容區 - list -->
-        <div class="main__content-list">
-            <div class="container">
-                <ul id="todo" class="todo">
-                  ${pageContent.length === 0 ? emptyMsgContent : todoContent}
-                </ul>
-            </div>
-        </div>
+      <!-- 主內容區 - list -->
+      <div class="main__content-list">
+          <div class="container">
+              <ul id="todo" class="todo">
+                ${pageContent.length === 0 ? emptyMsgContent : todoContent}
+              </ul>
+          </div>
+      </div>
     `;
   },
 

@@ -29,8 +29,6 @@ $dropdown-transition-speed: 450ms;
     cursor: pointer;
     user-select: none;
     outline: 1px solid var(--primary-color);
-    // border-top-left-radius: map-get($border-radius, base);
-    // border-top-right-radius: map-get($border-radius, base);
 
     @include sm {
       @include text(base);
@@ -60,13 +58,8 @@ $dropdown-transition-speed: 450ms;
   &__cover {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-
     outline: 1px solid var(--primary-color);
     overflow: hidden;
-    // border: 2px solid var(--primary-color);
-    // transition: height ease-in-out $dropdown-transition-speed;
-
-    
     transition: all ease-in-out $dropdown-transition-speed;
 
     &--closing {

@@ -20,6 +20,10 @@
     color: var(--primary-color);
     border-radius: map-get($border-radius, md);
     overflow: hidden;
+
+    &--completed{
+      opacity: 0.5;
+    }
   }
 
   &__header {
@@ -32,7 +36,6 @@
     padding-bottom: .5rem;
     color: var(--secondary-color);
     background-color: var(--primary-color);
-
 
     @include sm {
       padding-left: 1rem;
@@ -51,8 +54,8 @@
 
   &__color-block {
     margin-right: 1rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   &__content {
@@ -67,7 +70,6 @@
 
   &__text {
     @include text(base);
-    // font-weight: bold;
     @include flex($jc: space-between, $ai: center);
 
     &--column {
@@ -101,13 +103,12 @@
   grid-column: 1/-1;
   margin-top: 1.5rem;
 
-  &__value {
-  }
 
   &__outer {
     margin-top: .5rem;
     height: .5rem;
-    border: 1px solid var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: map-get($border-radius, md);
   }
 
   &__inner {

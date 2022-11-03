@@ -63,7 +63,7 @@ export const Home = {
 
           // 全部數量
           const all = content.length;
-          // 未完成數量
+          // 待完成數量
           const unCompleted = content.filter((todo) => !todo.checked).length;
           // 已完成數量
           const completed = content.filter((todo) => todo.checked).length;
@@ -73,38 +73,38 @@ export const Home = {
             : fillZero(Math.round((completed / all) * 100));
 
           return `
-                  <a href="#/${
-                    isCustom ? "customlist/" + id : id
-                  }" class="overview__link">
-                      <div class="overview__header" title="${pageName}">
-                          ${
-                            color === "default"
-                              ? ""
-                              : `<div class="overview__color-block color-block color-block-${color}"></div>`
-                          }
-                          <p class="overview__name-text">${pageName}</p>
+              <a href="#/${
+                isCustom ? "customlist/" + id : id
+              }" class="overview__link ${unCompleted === 0 ? "overview__link--completed" : ""}">
+                  <div class="overview__header" title="${pageName}">
+                      ${
+                        color === "default"
+                          ? ""
+                          : `<div class="overview__color-block color-block color-block-${color}"></div>`
+                      }
+                      <p class="overview__name-text">${pageName}</p>
+                  </div>
+                  <div class="overview__content">
+                      <div class="overview__text overview__text--column">待完成
+                          <span class="overview__number overview__number--lg">${unCompleted}</span>
                       </div>
-                      <div class="overview__content">
-                          <div class="overview__text overview__text--column">待完成
-                              <span class="overview__number overview__number--lg">${unCompleted}</span>
+                      <div class="overview__group">
+                          <div class="overview__text">全部
+                            <span class="overview__number overview__number--sm">${all}</span>
                           </div>
-                          <div class="overview__group">
-                              <div class="overview__text">全部
-                                <span class="overview__number overview__number--sm">${all}</span>
-                              </div>
-                              <div class="overview__text">已完成
-                                <span class="overview__number overview__number--sm">${completed}</span>
-                              </div>
-                          </div>
-                          <div class="overview__progress-bar progress">
-                            <span class="progress__value">${percentage}%</span>
-                            <div class="progress__outer">
-                                <div class="progress__inner" style="width:${percentage}%"></div>
-                            </div>
+                          <div class="overview__text">已完成
+                            <span class="overview__number overview__number--sm">${completed}</span>
                           </div>
                       </div>
-                  </a>
-              `;
+                      <div class="overview__progress-bar progress">
+                        <span class="progress__value">${percentage}%</span>
+                        <div class="progress__outer">
+                            <div class="progress__inner" style="width:${percentage}%"></div>
+                        </div>
+                      </div>
+                  </div>
+              </a>
+          `;
         })
         .join("");
 
@@ -256,7 +256,6 @@ export const Home = {
   listener: {
     click: (e) => {
       pageClickEvent(e);
-      // ! 以下只有本頁有
       // * 變更列表 view 模式
       if (
         e.target.classList.contains("main__view-btn") &&

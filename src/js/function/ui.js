@@ -171,13 +171,13 @@ export function renderCustomList() {
           class="custom-list__item nav__list-item 
                 ${id === currentPageId ? "nav__list-item--active" : null}"
       >
-          <a class="nav__list-link nav__list-link--custom-list" 
-              href="#/customlist/${id}"
-              title=${name}
-          >
-            <div class="custom-list__color color-block color-block-${color}"></div>
-            <p class="custom-list__name">${name}</p>
-          </a>
+        <a class="nav__list-link nav__list-link--custom-list" 
+            href="#/customlist/${id}"
+            title=${name}
+        >
+          <div class="custom-list__color color-block color-block-${color}"></div>
+          <p class="custom-list__name">${name}</p>
+        </a>
       </li>
     `;
     })
@@ -433,18 +433,6 @@ export function switchSearchPageUI() {
     document.querySelector("#search-input").value = "";
   }
 }
-
-// // @ 測試用: 用於表示仍可往上滑
-// export function scroll() {
-//   const mainContentList = document.querySelector(".main__content-list");
-//   mainContentList.addEventListener("scroll", (e) => {
-//     if (e.target.scrollTop) {
-//       mainContentList.classList.add("main__content--shadowTop");
-//     } else {
-//       mainContentList.classList.remove("main__content--shadowTop");
-//     }
-//   });
-// }
 
 /**
  * * 載入動畫

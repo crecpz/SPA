@@ -21,7 +21,6 @@
   }
 
   &.nav-open {
-    // width: calc(100% - 23.4375rem);
     width: calc(100% - 21.25rem);
 
     @include lg {
@@ -183,9 +182,7 @@
     @include flex($jc: center);
     margin-left: 1rem;
     grid-row: 1/2;
-
-    // ? 
-    max-width: 90px;
+    max-width: 5.625rem;
     width: 100%;
 
     @include sm {
@@ -200,7 +197,6 @@
     background-color: var(--primary-color);
     color: var(--secondary-color);
     opacity: 1;
-
     width: 50%;
 
     &:nth-child(1){

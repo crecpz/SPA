@@ -258,7 +258,6 @@ export function removeListConfirm() {
 }
 
 /**
- // ? 萬一內容很長怎麼辦? 
  * * 「 使用者按下刪除 todo ---> confirmModal 跳出 」 的確認過程
  * @param {*} todoId 欲刪除的 todoId
  */

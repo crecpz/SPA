@@ -1,7 +1,7 @@
 import { scrollBarFix } from "../function/fix.js";
-import { getAllTodos, getSearchResult, hide, removeTodoInSearchResult, searchResult, unhide } from "../function/helper.js";
+import { getSearchResult, hide, removeTodoInSearchResult, searchResult, unhide } from "../function/helper.js";
 import { closeConfirmModal, closeEditModal, closeModalOverlay, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
-import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, DATA, removeTodo, saveEditedTodo } from "../function/storage.js";
+import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, removeTodo, saveEditedTodo } from "../function/storage.js";
 import { createEmptyMsg, emptyMsg, switchSearchPageUI } from "../function/ui.js";
 import { Router } from "../routes/Router.js";
 
@@ -15,8 +15,6 @@ export const Search = {
   },
 
   render: () => {
-
-
     // * 準備 emptyMsg
     const emptyMsgContent = createEmptyMsg(
       emptyMsg.search.msgText,
@@ -89,7 +87,6 @@ export const Search = {
         e.target.previousElementSibling.value = '';
         Router()
       }
-
 
       // * confirmModal 設定
       // 在 confirm modal 為顯示的狀態時，無論使用者按下哪一個按鈕，都會關閉 confirm-modal

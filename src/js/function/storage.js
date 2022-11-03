@@ -33,21 +33,7 @@ export function getStorage() {
           content: [],
         },
       ],
-
-      custom: [
-        // {
-        //   id: "",
-        //   name: "未命名列表",
-        //   color: "",
-        //   content: [
-        // {
-        //   checked: false,
-        //   content: "this is todo A.",
-        //   top: false,
-        // },
-        // ],
-        // },
-      ],
+      custom: [],
     }
   );
 }
@@ -311,7 +297,6 @@ export function changeTopByEditModal(e) {
   } else {
     // 如果此頁不是位於 top，則在按下星號後不渲染。
     // 在不渲染的情況下，直接透過 click editModal 內的星星來改變 todoItem 內的星星樣式
-    // ? 不渲染的原因是:如果在 dropdown 會在渲染過後初始化，除非 dropdown 的開合有被儲存，那渲染就沒問題
     const starInTodoItem = document.querySelector(`#${currentTodoId} .top`);
     starInTodoItem.classList.toggle("fa-solid");
     starInTodoItem.classList.toggle("fa-regular");
@@ -406,20 +391,3 @@ export function removeCompleted() {
     );
   }
 }
-
-/**
- * @ 困難點在於: 總覽跟重要，必須深入每一個 obj 刪除他的內容
- *
- * - 在「總覽 list-view」按下刪除已完成  ★★★★★
- *    - 找出每一個 DATA 中的 page Object 中 checked === true 的物件
- *
- * - 在「預設列表」按下刪除已完成  ★☆☆☆☆
- *    很單純，只要找到該頁面的物件之後，從 content 屬性中剔除掉所有 checked === true 的項目
- *
- * - 在「重要」按下刪除已完成 ★★★★☆
- *    - 找出每一個 DATA 中的 page Object 中找出 top === true && checked === true 的元素，刪除它
- *
- * - 在「自訂列表」按下刪除已完成 ★☆☆☆☆
- *    很單純，只要找到該頁面的物件之後，從 content 屬性中剔除掉所有 checked === true 的項目
- *
- */
