@@ -1,4 +1,4 @@
-import { DATA } from "../function/storage.js";
+import { DATA } from "./storage.js";
 import { NotFound } from "../pages/NotFound.js";
 import { Router } from "../routes/Router.js";
 

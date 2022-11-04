@@ -1,32 +1,31 @@
 {
-  "name": "spa-prepare",
+  "name": "todo-task-list-app",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "watch": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crecpz/SPA-prepare.git"
+    "url": "git+https://github.com/crecpz/Todo-Task-List-App.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/crecpz/SPA-prepare/issues"
+    "url": "https://github.com/crecpz/Todo-Task-List-App/issues"
   },
-  "homepage": "https://github.com/crecpz/SPA-prepare#readme",
+  "homepage": "https://github.com/crecpz/Todo-Task-List-App#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.1.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "sass": "^1.54.8"
+    "sass": "^1.56.0"
   },
   "browserslist": [
     "last 1 version",
     "> 1%",
     "IE 10"
-  ],
-  "description": ""
+  ]
 }

@@ -20,13 +20,11 @@
   visibility: hidden;
   opacity: 0;
   transform: translateY(40%);
-
   padding: 2rem;
   width: 100%;
   max-width: 22.1875rem;
   background-color: var(--tertiary-color);
   border-radius: deep-map-get($border-radius, base);
-
   transition: 400ms ease-in-out;
   transition-property: transform, opacity, visibility;
 
@@ -178,7 +176,6 @@
       pointer-events: none;
       opacity: 0.5;
     }
-
   }
 
   &__top {
