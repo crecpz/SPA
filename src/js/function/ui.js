@@ -308,8 +308,6 @@ export function navSwitcher() {
   [wrapper, nav, main, mainHeader].forEach((elem) => {
     elem.classList.toggle("nav-open");
   });
-
-  // setNavIsOpen();
 }
 
 // nav 中所有的選單點擊切換行為

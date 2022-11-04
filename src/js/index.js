@@ -8,8 +8,7 @@ import {
 } from "./function/ui.js";
 import { Router } from "./routes/Router.js";
 import { appHeight, navCustomListTextOverflow } from "./function/fix.js";
-import { Home } from "./pages/Home.js";
-import { pageIsNotExist, switchNotFoundState } from "./function/helper.js";
+import { switchNotFoundState } from "./function/helper.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
@@ -39,7 +38,6 @@ window.addEventListener("hashchange", switchNotFoundState);
 // 於 home 的 grid-view 狀態隱藏 todoForm
 window.addEventListener("DOMContentLoaded", hideTodoForm);
 window.addEventListener("hashchange", hideTodoForm);
-
 
 // 在載入時或 hashchange 時切換 search 的 UI
 window.addEventListener("DOMContentLoaded", switchSearchPageUI);

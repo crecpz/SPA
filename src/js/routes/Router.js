@@ -2,14 +2,10 @@
 import { NotFound } from "../pages/NotFound.js";
 import { addListener, removeAllListeners } from "../function/eventListerer.js";
 import { Route } from "./Route.js";
-import {
-  pageIsNotExist,
-  getCurrentPage,
-  getCurrentPageId,
-} from "../function/helper.js";
+import { pageIsNotExist } from "../function/helper.js";
 
 /**
- *
+ * * 取得目前所在頁面的 component
  * @param {*} path 從網址列中接收到的路徑
  * @param {*} routes 從 ./Route.js 引入的路徑集合
  * @returns 若有找到匹配的路徑則返回該物件，若沒有的話則返回空物件。

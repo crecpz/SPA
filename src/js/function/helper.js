@@ -1,6 +1,5 @@
 import { DATA } from "../function/storage.js";
 import { NotFound } from "../pages/NotFound.js";
-import { Search } from "../pages/Search.js";
 import { Router } from "../routes/Router.js";
 
 /**
@@ -281,6 +280,3 @@ export function removeTodoInSearchResult(id){
   searchResult = searchResult.filter(i => i.id !== id)
   Router();
 }
-
-
-
