@@ -6,13 +6,10 @@
   grid-column: 1/-1;
   grid-row: 1/-1;
   position: relative;
-
   width: 100%;
   margin-left: auto;
-
   color: var(--primary-color);
   background-color: var(--secondary-color);
-
   transition-property: width;
   transition-duration: map-get($transition-duration, collapse);
 
@@ -31,18 +28,15 @@
   // main 頂部
   &__header {
     @include flex($ai: center);
+    @include padding-x;
     grid-row: 1 / 2;
     position: fixed;
     z-index: 5;
-
     width: 100%;
     height: deep-map-get($header-height, lg);
-    @include padding-x;
-
     border-bottom: 2px solid var(--primary-color);
     color: var(--primary-color);
     background-color: var(--secondary-color);
-
     transition-property: width;
     transition-duration: map-get($transition-duration, collapse);
 

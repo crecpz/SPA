@@ -20,7 +20,6 @@
   font-family: "Fira Code","Noto Serif TC", serif;
 }
 
-// 用於設定通用的 x 軸 padding (desktop 與 mobile 不一樣)
 @mixin padding-x {
   padding-left: 2.25rem;
   padding-right: 2.25rem;

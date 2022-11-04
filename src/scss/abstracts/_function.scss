@@ -1,36 +1,3 @@
-// /*
-// 用於取得相隔一層map內的值
-// $map: 最外層的map
-// $inner-map: 內層map
-// $key: 內層map屬性值
-// */
-// @function deep-map-get($map, $inner-map, $key) {
-//   @return map-get(map-get($map, $inner-map), $key);
-// }
-
-
-// deep-map-get
-// Get a value from nested map by the keys
-//
-// Required arguments:
-// `$map` Map
-// `$keys` String(s)
-//
-// Example of use:
-// $myMap:(
-//  layer1:(
-//   layer2:(
-//    layer3:(
-//     #fff
-//    ),
-//   ),
-//  ),
-// );
-//
-// deep-map-get($myMap, layer1, layer2, layer3) // #fff
-//
-// @return Unspecified (it may return anything as a result)
-// ---------------------------------------------------------
 @function deep-map-get ($map, $keys...) {
   @if type-of($map) != 'map' {
     @error 'The argument $map: `#{$map}` is of incorrect type: `#{type-of($map)}`. Type of `Map` is required!';

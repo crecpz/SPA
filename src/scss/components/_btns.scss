@@ -72,7 +72,6 @@
     }
   }
 
-
   // 新增自訂列表按鈕
   &--custom-list {
     @include text(base);
@@ -117,9 +116,8 @@
 }
 
 
-// mode-btn (光線模式)  之後回來處理，這邊要重寫
+// mode-btn (光線模式)
 .mode-btn {
-  // @include flex($jc: ceter, $ai: center);
   @include text(sm);
   padding: 0;
   color: var(--primary);
@@ -134,7 +132,6 @@
   }
   
   i{
-    // margin-top: 4px; // 此 icon 上下不均，旋轉時沒有確實繞著中心轉，故加上 margin
     pointer-events: none;
   }
 }

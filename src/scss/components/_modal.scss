@@ -16,12 +16,7 @@
 
 .modal {
   @include flex($dir: column);
-  // 因為 visibility: hidden 仍保有佔位，
-  // 多個 modal 即便都是不可見，但仍會影響彼此的位置，
-  // 讓所有只要有 modal class 的元素加上 fixed，
-  // 所有的 modal 將會變成重疊，而非左右排開。
   position: fixed;
-
   visibility: hidden;
   opacity: 0;
   transform: translateY(40%);
@@ -213,27 +208,11 @@
 
   .confirm-content {
     font-weight: bold;
-
     width: 100%;
-    // overflow: hidden;
-    // display: -webkit-box;
-    // -webkit-line-clamp: 2; // 行數
-    // -webkit-box-orient: vertical;
-    // white-space: normal;
-
     letter-spacing: 0.15em;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    
-
-    // @ 暫時禁用，因為省略字串時後方括號會不見
-    // &::before {
-    //   content: "「 ";
-    // }
-    // &::after {
-    //   content: " 」";
-    // }
   }
 
   // btn-group 基礎樣式

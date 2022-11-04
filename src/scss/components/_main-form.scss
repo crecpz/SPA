@@ -42,7 +42,7 @@
 
 .search {
   max-width: $max-width;
-  width: calc(100% - 5rem); // @ 減掉 80px 是因為「取消」按鈕
+  width: calc(100% - 5rem); 
 
 
   &__form {
