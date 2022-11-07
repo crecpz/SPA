@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-Task-List-App</title>
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Noto+Serif+TC:wght@600;900&display=swap"
+        rel="stylesheet">
+    <!-- font-awesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- style -->
+    <!-- <link rel="stylesheet" href="./dist/css/style.css"> -->
+</head>
+
+
+<body>
+    <div id="wrapper" class="wrapper">
+        <div class="body-overlay overlay"></div>
+        <!-- 側邊nav -->
+        <nav id="nav" class="nav">
+            <div class="nav__header">
+                <!-- 收起 nav 按鈕 -->
+                <button id="nav-hamburger" class="hamburger hamburger--nav">
+                    <i class="fa-solid fa-angle-left"></i>
+                </button>
+                <!-- mode 切換 -->
+                <button id="mode-btn" class="mode-btn mode-btn--change">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                </button>
+            </div>
+
+            <div class="nav__content">
+                <!-- 預設列表 -->
+                <ul class="nav__list default-list">
+                    <li id="home" class="default-list__item nav__list-item">
+                        <a class="nav__list-link" href="#/">
+                            <i class="fa-solid fa-table-cells-large"></i>總覽
+                        </a>
+                    </li>
+                    <li id="defaultlist" class="default-list__item nav__list-item">
+                        <a class="nav__list-link" href="#/defaultlist">
+                            <i class="fa-regular fa-clipboard"></i>預設列表</a>
+                    </li>
+                    <li id="top" class="default-list__item nav__list-item">
+                        <a class="nav__list-link" href="#/top">
+                            <i class="fa-solid fa-star"></i>重要
+                        </a>
+                    </li>
+                </ul>
+                <!-- 自訂列表 -->
+                <h3 class="custom-list-title">
+                    自訂列表
+                </h3>
+                <ul class="nav__list custom-list"></ul>
+                <button id="add-list-btn" class="btn btn--primary btn--custom-list">
+                    <i class="fa-solid fa-plus"></i>新增自訂列表
+                </button>
+            </div>
+        </nav>
+
+        <!-- 主內容區 -->
+        <main id="main" class="main">
+            <header id="main__header" class="main__header">
+                <div class="main__header-container main__header-container--normal">
+                    <!-- hamburger -->
+                    <button id="main-hamburger" class="hamburger hamburger--main">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <!-- seach btn -->
+                    <a href="#/search" id="search-btn" class="btn btn--search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                </div>
+
+                <div class="main__header-container main__header-container--search hidden">
+                    <!-- search bar -->
+                    <div id="search" class="search">
+                        <form class="main__form search__form">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" class="search__input main__input"
+                                placeholder="搜尋待辦事項" />
+                            <i id="clear-text-btn" class="hidden fa-solid fa-circle-xmark"></i>
+                        </form>
+                    </div>
+                    <!-- 取消按鈕 -->
+                    <button id="back-btn" class="btn btn--primary btn--xs btn--back">取消</button>
+                </div>
+            </header>
+
+            <!-- 渲染區域 -->
+            <section class="main__content"></section>
+
+            <!-- 輸入框 -->
+            <form class="main__form todo-form hidden">
+                <input type="text" id="todo-input" class="main__input todo-form__input">
+                <button id="todo-submit" class="btn todo-form__submit">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </form>
+        </main>
+    </div>
+
+    <!-- modal -->
+    <div class="modal-overlay overlay">
+        <!--  confirm modal -->
+        <div id="confirm-modal" class="modal modal--confirm"></div>
+        <!--  edit todo modal -->
+        <div id="edit-modal" class="modal modal--edit"></div>
+        <!--  color picker -->
+        <div id="edit-name-modal" class="modal modal--eidt-name">
+            <form class="modal__form">
+                <p class="modal__title">列表名稱設定</p>
+                <input type="text" id="list-name" class="modal__input">
+                <div id="color-picker" class="color-picker">
+                    <div class="modal__color-block color-block color-block-1" data-color="1"></div>
+                    <div class="modal__color-block color-block color-block-2" data-color="2"></div>
+                    <div class="modal__color-block color-block color-block-3" data-color="3"></div>
+                    <div class="modal__color-block color-block color-block-4" data-color="4"></div>
+                    <div class="modal__color-block color-block color-block-5" data-color="5"></div>
+                    <div class="modal__color-block color-block color-block-6" data-color="6"></div>
+                    <div class="modal__color-block color-block color-block-7" data-color="7"></div>
+                    <div class="modal__color-block color-block color-block-8" data-color="8"></div>
+                    <div class="modal__color-block color-block color-block-9" data-color="9"></div>
+                    <div class="modal__color-block color-block color-block-10" data-color="10"></div>
+                </div>
+                <button id="edit-name-close" class="btn btn--primary btn--modal btn--add-list-modal">完成</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 進場動畫 -->
+    <div id="loader" class="loader">
+        <div class="loader__container">
+            <div class="loader__circle">
+                <div class="loader__tick"></div>
+            </div>
+            <p class="loader__text">Todo Task List App</p>
+        </div>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>
