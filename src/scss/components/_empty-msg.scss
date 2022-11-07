@@ -1,4 +1,4 @@
-@use "abstracts" as *;
+@use "../abstracts" as *;
 
 .empty-msg {
   @include flex($dir: column, $jc: center, $ai: center);

@@ -1,14 +1,15 @@
-import { updateMode } from "./function/mode.js";
+import "./scss/style.scss";
+import { updateMode } from "./js/function/mode.js";
 import {
   activeNavLists,
   hideTodoForm,
   loader,
   renderCustomList,
   switchSearchPageUI,
-} from "./function/ui.js";
-import { Router } from "./routes/Router.js";
-import { appHeight, navCustomListTextOverflow } from "./function/fix.js";
-import { switchNotFoundState } from "./function/helper.js";
+} from "./js/function/ui.js";
+import { Router } from "./js/routes/Router.js";
+import { appHeight, navCustomListTextOverflow } from "./js/function/fix.js";
+import { switchNotFoundState } from "./js/function/helper.js";
 
 // 監聽 hash 變化 & 加載完畢事件
 window.addEventListener("hashchange", Router);
