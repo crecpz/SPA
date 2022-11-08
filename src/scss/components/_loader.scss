@@ -17,16 +17,16 @@
   }
 
   &__circle {
-    position: relative;
     @include rounded-full();
+    position: relative;
     width: 4.0625rem;
     height: 4.0625rem;
     border: 2px solid var(--primary-color);
     opacity: 0;
     transform: rotate(225deg);
-    transition: transform 1000ms ease-in-out, opacity 800ms ease-in-out;
-
+    
     &.active {
+      transition: transform 1000ms ease-in-out, opacity 800ms ease-in-out;
       opacity: 1;
     }
 
@@ -50,6 +50,7 @@
 
     &--animate {
       animation: tick 300ms ease-in-out forwards;
+
       &::before {
         animation: tick-before 300ms ease-in-out forwards 200ms;
       }
@@ -77,31 +78,23 @@
 
   &__text {
     @include text(xl);
-    color: var(--primary-color);
-    text-align: center;
+    visibility: hidden;
     opacity: 0;
     transform: translateY(30%);
+    color: var(--primary-color);
+    text-align: center;
     margin-top: 3rem;
-    transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
-
-    &.active {
+    
+    &--active {
+      transition: 600ms ease-in-out;
+      transition-property: transform, opacity, visibility;
       transform: translateY(0%);
       opacity: 1;
+      visibility: visible;
     }
 
     @include sm {
       @include text(md);
-    }
-  }
-
-  &__word {
-    display: inline-block;
-    transform: translateY(20%);
-    transition: all 500ms ease-in-out;
-
-    &.active {
-      transform: translateY(0%);
-      opacity: 1;
     }
   }
 

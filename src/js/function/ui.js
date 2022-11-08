@@ -227,7 +227,6 @@ export function dropdownSwitch(e) {
 
   dropdownCover.style.height = `${todos.clientHeight}px`;
 
-  
   if (dropdownCover.clientHeight) {
     dropdownCover.style.height = `${0}px`;
     dropdownCover.classList.add("dropdown__cover--closing");
@@ -441,10 +440,9 @@ export function loader() {
   const loaderTick = document.querySelector(".loader__tick");
   const loaderText = document.querySelector(".loader__text");
 
-  // 圓圈
   setTimeout(() => {
     loaderCircle.classList.add("active");
-  }, 100);
+  }, 300);
 
   // 勾勾
   setTimeout(() => {
@@ -453,7 +451,7 @@ export function loader() {
 
   // 文字
   setTimeout(() => {
-    loaderText.classList.add("active");
+    loaderText.classList.add("loader__text--active");
   }, 1400);
 
   // loader 背景
@@ -461,6 +459,6 @@ export function loader() {
     loader.style.transform = "translateY(-100vh)";
     loader.addEventListener('transitionend', ()=> {
       loader.style.display = 'none';
-    })
+    }, {once: true})
   }, 2500);
 }

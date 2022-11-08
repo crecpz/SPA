@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo-Task-List-App</title>
-
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- style -->
-    <!-- <link rel="stylesheet" href="./dist/css/style.css"> -->
 </head>
 
 
@@ -35,7 +32,6 @@
                     <i class="fa-solid fa-circle-half-stroke"></i>
                 </button>
             </div>
-
             <div class="nav__content">
                 <!-- 預設列表 -->
                 <ul class="nav__list default-list">
@@ -79,7 +75,6 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
                 </div>
-
                 <div class="main__header-container main__header-container--search hidden">
                     <!-- search bar -->
                     <div id="search" class="search">
@@ -94,10 +89,8 @@
                     <button id="back-btn" class="btn btn--primary btn--xs btn--back">取消</button>
                 </div>
             </header>
-
             <!-- 渲染區域 -->
             <section class="main__content"></section>
-
             <!-- 輸入框 -->
             <form class="main__form todo-form hidden">
                 <input type="text" id="todo-input" class="main__input todo-form__input">
@@ -107,7 +100,6 @@
             </form>
         </main>
     </div>
-
     <!-- modal -->
     <div class="modal-overlay overlay">
         <!--  confirm modal -->
@@ -135,7 +127,6 @@
             </form>
         </div>
     </div>
-
     <!-- 進場動畫 -->
     <div id="loader" class="loader">
         <div class="loader__container">
@@ -145,7 +136,6 @@
             <p class="loader__text">Todo Task List App</p>
         </div>
     </div>
-
     <script src="./main.js"></script>
 </body>
 </html>
