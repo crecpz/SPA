@@ -16,6 +16,7 @@ html {
 :root {
     --app-height: 100%;
     --danger-color: #a71f24;
+    --danger-color-hover: #7d171a;
     --color-type-1: #c58787;
     --color-type-2: #638c71;
     --color-type-3: #bf8f71;
@@ -37,13 +38,13 @@ html {
 }
 
 body {
-    font-family: "Fira Code","Noto Serif TC", serif;
+    font-family: "Fira Code", "Noto Serif TC", serif;
     padding: 0;
     margin: 0;
     overflow: hidden;
     width: 100vw;
     height: 100vh;
-    letter-spacing: deep-map-get($text,spacing, base);
+    letter-spacing: deep-map-get($text, spacing, base);
     // @　防止雙擊放大
     touch-action: manipulation;
 
@@ -54,41 +55,46 @@ body {
 
 input,
 textarea {
-    font-family: "Fira Code","Noto Serif TC", serif;
+    font-family: "Fira Code", "Noto Serif TC", serif;
 }
 
 button {
-    padding:0;
+    padding: 0;
 }
 
 .light:root {
     --primary-color: #2a2a2a;
+    --primary-hover: #404040;
     --secondary-color: #fff;
     --tertiary-color: #f1f1f1;
+    --scrollbar-color: #d6d6d6;
 }
 
 .dark:root {
     --primary-color: #fff;
-    --secondary-color: black;
+    --primary-hover: #b3b3b3;
+    --secondary-color: #000000;
     --tertiary-color: #3a3a3a;
-    // --tertiary-color: #f1f1f1;
-}
-
-// 使用者系統光線模式: dark
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary-color: #fff;
-        --secondary-color: black;
-        --tertiary-color: #3a3a3a;
-    }
+    --scrollbar-color: #3a3a3a;
 }
 
 // 使用者系統光線模式: light
 @media (prefers-color-scheme: light) {
     :root {
         --primary-color: #2a2a2a;
+        --primary-hover: #404040;
         --secondary-color: #fff;
         --tertiary-color: #f1f1f1;
+    }
+}
+
+// 使用者系統光線模式: dark
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #fff;
+        --primary-hover: #b3b3b3;
+        --secondary-color: black;
+        --tertiary-color: #3a3a3a;
     }
 }
 
@@ -115,4 +121,22 @@ button {
 
 .container {
     width: 100%;
+}
+
+
+// * scrollbar (firefox 相關設定在 _main.scss --> .main__content-list 中)
+::-webkit-scrollbar {
+    width: auto;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+}
+::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-hover);
 }

@@ -7,10 +7,10 @@
 
   &--xs {
     @include text(normal);
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-    padding-left: .75rem;
-    padding-right: .75rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 
   &--sm {
@@ -25,11 +25,11 @@
   &--back {
     position: absolute;
     right: 36px;
-    
-    @include xxl{
+
+    @include xxl {
       white-space: nowrap;
       margin-left: 1.5em;
-      position: static
+      position: static;
     }
   }
 
@@ -38,6 +38,12 @@
     font-size: 1.25rem;
     color: var(--primary-color);
     margin-left: auto;
+
+    @include hover-query {
+      &:hover i{
+        color: var(--primary-hover);
+      }
+    }
 
     i {
       pointer-events: none;
@@ -51,6 +57,14 @@
     background-color: var(--primary-color);
     color: var(--secondary-color);
     border-radius: deep-map-get($border-radius, base);
+    transition: map-get($transition-duration, fast) ease-in-out;
+    transition-property: color, background-color;
+
+    @include hover-query {
+      &:hover {
+        background-color: var(--primary-hover);
+      }
+    }
 
     i {
       margin-right: 1rem;
@@ -61,6 +75,12 @@
   &--danger {
     color: #fff;
     background-color: var(--danger-color);
+
+    @include hover-query {
+      &:hover {
+        background-color: var(--danger-color-hover);
+      }
+    }
   }
 
   &--remove {
@@ -92,7 +112,7 @@
   &--list-option {
     @include text(md);
     color: var(--primary-color);
-    padding: 0 .5rem; // 增加點選範圍
+    padding: 0 0.5rem; // 增加點選範圍
 
     i {
       pointer-events: none;
@@ -115,7 +135,6 @@
   }
 }
 
-
 // mode-btn (光線模式)
 .mode-btn {
   @include text(sm);
@@ -128,10 +147,10 @@
   transform-origin: center;
 
   &--change {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
-  
-  i{
+
+  i {
     pointer-events: none;
   }
 }

@@ -28,7 +28,7 @@ $dropdown-transition-speed: 450ms;
     background-color: var(--primary-color);
     cursor: pointer;
     user-select: none;
-    outline: 1px solid var(--primary-color);
+    outline: 2px solid var(--primary-color);
 
     @include sm {
       @include text(base);
@@ -58,7 +58,7 @@ $dropdown-transition-speed: 450ms;
   &__cover {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    outline: 1px solid var(--primary-color);
+    outline: 2px solid var(--primary-color);
     overflow: hidden;
     transition: all ease-in-out $dropdown-transition-speed;
 

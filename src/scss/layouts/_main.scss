@@ -193,17 +193,23 @@
     opacity: 1;
     width: 50%;
 
-    &:nth-child(1){
+    @include hover-query {
+      &:hover {
+        background-color: var(--primary-hover);
+      }
+    }
+
+    &:nth-child(1) {
       border-top-left-radius: deep-map-get($border-radius, base);
       border-bottom-left-radius: deep-map-get($border-radius, base);
     }
 
-    &:nth-child(2){
+    &:nth-child(2) {
       border-top-right-radius: deep-map-get($border-radius, base);
       border-bottom-right-radius: deep-map-get($border-radius, base);
     }
 
-    &--active {    
+    &--active {
       opacity: 0.8;
     }
 
@@ -218,6 +224,7 @@
     margin-top: 1.5rem;
     width: 100%;
     overflow-y: scroll;
+    scrollbar-color: var(--scrollbar-color) var(--secondary-color);
 
     @include sm {
       margin-top: 1.5rem;
