@@ -75,7 +75,9 @@ export const Home = {
           return `
               <a href="#/${
                 isCustom ? "customlist/" + id : id
-              }" class="overview__link ${unCompleted === 0 ? "overview__link--completed" : ""}">
+              }" class="overview__link ${
+            unCompleted === 0 ? "overview__link--completed" : ""
+          }">
                   <div class="overview__header" title="${pageName}">
                       ${
                         color === "default"
@@ -107,17 +109,18 @@ export const Home = {
           `;
         })
         .join("");
-
     } else if (currentView === "list-view") {
-
       // * --------------------------- list-view  -----------------------------------
-        
-      viewContent = pageContentObjects.map(({ name, content, color }) => {
+
+      viewContent = pageContentObjects
+        .map(({ name, content, color }) => {
           // * 每一個 dropdown 內的 todoList 結構
           const todoListInDropdown = content
             .map(({ id, checked, content, top }) => {
               return `
-                <li id="${id}" class="todo__item ${ checked ? "todo__item--isChecked" : ""}">
+                <li id="${id}" class="todo__item ${
+                checked ? "todo__item--isChecked" : ""
+              }">
                     <label class="todo__checkbox checkbox">
                         <input type="checkbox" class="checkbox__input" ${
                           checked ? "checked" : ""
@@ -200,48 +203,50 @@ export const Home = {
     return `
             <!-- 主內容區 - header -->
             <div class="main__content-header">
-                <div class="container">
-                    <div class="main__name-wrapper">
-                        <div class="main__color-block color-block--default"></div>
-                        <h2 class="main__name">總覽</h2>
-                        <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option
-                          ${currentView === "grid-view" ? "hidden" : ""}"
-                        >
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
+              <div class="container">
+                <div class="main__name-wrapper">
+                    <div class="main__color-block color-block--default"></div>
+                    <p class="main__name">總覽</p>
+                    <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option
+                      ${currentView === "grid-view" ? "hidden" : ""}"
+                    >
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                    <!-- list-options -->
+                    <ul class="list-options list-options--home">
+                      <li class="list-option">
+                        <a href="javascript:;" class="list-option__link remove-completed ${
+                          hasCompletedTodo ? "" : "not-allowed"
+                        }">清除完成事項</a>
+                      </li>
+                    </ul>
+                    <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
+                      currentView === "grid-view" || noContent
+                        ? "hidden"
+                        : ""
+                    } ${hasCompletedTodo ? "" : "not-allowed"}">
+                      清除完成事項
+                    </button>
+                    <div class="main__view-btns">
+                        <button data-view="grid-view" class="main__view-btn btn 
+                            ${
+                              currentView === "grid-view"
+                                ? "main__view-btn--active"
+                                : ""
+                            }">
+                            <i class="fa-solid fa-table-cells-large"></i>
                         </button>
-                        <!-- list-options -->
-                        <ul class="list-options list-options--home">
-                          <li class="list-option">
-                            <a href="javascript:;" class="list-option__link remove-completed ${ hasCompletedTodo ? "" : "not-allowed"}">清除完成事項</a>
-                          </li>
-                        </ul>
-                        <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
-                          currentView === "grid-view" || noContent
-                            ? "hidden"
-                            : ""
-                        } ${ hasCompletedTodo ? "" : "not-allowed"}">
-                          清除完成事項
+                        <button data-view="list-view" class="main__view-btn btn 
+                            ${
+                              currentView === "list-view"
+                                ? "main__view-btn--active"
+                                : ""
+                            }">
+                            <i class="fa-solid fa-list-ul"></i>
                         </button>
-                        <div class="main__view-btns">
-                            <button data-view="grid-view" class="main__view-btn btn 
-                                ${
-                                  currentView === "grid-view"
-                                    ? "main__view-btn--active"
-                                    : ""
-                                }">
-                                <i class="fa-solid fa-table-cells-large"></i>
-                            </button>
-                            <button data-view="list-view" class="main__view-btn btn 
-                                ${
-                                  currentView === "list-view"
-                                    ? "main__view-btn--active"
-                                    : ""
-                                }">
-                                <i class="fa-solid fa-list-ul"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
+              </div>
             </div>
 
             <!-- 主內容區 - list -->
@@ -271,7 +276,7 @@ export const Home = {
           .forEach((btn) => btn.classList.remove("main__view-btn--active"));
         e.target.classList.add("main__view-btn--active");
 
-        if(e.target.dataset.view === "list-view"){
+        if (e.target.dataset.view === "list-view") {
           switchRemoveCompletedBtn();
         }
         Router();
