@@ -4,6 +4,7 @@
   $block: &;
   @include flex($dir: column);
 
+
   &__item {
     @include flex($ai: center);
     padding-top: 1.25rem;
