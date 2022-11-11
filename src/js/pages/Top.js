@@ -66,7 +66,7 @@ export const Top = {
           <div class="container">
             <div class="main__name-wrapper">
               <div class="main__color-block color-block--default"></div>
-              <h2 class="main__name">${pageName}</h2>
+              <p class="main__name">${pageName}</p>
               <!-- list-option-btn -->
               <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
               <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${ hasCompletedTodo ? "" : "not-allowed"}">清除完成事項</button>

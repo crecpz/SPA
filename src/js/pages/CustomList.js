@@ -53,7 +53,7 @@ export const CustomList = {
           <div class="container">
               <div class="main__name-wrapper">
                   <div class="main__color-block color-block-${color}"></div>
-                  <h2 class="main__name">${pageName}</h2>
+                  <p class="main__name">${pageName}</p>
                   <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
                     hasCompletedTodo ? "" : "not-allowed"
                   }">清除完成事項</button>
