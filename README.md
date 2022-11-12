@@ -13,4 +13,4 @@ https://crecpz.github.io/Todo-Task-List-App/
 - **深色 / 淺色模式** : 可變更深色或淺色主題，首次載入時的顏色取決於裝置系統設定。
 - **資料儲存** : 資料將存放在 localStorage 中，即使關閉分頁，資料也不會消失。
 - 使用原生 JavaScript 撰寫。
-- 頁面的切換是透過監聽 `window` 的 `hashchange` 事件來偵測網址變化，再根據 `loaction.hash` 的值，渲染相對應的內容到畫面中。
+- 透過監聽 `window` 的 `hashchange` 事件偵測 `loaction.hash` 變化，再根據 `loaction.hash` 的值，渲染相對應的內容到畫面中。
