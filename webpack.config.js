@@ -47,6 +47,9 @@ module.exports = {
     open: true,
     compress: true,
     hot: true,
+    open: {
+      app: { name: "firefox" },
+    },
   },
   mode: "production",
   performance: {
