@@ -27,7 +27,8 @@ export const Home = {
     // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view，該狀態存放在 Home.state 中。
 
     // 存放目前 view 模式
-    const currentView = Home.state.view;
+    // const currentView = Home.state.view;
+    const currentView = this.state.view;
 
     // 存放 grid-view 或是 list-view 的內容 (實際會放哪種內容在內取決於 currentView)
     let viewContent = "";
@@ -147,6 +148,8 @@ export const Home = {
             // 根據目前的 expand 狀態決定是否要在相對應的元素上面放上相對應的 class
             let dropdownCoverClosing = "";
             let dropdownArrowClass = "";
+            // 此變數表示: 當前的 dropdown 是新的(原本 expandInfo 沒有)，預設 false
+            let isNewExpandInfo = false;
             // 如果在 state.expandInfo 找得到資料
             if (this.state.expandInfo.find((i) => i.id === id)) {
               // 則根據資料的內容決定其高度
@@ -156,8 +159,14 @@ export const Home = {
                 dropdownCoverClosing = "dropdown__cover--closing";
               }
             } else {
-              // 如果找不到資料，新增一個(預設讓它展開)
-              this.state.expandInfo.push({ id: id, isExpand: true });
+              // 如果找不到資料
+              // 新增一個(預設讓它收合)
+              this.state.expandInfo.push({ id: id, isExpand: false });
+              // 新增初始值之後，將 isNewExpandInfo 設為 true
+              isNewExpandInfo = true;
+              // 下面的 dropdown__cover 內的 style="" 屬性將會依據此 dropdown 是不是新的來決定
+              // 如果目前的 dropdown 是新的，則將其設為 height: 0px;
+              // 反之，則根據上面 dropdownCoverStyle 的結果。
             }
 
             return `
@@ -172,7 +181,9 @@ export const Home = {
                     <i class="dropdown__arrow fa-solid fa-chevron-right ${dropdownArrowClass}"></i>
                   </div>
                   <div class="dropdown__cover ${dropdownCoverClosing}"
-                    style="${dropdownCoverStyle}"
+                    style="${
+                      isNewExpandInfo ? "height: 0px;" : dropdownCoverStyle
+                    }"
                   >
                     <ul class="todo">
                         ${todoListInDropdown}
@@ -288,6 +299,12 @@ export const Home = {
     click: (e) => {
       pageClickEvent(e);
 
+      if (e.target.id === "todo-submit") {
+        document
+          .querySelector('[data-id="defaultlist"]')
+          .classList.add("animation-light-up");
+      }
+
       // * 變更列表 view 模式
       if (
         e.target.classList.contains("main__view-btn") &&
@@ -313,16 +330,19 @@ export const Home = {
       if (e.target.classList.contains("dropdown__name")) {
         dropdownSwitch(e);
 
-        // 取得
+        // 取得 state.expandInfo
         const expandInfo = Home.state.expandInfo;
+        // 尋找目前 e.target 的 data-id 是否存在於 state.expandInfo 中
         const currentExpand = expandInfo.find(
           ({ id }) => e.target.dataset.id === id
         );
-
+        // 若存在
         if (currentExpand) {
+          // 翻轉該項的 isExpand 值
           currentExpand.isExpand = !currentExpand.isExpand;
         } else {
-          expandInfo.push({ id: e.target.dataset.id, isExpand: true });
+          // 若不存在，則將其新增一個初始值
+          expandInfo.push({ id: e.target.dataset.id, isExpand: false });
         }
       }
     },

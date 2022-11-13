@@ -1,6 +1,7 @@
 @use "../abstracts" as *;
 
 .overview {
+  $block: &;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -22,6 +23,14 @@
     color: var(--primary-color);
     border-radius: map-get($border-radius, md);
     overflow: hidden;
+
+    @include hover-query {
+      &:hover {
+        #{$block}__content {
+          background-color: var(--tertiary-color);
+        }
+      }
+    }
 
     &--completed {
       opacity: 0.5;
@@ -68,6 +77,8 @@
     padding-bottom: 2.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+    transition: ease-in-out map-get($transition-duration, fast);
+    transition-property: color, background-color;
   }
 
   &__text {

@@ -8,7 +8,7 @@
 }
 
 .dropdown {
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
 
   &__color-block {
     width: 18px;
@@ -21,7 +21,7 @@
     @include flex($ai: center);
     @include text(base);
     position: sticky;
-    top: 0;
+    top: 12.6563rem;
     z-index: 4;
     font-weight: bold;
     width: 100%;
@@ -33,10 +33,23 @@
     background-color: var(--primary-color);
     cursor: pointer;
     user-select: none;
-    outline: 1px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
+    transition: ease-in-out map-get($transition-duration, base);
+    transition-property: outline, background-color;
+
+    &.animation-light-up{
+      animation: lights-up ease-in-out 1500ms;
+    }
+
+    @include hover-query{
+      &:hover{
+        background-color: var(--primary-hover);
+      }  
+    }
 
     @include sm {
       @include text(base);
+      top: 186.5px;
     }
   }
 
@@ -63,13 +76,13 @@
   &__cover {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    outline: 1px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
     overflow: hidden;
     transition: map-get($transition-duration, base) ease-in-out;
     transition-property: border visibility opacity;
 
     &--closing {
-      border: 0;
+      border-color: transparent;
       visibility: hidden;
       opacity: 0;
     }

@@ -51,8 +51,8 @@ module.exports = {
       app: { name: "firefox" },
     },
   },
-  // mode: "production",
-  mode: "development",
+  mode: "production",
+  // mode: "development",
   performance: {
     hints: false,
     maxEntrypointSize: 512000,

@@ -1,7 +1,6 @@
 @use "../abstracts" as *;
 
 .main {
-  // position: relative;
   display: grid;
   grid-template-rows: deep-map-get($header-height, lg) 1fr auto;
   grid-column: 1/-1;
@@ -46,7 +45,6 @@
 
     &.nav-open {
       width: calc(100% - 21.25rem);
-      // width: calc(100% - 23.4375rem);
       @include lg {
         width: 100%;
       }
@@ -78,11 +76,6 @@
     grid-column: 2/-1;
     grid-row: 2/3;
     overflow-y: scroll;
-    
-    // @include lg {
-    //   padding-left: 0;
-    //   padding-right: 0;
-    // }
 
     > .container {
       @include flex($dir: column, $ai: flex-end);
@@ -94,33 +87,14 @@
 
   &__content-header {
     @include flex($dir: column, $jc: center);
-    // @include padding-x;
-    
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
-    width: 100%;
-    // margin-top: 3rem;
-    position:sticky;
+    position: sticky;
     z-index: 1;
     top: 0;
     padding-top: 3rem;
-    // background-color: #bfa;
-
-
-    @include xl {
-      // margin-top: 3rem;
-    }
-
-    @include sm {
-      // margin-top: 2.25rem;
-    }
-
-    .container {
-      // @include flex($dir: column, $ai: flex-end);
-      // position: relative;
-      // max-width: $max-width;
-      // width: 100%;
-    }
+    padding-bottom: 1.5rem;
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
   }
 
   &__name-wrapper {
@@ -133,10 +107,6 @@
     width: 100%;
     height: 100%;
     min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
-
-    // @include lg {
-    //   @include padding-x;
-    // }
 
     @include sm {
       grid-template-rows: auto auto;
@@ -243,25 +213,11 @@
 
   &__content-list {
     @include flex($jc: center);
-
-    margin-top: 1.5rem;
     width: 100%;
     scrollbar-color: var(--scrollbar-color) var(--secondary-color);
 
-
-
-    // @include lg {
-    //   @include padding-x;
-    // }
-
-    @include sm {
-      // margin-top: 1.5rem;
-    }
-
     .container {
       max-width: $max-width;
-      // border-top: 1px solid var(--line-color);
-      // border-bottom: 1px solid var(--line-color);
     }
   }
 
@@ -269,9 +225,7 @@
     @include flex($jc: center, $ai: center);
     width: 100%;
     height: 100%;
-
     max-width: $max-width;
-    height: 100%;
 
     .container {
       @include flex($dir: column, $ai: center, $jc: center);

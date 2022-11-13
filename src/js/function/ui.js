@@ -372,22 +372,6 @@ export const emptyMsg = {
 };
 
 /**
- * * 當目前頁面是總覽且當前 view 是 grid-view 時，不需要顯示 .todo-form。
- * 預設是先將 .todo-form 加上 .hidden class (display: none)，可以顯示時才將 .hidden class remove
- */
-export function hideTodoForm() {
-  if (
-    (location.hash === "#/" && Home.state.view === "grid-view") ||
-    pageIsNotExist() ||
-    location.hash === "#/search"
-  ) {
-    document.querySelector(".todo-form").classList.add("hidden");
-  } else {
-    document.querySelector(".todo-form").classList.remove("hidden");
-  }
-}
-
-/**
  * * 建立一個當頁面內容為空的時候要顯示的訊息
  * @param {*} msgText 訊息文字內容
  * @param {*} svgTag 要顯示的 <svg> tag

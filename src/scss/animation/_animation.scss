@@ -1,0 +1,57 @@
+@use "../abstracts" as *;
+
+@keyframes lights-up{
+  25% {
+    // background-color: var(--tertiary-color); 
+    background-color: var(--secondary-color); 
+    // background-color: var(--tertiary-color); 
+    color: var(--primary-color); 
+  }
+
+  50% {
+    color: var(--secondary-color); 
+    background-color: var(--primary-color); 
+  }
+
+  75%{
+    // background-color: var(--tertiary-color); 
+    background-color: var(--secondary-color); 
+    color: var(--primary-color); 
+  }
+
+  100% {
+    color: var(--secondary-color);
+    background-color: var(--primary-color); 
+  }
+
+}
+
+// * loader
+
+// @ desktop
+@keyframes tick {
+  100% {
+    width: 16px;
+  }
+}
+
+@keyframes tick-before {
+  100% {
+    height: 24px;
+  }
+}
+
+// @ mobile
+@keyframes tick-sm {
+  100%{
+    width: 10px;
+  }
+}
+
+@keyframes tick-before-sm {
+  100%{
+    height: 16px;
+  }
+}
+
+

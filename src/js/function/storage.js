@@ -86,7 +86,7 @@ export function setTodo(e) {
     todoInput.value = "";
 
     Router();
-    e.target.previousElementSibling.focus();
+    // e.target.previousElementSibling.focus();
   }
 }
 

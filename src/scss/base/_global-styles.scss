@@ -73,7 +73,7 @@ button {
 
 .dark:root {
     --primary-color: #fff;
-    --primary-hover: #b3b3b3;
+    --primary-hover: #dcdcdc;
     --secondary-color: #000000;
     --tertiary-color: #3a3a3a;
     --scrollbar-color: #3a3a3a;
@@ -95,7 +95,7 @@ button {
 @media (prefers-color-scheme: dark) {
     :root {
         --primary-color: #fff;
-        --primary-hover: #b3b3b3;
+        --primary-hover: #dcdcdc;
         --secondary-color: black;
         --tertiary-color: #3a3a3a;
         --line-color: #898989;
@@ -127,7 +127,6 @@ button {
     width: 100%;
 }
 
-
 // * scrollbar (firefox 相關設定在 _main.scss --> .main__content-list 中)
 ::-webkit-scrollbar {
     width: auto;
@@ -139,7 +138,6 @@ button {
 ::-webkit-scrollbar-track {
     background-color: var(--secondary-color);
 }
-
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary-hover);
