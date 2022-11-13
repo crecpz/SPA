@@ -14,11 +14,7 @@
 }
 
 .todo-form {
-  @include flex;
-
-  // position: sticky;
-  // bottom: 0%;
-  // box-shadow: 0 3px 2px 1px #333;;
+  @include flex($jc: center);
   margin-top: 2rem;
   max-width: $max-width;
   border-top-left-radius: 5px;
@@ -34,6 +30,7 @@
     border-bottom-left-radius: 5px;
 
     &::placeholder {
+      @include text(normal);
       font-style: italic;
     }
   }

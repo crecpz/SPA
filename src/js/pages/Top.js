@@ -28,20 +28,19 @@ export const Top = {
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item ${
-          checked ? "todo__item--isChecked" : ""
-        }">
-                  <label class="todo__checkbox checkbox">
-                    <input type="checkbox" class="checkbox__input" ${
-                      checked ? "checked" : ""
-                    }>
-                    <div class="checkbox__appearance"></div>
-                  </label>
-                  <p class="todo__content">${content}</p>
-                  <i class="top ${
-                    top ? "fa-solid" : "fa-regular"
-                  } fa-star"></i> 
-                </li>
+          <li id="${id}" class="todo__item ${
+          checked ? "todo__item--isChecked" : ""}">
+            <label class="todo__checkbox checkbox">
+              <input type="checkbox" class="checkbox__input" ${
+                checked ? "checked" : ""
+              }>
+              <div class="checkbox__appearance"></div>
+            </label>
+            <p class="todo__content">${content}</p>
+            <i class="top ${
+              top ? "fa-solid" : "fa-regular"
+            } fa-star"></i> 
+          </li>
         `;
       })
       .join("");

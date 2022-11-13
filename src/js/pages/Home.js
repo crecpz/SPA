@@ -15,6 +15,7 @@ import { Router } from "../routes/Router.js";
 export const Home = {
   state: {
     view: "grid-view",
+    expandInfo: [],
     // pageContentObjects: pageContentObjects,
   },
 
@@ -41,15 +42,21 @@ export const Home = {
     let viewContent = "";
 
     // 獲取所有的頁面物件資料(排除 top 頁面)
-    // const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
-    const pageContentObjects = getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
+    const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
+    // const pageContentObjects = getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
+
+    if (Home.state.expandInfo.length === 0) {
+      Home.state.expandInfo = getAllPage()
+        .filter(({ id }) => id !== "top")
+        .map(({ id }) => ({ id: id, isExpand: true }));
+    }
+
 
     // console.log(
-    //   getAllPage()
-    //     .filter(({ id }) => id !== "top")
-    //     .map(({ id }) => ({ id: id, isExpand: true }))
+    // getAllPage()
+    //   .filter(({ id }) => id !== "top")
+    //   .map(({ id }) => ({ id: id, isExpand: true }))
     // );
-
 
     // console.log(
     //   getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
@@ -128,7 +135,7 @@ export const Home = {
       // * --------------------------- list-view  -----------------------------------
 
       viewContent = pageContentObjects
-        .map(({ name, content, color }) => {
+        .map(({ id, name, content, color }) => {
           // * 每一個 dropdown 內的 todoList 結構
           const todoListInDropdown = content
             .map(({ id, checked, content, top }) => {
@@ -158,7 +165,7 @@ export const Home = {
           } else {
             return `
               <li class="dropdown">
-                  <div class="dropdown__name" title="${name}">
+                  <div class="dropdown__name" title="${name}" data-id="${id}">
                     ${
                       color === "default"
                         ? ""
@@ -167,7 +174,13 @@ export const Home = {
                     <p class="dropdown__name-text">${name}</p>
                     <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
                   </div>
-                  <div class="dropdown__cover">
+                  <div class="dropdown__cover" style="${
+                    
+                      Home.state.expandInfo.find( i => i.id === id ).isExpand === true
+                        ? ""
+                        : "height: 0px;"
+                    
+                  }">
                     <ul class="todo">
                         ${todoListInDropdown}
                     </ul>
@@ -305,6 +318,12 @@ export const Home = {
       // * dropdown 切換
       if (e.target.classList.contains("dropdown__name")) {
         dropdownSwitch(e);
+
+        const expandInfo = Home.state.expandInfo;
+        const currentExpand = expandInfo.find(
+          ({ id }) => e.target.dataset.id === id
+        );
+        currentExpand.isExpand = !currentExpand.isExpand;
       }
     },
 

@@ -3,9 +3,10 @@
 .list-options {
   @include text(sm);
   position: absolute;
-  top: 2.5rem;
+  // top: 2.5rem;
+  top: 50px;
   right: 2.25rem;
-  z-index: 6;
+  z-index: 10;
   border: 1px solid var(--primary-color);
   border-radius: deep-map-get($border-radius, md);
   background-color: var(--secondary-color);
@@ -46,8 +47,11 @@
     padding-bottom: 0.875rem;
     width: 100%;
     transition: background-color 100ms, color 100ms;
-
     color: var(--primary-color);
+
+    @include sm {
+      @include text(normal);
+    }
 
     @include hover-query {
       &:hover {
