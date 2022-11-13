@@ -76,12 +76,13 @@ export const Router = () => {
     location.hash = "/";
   }
 
-  // 得到目前路徑(對應route)
+  // 得到目前路徑
   const path = location.hash.slice(1).toLowerCase();
 
   // 找出對應頁面
   let { component = NotFound, props = {} } = getComponent(path, Route);
 
+  // 如果頁面不存在，指定 component 為 NotFound
   if (pageIsNotExist()) {
     component = NotFound;
   }

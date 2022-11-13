@@ -14,55 +14,34 @@ import { Router } from "../routes/Router.js";
 
 export const Home = {
   state: {
+    // 記錄目前的總覽模式(grid-view & list-view)
     view: "grid-view",
+    // 紀錄 list-view 中的 dropdown 目前是展開還是收起
+    // expandInfo 內放的是: {id: "string", isExpand: boolean}
     expandInfo: [],
-    // pageContentObjects: pageContentObjects,
   },
 
-  mount: () => {
-    // scrollBarFix(".main__content-list");
-  },
-
-  render: () => {
+  render() {
     // @ 提醒:
-    // 1.在「總覽」中並不會顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
-    // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
+    // 1.在「總覽」中並不會顯示出 top.js 的內容，因為 top 的內容是來自於所有頁面中加上星號的內容，不需要在顯示它的進度。
+    // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view，該狀態存放在 Home.state 中。
 
     // 存放目前 view 模式
     const currentView = Home.state.view;
-
-    // 於 home 的 grid-view 狀態隱藏 todoForm
-    // if (currentView === "grid-view") {
-    //   document.querySelector(".todo-form").classList.add("hidden");
-    // } else {
-    //   document.querySelector(".todo-form").classList.remove("hidden");
-    // }
 
     // 存放 grid-view 或是 list-view 的內容 (實際會放哪種內容在內取決於 currentView)
     let viewContent = "";
 
     // 獲取所有的頁面物件資料(排除 top 頁面)
     const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
-    // const pageContentObjects = getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
 
-    if (Home.state.expandInfo.length === 0) {
-      Home.state.expandInfo = getAllPage()
-        .filter(({ id }) => id !== "top")
-        .map(({ id }) => ({ id: id, isExpand: true }));
+    // 如果 state.expandInfo 為空陣列，則放入初始值
+    if (this.state.expandInfo.length === 0) {
+      this.state.expandInfo = pageContentObjects.map(({ id }) => ({
+        id: id,
+        isExpand: false,
+      }));
     }
-
-
-    // console.log(
-    // getAllPage()
-    //   .filter(({ id }) => id !== "top")
-    //   .map(({ id }) => ({ id: id, isExpand: true }))
-    // );
-
-    // console.log(
-    //   getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
-    // )
-
-    // console.log();
 
     // * --------------------------- grid-view  -----------------------------------
 
@@ -163,6 +142,24 @@ export const Home = {
             // 如果 content 沒任何內容，就渲染空字串
             return "";
           } else {
+            // 設定目前的 dropdown__cover 高度
+            let dropdownCoverStyle = "";
+            // 根據目前的 expand 狀態決定是否要在相對應的元素上面放上相對應的 class
+            let dropdownCoverClosing = "";
+            let dropdownArrowClass = "";
+            // 如果在 state.expandInfo 找得到資料
+            if (this.state.expandInfo.find((i) => i.id === id)) {
+              // 則根據資料的內容決定其高度
+              if (!this.state.expandInfo.find((i) => i.id === id).isExpand) {
+                dropdownArrowClass = "dropdown__arrow--closing";
+                dropdownCoverStyle = "height: 0px;";
+                dropdownCoverClosing = "dropdown__cover--closing";
+              }
+            } else {
+              // 如果找不到資料，新增一個(預設讓它展開)
+              this.state.expandInfo.push({ id: id, isExpand: true });
+            }
+
             return `
               <li class="dropdown">
                   <div class="dropdown__name" title="${name}" data-id="${id}">
@@ -172,15 +169,11 @@ export const Home = {
                         : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
                     }
                     <p class="dropdown__name-text">${name}</p>
-                    <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                    <i class="dropdown__arrow fa-solid fa-chevron-right ${dropdownArrowClass}"></i>
                   </div>
-                  <div class="dropdown__cover" style="${
-                    
-                      Home.state.expandInfo.find( i => i.id === id ).isExpand === true
-                        ? ""
-                        : "height: 0px;"
-                    
-                  }">
+                  <div class="dropdown__cover ${dropdownCoverClosing}"
+                    style="${dropdownCoverStyle}"
+                  >
                     <ul class="todo">
                         ${todoListInDropdown}
                     </ul>
@@ -294,6 +287,7 @@ export const Home = {
   listener: {
     click: (e) => {
       pageClickEvent(e);
+
       // * 變更列表 view 模式
       if (
         e.target.classList.contains("main__view-btn") &&
@@ -319,11 +313,17 @@ export const Home = {
       if (e.target.classList.contains("dropdown__name")) {
         dropdownSwitch(e);
 
+        // 取得
         const expandInfo = Home.state.expandInfo;
         const currentExpand = expandInfo.find(
           ({ id }) => e.target.dataset.id === id
         );
-        currentExpand.isExpand = !currentExpand.isExpand;
+
+        if (currentExpand) {
+          currentExpand.isExpand = !currentExpand.isExpand;
+        } else {
+          expandInfo.push({ id: e.target.dataset.id, isExpand: true });
+        }
       }
     },
 

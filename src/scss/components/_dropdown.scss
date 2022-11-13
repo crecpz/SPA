@@ -1,7 +1,5 @@
 @use "../abstracts" as *;
 
-$dropdown-transition-speed: 450ms;
-
 .dropdowns {
   width: 100%;
   z-index: 0;
@@ -55,7 +53,7 @@ $dropdown-transition-speed: 450ms;
     pointer-events: none;
     transform: rotate(90deg);
     transform-origin: center;
-    transition: transform $dropdown-transition-speed ease-in-out;
+    transition: transform map-get($transition-duration, base) ease-in-out;
 
     &--closing {
       transform: rotate(0deg);
@@ -67,7 +65,8 @@ $dropdown-transition-speed: 450ms;
     padding-right: 1.5rem;
     outline: 1px solid var(--primary-color);
     overflow: hidden;
-    transition: all ease-in-out $dropdown-transition-speed;
+    transition: map-get($transition-duration, base) ease-in-out;
+    transition-property: border visibility opacity;
 
     &--closing {
       border: 0;
