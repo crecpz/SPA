@@ -11,7 +11,8 @@ export const Search = {
   },
 
   mount: () => {
-    scrollBarFix(".main__search-result");
+    scrollBarFix(".main__content");
+    // scrollBarFix(".main__search-result");
   },
 
   render: () => {
@@ -62,12 +63,15 @@ export const Search = {
       }
     }
 
+    // <div class="container">
+    // </div>
+
     return `
       <!-- 主內容區 - list -->
       <div class="main__search-result">
-        <div class="container">
+
           ${result}
-        </div>
+
       </div>
     `;
   },

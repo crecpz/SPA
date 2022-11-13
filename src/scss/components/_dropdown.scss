@@ -2,6 +2,13 @@
 
 $dropdown-transition-speed: 450ms;
 
+.dropdowns {
+  width: 100%;
+  z-index: 0;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 .dropdown {
   padding-bottom: 1.5rem;
 
@@ -28,14 +35,14 @@ $dropdown-transition-speed: 450ms;
     background-color: var(--primary-color);
     cursor: pointer;
     user-select: none;
-    outline: 2px solid var(--primary-color);
+    outline: 1px solid var(--primary-color);
 
     @include sm {
       @include text(base);
     }
   }
 
-  &__name-text{
+  &__name-text {
     pointer-events: none;
     overflow: hidden;
     white-space: nowrap;
@@ -58,7 +65,7 @@ $dropdown-transition-speed: 450ms;
   &__cover {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    outline: 2px solid var(--primary-color);
+    outline: 1px solid var(--primary-color);
     overflow: hidden;
     transition: all ease-in-out $dropdown-transition-speed;
 

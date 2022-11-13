@@ -1,6 +1,7 @@
 @use "../abstracts" as *;
 
 .main {
+  // position: relative;
   display: grid;
   grid-template-rows: deep-map-get($header-height, lg) 1fr auto;
   grid-column: 1/-1;
@@ -29,7 +30,6 @@
   &__header {
     @include flex($ai: center);
     @include padding-x;
-    grid-row: 1 / 2;
     position: fixed;
     z-index: 5;
     width: 100%;
@@ -73,34 +73,53 @@
 
   // main 中間部分內容區
   &__content {
+    @include padding-x;
     @include flex($dir: column, $ai: center);
     grid-column: 2/-1;
     grid-row: 2/3;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    
+    // @include lg {
+    //   padding-left: 0;
+    //   padding-right: 0;
+    // }
+
+    > .container {
+      @include flex($dir: column, $ai: flex-end);
+      position: relative;
+      max-width: $max-width;
+      width: 100%;
+    }
   }
 
   &__content-header {
-    @include flex($jc: center);
-    @include padding-x;
-
+    @include flex($dir: column, $jc: center);
+    // @include padding-x;
+    
     color: var(--primary-color);
     background-color: var(--secondary-color);
     width: 100%;
-    margin-top: 3rem;
+    // margin-top: 3rem;
+    position:sticky;
+    z-index: 1;
+    top: 0;
+    padding-top: 3rem;
+    // background-color: #bfa;
+
 
     @include xl {
       // margin-top: 3rem;
     }
 
     @include sm {
-      margin-top: 2.25rem;
+      // margin-top: 2.25rem;
     }
 
     .container {
-      @include flex($dir: column, $ai: flex-end);
-      position: relative;
-      max-width: $max-width;
-      width: 100%;
+      // @include flex($dir: column, $ai: flex-end);
+      // position: relative;
+      // max-width: $max-width;
+      // width: 100%;
     }
   }
 
@@ -114,6 +133,10 @@
     width: 100%;
     height: 100%;
     min-height: 3.125rem; // 指定最小高度，以防止每個頁面的大小高度不均
+
+    // @include lg {
+    //   @include padding-x;
+    // }
 
     @include sm {
       grid-template-rows: auto auto;
@@ -220,14 +243,19 @@
 
   &__content-list {
     @include flex($jc: center);
-    @include padding-x;
+
     margin-top: 1.5rem;
     width: 100%;
-    overflow-y: scroll;
     scrollbar-color: var(--scrollbar-color) var(--secondary-color);
 
+
+
+    // @include lg {
+    //   @include padding-x;
+    // }
+
     @include sm {
-      margin-top: 1.5rem;
+      // margin-top: 1.5rem;
     }
 
     .container {
@@ -239,10 +267,11 @@
 
   &__search-result {
     @include flex($jc: center, $ai: center);
-    @include padding-x;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+
+    max-width: $max-width;
+    height: 100%;
 
     .container {
       @include flex($dir: column, $ai: center, $jc: center);
@@ -254,6 +283,7 @@
       width: 100%;
       height: 100%;
       margin-top: 2rem;
+      padding-bottom: 2rem;
     }
   }
 }

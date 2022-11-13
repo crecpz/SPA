@@ -3,7 +3,6 @@
 .main__form {
   width: 100%;
   margin: 0 auto;
-  z-index: 5;
 }
 
 .main__input {
@@ -16,21 +15,34 @@
 
 .todo-form {
   @include flex;
-  grid-row: 3/4;
+
+  // position: sticky;
+  // bottom: 0%;
+  // box-shadow: 0 3px 2px 1px #333;;
+  margin-top: 2rem;
   max-width: $max-width;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+
+  @include sm {
+    margin-top: 1rem;
+  }
 
   &__input {
     border: 2px solid var(--primary-color);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+
+    &::placeholder {
+      font-style: italic;
+    }
   }
 
   &__submit {
     background-color: var(--primary-color);
     color: var(--secondary-color);
-    padding: 1rem 1.5rem;
+    padding: 14px 18px;
+    // padding: 1rem 1.5rem;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 

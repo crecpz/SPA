@@ -52,6 +52,11 @@ export function switchRemoveCompletedBtn() {
 
 // * 各個頁面中的 click 事件函數
 export function pageClickEvent(e) {
+  // * todo__input 相關設定
+  if (e.target.id === "todo-submit") {
+    setTodo(e);
+  }
+
   // * listOption 開啟 & 關閉
   // 判斷是否要開啟 listOption
   openListOption(e);
@@ -239,7 +244,7 @@ export function dropdownSwitch(e) {
 }
 
 // 監聽 todo submit 按鈕
-document.querySelector("#todo-submit").addEventListener("click", setTodo);
+// document.querySelector("#todo-submit").addEventListener("click", setTodo);
 
 // 監聽新增自訂列表按鈕
 const addBtn = document.querySelector("#add-list-btn");
@@ -454,11 +459,18 @@ export function loader() {
     loaderText.classList.add("loader__text--active");
   }, 1400);
 
+  // // loader 背景
+  // setTimeout(() => {
+  //   loader.style.transform = "translateY(-100vh)";
+  //   loader.addEventListener('transitionend', ()=> {
+  //     loader.style.display = 'none';
+  //   }, {once: true})
+  // }, 2500);
   // loader 背景
   setTimeout(() => {
     loader.style.transform = "translateY(-100vh)";
     loader.addEventListener('transitionend', ()=> {
       loader.style.display = 'none';
     }, {once: true})
-  }, 2500);
+  }, 20);
 }

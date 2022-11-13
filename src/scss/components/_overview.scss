@@ -7,6 +7,7 @@
   column-gap: 2rem;
   row-gap: 1.5rem;
   padding-bottom: 1.5rem; // 與 dropdown 底部與視窗邊界的距離相同
+  width: 100%;
 
   @include md {
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));

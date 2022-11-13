@@ -15,10 +15,11 @@ import { Router } from "../routes/Router.js";
 export const Home = {
   state: {
     view: "grid-view",
+    // pageContentObjects: pageContentObjects,
   },
 
   mount: () => {
-    scrollBarFix(".main__content-list");
+    // scrollBarFix(".main__content-list");
   },
 
   render: () => {
@@ -30,17 +31,31 @@ export const Home = {
     const currentView = Home.state.view;
 
     // 於 home 的 grid-view 狀態隱藏 todoForm
-    if (currentView === "grid-view") {
-      document.querySelector(".todo-form").classList.add("hidden");
-    } else {
-      document.querySelector(".todo-form").classList.remove("hidden");
-    }
+    // if (currentView === "grid-view") {
+    //   document.querySelector(".todo-form").classList.add("hidden");
+    // } else {
+    //   document.querySelector(".todo-form").classList.remove("hidden");
+    // }
 
     // 存放 grid-view 或是 list-view 的內容 (實際會放哪種內容在內取決於 currentView)
     let viewContent = "";
 
     // 獲取所有的頁面物件資料(排除 top 頁面)
-    const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
+    // const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
+    const pageContentObjects = getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
+
+    // console.log(
+    //   getAllPage()
+    //     .filter(({ id }) => id !== "top")
+    //     .map(({ id }) => ({ id: id, isExpand: true }))
+    // );
+
+
+    // console.log(
+    //   getAllPage().filter(({ id }) => id !== "top").map((pageObj) => ({ ...pageObj, isExpand: true }))
+    // )
+
+    // console.log();
 
     // * --------------------------- grid-view  -----------------------------------
 
@@ -121,16 +136,16 @@ export const Home = {
                 <li id="${id}" class="todo__item ${
                 checked ? "todo__item--isChecked" : ""
               }">
-                    <label class="todo__checkbox checkbox">
-                        <input type="checkbox" class="checkbox__input" ${
-                          checked ? "checked" : ""
-                        }>
-                        <div class="checkbox__appearance"></div>
-                    </label>
-                    <p class="todo__content">${content}</p>
-                    <i class="top ${
-                      top ? "fa-solid" : "fa-regular"
-                    } fa-star"></i> 
+                  <label class="todo__checkbox checkbox">
+                      <input type="checkbox" class="checkbox__input" ${
+                        checked ? "checked" : ""
+                      }>
+                      <div class="checkbox__appearance"></div>
+                  </label>
+                  <p class="todo__content">${content}</p>
+                  <i class="top ${
+                    top ? "fa-solid" : "fa-regular"
+                  } fa-star"></i> 
                 </li>
               `;
             })
@@ -166,7 +181,7 @@ export const Home = {
 
     // * 決定最終要顯示什麼到 .main__content-list 內
     // 存放 .main__content-list 內要顯示的內容
-    let contentsWillBeDisplayed = "";
+    let displayContent = "";
 
     // 檢查 pageContentObjects 中所有物件的 content 屬性，看看是否全部都沒有內容
     // (如果全部都沒內容就必須讓 empty-msg 出現)
@@ -180,30 +195,30 @@ export const Home = {
     // 4. currentView === list-view && noContent === false ---> contentsWillBeDisplayed = list-view 的內容
     if (currentView === "grid-view") {
       if (noContent) {
-        contentsWillBeDisplayed = createEmptyMsg(
+        displayContent = createEmptyMsg(
           emptyMsg.home.gridView.msgText,
           emptyMsg.home.gridView.svgTag,
           "#888"
         );
       } else {
-        contentsWillBeDisplayed = `<div class="overview">${viewContent}</div>`;
+        displayContent = `<div class="overview">${viewContent}</div>`;
       }
     } else {
       if (noContent) {
-        contentsWillBeDisplayed = createEmptyMsg(
+        displayContent = createEmptyMsg(
           emptyMsg.home.listView.msgText,
           emptyMsg.home.listView.svgTag,
           "#888"
         );
       } else {
-        contentsWillBeDisplayed = `<ul class="dropdowns"> ${viewContent}</ul>`;
+        displayContent = `<ul class="dropdowns"> ${viewContent}</ul>`;
       }
     }
 
     return `
             <!-- 主內容區 - header -->
-            <div class="main__content-header">
-              <div class="container">
+            <div class="container">
+              <div class="main__content-header">
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block--default"></div>
                     <p class="main__name">總覽</p>
@@ -221,9 +236,7 @@ export const Home = {
                       </li>
                     </ul>
                     <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
-                      currentView === "grid-view" || noContent
-                        ? "hidden"
-                        : ""
+                      currentView === "grid-view" || noContent ? "hidden" : ""
                     } ${hasCompletedTodo ? "" : "not-allowed"}">
                       清除完成事項
                     </button>
@@ -246,15 +259,22 @@ export const Home = {
                         </button>
                     </div>
                 </div>
+                <!-- 輸入框 -->
+                <form class="main__form todo-form ${
+                  currentView === "grid-view" ? "hidden" : ""
+                }">
+                    <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項...">
+                    <button id="todo-submit" class="btn todo-form__submit">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
               </div>
-            </div>
 
-            <!-- 主內容區 - list -->
+            <!-- list -->
             <div class="main__content-list">
-                <div class="container">
-                    ${contentsWillBeDisplayed}
-                </div>
+              ${displayContent}
             </div>
+          </div>
         `;
   },
 
@@ -295,6 +315,12 @@ export const Home = {
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
         saveEditedTodo(e);
+      }
+    },
+
+    keyup: (e) => {
+      if (e.key === "Enter") {
+        document.getElementById("todo-input").focus();
       }
     },
   },
