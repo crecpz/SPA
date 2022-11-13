@@ -159,19 +159,9 @@
 .custom-list {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border-top:  1px solid var(--line-color);
-  border-bottom: 1px solid var(--line-color);
-  // margin-top: -14px;
-  // padding-top: 2rem;
-  // padding-bottom: 2rem;
-
   overflow-y: auto;
-
-  // @include sm {
-  //   // margin-top: -14px;
-  //   // padding-top: 2rem;
-  //   // padding-bottom: 2rem;
-  // }
+  // border-top:  1px solid var(--line-color);
+  // border-bottom: 1px solid var(--line-color);
 
   &__color {
     width: 2rem;
