@@ -1,5 +1,3 @@
-// import { scrollBarFix } from "../function/fix.js";
-import { scrollBarFix } from "../function/fix.js";
 import { getCssVarValue } from "../function/helper.js";
 import {
   listIsRemoving,
@@ -19,26 +17,22 @@ import {
 } from "../function/ui.js";
 
 export const CustomList = {
-  mount: () => {
-    scrollBarFix(".main__content-list");
-  },
-
   render: (props) => {
     const pageData = DATA.custom.find((page) => page.id === props.id);
     const { name: pageName, content: pageContent, color } = pageData;
     const todoContent = pageContent
       .map(({ id, checked, content, top }) => {
         return `
-                <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
-                  <label class="todo__checkbox checkbox">
-                    <input type="checkbox" class="checkbox__input" ${
-                      checked ? "checked" : ""
-                    }>
-                    <div class="checkbox__appearance"></div>
-                  </label>
-                  <p class="todo__content">${content}</p>
-                  <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
-                </li>`;
+          <li id="${id}" class="todo__item ${checked ? "todo__item--isChecked" : ""}">
+            <label class="todo__checkbox checkbox">
+              <input type="checkbox" class="checkbox__input" ${
+                checked ? "checked" : ""
+              }>
+              <div class="checkbox__appearance"></div>
+            </label>
+            <p class="todo__content">${content}</p>
+            <i class="top ${top ? "fa-solid" : "fa-regular"} fa-star"></i> 
+          </li>`;
       }).join("");
 
     const emptyMsgContent = createEmptyMsg(
@@ -49,41 +43,45 @@ export const CustomList = {
 
     return `
       <!-- 主內容區 - header -->
-      <div class="main__content-header">
-          <div class="container">
-              <div class="main__name-wrapper">
-                  <div class="main__color-block color-block-${color}"></div>
-                  <p class="main__name">${pageName}</p>
-                  <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
-                    hasCompletedTodo ? "" : "not-allowed"
-                  }">清除完成事項</button>
-                  <!-- list-option-btn -->
-                  <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-              </div>
-              <!-- list-options -->
-              <ul class="list-options">
-                  <li class="list-option">
-                    <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
-                  </li>
-                  <li class="list-option">
-                    <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
-                  </li>
-                  <li class="list-option list-option--custom-list">
-                    <a href="javascript:;" class="list-option__link remove-completed ${
-                      hasCompletedTodo ? "" : "not-allowed"
-                    }">清除完成事項</a>
-                  </li>
-              </ul>
+      <div class="container">
+        <div class="main__content-header">
+          <div class="main__name-wrapper">
+              <div class="main__color-block color-block-${color}"></div>
+              <p class="main__name">${pageName}</p>
+              <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
+                hasCompletedTodo ? "" : "not-allowed"
+              }">清除完成事項</button>
+              <!-- list-option-btn -->
+              <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
           </div>
-      </div>
-
-      <!-- 主內容區 - list -->
-      <div class="main__content-list">
-          <div class="container">
-              <ul id="todo" class="todo">
-                ${pageContent.length === 0 ? emptyMsgContent : todoContent}
-              </ul>
-          </div>
+          <!-- list-options -->
+          <ul class="list-options">
+              <li class="list-option">
+                <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
+              </li>
+              <li class="list-option">
+                <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
+              </li>
+              <li class="list-option list-option--custom-list">
+                <a href="javascript:;" class="list-option__link remove-completed ${
+                  hasCompletedTodo ? "" : "not-allowed"
+                }">清除完成事項</a>
+              </li>
+          </ul>
+          <!-- 輸入框 -->
+          <form class="main__form todo-form">
+              <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項...">
+              <button id="todo-submit" class="btn todo-form__submit">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+          </form>
+        </div>
+        <!-- list -->
+        <div class="main__content-list">
+          <ul id="todo" class="todo">
+            ${pageContent.length === 0 ? emptyMsgContent : todoContent}
+          </ul>
+        </div>
       </div>
     `;
   },
@@ -123,6 +121,12 @@ export const CustomList = {
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
         saveEditedTodo(e);
+      }
+    },
+
+    keyup: (e) => {
+      if (e.key === "Enter") {
+        document.getElementById("todo-input").focus();
       }
     },
   },

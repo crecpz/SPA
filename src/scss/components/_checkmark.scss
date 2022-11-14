@@ -4,13 +4,7 @@
   position: relative;
   cursor: pointer;
 
-  @include hover-query(){
-    &:hover {
-      .checkbox__appearance {
-        background-color: var(--tertiary-color);
-      }
-    }
-  }
+  
 }
 
 .checkbox__input {
@@ -23,15 +17,17 @@
 .checkbox__appearance {
   position: relative;
   cursor: pointer;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
   border: 2px solid var(--primary-color);
   border-radius: 50%;
   pointer-events: none;
+  transform: scale(1);
+  transition: transform ease-in-out map-get($transition-duration, fast);
 
   @include sm {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
   
 

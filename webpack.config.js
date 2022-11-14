@@ -1,11 +1,12 @@
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+    filename: "js/main.js",
     clean: true,
   },
   module: {
@@ -13,8 +14,7 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          // 将 JS 字符串生成为 style 节点
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           // 将 CSS 转化成 CommonJS 模块
           "css-loader",
           // 将 Sass 编译成 CSS
@@ -37,7 +37,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-    })
+    }),
+
+    // 指定位置
+    new MiniCssExtractPlugin({
+      filename: "./css/main.css",
+    }),
   ],
   devServer: {
     static: {
@@ -52,6 +57,7 @@ module.exports = {
     },
   },
   mode: "production",
+  // mode: "development",
   performance: {
     hints: false,
     maxEntrypointSize: 512000,

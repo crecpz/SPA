@@ -1,7 +1,10 @@
 // import { scrollBarFix } from "../function/fix.js";
-import { scrollBarFix } from "../function/fix.js";
 import { todoIsEditing } from "../function/modal.js";
-import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
+import {
+  changeCheckbox,
+  DATA,
+  saveEditedTodo,
+} from "../function/storage.js";
 import {
   createEmptyMsg,
   emptyMsg,
@@ -10,10 +13,6 @@ import {
 } from "../function/ui.js";
 
 export const DefaultList = {
-  mount: () => {
-    scrollBarFix(".main__content-list");
-  },
-
   render: () => {
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "defaultlist");
@@ -47,37 +46,41 @@ export const DefaultList = {
 
     return `
         <!-- 主內容區 - header -->
-        <div class="main__content-header">
-            <div class="container">
-                <div class="main__name-wrapper">
-                  <div class="main__color-block color-block--default"></div>
-                  <p class="main__name">${pageName}</p>
-                  <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
-                    hasCompletedTodo ? "" : "not-allowed"
-                  }">
-                    清除完成事項
-                  </button>
-                  <!-- list-option-btn -->
-                  <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                </div>
-                <!-- list-options -->
-                <ul class="list-options">
-                  <li class="list-option">
-                    <a href="javascript:;" class="list-option__link remove-completed ${
-                      hasCompletedTodo ? "" : "not-allowed"
-                    }">清除完成事項</a>
-                  </li>
-                </ul>
+        <div class="container">
+          <div class="main__content-header">
+            <div class="main__name-wrapper">
+              <div class="main__color-block color-block--default"></div>
+              <p class="main__name">${pageName}</p>
+              <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
+                hasCompletedTodo ? "" : "not-allowed"
+              }">
+                清除完成事項
+              </button>
+              <!-- list-option-btn -->
+              <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
             </div>
-        </div>
-
-        <!-- 主內容區 - list -->
-        <div class="main__content-list">
-            <div class="container">
-                <ul id="todo" class="todo">
-                  ${pageContent.length === 0 ? emptyMsgContent : todoContent}
-                </ul>
-            </div>
+            <!-- list-options -->
+            <ul class="list-options">
+              <li class="list-option">
+                <a href="javascript:;" class="list-option__link remove-completed ${
+                  hasCompletedTodo ? "" : "not-allowed"
+                }">清除完成事項</a>
+              </li>
+            </ul>
+            <!-- 輸入框 -->
+            <form class="main__form todo-form">
+                <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項...">
+                <button id="todo-submit" class="btn todo-form__submit">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+            </form>
+          </div>
+          <!-- list -->
+          <div class="main__content-list">
+              <ul id="todo" class="todo">
+                ${pageContent.length === 0 ? emptyMsgContent : todoContent}
+              </ul>
+          </div>
         </div>
     `;
   },
@@ -95,6 +98,12 @@ export const DefaultList = {
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
         saveEditedTodo(e);
+      }
+    },
+    
+    keyup: (e) => {
+      if (e.key === "Enter") {
+        document.getElementById("todo-input").focus();
       }
     },
   },

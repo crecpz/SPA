@@ -1,9 +1,14 @@
 @use "../abstracts" as *;
 
-$dropdown-transition-speed: 450ms;
+.dropdowns {
+  width: 100%;
+  z-index: 0;
+  padding-left: 2px;
+  padding-right: 2px;
+}
 
 .dropdown {
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
 
   &__color-block {
     width: 18px;
@@ -16,7 +21,7 @@ $dropdown-transition-speed: 450ms;
     @include flex($ai: center);
     @include text(base);
     position: sticky;
-    top: 0;
+    top: 12.6563rem;
     z-index: 4;
     font-weight: bold;
     width: 100%;
@@ -28,14 +33,27 @@ $dropdown-transition-speed: 450ms;
     background-color: var(--primary-color);
     cursor: pointer;
     user-select: none;
-    outline: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
+    transition: ease-in-out map-get($transition-duration, base);
+    transition-property: outline, background-color;
+
+    &.animation-light-up{
+      animation: lights-up ease-in-out 1500ms;
+    }
+
+    @include hover-query{
+      &:hover{
+        background-color: var(--primary-hover);
+      }  
+    }
 
     @include sm {
       @include text(base);
+      top: 186.5px;
     }
   }
 
-  &__name-text{
+  &__name-text {
     pointer-events: none;
     overflow: hidden;
     white-space: nowrap;
@@ -48,7 +66,7 @@ $dropdown-transition-speed: 450ms;
     pointer-events: none;
     transform: rotate(90deg);
     transform-origin: center;
-    transition: transform $dropdown-transition-speed ease-in-out;
+    transition: transform map-get($transition-duration, base) ease-in-out;
 
     &--closing {
       transform: rotate(0deg);
@@ -58,12 +76,13 @@ $dropdown-transition-speed: 450ms;
   &__cover {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    outline: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
     overflow: hidden;
-    transition: all ease-in-out $dropdown-transition-speed;
+    transition: map-get($transition-duration, base) ease-in-out;
+    transition-property: border visibility opacity;
 
     &--closing {
-      border: 0;
+      border-color: transparent;
       visibility: hidden;
       opacity: 0;
     }

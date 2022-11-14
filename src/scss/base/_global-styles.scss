@@ -68,16 +68,16 @@ button {
     --secondary-color: #fff;
     --tertiary-color: #f1f1f1;
     --scrollbar-color: #d6d6d6;
-    --line-color: #b4b4b43b;
+    --line-color: #4545453b;
 }
 
 .dark:root {
     --primary-color: #fff;
-    --primary-hover: #b3b3b3;
+    --primary-hover: #dcdcdc;
     --secondary-color: #000000;
     --tertiary-color: #3a3a3a;
     --scrollbar-color: #3a3a3a;
-    --line-color: #ececec3b;
+    --line-color: #898989;
 }
 
 // 使用者系統光線模式: light
@@ -87,7 +87,7 @@ button {
         --primary-hover: #404040;
         --secondary-color: #fff;
         --tertiary-color: #f1f1f1;
-        --line-color: #b4b4b43b;
+        --line-color: #4545453b;
     }
 }
 
@@ -95,10 +95,10 @@ button {
 @media (prefers-color-scheme: dark) {
     :root {
         --primary-color: #fff;
-        --primary-hover: #b3b3b3;
+        --primary-hover: #dcdcdc;
         --secondary-color: black;
         --tertiary-color: #3a3a3a;
-        --line-color: #ececec3b;
+        --line-color: #898989;
     }
 }
 
@@ -127,7 +127,6 @@ button {
     width: 100%;
 }
 
-
 // * scrollbar (firefox 相關設定在 _main.scss --> .main__content-list 中)
 ::-webkit-scrollbar {
     width: auto;
@@ -139,7 +138,6 @@ button {
 ::-webkit-scrollbar-track {
     background-color: var(--secondary-color);
 }
-
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary-hover);

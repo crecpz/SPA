@@ -86,9 +86,10 @@ export function setTodo(e) {
     todoInput.value = "";
 
     Router();
-    e.target.previousElementSibling.focus();
+    // e.target.previousElementSibling.focus();
   }
 }
+
 
 /**
  * * 接收一個在「重要」頁面被取消星號的 todo 物件，並將該物件資料從「top」移動至「defaultlsit」

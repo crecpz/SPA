@@ -35,3 +35,11 @@
 .text-center {
   text-align: center;
 }
+
+.text-linebreak{
+  display: none;
+  
+  @include sm {
+    display: block;
+  }
+}

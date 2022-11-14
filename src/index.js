@@ -24,7 +24,7 @@ window
   .addEventListener("change", updateMode);
 
 // 初次載入從資料中渲染出 customList
-window.addEventListener("DOMContentLoaded", renderCustomList);
+renderCustomList();
 
 // 初次載入時將 Nav 中相對應的頁面套用 active
 window.addEventListener("load", activeNavLists);
@@ -37,8 +37,8 @@ window.addEventListener("DOMContentLoaded", appHeight);
 window.addEventListener("hashchange", switchNotFoundState);
 
 // 於 home 的 grid-view 狀態隱藏 todoForm
-window.addEventListener("DOMContentLoaded", hideTodoForm);
-window.addEventListener("hashchange", hideTodoForm);
+// window.addEventListener("DOMContentLoaded", hideTodoForm);
+// window.addEventListener("hashchange", hideTodoForm);
 
 // 在載入時或 hashchange 時切換 search 的 UI
 window.addEventListener("DOMContentLoaded", switchSearchPageUI);
@@ -52,4 +52,4 @@ window.addEventListener("DOMContentLoaded", navCustomListTextOverflow);
 window.addEventListener("hashchange", activeNavLists);
 
 // loader 動畫
-window.addEventListener("DOMContentLoaded", loader);
+loader()

@@ -1,4 +1,3 @@
-import { scrollBarFix } from "../function/fix.js";
 import { fillZero, getAllPage } from "../function/helper.js";
 import { todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
@@ -14,33 +13,35 @@ import { Router } from "../routes/Router.js";
 
 export const Home = {
   state: {
+    // 記錄目前的總覽模式(grid-view & list-view)
     view: "grid-view",
+    // 紀錄 list-view 中的 dropdown 目前是展開還是收起
+    // expandInfo 內放的是: {id: "string", isExpand: boolean}
+    expandInfo: [],
   },
 
-  mount: () => {
-    scrollBarFix(".main__content-list");
-  },
-
-  render: () => {
+  render() {
     // @ 提醒:
-    // 1.在「總覽」中並不會顯示出 top.js 的內容，因為不需要追蹤一個來自各頁內容的頁面完成進度
-    // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view
+    // 1.在「總覽」中並不會顯示出 top.js 的內容，因為 top 的內容是來自於所有頁面中加上星號的內容，不需要在顯示它的進度。
+    // 2.以下頁面透過 Home.state.view 的值來顯示兩種不同的顯示方式，分別為 grid-view & list-view，該狀態存放在 Home.state 中。
 
     // 存放目前 view 模式
-    const currentView = Home.state.view;
-
-    // 於 home 的 grid-view 狀態隱藏 todoForm
-    if (currentView === "grid-view") {
-      document.querySelector(".todo-form").classList.add("hidden");
-    } else {
-      document.querySelector(".todo-form").classList.remove("hidden");
-    }
+    // const currentView = Home.state.view;
+    const currentView = this.state.view;
 
     // 存放 grid-view 或是 list-view 的內容 (實際會放哪種內容在內取決於 currentView)
     let viewContent = "";
 
     // 獲取所有的頁面物件資料(排除 top 頁面)
     const pageContentObjects = getAllPage().filter(({ id }) => id !== "top");
+
+    // 如果 state.expandInfo 為空陣列，則放入初始值
+    if (this.state.expandInfo.length === 0) {
+      this.state.expandInfo = pageContentObjects.map(({ id }) => ({
+        id: id,
+        isExpand: false,
+      }));
+    }
 
     // * --------------------------- grid-view  -----------------------------------
 
@@ -113,7 +114,7 @@ export const Home = {
       // * --------------------------- list-view  -----------------------------------
 
       viewContent = pageContentObjects
-        .map(({ name, content, color }) => {
+        .map(({ id, name, content, color }) => {
           // * 每一個 dropdown 內的 todoList 結構
           const todoListInDropdown = content
             .map(({ id, checked, content, top }) => {
@@ -121,16 +122,16 @@ export const Home = {
                 <li id="${id}" class="todo__item ${
                 checked ? "todo__item--isChecked" : ""
               }">
-                    <label class="todo__checkbox checkbox">
-                        <input type="checkbox" class="checkbox__input" ${
-                          checked ? "checked" : ""
-                        }>
-                        <div class="checkbox__appearance"></div>
-                    </label>
-                    <p class="todo__content">${content}</p>
-                    <i class="top ${
-                      top ? "fa-solid" : "fa-regular"
-                    } fa-star"></i> 
+                  <label class="todo__checkbox checkbox">
+                      <input type="checkbox" class="checkbox__input" ${
+                        checked ? "checked" : ""
+                      }>
+                      <div class="checkbox__appearance"></div>
+                  </label>
+                  <p class="todo__content">${content}</p>
+                  <i class="top ${
+                    top ? "fa-solid" : "fa-regular"
+                  } fa-star"></i> 
                 </li>
               `;
             })
@@ -141,18 +142,48 @@ export const Home = {
             // 如果 content 沒任何內容，就渲染空字串
             return "";
           } else {
+            // 設定目前的 dropdown__cover 高度
+            let dropdownCoverStyle = "";
+            // 根據目前的 expand 狀態決定是否要在相對應的元素上面放上相對應的 class
+            let dropdownCoverClosing = "";
+            let dropdownArrowClass = "";
+            // 此變數表示: 當前的 dropdown 是新的(原本 expandInfo 沒有)，預設 false
+            let isNewExpandInfo = false;
+            // 如果在 state.expandInfo 找得到資料
+            if (this.state.expandInfo.find((i) => i.id === id)) {
+              // 則根據資料的內容決定其高度
+              if (!this.state.expandInfo.find((i) => i.id === id).isExpand) {
+                dropdownArrowClass = "dropdown__arrow--closing";
+                dropdownCoverStyle = "height: 0px;";
+                dropdownCoverClosing = "dropdown__cover--closing";
+              }
+            } else {
+              // 如果找不到資料
+              // 新增一個(預設讓它收合)
+              this.state.expandInfo.push({ id: id, isExpand: false });
+              // 新增初始值之後，將 isNewExpandInfo 設為 true
+              isNewExpandInfo = true;
+              // 下面的 dropdown__cover 內的 style="" 屬性將會依據此 dropdown 是不是新的來決定
+              // 如果目前的 dropdown 是新的，則將其設為 height: 0px;
+              // 反之，則根據上面 dropdownCoverStyle 的結果。
+            }
+
             return `
               <li class="dropdown">
-                  <div class="dropdown__name" title="${name}">
+                  <div class="dropdown__name" title="${name}" data-id="${id}">
                     ${
                       color === "default"
                         ? ""
                         : `<div class="dropdown__color-block color-block color-block-${color}"></div>`
                     }
                     <p class="dropdown__name-text">${name}</p>
-                    <i class="dropdown__arrow fa-solid fa-chevron-right"></i>
+                    <i class="dropdown__arrow fa-solid fa-chevron-right ${dropdownArrowClass}"></i>
                   </div>
-                  <div class="dropdown__cover">
+                  <div class="dropdown__cover ${dropdownCoverClosing}"
+                    style="${
+                      isNewExpandInfo ? "height: 0px;" : dropdownCoverStyle
+                    }"
+                  >
                     <ul class="todo">
                         ${todoListInDropdown}
                     </ul>
@@ -166,7 +197,7 @@ export const Home = {
 
     // * 決定最終要顯示什麼到 .main__content-list 內
     // 存放 .main__content-list 內要顯示的內容
-    let contentsWillBeDisplayed = "";
+    let displayContent = "";
 
     // 檢查 pageContentObjects 中所有物件的 content 屬性，看看是否全部都沒有內容
     // (如果全部都沒內容就必須讓 empty-msg 出現)
@@ -180,30 +211,30 @@ export const Home = {
     // 4. currentView === list-view && noContent === false ---> contentsWillBeDisplayed = list-view 的內容
     if (currentView === "grid-view") {
       if (noContent) {
-        contentsWillBeDisplayed = createEmptyMsg(
+        displayContent = createEmptyMsg(
           emptyMsg.home.gridView.msgText,
           emptyMsg.home.gridView.svgTag,
           "#888"
         );
       } else {
-        contentsWillBeDisplayed = `<div class="overview">${viewContent}</div>`;
+        displayContent = `<div class="overview">${viewContent}</div>`;
       }
     } else {
       if (noContent) {
-        contentsWillBeDisplayed = createEmptyMsg(
+        displayContent = createEmptyMsg(
           emptyMsg.home.listView.msgText,
           emptyMsg.home.listView.svgTag,
           "#888"
         );
       } else {
-        contentsWillBeDisplayed = `<ul class="dropdowns"> ${viewContent}</ul>`;
+        displayContent = `<ul class="dropdowns"> ${viewContent}</ul>`;
       }
     }
 
     return `
             <!-- 主內容區 - header -->
-            <div class="main__content-header">
-              <div class="container">
+            <div class="container">
+              <div class="main__content-header">
                 <div class="main__name-wrapper">
                     <div class="main__color-block color-block--default"></div>
                     <p class="main__name">總覽</p>
@@ -221,9 +252,7 @@ export const Home = {
                       </li>
                     </ul>
                     <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
-                      currentView === "grid-view" || noContent
-                        ? "hidden"
-                        : ""
+                      currentView === "grid-view" || noContent ? "hidden" : ""
                     } ${hasCompletedTodo ? "" : "not-allowed"}">
                       清除完成事項
                     </button>
@@ -246,21 +275,35 @@ export const Home = {
                         </button>
                     </div>
                 </div>
+                <!-- 輸入框 -->
+                <form class="main__form todo-form ${
+                  currentView === "grid-view" ? "hidden" : ""
+                }">
+                    <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項...">
+                    <button id="todo-submit" class="btn todo-form__submit">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
               </div>
-            </div>
 
-            <!-- 主內容區 - list -->
+            <!-- list -->
             <div class="main__content-list">
-                <div class="container">
-                    ${contentsWillBeDisplayed}
-                </div>
+              ${displayContent}
             </div>
+          </div>
         `;
   },
 
   listener: {
     click: (e) => {
       pageClickEvent(e);
+
+      if (e.target.id === "todo-submit") {
+        document
+          .querySelector('[data-id="defaultlist"]')
+          .classList.add("animation-light-up");
+      }
+
       // * 變更列表 view 模式
       if (
         e.target.classList.contains("main__view-btn") &&
@@ -285,6 +328,21 @@ export const Home = {
       // * dropdown 切換
       if (e.target.classList.contains("dropdown__name")) {
         dropdownSwitch(e);
+
+        // 取得 state.expandInfo
+        const expandInfo = Home.state.expandInfo;
+        // 尋找目前 e.target 的 data-id 是否存在於 state.expandInfo 中
+        const currentExpand = expandInfo.find(
+          ({ id }) => e.target.dataset.id === id
+        );
+        // 若存在
+        if (currentExpand) {
+          // 翻轉該項的 isExpand 值
+          currentExpand.isExpand = !currentExpand.isExpand;
+        } else {
+          // 若不存在，則將其新增一個初始值
+          expandInfo.push({ id: e.target.dataset.id, isExpand: false });
+        }
       }
     },
 
@@ -295,6 +353,12 @@ export const Home = {
       // * 偵測在 todoEditing 為 true 的狀態下 change 事件是否由 .modal__textarea 觸發
       if (todoIsEditing && e.target.classList.contains("modal__textarea")) {
         saveEditedTodo(e);
+      }
+    },
+
+    keyup: (e) => {
+      if (e.key === "Enter") {
+        document.getElementById("todo-input").focus();
       }
     },
   },

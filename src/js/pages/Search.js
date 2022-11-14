@@ -1,4 +1,3 @@
-import { scrollBarFix } from "../function/fix.js";
 import { getSearchResult, hide, removeTodoInSearchResult, searchResult, unhide } from "../function/helper.js";
 import { closeConfirmModal, closeEditModal, closeModalOverlay, listIsRemoving, removeTodoConfirm, todoEditing, todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, changeTopByEditModal, changeTopByTodoItem, removeTodo, saveEditedTodo } from "../function/storage.js";
@@ -8,10 +7,6 @@ import { Router } from "../routes/Router.js";
 export const Search = {
   state: {
     isSearching: true,
-  },
-
-  mount: () => {
-    scrollBarFix(".main__search-result");
   },
 
   render: () => {
@@ -62,12 +57,15 @@ export const Search = {
       }
     }
 
+    // <div class="container">
+    // </div>
+
     return `
       <!-- 主內容區 - list -->
       <div class="main__search-result">
-        <div class="container">
+
           ${result}
-        </div>
+
       </div>
     `;
   },
