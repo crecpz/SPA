@@ -1,4 +1,3 @@
-import { scrollBarFix } from "../function/fix.js";
 import { fillZero, getAllPage } from "../function/helper.js";
 import { todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";

@@ -90,49 +90,6 @@ export function setTodo(e) {
   }
 }
 
-// /**
-//  * * 建立新的 todo 資料，並加進當前頁面中
-//  */
-// export function setTodo(e) {
-//   e.preventDefault();
-//   const todoInput = document.querySelector("#todo-input");
-//   if (todoInput.value.trim() !== "") {
-//     // 存放使用者輸入的文字內容
-//     const todoValue = todoInput.value.trim();
-
-//     // 取得當前所在頁面的頁面 id
-//     const currentPageId = getCurrentPageId();
-//     // 設定 todo 的 srcId, srcName 屬性:
-//     // srcId: 當前 todo 被創建時所屬的來源 id。
-//     //  除非當前頁面位於 "home"，src 屬性將被指定為 defaultlist；
-//     //  否則一般情況下，todo 創建時所屬的來源 id 就是 currentPageId。
-//     const todoCreatedSourceId =
-//       getCurrentPageId() === "home" ? "defaultlist" : currentPageId;
-//     // srcName: 當前 todo 被創建時所屬的頁面名稱
-//     const todoCreatedSourceName = getPage(todoCreatedSourceId).name;
-
-//     // 建構 todo Obecjt
-//     const todo = {
-//       id: createUniqueId(),
-//       checked: false,
-//       content: todoValue,
-//       top: todoCreatedSourceId === "top", // 凡是在 top 內的都是 true
-//       srcId: todoCreatedSourceId,
-//       srcName: todoCreatedSourceName,
-//     };
-
-//     // 取得所有的頁面資料，並找出與目前頁面 id 相匹配的資料，
-//     // 在 content 內加入新 todo
-//     const allPage = getAllPage();
-//     allPage.find((i) => i.id === todoCreatedSourceId).content.unshift(todo);
-
-//     setStorage(DATA);
-//     todoInput.value = "";
-
-//     Router();
-//     e.target.previousElementSibling.focus();
-//   }
-// }
 
 /**
  * * 接收一個在「重要」頁面被取消星號的 todo 物件，並將該物件資料從「top」移動至「defaultlsit」

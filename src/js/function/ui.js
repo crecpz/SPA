@@ -443,18 +443,11 @@ export function loader() {
     loaderText.classList.add("loader__text--active");
   }, 1400);
 
-  // // loader 背景
-  // setTimeout(() => {
-  //   loader.style.transform = "translateY(-100vh)";
-  //   loader.addEventListener('transitionend', ()=> {
-  //     loader.style.display = 'none';
-  //   }, {once: true})
-  // }, 2500);
   // loader 背景
   setTimeout(() => {
     loader.style.transform = "translateY(-100vh)";
     loader.addEventListener('transitionend', ()=> {
       loader.style.display = 'none';
     }, {once: true})
-  }, 20);
+  }, 2500);
 }
