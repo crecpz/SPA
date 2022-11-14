@@ -16,6 +16,7 @@
 .todo-form {
   @include flex($jc: center);
   margin-top: 2rem;
+  width: 100%;
   max-width: $max-width;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -25,8 +26,8 @@
   }
 
   &__input {
+    width: 100%;
     border: 2px solid var(--primary-color);
-    // border-right: 0px;
     border-top-left-radius: 5px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 5px;
@@ -39,10 +40,10 @@
   }
 
   &__submit {
+    flex: 1 0 auto;
+    padding: .875rem 1.125rem;
     background-color: var(--primary-color);
     color: var(--secondary-color);
-    padding: 14px 18px;
-    // padding: 1rem 1.5rem;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 

@@ -296,9 +296,11 @@ export const Home = {
       pageClickEvent(e);
 
       if (e.target.id === "todo-submit") {
-        document
-          .querySelector('[data-id="defaultlist"]')
-          .classList.add("animation-light-up");
+        const defaultlist = document.querySelector('[data-id="defaultlist"]');
+        if (defaultlist !== null)
+          document
+            .querySelector('[data-id="defaultlist"]')
+            .classList.add("animation-light-up");
       }
 
       // * 變更列表 view 模式
