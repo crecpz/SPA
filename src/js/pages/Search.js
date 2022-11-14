@@ -57,15 +57,10 @@ export const Search = {
       }
     }
 
-    // <div class="container">
-    // </div>
-
     return `
       <!-- 主內容區 - list -->
       <div class="main__search-result">
-
           ${result}
-
       </div>
     `;
   },

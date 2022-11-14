@@ -307,9 +307,9 @@ export function navSwitcher() {
   const wrapper = document.querySelector("#wrapper"),
     nav = document.querySelector("#nav"),
     main = document.querySelector("#main"),
-    mainHeader = document.querySelector("#main__header");
+    mainTopbar = document.querySelector("#main__topbar");
   // 加上 nav-open class
-  [wrapper, nav, main, mainHeader].forEach((elem) => {
+  [wrapper, nav, main, mainTopbar].forEach((elem) => {
     elem.classList.toggle("nav-open");
   });
 }
@@ -397,16 +397,16 @@ export function createEmptyMsg(msgText, svgTag, svgColor) {
 
 /**
  * * 根據目前所在的頁面，來決定 Search 頁面的 UI 顯示與隱藏
- * 主要要是根據當前頁面位在哪一頁，來控制 main__header-container--normal
- * 與 main__header-container--search 哪個顯示哪個隱藏，一次只會顯示一個。
+ * 主要要是根據當前頁面位在哪一頁，來控制 main__topbar-container--normal
+ * 與 main__topbar-container--search 哪個顯示哪個隱藏，一次只會顯示一個。
  */
 export function switchSearchPageUI() {
   const currentPageId = getCurrentPageId();
   const normalContainer = document.querySelector(
-    ".main__header-container--normal"
+    ".main__topbar-container--normal"
   );
   const searchContainer = document.querySelector(
-    ".main__header-container--search"
+    ".main__topbar-container--search"
   );
 
   if (currentPageId === "search") {
