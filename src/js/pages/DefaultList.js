@@ -1,11 +1,9 @@
 // import { scrollBarFix } from "../function/fix.js";
-import { scrollBarFix } from "../function/fix.js";
 import { todoIsEditing } from "../function/modal.js";
 import {
   changeCheckbox,
   DATA,
   saveEditedTodo,
-  setTodo,
 } from "../function/storage.js";
 import {
   createEmptyMsg,
@@ -15,11 +13,6 @@ import {
 } from "../function/ui.js";
 
 export const DefaultList = {
-  mount: () => {
-    // scrollBarFix(".main__content-list");
-    // scrollBarFix(".main__content");
-  },
-
   render: () => {
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "defaultlist");

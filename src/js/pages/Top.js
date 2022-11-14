@@ -1,4 +1,3 @@
-import { scrollBarFix } from "../function/fix.js";
 import { getAllTodos } from "../function/helper.js";
 import { todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
@@ -10,10 +9,6 @@ import {
 } from "../function/ui.js";
 
 export const Top = {
-  mount: () => {
-    scrollBarFix(".main__content-list");
-  },
-
   render: function () {
     // 找出此頁面 object
     const pageObj = DATA.default.find(({ id }) => id === "top");
