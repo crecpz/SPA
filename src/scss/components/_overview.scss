@@ -37,7 +37,7 @@
     }
   }
 
-  &__header {
+  &__head {
     @include flex($ai: center);
     @include text(base);
     font-weight: bold;

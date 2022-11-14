@@ -6,7 +6,7 @@
   transform: translateX(-100%);
 
   display: grid;
-  grid-template-rows: deep-map-get($header-height, lg) auto 1fr;
+  grid-template-rows: $topbar-height auto 1fr;
   grid-column: 1/2;
   grid-row: 1/-1;
 
@@ -22,7 +22,7 @@
 
   @include sm {
     border-right: 0;
-    grid-template-rows: deep-map-get($header-height, sm) auto 1fr;
+    grid-template-rows: $topbar-height auto 1fr;
   }
 
   &__list {
@@ -43,7 +43,7 @@
     }
   }
 
-  &__header {
+  &__topbar {
     @include flex($ai: center, $jc: space-between);
     padding-left: 2.25rem;
     padding-right: 2.25rem;
@@ -56,11 +56,11 @@
 
   &__content {
     @include flex($dir: column, $jc: flex-start);
-    height: calc(var(--app-height) - deep-map-get($header-height, lg));
+    height: calc(var(--app-height) - #{$topbar-height});
     padding-bottom: 1rem;
 
     @include sm {
-      height: calc(var(--app-height) - deep-map-get($header-height, sm));
+      height: calc(var(--app-height) - #{$topbar-height});
     }
   }
 

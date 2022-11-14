@@ -2,7 +2,7 @@
 
 .main {
   display: grid;
-  grid-template-rows: deep-map-get($header-height, lg) 1fr auto;
+  grid-template-rows: $topbar-height 1fr auto;
   grid-column: 1/-1;
   grid-row: 1/-1;
   position: relative;
@@ -14,7 +14,7 @@
   transition-duration: map-get($transition-duration, collapse);
 
   @include sm {
-    grid-template-rows: deep-map-get($header-height, sm) 1fr auto;
+    grid-template-rows: $topbar-height 1fr auto;
   }
 
   &.nav-open {
@@ -32,7 +32,7 @@
     position: fixed;
     z-index: 5;
     width: 100%;
-    height: deep-map-get($header-height, lg);
+    height: $topbar-height;
     border-bottom: 2px solid var(--primary-color);
     color: var(--primary-color);
     background-color: var(--secondary-color);
@@ -40,7 +40,7 @@
     transition-duration: map-get($transition-duration, collapse);
 
     @include sm {
-      height: deep-map-get($header-height, sm);
+      height: $topbar-height;
     }
 
     &.nav-open {

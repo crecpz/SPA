@@ -79,7 +79,7 @@ export const Home = {
               }" class="overview__link ${
             unCompleted === 0 ? "overview__link--completed" : ""
           }">
-                  <div class="overview__header" title="${pageName}">
+                  <div class="overview__head" title="${pageName}">
                       ${
                         color === "default"
                           ? ""
