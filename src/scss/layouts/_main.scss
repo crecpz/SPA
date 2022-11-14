@@ -26,7 +26,7 @@
   }
 
   // main 頂部
-  &__header {
+  &__topbar {
     @include flex($ai: center);
     @include padding-x;
     position: fixed;
@@ -85,7 +85,7 @@
     }
   }
 
-  &__content-header {
+  &__content-head {
     @include flex($dir: column, $jc: center);
     position: sticky;
     z-index: 1;

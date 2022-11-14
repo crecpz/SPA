@@ -47,9 +47,9 @@ export const Top = {
     );
 
     return `
-        <!-- 主內容區 - header -->
+        <!-- 主內容區 - head -->
         <div class="container">
-          <div class="main__content-header">
+          <div class="main__content-head">
             <div class="main__name-wrapper">
               <div class="main__color-block color-block--default"></div>
               <p class="main__name">${pageName}</p>
@@ -71,10 +71,7 @@ export const Top = {
 
             <!-- 輸入框 -->
             <form class="main__form todo-form">
-                <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項...">
-                <button id="todo-submit" class="btn todo-form__submit">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
+              <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項..."><button id="todo-submit" class="btn todo-form__submit"><i class="fa-solid fa-plus"></i></button>
             </form>
           </div>
 
