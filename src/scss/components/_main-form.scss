@@ -26,6 +26,7 @@
   }
 
   &__input {
+    margin: 0;
     width: 100%;
     border: 2px solid var(--primary-color);
     border-top-left-radius: 5px;
@@ -40,6 +41,7 @@
   }
 
   &__submit {
+    margin: 0;
     flex: 1 0 auto;
     padding: .875rem 1.125rem;
     background-color: var(--primary-color);
