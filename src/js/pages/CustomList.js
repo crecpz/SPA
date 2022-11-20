@@ -53,21 +53,21 @@ export const CustomList = {
               }">清除完成事項</button>
               <!-- list-option-btn -->
               <button class="main__list-option-btn btn btn--list-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              <!-- list-options -->
+              <ul class="list-options">
+                  <li class="list-option">
+                    <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
+                  </li>
+                  <li class="list-option">
+                    <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
+                  </li>
+                  <li class="list-option list-option--custom-list">
+                    <a href="javascript:;" class="list-option__link remove-completed ${
+                      hasCompletedTodo ? "" : "not-allowed"
+                    }">清除完成事項</a>
+                  </li>
+              </ul>
           </div>
-          <!-- list-options -->
-          <ul class="list-options">
-              <li class="list-option">
-                <a href="javascript:;" id="rename-list" class="list-option__link">列表名稱設定</a>
-              </li>
-              <li class="list-option">
-                <a href="javascript:;" id="remove-list" class="list-option__link">刪除列表</a>
-              </li>
-              <li class="list-option list-option--custom-list">
-                <a href="javascript:;" class="list-option__link remove-completed ${
-                  hasCompletedTodo ? "" : "not-allowed"
-                }">清除完成事項</a>
-              </li>
-          </ul>
           <!-- 輸入框 -->
           <form class="main__form todo-form">
             <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項..."><button id="todo-submit" class="btn todo-form__submit"><i class="fa-solid fa-plus"></i></button>

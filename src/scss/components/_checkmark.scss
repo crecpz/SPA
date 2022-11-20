@@ -3,8 +3,6 @@
 .checkbox {
   position: relative;
   cursor: pointer;
-
-  
 }
 
 .checkbox__input {
@@ -22,15 +20,12 @@
   border: 2px solid var(--primary-color);
   border-radius: 50%;
   pointer-events: none;
-  transform: scale(1);
-  transition: transform ease-in-out map-get($transition-duration, fast);
 
   @include sm {
     width: 1.5rem;
     height: 1.5rem;
   }
   
-
   &::before {
     content: "";
     display: none;

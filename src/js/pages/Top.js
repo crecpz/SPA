@@ -58,23 +58,20 @@ export const Top = {
               <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
                 hasCompletedTodo ? "" : "not-allowed"
               }">清除完成事項</button>
+              <!-- list-options -->
+              <ul class="list-options">
+                <li class="list-option">
+                  <a href="javascript:;" class="list-option__link remove-completed ${
+                    hasCompletedTodo ? "" : "not-allowed"
+                  }">清除完成事項</a>
+                </li>
+              </ul>
             </div>
-
-            <!-- list-options -->
-            <ul class="list-options">
-              <li class="list-option">
-                <a href="javascript:;" class="list-option__link remove-completed ${
-                  hasCompletedTodo ? "" : "not-allowed"
-                }">清除完成事項</a>
-              </li>
-            </ul>
-
             <!-- 輸入框 -->
             <form class="main__form todo-form">
               <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項..."><button id="todo-submit" class="btn todo-form__submit"><i class="fa-solid fa-plus"></i></button>
             </form>
           </div>
-
 
           <!-- list -->
           <div class="main__content-list">

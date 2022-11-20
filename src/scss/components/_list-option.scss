@@ -2,26 +2,29 @@
 
 .list-options {
   @include text(sm);
+  overflow: hidden;
+
   position: absolute;
-  // top: 2.5rem;
-  top: 50px;
-  right: 2.25rem;
+  right: 1rem;
+  top: 2.5rem;
   z-index: 10;
+
+  transform: scale(0);
+  transform-origin: top right;
+
   border: 1px solid var(--primary-color);
   border-radius: deep-map-get($border-radius, md);
   background-color: var(--secondary-color);
-  overflow: hidden;
-  transform: scale(0);
-  transform-origin: top right;
-  transition: transform map-get($map: $transition-duration, $key: hover);
-  
+
+  transition: all map-get($map: $transition-duration, $key: fast);
+
   &--open {
     transform: scale(1);
   }
 
   &--home {
-    top: -0.5rem;
-    right: 8.75rem;
+    right: 7.625rem;
+    top: 2.5rem;
   }
 }
 
