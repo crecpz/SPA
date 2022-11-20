@@ -232,63 +232,63 @@ export const Home = {
     }
 
     return `
-            <!-- 主內容區 - head -->
-            <div class="container">
-              <div class="main__content-head">
-                <div class="main__name-wrapper">
-                    <div class="main__color-block color-block--default"></div>
-                    <p class="main__name">總覽</p>
-                    <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option
-                      ${currentView === "grid-view" ? "hidden" : ""}"
-                    >
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
+        <div class="container">
+          <!-- head -->
+          <div class="main__content-head">
+            <div class="main__name-wrapper">
+                <div class="main__color-block color-block--default"></div>
+                <p class="main__name">總覽</p>
+                <button class="main__list-option-btn main__list-option-btn--default-list btn btn--list-option
+                  ${currentView === "grid-view" ? "hidden" : ""}"
+                >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <!-- list-options -->
+                <ul class="list-options list-options--home">
+                  <li class="list-option">
+                    <a href="javascript:;" class="list-option__link remove-completed ${
+                      hasCompletedTodo ? "" : "not-allowed"
+                    }">清除完成事項</a>
+                  </li>
+                </ul>
+                <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
+                  currentView === "grid-view" || noContent ? "hidden" : ""
+                } ${hasCompletedTodo ? "" : "not-allowed"}">
+                  清除完成事項
+                </button>
+                <div class="main__view-btns">
+                    <button data-view="grid-view" class="main__view-btn btn 
+                        ${
+                          currentView === "grid-view"
+                            ? "main__view-btn--active"
+                            : ""
+                        }">
+                        <i class="fa-solid fa-table-cells-large"></i>
                     </button>
-                    <!-- list-options -->
-                    <ul class="list-options list-options--home">
-                      <li class="list-option">
-                        <a href="javascript:;" class="list-option__link remove-completed ${
-                          hasCompletedTodo ? "" : "not-allowed"
-                        }">清除完成事項</a>
-                      </li>
-                    </ul>
-                    <button class="main__clear-completed-btn remove-completed btn btn--primary btn--sm ${
-                      currentView === "grid-view" || noContent ? "hidden" : ""
-                    } ${hasCompletedTodo ? "" : "not-allowed"}">
-                      清除完成事項
+                    <button data-view="list-view" class="main__view-btn btn 
+                        ${
+                          currentView === "list-view"
+                            ? "main__view-btn--active"
+                            : ""
+                        }">
+                        <i class="fa-solid fa-list-ul"></i>
                     </button>
-                    <div class="main__view-btns">
-                        <button data-view="grid-view" class="main__view-btn btn 
-                            ${
-                              currentView === "grid-view"
-                                ? "main__view-btn--active"
-                                : ""
-                            }">
-                            <i class="fa-solid fa-table-cells-large"></i>
-                        </button>
-                        <button data-view="list-view" class="main__view-btn btn 
-                            ${
-                              currentView === "list-view"
-                                ? "main__view-btn--active"
-                                : ""
-                            }">
-                            <i class="fa-solid fa-list-ul"></i>
-                        </button>
-                    </div>
                 </div>
-                <!-- 輸入框 -->
-                <form class="main__form todo-form ${
-                  currentView === "grid-view" ? "hidden" : ""
-                }">
-                  <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項..."><button id="todo-submit" class="btn todo-form__submit"><i class="fa-solid fa-plus"></i></button>
-                </form>
-              </div>
-
-            <!-- list -->
-            <div class="main__content-list">
-              ${displayContent}
             </div>
+            <!-- 輸入 -->
+            <form class="main__form todo-form ${
+              currentView === "grid-view" ? "hidden" : ""
+            }">
+              <input type="text" id="todo-input" class="main__input todo-form__input" placeholder="輸入待辦事項..."><button id="todo-submit" class="btn todo-form__submit"><i class="fa-solid fa-plus"></i></button>
+            </form>
           </div>
-        `;
+
+        <!-- list -->
+        <div class="main__content-list">
+          ${displayContent}
+        </div>
+      </div>
+    `;
   },
 
   listener: {
