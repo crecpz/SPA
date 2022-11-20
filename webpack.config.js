@@ -4,20 +4,21 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
+  
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "js/main.js",
     clean: true,
   },
+
   module: {
     rules: [
       {
         test: /\.s[ac]ss$/i,
         use: [
           MiniCssExtractPlugin.loader,
-          // 将 CSS 转化成 CommonJS 模块
           "css-loader",
-          // 将 Sass 编译成 CSS
+          "postcss-loader",
           "sass-loader",
         ],
       },
@@ -34,6 +35,7 @@ module.exports = {
       },
     ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
@@ -44,6 +46,7 @@ module.exports = {
       filename: "./css/main.css",
     }),
   ],
+
   devServer: {
     static: {
       directory: path.join(__dirname, "dist"),
@@ -56,8 +59,10 @@ module.exports = {
       app: { name: "firefox" },
     },
   },
+
   mode: "production",
   // mode: "development",
+
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
