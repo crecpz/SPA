@@ -21,18 +21,22 @@
     @include flex($ai: center);
     @include text(base);
     position: sticky;
-    top: 12.6563rem;
+    top: 12.1563rem;
     z-index: 4;
+
     font-weight: bold;
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+
     color: var(--secondary-color);
     background-color: var(--primary-color);
+
     cursor: pointer;
     user-select: none;
+
     border: 1px solid var(--primary-color);
     transition: ease-in-out map-get($transition-duration, base);
     transition-property: outline, background-color;
@@ -49,7 +53,7 @@
 
     @include sm {
       @include text(base);
-      top: 186.5px;
+      top: 10.9375rem;
     }
   }
 

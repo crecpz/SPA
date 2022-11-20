@@ -16,7 +16,6 @@
     @include hover-query {
       &:hover {
         border-bottom-color: var(--line-color);
-        // background-color: var(--tertiary-color);
       }
     }
 
@@ -30,7 +29,6 @@
     @include hover-query(){
       &:hover {
         .checkbox__appearance {
-          transform: scale(1.25);
           background-color: var(--tertiary-color);
         }
       }
