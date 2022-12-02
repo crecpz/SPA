@@ -328,7 +328,6 @@ document.querySelectorAll(".nav__list").forEach((navList) => {
       const isSmallerThan1024 = window.matchMedia(
         "(max-width: 1024px)"
       ).matches;
-      console.log(isSmallerThan1024);
 
       // If media query matches
       if (isSmallerThan1024) {
