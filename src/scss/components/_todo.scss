@@ -25,8 +25,8 @@
     }
   }
 
-  .checkbox{
-    @include hover-query(){
+  .checkbox {
+    @include hover-query() {
       &:hover {
         .checkbox__appearance {
           background-color: var(--tertiary-color);
@@ -73,16 +73,6 @@
     }
   }
 
-  // .checkbox__apparance {
-  //   height: 1.5rem;
-  //   width: 1.5rem;
-
-  //   @include sm {
-  //     width: 1.25rem;
-  //     height: 1.25rem;
-  //   }
-  // }
-
   &__item--isChecked {
     :is(.todo__checkbox, .todo__content, .top) {
       opacity: 0.5;
@@ -112,11 +102,5 @@
     margin-left: auto;
     color: var(--primary-color);
     transition: transform ease-in-out map-get($transition-duration, fast);
-
-    @include hover-query() {
-      &:hover {
-        transform: scale(1.25);
-      }
-    }
   }
 }
