@@ -11,7 +11,7 @@ import {
 import { closeEditModal, closeModalOverlay } from "./modal.js";
 import { switchRemoveCompletedBtn } from "./ui.js";
 
-// 初次載入時取得 localStorage 中的資料並存進變量中
+// 初次載入時取得 localStorage 中的資料並存進變數中
 export const DATA = getStorage();
 
 // 取得 localStorage 的資料
@@ -182,9 +182,9 @@ export function removeTodo(removeTodoId) {
 export function changeCheckbox(e) {
   // 如果 change 事件所觸發的 e.target 包含 .checkbox__input class
   if (e.target.classList.contains("checkbox__input")) {
-    // 此變量會用來存放當前 todo id
+    // 此變數會用來存放當前 todo id
     let currentTodoId;
-    // 此變量用來存取目前事件觸發是否來自於 editModal
+    // 此變數用來存取目前事件觸發是否來自於 editModal
     let triggerFromEditModal;
 
     // 如果 e.target 向上尋找可以找到 .todo__item

@@ -160,8 +160,6 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   overflow-y: auto;
-  // border-top:  1px solid var(--line-color);
-  // border-bottom: 1px solid var(--line-color);
 
   &__color {
     width: 2rem;
@@ -177,5 +175,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 14.0625rem; // 此為視窗大於 576px 時的文字寬度
-  pointer-events: none; // 防止點按到此，點按到此會造成手機模式下點擊後自動收合 nav 的功能失效
+  pointer-events: none; // 防止點按到此元素
+  font-weight: 900;
 }

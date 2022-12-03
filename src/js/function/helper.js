@@ -203,9 +203,9 @@ export function createNewListName() {
 }
 
 /**
- * * 取得並返回特定 css 變量名稱內的值
- * @param {*} cssVar css 變量名稱 (string)
- * @returns 返回該變量內的值
+ * * 取得並返回特定 css 變數名稱內的值
+ * @param {*} cssVar css 變數名稱 (string)
+ * @returns 返回該變數內的值
  */
 export function getCssVarValue(cssVar) {
   const root = document.querySelector(":root");
@@ -218,24 +218,30 @@ export function getCssVarValue(cssVar) {
  * * 切換 NotFound.js 中的 isNotFound 狀態
  */
 export function switchNotFoundState() {
-  NotFound.state.isNotFound = pageIsNotExist();
+  NotFound.state.isNotFound = customlistIdNotFound();
 }
 
 /**
- * * 判斷目前所在頁面是否存在
- * @returns Boolean。 true: 不存在； false: 存在
+ * * 檢查網址列 customlist 後的 id 參數是否存在於 DATA 中
+ * 大多數的頁面只要不匹配 Route.path，在解構賦值時就會自動用 NotFound 作為預設值，
+ * 此函數主要是針對 customlist/ 之後的 id 參數，若不存在於 DATA 中，
+ * 且 id 不是 "home"、"search" 則代表目前處於一個不存在的頁面。
+ * @returns Boolean (true: 不存在，false: 存在)
  */
-export function pageIsNotExist() {
-  // ↓ noDataPage 放的是在 DATA 內沒有存放資料的頁面(頁面ID)
-  const noDataPage = ["home", "search"];
-  // 取得當前頁面在 DATA 中的物件
+export function customlistIdNotFound() {
+  // 取得當前頁面物件(若不存在則會得到 undefined)
   const currentPageObj = getCurrentPage();
   // 取得當前頁面 ID
   const currentPageId = getCurrentPageId();
-  // 檢查 noDataPage 內的每一個項目是否不等於當前頁面 ID
-  const notBelongAnyPage = noDataPage.every((id) => id !== currentPageId);
-  // 既獲取不到物件、又不存在於 noDataPage 中，代表目前沒有這個頁面
-  return !currentPageObj && notBelongAnyPage; // 返回 Boolean， true: 不存在； false: 存在
+  // 如果目前所在頁面在 DATA 中沒有資料，
+  // 且當前頁面 ID 不是 "home" 或 "search"(只有 "home"、"search" 頁面在 DATA 中無資料)
+  if (
+    !currentPageObj &&
+    ["home", "search"].every((id) => id !== currentPageId)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 // * 用來存放搜尋到的結果
@@ -264,19 +270,19 @@ export function getSearchResult(e) {
   if (value.trim() === "") {
     searchResult = [];
     // input 內沒有文字 -> clear-text-btn 隱藏
-    document.getElementById('clear-text-btn').classList.add('hidden');
+    document.getElementById("clear-text-btn").classList.add("hidden");
   } else {
     // input 內有文字 -> clear-text-btn 顯示
-    document.getElementById('clear-text-btn').classList.remove('hidden');
+    document.getElementById("clear-text-btn").classList.remove("hidden");
   }
 }
 
 /**
  * * 當使用者直接在 Search 頁面中將找到的結果刪除時，重新更新結果並顯示出來
  * 此函數只在 search 使用
- * @param {*} id 要刪除的 id 
+ * @param {*} id 要刪除的 id
  */
-export function removeTodoInSearchResult(id){
-  searchResult = searchResult.filter(i => i.id !== id)
+export function removeTodoInSearchResult(id) {
+  searchResult = searchResult.filter((i) => i.id !== id);
   Router();
 }
