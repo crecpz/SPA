@@ -7,7 +7,7 @@ https://crecpz.github.io/Todo-Task-List-App/
 
 <img src="https://user-images.githubusercontent.com/81663340/204447623-e5bf41c7-9978-47a1-8341-778c77b3814c.png" width="50%" />
 
-## 說明
+## 介紹
 
 **特色**
 - **進度總覽**：透過總覽頁面查看不同列表的完成進度。
