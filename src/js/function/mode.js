@@ -31,7 +31,7 @@ export function modeSwitcher() {
   // 旋轉光線模式鈕
   const modeBtn = document.getElementById("mode-btn");
   modeBtn.classList.toggle("mode-btn--change");
-  // 將目前最新的顏色存入 currentMode 變量中
+  // 將目前最新的顏色存入 currentMode 變數中
   currentMode = currentMode === "light" ? "dark" : "light";
   // 刪除html既有的'light' 或 'dark' class，並更新現有的主題色。
   updateMode();

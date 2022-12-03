@@ -2,7 +2,7 @@
 import { NotFound } from "../pages/NotFound.js";
 import { addListener, removeAllListeners } from "../function/eventListerer.js";
 import { Route } from "./Route.js";
-import { pageIsNotExist } from "../function/helper.js";
+import { customlistIdNotFound } from "../function/helper.js";
 
 /**
  * * 取得目前所在頁面的 component
@@ -33,7 +33,6 @@ const getComponent = (path, routes) => {
         let routesArry = route.path.split("/").filter((a) => a);
         //當前網址列路徑目錄陣列(filter去除無效值)
         let urlArry = path.split("/").filter((a) => a);
-
         //逐個比對是否符合路徑
         for (let i = 0; i < routesArry.length; i++) {
           //若有設定傳入參數
@@ -82,8 +81,9 @@ export const Router = () => {
   // 找出對應頁面
   let { component = NotFound, props = {} } = getComponent(path, Route);
 
+  // 檢查網址列 customlist 後的 id 參數是否存在於 DATA 中，
   // 如果頁面不存在，指定 component 為 NotFound
-  if (pageIsNotExist()) {
+  if (customlistIdNotFound()) {
     component = NotFound;
   }
 

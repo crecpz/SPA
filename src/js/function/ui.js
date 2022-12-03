@@ -1,5 +1,5 @@
 import { Home } from "../pages/Home.js";
-import { getCurrentPageId, hide, pageIsNotExist, unhide } from "./helper.js";
+import { getCurrentPageId, hide, customlistIdNotFound, unhide } from "./helper.js";
 import {
   clearColorSelectorActive,
   closeConfirmModal,
@@ -294,7 +294,7 @@ export function removeNavActive() {
 export function activeNavLists() {
   removeNavActive();
   const currentPageId = getCurrentPageId();
-  if (!pageIsNotExist() && currentPageId !== "search") {
+  if (!customlistIdNotFound() && currentPageId !== "search") {
     const activeTarget = navContent.querySelector(`#${currentPageId}`);
     activeTarget.classList.add("nav__list-item--active");
   }
