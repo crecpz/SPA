@@ -21,6 +21,6 @@ https://crecpz.github.io/Todo-Task-List-App/
 **使用技術**
   - 使用 JavaScript 進行開發。
   - 使用 SPA（Single-page application）的方式實現頁面跳轉（透過監聽 `window` 的 `hashchange` 事件，來偵測網址列變化，再根據 `window.location.hash` 的值，渲染對應的頁面內容至畫面）。
-  - 使用 SCSS 管理樣式、規劃 RWD 版型。
+  - 使用 SCSS 管理樣式、建構 RWD 版型。
   - 使用 CSS Variables 與 Media Query `prefers-color-scheme` 媒體特性，實現深／淺色模式切換。
   - 使用 localStorage 儲存資料。
