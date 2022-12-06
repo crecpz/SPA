@@ -75,7 +75,7 @@
     @include flex($dir: column, $ai: center);
     grid-column: 2/-1;
     grid-row: 2/3;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-color: var(--scrollbar-color) var(--secondary-color);
 
     > .container {

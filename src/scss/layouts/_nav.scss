@@ -45,8 +45,7 @@
 
   &__topbar {
     @include flex($ai: center, $jc: space-between);
-    padding-left: 2.25rem;
-    padding-right: 2.25rem;
+    @include padding-x;
     border-bottom: 2px solid var(--primary-color);
   }
 
@@ -92,6 +91,10 @@
     padding-bottom: 0.625rem;
     padding-left: 2.25rem;
     color: var(--primary-color);
+
+    @include sm {
+      padding-left: 1.5rem;
+    }
 
     i {
       @include text(md);
