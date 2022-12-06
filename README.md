@@ -1,11 +1,12 @@
 # Todo-Task-List-App
 可新增自訂列表、可查看完成進度的待辦事項網頁 App。
-
+<br />
 
 ## Demo
 https://crecpz.github.io/Todo-Task-List-App/
 
 <img src="https://user-images.githubusercontent.com/81663340/204447623-e5bf41c7-9978-47a1-8341-778c77b3814c.png" width="50%" />
+<br />
 
 ## 介紹
 
@@ -16,7 +17,6 @@ https://crecpz.github.io/Todo-Task-List-App/
 - **自訂列表**：使用者可自行新增列表，來為待辦事項分類，並可以為列表標示不同的顏色。
 - **搜尋功能**：透過搜尋功能尋找特定的待辦事項。
 - **深 / 淺色模式**：可切換深色或淺色主題。
-<br />
 
 **使用技術**
   - 使用 JavaScript 開發。
