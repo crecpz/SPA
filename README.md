@@ -4,8 +4,6 @@
 
 ## Demo
 https://crecpz.github.io/Todo-Task-List-App/
-
-<img src="https://user-images.githubusercontent.com/81663340/204447623-e5bf41c7-9978-47a1-8341-778c77b3814c.png" width="50%" />
 <br />
 
 ## 介紹
@@ -24,3 +22,10 @@ https://crecpz.github.io/Todo-Task-List-App/
   - 使用 SCSS 管理樣式、建構 RWD 版型。
   - 使用 CSS Variables 與 Media Query `prefers-color-scheme` 媒體特性，實現深／淺色模式切換。
   - 使用 localStorage 儲存資料。
+  <br />
+
+## 畫面
+| Desktop | Mobile |
+| ------------- | ------------- |
+| ![Todo-Task-List-App](https://user-images.githubusercontent.com/81663340/205801126-1a165b07-d518-430c-8196-3d6d1770c753.png)  | ![Todo-Task-List-App-m](https://user-images.githubusercontent.com/81663340/205801139-b4e2c627-4bd3-48c2-be9c-7d0de5ef6336.png)  |
+| ![Todo-Task-List-App-1](https://user-images.githubusercontent.com/81663340/205805475-f3c8ce91-8d75-47b9-81c3-091af459b58d.png) | ![Todo-Task-List-App-m1](https://user-images.githubusercontent.com/81663340/205804780-3157a965-5109-4914-b334-c55cb46e2e9e.png) |
