@@ -1,4 +1,3 @@
-// import { scrollBarFix } from "../function/fix.js";
 import { todoIsEditing } from "../function/modal.js";
 import { changeCheckbox, DATA, saveEditedTodo } from "../function/storage.js";
 import {
@@ -95,6 +94,7 @@ export const DefaultList = {
     },
 
     keyup: (e) => {
+      // 如果按下 Enter，聚焦 input
       if (e.key === "Enter") {
         document.getElementById("todo-input").focus();
       }

@@ -25,15 +25,13 @@
     }
   }
 
-  // main 頂部
+  // main 頂部 bar
   &__topbar {
     @include flex($ai: center);
-    @include padding-x;
     position: fixed;
     z-index: 5;
     width: 100%;
     height: $topbar-height;
-    border-bottom: 2px solid var(--primary-color);
     color: var(--primary-color);
     background-color: var(--secondary-color);
     transition-property: width;

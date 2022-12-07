@@ -5,7 +5,13 @@
   height: 50vh;
 
   &__svg {
-    height: 200px;
+    height: 12.5rem;
+
+    // 因 home 的 grid-view 並沒有 input，
+    // 導致圖片位置較高，補上 home 頁面 svg 的 margin-top;
+    &--home {
+      margin-top: 10rem;
+    }
   }
 
   &__text {
@@ -14,7 +20,7 @@
     text-align: center;
     margin-top: 3rem;
 
-    @include sm{
+    @include sm {
       @include text(base);
     }
   }

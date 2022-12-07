@@ -226,7 +226,7 @@ export function switchNotFoundState() {
  * 大多數的頁面只要不匹配 Route.path，在解構賦值時就會自動用 NotFound 作為預設值，
  * 此函數主要是針對 customlist/ 之後的 id 參數，若不存在於 DATA 中，
  * 且 id 不是 "home"、"search" 則代表目前處於一個不存在的頁面。
- * @returns Boolean (true: 不存在，false: 存在)
+ * @returns Boolean (true => 不存在, false => 存在)
  */
 export function customlistIdNotFound() {
   // 取得當前頁面物件(若不存在則會得到 undefined)

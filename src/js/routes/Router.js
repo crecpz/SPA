@@ -59,6 +59,7 @@ const getComponent = (path, routes) => {
 };
 
 export const Router = () => {
+  // 如果無 hash 值，則補上斜線
   if (!location.hash) {
     location.hash = "/";
   }
@@ -87,6 +88,7 @@ export const Router = () => {
   // 刪除之前的所有已註冊的事件
   removeAllListeners();
 
+  // 新增 listener
   "listener" in component
     ? Object.keys(component["listener"]).forEach((type) => {
         addListener(type, component.listener[type]);

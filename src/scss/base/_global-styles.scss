@@ -105,8 +105,8 @@ button {
 .wrapper {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 340px) 1fr;
-    grid-template-rows: 4.375rem 1fr;
+    grid-template-columns: minmax(0, 21.25rem) 1fr;
+    grid-template-rows: auto 1fr;
     font-weight: 600;
     height: 100%;
 
@@ -125,6 +125,11 @@ button {
 
 .container {
     width: 100%;
+}
+
+.topbar {
+    @include padding-x;
+    border-bottom: 2px solid var(--primary-color);
 }
 
 // * scrollbar (firefox 相關設定在 _main.scss --> .main__content-list 中)
