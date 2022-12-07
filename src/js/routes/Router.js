@@ -15,57 +15,45 @@ const getComponent = (path, routes) => {
   if (path.slice(-1) === "/" && path.match(/\//g).length > 1) {
     path = path.slice(0, -1);
   }
-
   // STEP2:比對完全符合路徑
   let result =
     routes.find((route) => route.path.match(new RegExp(`^${path}$`))) ||
     undefined;
-
-  // STEP3:若無比對完全符合路徑,則找尋相似目錄,及判斷是否傳入參數
+  // STEP3:若無比對完全符合路徑,判斷是否傳入參數
   if (!result) {
     //尋找符合條件的route
     result = routes.find((route) => {
-      //找尋設定參數目錄(:)
+      //找尋有設定參數的 path
       if (route.path.match(/\/:/g)) {
         //傳入參數初始化
         route.props = {};
         //當前routes路徑目錄陣列(filter去除無效值)
-        let routesArry = route.path.split("/").filter((a) => a);
+        let routesArr = route.path.split("/").filter((a) => a);
         //當前網址列路徑目錄陣列(filter去除無效值)
-        let urlArry = path.split("/").filter((a) => a);
+        let urlArr = path.split("/").filter((a) => a);
         //逐個比對是否符合路徑
-        for (let i = 0; i < routesArry.length; i++) {
+        for (let i = 0; i < routesArr.length; i++) {
           //若有設定傳入參數
-          if (routesArry[i].slice(0, 1) === ":") {
+          if (routesArr[i].slice(0, 1) === ":") {
             //檢查當前路由是否設定傳入參數及正規表示法比對
-            let regex = routesArry[i].match(/[^\:(.)^?]+/g);
+            let regex = routesArr[i].match(/[^\:(.)^?]+/g);
             //解構路由陣列
-            let [params, paramsRegex] = regex;
-            //排除條件設定
-            if (
-              urlArry.length > routesArry.length || //當前網址列路徑數目多於routes
-              !paramsRegex || //若有設定正規表示法驗證
-              (!urlArry[i] && routesArry[i].slice(-1) !== "?") || //若網址不存在,檢查路徑是否設定模糊匹配
-              (urlArry[i] &&
-                !urlArry[i].match(new RegExp(`^${paramsRegex}$`, "gm"))) //若網址存在,檢查是否符合路徑設定之正規表示法
-            ) {
-              return false;
-            }
-            //比對成功,設定傳遞參數值
-            route.props[params] = urlArry[i] || ""; //將路徑參數導入組件
+            let [params] = regex;
+            //設定傳遞參數值
+            route.props[params] = urlArr[i] || ""; //將路徑參數導入組件
           } else {
-            //若非相似目錄則比對是否完全相同(判斷是否持續比對)
-            if (routesArry[i] !== urlArry[i]) {
+            //若無設定傳入參數，比對是否完全相同
+            if (routesArr[i] !== urlArr[i]) {
               return false;
             }
           }
         }
         return route;
       }
+      // 若無使用參數，返回 false
       return false;
     });
   }
-
   // STEP4:返回結果
   return result || {};
 };
@@ -87,6 +75,7 @@ export const Router = () => {
     component = NotFound;
   }
 
+  // 渲染到指定位置
   const mainContent = document.querySelector(".main__content");
 
   // 將元件內容渲染至畫面
