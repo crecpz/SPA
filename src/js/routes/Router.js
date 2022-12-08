@@ -35,12 +35,8 @@ const getComponent = (path, routes) => {
         for (let i = 0; i < routesArr.length; i++) {
           //若有設定傳入參數
           if (routesArr[i].slice(0, 1) === ":") {
-            //檢查當前路由是否設定傳入參數及正規表示法比對
-            let regex = routesArr[i].match(/[^\:(.)^?]+/g);
-            //解構路由陣列
-            let [params] = regex;
             //設定傳遞參數值
-            route.props[params] = urlArr[i] || ""; //將路徑參數導入組件
+            route.props["id"] = urlArr[i] || ""; //將路徑參數導入組件
           } else {
             //若無設定傳入參數，比對是否完全相同
             if (routesArr[i] !== urlArr[i]) {

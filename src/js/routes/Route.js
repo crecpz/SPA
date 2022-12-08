@@ -9,6 +9,7 @@ export const Route = [
   { path: '/', component: Home },
   { path: '/defaultlist', component: DefaultList },
   { path: '/top', component: Top },
-  { path: '/customlist/:id([A-z0-9]*)', component: CustomList },
+  // { path: '/customlist/:id([A-z0-9]*)', component: CustomList },
+  { path: '/customlist/:id', component: CustomList },
   { path: '/search', component: Search },
 ];

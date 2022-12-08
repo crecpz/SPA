@@ -1,8 +1,4 @@
-import {
-  getCurrentPageId,
-  hide,
-  unhide,
-} from "./helper.js";
+import { getCurrentPageId, hide, unhide } from "./helper.js";
 import {
   clearColorSelectorActive,
   closeConfirmModal,
@@ -291,9 +287,12 @@ export function removeNavActive() {
 export function activeNavLists() {
   // 去除之前的 active 效果
   removeNavActive();
-  // 嘗試獲取目前所在頁面 id 相對應的 <li>
-  const activeTarget = navContent.querySelector(`#${getCurrentPageId()}`);
-  // 若有獲取到，則將其加上 active
+  // 獲取目前所在頁面 id (檢查頁面 id 是否為符合規則，若首字為數字，則後續進行 querySelector 會出錯)
+  const currentPageId = getCurrentPageId().match(/^[A-z]{1}[A-z0-9]+/);
+  const activeTarget = currentPageId // 檢查 currentPageId 是否有效
+    ? navContent.querySelector(`#${currentPageId}`) // 若有效，透過 currentPageId 來獲取 DOM 元素
+    : currentPageId; // 若無效，則讓 activeTarget 直接等於 currentPageId (null)
+  // 若有效，新增 active class
   if (activeTarget) {
     activeTarget.classList.add("nav__list-item--active");
   }
