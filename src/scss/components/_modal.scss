@@ -185,6 +185,7 @@
     padding-right: 0;
 
     i {
+      @include text(base);
       pointer-events: none;
     }
   }
